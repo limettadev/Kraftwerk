@@ -343,7 +343,7 @@ class Kraftwerk : ExtendedJavaPlugin() {
 
     fun setupDataSource() {
         val uri = ConfigFeature.instance.config!!.getString("database.uri")
-        if (uri == null) {
+        if (uri == null || uri == "") {
             Log.severe("No database URI set. Please set it in the config.")
             return
         }

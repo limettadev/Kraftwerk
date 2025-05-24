@@ -19,6 +19,7 @@ import pink.mino.kraftwerk.discord.Discord
 import pink.mino.kraftwerk.features.*
 import pink.mino.kraftwerk.utils.Chat
 import pink.mino.kraftwerk.utils.GameState
+import pink.mino.kraftwerk.utils.MiscUtils
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
@@ -111,7 +112,7 @@ class EndGameCommand : CommandExecutor {
             e.printStackTrace()
         }
         val embed = EmbedBuilder()
-        embed.setColor(java.awt.Color(255, 61, 61))
+        embed.setColor(MiscUtils.hexToColor(ConfigFeature.instance.config!!.getString("discord.embed-color")))
         embed.setTitle(ConfigFeature.instance.data!!.getString("matchpost.host"))
         embed.setThumbnail("https://visage.surgeplay.com/bust/512/${host.uniqueId}")
         winners.joinToString(", ", "", "", -1, "...") {

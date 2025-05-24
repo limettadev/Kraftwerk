@@ -18,7 +18,7 @@ class Discord : ListenerAdapter() {
         var instance: JDA? = null
 
         fun main() {
-            if (ConfigFeature.instance.config!!.getString("discord.token") == null) {
+            if (ConfigFeature.instance.config!!.getString("discord.token") == null || ConfigFeature.instance.config!!.getString("discord.token") == "") {
                 throw(LoginException("No token found in config.yml"))
             }
             val jda = JDABuilder.createLight(
