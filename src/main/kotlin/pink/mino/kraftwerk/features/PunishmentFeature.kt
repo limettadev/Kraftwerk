@@ -5,6 +5,7 @@ import com.mongodb.client.model.Filters
 import com.mongodb.client.model.FindOneAndReplaceOptions
 import com.mongodb.client.model.Sorts
 import me.lucko.helper.Schedulers
+import me.lucko.helper.promise.Promise
 import net.dv8tion.jda.api.EmbedBuilder
 import org.bson.Document
 import org.bukkit.Bukkit
@@ -86,31 +87,32 @@ class PunishmentFeature {
             return number * millisPerUnit
         }
 
-        fun revokePunishment(punishmentUuid: UUID, type: PunishmentType): Boolean {
-            val plugin = JavaPlugin.getPlugin(Kraftwerk::class.java)
-            val collection = plugin.dataSource.getDatabase("applejuice").getCollection("punishments")
+        fun revokePunishment(punishmentUuid: UUID, type: PunishmentType): Promise<Boolean> {
+            return Schedulers.async().supply {
+                val plugin = JavaPlugin.getPlugin(Kraftwerk::class.java)
+                val collection = plugin.dataSource.getDatabase("applejuice").getCollection("punishments")
 
-            val filter = Filters.and(
-                Filters.eq("playerUniqueId", punishmentUuid),
-                Filters.eq("type", type.toString()),
-                Filters.eq("revoked", false)
-            )
-
-            val newestPunishment = collection.find(filter)
-                .sort(Sorts.descending("punishedAt"))
-                .firstOrNull()
-
-            if (newestPunishment != null) {
-                Bukkit.getLogger().info(newestPunishment.toString())
-                val updateResult = collection.updateOne(
-                    Filters.eq("uuid", newestPunishment.get("uuid", UUID::class.java)),
-                    Document("\$set", Document("revoked", true))
+                val filter = Filters.and(
+                    Filters.eq("playerUniqueId", punishmentUuid),
+                    Filters.eq("type", type.toString()),
+                    Filters.eq("revoked", false)
                 )
-                Bukkit.getLogger().info("${updateResult.modifiedCount > 0}")
-                return updateResult.modifiedCount > 0
+
+                val newestPunishment = collection.find(filter)
+                    .sort(Sorts.descending("punishedAt"))
+                    .firstOrNull()
+
+                if (newestPunishment != null) {
+                    Bukkit.getLogger().info(newestPunishment.toString())
+                    val updateResult = collection.updateOne(
+                        Filters.eq("uuid", newestPunishment.get("uuid", UUID::class.java)),
+                        Document("\$set", Document("revoked", true))
+                    )
+                    Bukkit.getLogger().info("${updateResult.modifiedCount > 0}")
+                    return@supply updateResult.modifiedCount > 0
+                }
+                return@supply false
             }
-            Bukkit.getLogger().info("nope")
-            return false
         }
 
         fun getActivePunishment(player: OfflinePlayer, punishmentType: PunishmentType): Punishment? {
