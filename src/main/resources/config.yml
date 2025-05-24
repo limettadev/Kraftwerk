@@ -26,12 +26,14 @@ discord:
   preWhitelistChannelId: 1284248799556145222
   gameLogsChannelId: 1284249710919548991
   punishmentChannelId: 1375360473188270141
-  token: # This is ideally where you would put a token.
+  flag: 'ca' # the emoji for your server's region
+  embed-color: '#ff3d3d' # Color format ideally.
+  token: '' # This is ideally where you would put a token.
 buycraft:
   scan: false # Scans every 15 minutes using API to get highest donator or whatever.
-  token: # This is ideally where you would put a token.
+  token: '' # This is ideally where you would put a token.
 database:
-  uri: # THIS IS IDEALLY WHERE YOU WOULD PUT A URI!
+  uri: '' # THIS IS IDEALLY WHERE YOU WOULD PUT A URI!
 void:
   enabled: true
   level: 75 # y-level to get teleported at.

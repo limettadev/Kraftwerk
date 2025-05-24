@@ -20,7 +20,7 @@ import pink.mino.kraftwerk.features.ConfigFeature
 import pink.mino.kraftwerk.scenarios.ScenarioHandler
 import pink.mino.kraftwerk.utils.ActionBar
 import pink.mino.kraftwerk.utils.Chat
-import java.awt.Color
+import pink.mino.kraftwerk.utils.MiscUtils
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
@@ -87,14 +87,14 @@ class ScheduleBroadcast(private val opening: String) : BukkitRunnable() {
             cancel()
             val host = Bukkit.getOfflinePlayer(ConfigFeature.instance.data!!.getString("game.host"))
             var embed = EmbedBuilder()
-            embed.setColor(Color(255, 61, 61))
+            embed.setColor(MiscUtils.hexToColor(ConfigFeature.instance.config!!.getString("discord.embed-color")))
             embed.setTitle(ConfigFeature.instance.data!!.getString("matchpost.host"))
             embed.setThumbnail("https://visage.surgeplay.com/bust/512/${host.uniqueId}")
             val scenarios = ConfigFeature.instance.data!!.getStringList("matchpost.scenarios")
             val fr = (System.currentTimeMillis() / 1000L) + (900000L) / 1000L
             embed.addField("Teams", ConfigFeature.instance.data!!.getString("matchpost.team"), false)
             embed.addField("Scenarios", scenarios.joinToString(", "), false)
-            var flag = ":flag_ca:"
+            var flag = ":flag_${ConfigFeature.instance.config!!.getString("discord.flag")}:"
             embed.addField("IP", "$flag `${if (ConfigFeature.instance.config!!.getString("chat.serverIp") != null) ConfigFeature.instance.config!!.getString("chat.serverIp") else "no server ip setup in config tough tits"}` (1.8.x)", false)
             embed.addField("Opening", "<t:${fr}:t> (<t:${fr}:R>)", false)
             embed.addField("Matchpost", "[uhc.gg](https://hosts.uhc.gg/m/${ConfigFeature.instance.data!!.getInt("matchpost.id")})", false)
@@ -111,7 +111,7 @@ class ScheduleBroadcast(private val opening: String) : BukkitRunnable() {
             }
             if (ConfigFeature.instance.config!!.getBoolean("options.whitelist-after-restart")) {
                 embed = EmbedBuilder()
-                embed.setColor(Color(255, 61, 61))
+                embed.setColor(MiscUtils.hexToColor(ConfigFeature.instance.config!!.getString("discord.embed-color")))
                 embed.setTitle(ConfigFeature.instance.data!!.getString("matchpost.host"))
                 embed.setThumbnail("https://visage.surgeplay.com/bust/512/${host.uniqueId}")
                 embed.addField("Pre-whitelists are on!", "You are now allowed to use the command `/wl` to request to pre-whitelist yourself in the server!", false)
@@ -204,7 +204,7 @@ class ScheduleOpening(private val opening: String) : BukkitRunnable() {
             val host = Bukkit.getOfflinePlayer(ConfigFeature.instance.data!!.getString("game.host"))
             val embed = EmbedBuilder()
             embed.addField("Matchpost", "https://hosts.uhc.gg/m/${ConfigFeature.instance.data!!.getInt("matchpost.id")}", false)
-            embed.setColor(Color(255, 61, 61))
+            embed.setColor(MiscUtils.hexToColor(ConfigFeature.instance.config!!.getString("discord.embed-color")))
             embed.setTitle(ConfigFeature.instance.data!!.getString("matchpost.host"))
             embed.setThumbnail("https://visage.surgeplay.com/bust/512/${host.uniqueId}")
             embed.addField("Game Open!", "The game is now open at `${if (ConfigFeature.instance.config!!.getString("chat.serverIp") != null) ConfigFeature.instance.config!!.getString("chat.serverIp") else "no server ip setup in config tough tits"}`.", false)
