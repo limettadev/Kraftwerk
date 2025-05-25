@@ -229,6 +229,7 @@ class Kraftwerk : ExtendedJavaPlugin() {
         getCommand("unban").executor = UnbanCommand()
         getCommand("unhelpopmute").executor = UnHelpopMuteCommand()
         getCommand("unmute").executor = UnmuteCommand()
+        getCommand("plugins").executor = PluginsCommand()
         //getCommand("hotbar").executor = HotbarCommand()
 
         /* ProtocolLib stuff */

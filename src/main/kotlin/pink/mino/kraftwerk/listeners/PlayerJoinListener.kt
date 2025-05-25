@@ -280,7 +280,7 @@ class PlayerJoinListener : Listener {
                     Gson().toJson(
                         PlayerJoinMessage(
                             player.uniqueId,
-                            ConfigFeature.instance.config!!.getString("chat.serverName")
+                            Kraftwerk.instance.sessionId
                         )
                     )
                 )

@@ -414,6 +414,11 @@ commands:
     aliases:
       - um
     description: Unmutes a player.
+  plugins:
+    aliases:
+      - pl
+      - ver
+    description: View list of plugins :)
 depend:
   - ProtocolLib
   - Vault
