@@ -68,8 +68,9 @@ class WhitelistCommand : CommandExecutor {
 
         if (args.isEmpty()) {
             sender.sendMessage(Chat.line)
-            Chat.sendMessage(sender as Player,"${Chat.dash} Invalid usage: ${Chat.secondaryColor}/wl <remove/add> <player>")
-            Chat.sendMessage(sender,"${Chat.dash} Invalid usage: ${Chat.secondaryColor}/wl <all/clear/off/on/list>")
+            Chat.sendMessage(sender as Player, "${Chat.prefix} The whitelist is currently ${if (ConfigFeature.instance.data!!.getBoolean("whitelist.enabled")) "&aenabled" else "&cdisabled"}&7!")
+            Chat.sendMessage(sender,"${Chat.prefix} Invalid usage: ${Chat.secondaryColor}/wl <remove/add> <player>")
+            Chat.sendMessage(sender,"${Chat.prefix} Invalid usage: ${Chat.secondaryColor}/wl <all/clear/off/on/list>")
             sender.sendMessage(Chat.line)
             return false
         }
