@@ -86,7 +86,7 @@ class ArenaFeature : Listener {
         }
     }
 
-    val seeds = hashMapOf<UUID, Int?>()
+    val seeds = hashMapOf<UUID, Int>()
 
     fun send(p: Player) {
         if (SpecFeature.instance.getSpecs().contains(p.name)) {
@@ -162,30 +162,29 @@ class ArenaFeature : Listener {
     fun onPlayerPickup(e: PlayerPickupItemEvent) {
         if (e.player.world.name != "Arena") return
         if (e.item.itemStack.type == Material.SEEDS) {
-            if (seeds[e.player.uniqueId] != null) {
-                seeds[e.player.uniqueId] = seeds[e.player.uniqueId]!! + e.item.itemStack.amount
-                if (seeds[e.player.uniqueId]!! >= 10) {
-                    for ((index, item) in e.player.inventory.contents.withIndex()) {
-                        if (item.type == Material.DIAMOND_SWORD) {
-                            val sword = ItemBuilder(Material.DIAMOND_SWORD)
-                                .name("&5&lSeedly Sword")
-                                .addEnchantment(Enchantment.DAMAGE_ALL, 1)
-                                .addEnchantment(Enchantment.FIRE_ASPECT, 1)
-                                .make()
-                            e.player.inventory.setItem(index, sword)
-                        }
-                        if (item.type == Material.BOW) {
-                            val bow = ItemBuilder(Material.BOW)
-                                .name("&5&lSeedly Bow")
-                                .addEnchantment(Enchantment.ARROW_DAMAGE, 1)
-                                .addEnchantment(Enchantment.ARROW_FIRE, 1)
-                                .make()
-                            e.player.inventory.setItem(index, bow)
-                        }
+            if (seeds[e.player.uniqueId] == null) seeds[e.player.uniqueId] = 0
+            seeds[e.player.uniqueId] = seeds[e.player.uniqueId]!! + 1
+            if (seeds[e.player.uniqueId]!! >= 10) {
+                for ((index, item) in e.player.inventory.contents.withIndex()) {
+                    if (item.type == Material.DIAMOND_SWORD) {
+                        val sword = ItemBuilder(Material.DIAMOND_SWORD)
+                            .name("&5&lSeedly Sword")
+                            .addEnchantment(Enchantment.DAMAGE_ALL, 1)
+                            .addEnchantment(Enchantment.FIRE_ASPECT, 1)
+                            .make()
+                        e.player.inventory.setItem(index, sword)
                     }
-                    Chat.sendMessage(e.player, "&8[&d&lSecret&8]&7&o You get the &5&oSeedly&7 buff!")
-                    seeds[e.player.uniqueId] = null
+                    if (item.type == Material.BOW) {
+                        val bow = ItemBuilder(Material.BOW)
+                            .name("&5&lSeedly Bow")
+                            .addEnchantment(Enchantment.ARROW_DAMAGE, 1)
+                            .addEnchantment(Enchantment.ARROW_FIRE, 1)
+                            .make()
+                        e.player.inventory.setItem(index, bow)
+                    }
                 }
+                Chat.sendMessage(e.player, "&8[&d&lSecret&8]&7&o You get the &5&oSeedly&7 buff!")
+                seeds[e.player.uniqueId] = 0
             }
         }
     }
