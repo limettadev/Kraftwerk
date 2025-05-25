@@ -175,7 +175,7 @@ class TeamCommand : CommandExecutor {
             )
             Chat.sendMessage(
                 sender,
-                "${Chat.dash} ${Chat.secondaryColor}/team color <color> [bold] [italic] [underline] &8(&6GOLD AND ABOVE&8) ${ChatColor.DARK_GRAY}-${ChatColor.GRAY} Changes your team color."
+                "${Chat.dash} ${Chat.secondaryColor}/team color <color> [bold] [italic] [underline] &8(&2DONATOR&8) ${ChatColor.DARK_GRAY}-${ChatColor.GRAY} Changes your team color."
             )
             Chat.sendMessage(
                 sender,
@@ -753,7 +753,7 @@ class TeamCommand : CommandExecutor {
             Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} &cRed&7 vs &9Blue&7 teams have been randomized."))
         } else if (args[0] == "color") {
             if (!PerkChecker.checkPerk(sender as Player, "uhc.donator.teamColors")) {
-                Chat.sendMessage(sender, "&cBuy &6Gold&c to use this perk. &e${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store url setup in config tough tits"}}")
+                Chat.sendMessage(sender, "&cBuy a &2Donator&c rank to use this perk. &e${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store url setup in config tough tits"}}")
                 return false
             }
             if (TeamsFeature.manager.getTeam(sender) == null) {

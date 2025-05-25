@@ -78,7 +78,7 @@ class FlyCommand : CommandExecutor {
                 }
                 return true
             } else {
-                Chat.sendMessage(sender, "&6Gold&7 ranks and above can fly in spawn. Buy it at the store &e${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store url setup in config tough tits"}")
+                Chat.sendMessage(sender, "&cDonator ranks can fly in spawn. Buy it at the store &e${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store url setup in config tough tits"}")
                 return false
             }
         }

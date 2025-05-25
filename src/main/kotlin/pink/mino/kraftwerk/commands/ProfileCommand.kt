@@ -185,7 +185,7 @@ class ProfileCommand : CommandExecutor {
             }
             gui.item(0, disableRedstonePickup.make()).onClick runnable@ {
                 if (!PerkChecker.checkPerks(player).contains(Perk.TOGGLE_PICKUPS)) {
-                    Chat.sendMessage(player, "&cThis setting is locked to &6Gold&c players. &cBuy it at &e${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store url setup in config tough tits"}&c.")
+                    Chat.sendMessage(player, "&cThis setting is locked to &2Donator&c ranks. &cBuy it at &e${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store url setup in config tough tits"}&c.")
                     return@runnable
                 }
                 if (profile.disableRedstonePickup) {
@@ -213,7 +213,7 @@ class ProfileCommand : CommandExecutor {
             }
             gui.item(1, disableLapisPickup.make()).onClick runnable@ {
                 if (!PerkChecker.checkPerks(player).contains(Perk.TOGGLE_PICKUPS)) {
-                    Chat.sendMessage(player, "&cThis setting is locked to &6Gold&c players. &cBuy it at &e${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store url setup in config tough tits"}&c.")
+                    Chat.sendMessage(player, "&cThis setting is locked to &2Donator&c ranks. &cBuy it at &e${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store url setup in config tough tits"}&c.")
                     return@runnable
                 }
                 if (profile.disableLapisPickup) {
