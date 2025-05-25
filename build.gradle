@@ -24,6 +24,7 @@ repositories {
 }
 
 dependencies {
+    implementation ('redis.clients:jedis:5.2.0-beta4')
     implementation ('me.lucko:helper:5.6.10')
     implementation ('me.lucko:helper-profiles:1.2.0')
     implementation ('org.mongodb:mongodb-driver:3.12.11')

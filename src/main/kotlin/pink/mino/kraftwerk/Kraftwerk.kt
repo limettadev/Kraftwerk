@@ -2,6 +2,7 @@ package pink.mino.kraftwerk
 
 import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.ProtocolManager
+import com.google.gson.Gson
 import com.mongodb.MongoClient
 import com.mongodb.MongoClientException
 import com.mongodb.MongoClientURI
@@ -25,6 +26,8 @@ import pink.mino.kraftwerk.listeners.donator.MobEggsListener
 import pink.mino.kraftwerk.listeners.lunar.PlayerRegisterListener
 import pink.mino.kraftwerk.scenarios.ScenarioHandler
 import pink.mino.kraftwerk.utils.*
+import redis.clients.jedis.Jedis
+import redis.clients.jedis.JedisPubSub
 import java.nio.file.Files
 import java.nio.file.Path
 import java.util.*
@@ -58,8 +61,11 @@ class Kraftwerk : ExtendedJavaPlugin() {
     lateinit var discordInstance: JDA
     lateinit var statsHandler: StatsHandler
     lateinit var dataSource: MongoClient
+    lateinit var redisManager: RedisManager
     lateinit var spark: Spark
     lateinit var profileHandler: ProfileService
+
+    val sessionId = UUID.randomUUID()
 
     var welcomeChannelId: Long? = null
     var alertsRoleId: Long? = null
@@ -259,6 +265,30 @@ class Kraftwerk : ExtendedJavaPlugin() {
             spark = provider.provider
         }
 
+        try {
+            if (ConfigFeature.instance.config!!.getBoolean("database.redis.enabled")) {
+                redisManager = RedisManager()
+                if (redisManager != null && ConfigFeature.instance.config!!.getString("chat.serverName") != null) {
+                    val playerPubSub = object : JedisPubSub() {
+                        override fun onMessage(channel: String?, message: String?) {
+                            val playerJoinMessage = Gson().fromJson(message!!, PlayerJoinMessage::class.java)
+                            if (playerJoinMessage.sessionId != sessionId) {
+                                val player = Bukkit.getPlayer(playerJoinMessage.playerUniqueId)
+                                if (player != null) {
+                                    player.kickPlayer(Chat.colored("&cYou've logged into a new location."))
+                                }
+                            }
+                        }
+                    }
+                    redisManager.executeCommand { redis: Jedis ->
+                        redis.subscribe(playerPubSub, "players")
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
         /* Discord */
         try {
             Discord.main()
@@ -347,7 +377,7 @@ class Kraftwerk : ExtendedJavaPlugin() {
     }
 
     fun setupDataSource() {
-        val uri = ConfigFeature.instance.config!!.getString("database.uri")
+        val uri = ConfigFeature.instance.config!!.getString("database.mongodb.uri")
         if (uri == null || uri == "") {
             Log.severe("No database URI set. Please set it in the config.")
             return

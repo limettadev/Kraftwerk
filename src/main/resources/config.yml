@@ -33,7 +33,11 @@ buycraft:
   scan: false # Scans every 15 minutes using API to get highest donator or whatever.
   token: '' # This is ideally where you would put a token.
 database:
-  uri: '' # THIS IS IDEALLY WHERE YOU WOULD PUT A URI!
+  mongodb:
+    uri: '' # THIS IS IDEALLY WHERE YOU WOULD PUT A URI!
+  redis:
+    enabled: false # Enables Redis features on server, i.e. cross-server messaging
+    uri: ''
 void:
   enabled: true
   level: 75 # y-level to get teleported at.

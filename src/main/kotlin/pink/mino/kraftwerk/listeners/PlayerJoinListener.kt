@@ -1,5 +1,6 @@
 package pink.mino.kraftwerk.listeners
 
+import com.google.gson.Gson
 import com.mongodb.client.model.Filters
 import net.md_5.bungee.api.chat.ClickEvent
 import net.md_5.bungee.api.chat.TextComponent
@@ -19,6 +20,7 @@ import pink.mino.kraftwerk.commands.WhitelistCommand
 import pink.mino.kraftwerk.features.*
 import pink.mino.kraftwerk.scenarios.ScenarioHandler
 import pink.mino.kraftwerk.utils.*
+import redis.clients.jedis.Jedis
 import java.util.*
 import net.milkbowl.vault.chat.Chat as VaultChat
 
@@ -266,5 +268,24 @@ class PlayerJoinListener : Listener {
                 checkEvaders(player)
             }
         }, 40L)
+
+        if (
+            ConfigFeature.instance.config!!.getBoolean("database.redis.enabled")
+            && Kraftwerk.instance.redisManager != null
+            && ConfigFeature.instance.config!!.getString("chat.serverName") != null
+        ) {
+            Kraftwerk.instance.redisManager.executeCommand { redis: Jedis ->
+                redis.publish(
+                    "players",
+                    Gson().toJson(
+                        PlayerJoinMessage(
+                            player.uniqueId,
+                            ConfigFeature.instance.config!!.getString("chat.serverName")
+                        )
+                    )
+                )
+                null
+            }
+        }
     }
 }
