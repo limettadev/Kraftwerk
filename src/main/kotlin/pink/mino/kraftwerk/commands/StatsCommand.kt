@@ -1,19 +1,15 @@
 package pink.mino.kraftwerk.commands
 
 import me.lucko.helper.promise.Promise
-import org.bukkit.Bukkit
-import org.bukkit.ChatColor
-import org.bukkit.Material
-import org.bukkit.OfflinePlayer
+import org.bukkit.*
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
 import pink.mino.kraftwerk.Kraftwerk
-import pink.mino.kraftwerk.utils.Chat
-import pink.mino.kraftwerk.utils.GuiBuilder
-import pink.mino.kraftwerk.utils.ItemBuilder
+import pink.mino.kraftwerk.features.ConfigFeature
+import pink.mino.kraftwerk.utils.*
 import kotlin.math.floor
 import kotlin.math.round
 
@@ -49,7 +45,7 @@ class StatsCommand : CommandExecutor {
             sender.sendMessage("You can't use this command as you technically aren't a player.")
             return false
         }
-        val gui = GuiBuilder().rows(1).name(ChatColor.translateAlternateColorCodes('&', "${Chat.primaryColor}Stats")).owner(sender)
+        var gui = GuiBuilder().rows(1).name(ChatColor.translateAlternateColorCodes('&', "${Chat.primaryColor}Stats")).owner(sender)
         val target: OfflinePlayer = if (args.isEmpty()) {
             sender
         } else {
@@ -131,6 +127,15 @@ class StatsCommand : CommandExecutor {
                     .addLore(" &7Thank Yous ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.thankYous}")
                     .addLore(" ")
                     .make()
+
+                val resetStats = ItemBuilder(Material.BARRIER)
+                    .name(" &4&lReset Stats &7(Donator Perk)")
+                    .addLore(" ")
+                    .addLore("&7Clicking this will allow you to reset your statistics.")
+                    .addLore("&c&lWARNING:&c Doing this is a dangerous action!")
+                    .addLore(" ")
+                    .make()
+
                 gui.item(0, skull).onClick runnable@ {
                     it.isCancelled = true
                 }
@@ -151,6 +156,58 @@ class StatsCommand : CommandExecutor {
                 }
                 gui.item(7, staff).onClick runnable@ {
                     it.isCancelled = true
+                }
+                if (target == sender) {
+                    gui.item(8, resetStats).onClick runnable@ {
+                        if (PerkChecker.checkPerks(sender as Player).contains(Perk.STATS_RESET)) {
+                            gui = GuiBuilder().rows(1).name(Chat.colored("Reset your stats?")).owner(sender)
+
+                            val accept = ItemBuilder(Material.WOOL)
+                                .setDurability(5)
+                                .name("&aAccept")
+                                .addLore("&7Accept and reset your stats.")
+                            val decline = ItemBuilder(Material.WOOL)
+                                .setDurability(14)
+                                .name("&cDecline")
+                                .addLore("&7Decline & go back to your stats page.")
+                                .make()
+
+                            gui.item(3, accept.make()).onClick runnable@ {
+                                statsPlayer.diamondsMined = 0
+                                statsPlayer.ironMined = 0
+                                statsPlayer.goldMined = 0
+                                statsPlayer.gamesPlayed = 0
+                                statsPlayer.kills = 0
+                                statsPlayer.arenaKills = 0
+                                statsPlayer.arenaDeaths = 0
+                                statsPlayer.highestArenaKs = 0
+                                statsPlayer.wins = 0
+                                statsPlayer.deaths = 0
+                                statsPlayer.damageDealt = 0.0
+                                statsPlayer.damageTaken = 0.0
+                                statsPlayer.bowShots = 0
+                                statsPlayer.bowMisses = 0
+                                statsPlayer.bowHits = 0
+                                statsPlayer.meleeHits = 0
+                                statsPlayer.gapplesCrafted = 0
+                                statsPlayer.gapplesEaten = 0
+                                statsPlayer.timesCrafted = 0
+                                statsPlayer.timesEnchanted = 0
+                                statsPlayer.timesNether = 0
+                                Kraftwerk.instance.statsHandler.savePlayerData(statsPlayer)
+
+                                sender.sendTitle(Chat.colored("&4RESET STATS!"), Chat.colored("&7Your statistics have been reset!"))
+                                Chat.sendMessage(sender, "${Chat.prefix} Your stats have been reset!")
+                                sender.playSound(sender.location, Sound.ANVIL_LAND, 1f, 1f)
+                            }
+                            gui.item(5, decline).onClick runnable@ {
+                                Bukkit.dispatchCommand(sender, "stats")
+                            }
+                            sender.openInventory(gui.make())
+                        } else {
+                            Chat.sendMessage(sender, "&c&2Donator &cranks can reset their stats. Buy it at the store &e${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store url setup in config tough tits"}")
+                        }
+                    }
                 }
                 sender.openInventory(gui.make())
             }
