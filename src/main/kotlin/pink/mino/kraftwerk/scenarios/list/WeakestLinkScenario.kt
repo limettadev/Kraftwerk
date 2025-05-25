@@ -9,7 +9,9 @@ import org.bukkit.scheduler.BukkitRunnable
 import pink.mino.kraftwerk.Kraftwerk
 import pink.mino.kraftwerk.features.SpecFeature
 import pink.mino.kraftwerk.scenarios.Scenario
+import pink.mino.kraftwerk.scenarios.ScenarioHandler
 import pink.mino.kraftwerk.utils.Chat
+import pink.mino.kraftwerk.utils.GameState
 
 
 class WeakestLinkLogic : BukkitRunnable() {
@@ -26,6 +28,12 @@ class WeakestLinkLogic : BukkitRunnable() {
                 Bukkit.broadcastMessage(Chat.colored("$prefix ${Chat.secondaryColor}${player.name}&7 was the &eWeakest Link&7!"))
             }
         }
+        if (!ScenarioHandler.getActiveScenarios().contains(ScenarioHandler.getScenario("weakestlink"))) {
+            cancel()
+        }
+        if (GameState.currentState != GameState.INGAME) {
+            cancel()
+        }
         timer -= 1
     }
 }
@@ -36,7 +44,7 @@ class WeakestLinkScenario : Scenario(
     "weakestlink",
     Material.IRON_BARDING
 ) {
-    private val byHealth: Ordering<Player?> = object : Ordering<Player?>() {
+    val byHealth: Ordering<Player?> = object : Ordering<Player?>() {
         override fun compare(p0: Player?, p1: Player?): Int {
             return p0!!.health.compareTo(p1!!.health)
         }
