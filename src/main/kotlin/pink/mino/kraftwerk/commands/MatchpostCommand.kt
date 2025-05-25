@@ -360,8 +360,17 @@ class MatchpostCommand : CommandExecutor {
         ConfigFeature.instance.data!!.set("matchpost.scenarios", scenarios)
         ConfigFeature.instance.data!!.set("matchpost.opens", opening)
         ConfigFeature.instance.data!!.set("matchpost.server", server)
-        ScheduleOpening(opening).runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, (5 * 20).toLong())
-        ScheduleBroadcast(opening).runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, 300L)
+        if (Kraftwerk.instance.scheduledOpening != null) {
+            Kraftwerk.instance.scheduledOpening!!.cancel()
+        }
+        if (Kraftwerk.instance.scheduledBroadcast != null) {
+            Kraftwerk.instance.scheduledBroadcast!!.cancel()
+            Chat.sendMessage(sender, "${Chat.prefix} Cancelled ongoing scheduled opening/broadcast.")
+        }
+        Kraftwerk.instance.scheduledOpening = ScheduleOpening(opening)
+        Kraftwerk.instance.scheduledOpening!!.runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, (5 * 20).toLong())
+        Kraftwerk.instance.scheduledBroadcast = ScheduleBroadcast(opening)
+        Kraftwerk.instance.scheduledBroadcast!!.runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, 300L)
         Chat.sendMessage(sender, "${Chat.prefix} Set the matchpost to ${Chat.secondaryColor}https://hosts.uhc.gg/m/${id.toInt()}")
         Chat.sendMessage(sender, "${Chat.prefix} The server will now begin to check when the matchpost opens.")
         ConfigFeature.instance.saveData()

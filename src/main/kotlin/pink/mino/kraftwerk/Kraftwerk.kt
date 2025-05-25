@@ -43,6 +43,8 @@ class Kraftwerk : ExtendedJavaPlugin() {
     private var protocolManager: ProtocolManager? = null
     var vote: Vote? = null
     var game: UHCTask? = null
+    var scheduledOpening: ScheduleOpening? = null
+    var scheduledBroadcast: ScheduleBroadcast? = null
     var database: Boolean = false
     var discord: Boolean = false
     var arena: Boolean = true
@@ -264,8 +266,11 @@ class Kraftwerk : ExtendedJavaPlugin() {
             ConfigFeature.instance.saveData()
             if (!ConfigFeature.instance.data!!.getBoolean("matchpost.cancelled")) {
                 if (ConfigFeature.instance.data!!.getString("matchpost.opens") != null) {
-                    ScheduleBroadcast(ConfigFeature.instance.data!!.getString("matchpost.opens")).runTaskTimer(this, 0L, 300L)
-                    ScheduleOpening(ConfigFeature.instance.data!!.getString("matchpost.opens")).runTaskTimer(this, 0L, 300L)
+                    scheduledBroadcast = ScheduleBroadcast(ConfigFeature.instance.data!!.getString("matchpost.opens"))
+                    scheduledBroadcast!!.runTaskTimer(this, 0L, 300L)
+                    scheduledOpening = ScheduleOpening(ConfigFeature.instance.data!!.getString("matchpost.opens"))
+                    scheduledOpening!!.runTaskTimer(this, 0L, 300L)
+
                 }
                 if (ConfigFeature.instance.data!!.getString("matchpost.host") == null) {
                     Discord.instance!!.presence.activity = Activity.playing(if (ConfigFeature.instance.config!!.getString("chat.serverIp") != null) ConfigFeature.instance.config!!.getString("chat.serverIp") else "no server ip setup in config tough tits")
