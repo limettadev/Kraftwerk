@@ -131,8 +131,8 @@ class StatsCommand : CommandExecutor {
                 val resetStats = ItemBuilder(Material.BARRIER)
                     .name(" &4&lReset Stats &7(Donator Perk)")
                     .addLore(" ")
-                    .addLore("&7Clicking this will allow you to reset your statistics.")
-                    .addLore("&c&lWARNING:&c Doing this is a dangerous action!")
+                    .addLore(" &7Clicking this will allow you to reset your statistics. ")
+                    .addLore(" &c&lWARNING:&c Doing this is a dangerous action! ")
                     .addLore(" ")
                     .make()
 
@@ -196,6 +196,7 @@ class StatsCommand : CommandExecutor {
                                 statsPlayer.timesNether = 0
                                 Kraftwerk.instance.statsHandler.savePlayerData(statsPlayer)
 
+                                sender.closeInventory()
                                 sender.sendTitle(Chat.colored("&4RESET STATS!"), Chat.colored("&7Your statistics have been reset!"))
                                 Chat.sendMessage(sender, "${Chat.prefix} Your stats have been reset!")
                                 sender.playSound(sender.location, Sound.ANVIL_LAND, 1f, 1f)
