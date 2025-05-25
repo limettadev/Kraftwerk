@@ -59,43 +59,43 @@ class StatsPlayer(val player: OfflinePlayer) : Listener {
 
 class Leaderboards : BukkitRunnable() {
     var timer = 1
-    val plugin = JavaPlugin.getPlugin(Kraftwerk::class.java)
-    val gamesPlayed =
-        HologramsAPI.createHologram(plugin, generateThingLocationFromConfig("games_played_holo"))
-    val wins =
-        HologramsAPI.createHologram(plugin, generateThingLocationFromConfig("wins_holo"))
-    val kills =
-        HologramsAPI.createHologram(plugin, generateThingLocationFromConfig("kills_holo"))
-    val diamondsMined =
-        HologramsAPI.createHologram(plugin, generateThingLocationFromConfig("diamonds_mined_holo"))
-    val goldMined = HologramsAPI.createHologram(
-        plugin,
-        generateThingLocationFromConfig("gold_mined_holo")
-    )
-    val gapplesEaten = HologramsAPI.createHologram(
-        plugin,
-        generateThingLocationFromConfig("gapples_eaten_holo")
-    )
-    val highestLevel = HologramsAPI.createHologram(
-        plugin,
-        generateThingLocationFromConfig("highest_level_holo")
-    )
-    val latestMatch = HologramsAPI.createHologram(
-        plugin,
-        generateThingLocationFromConfig("latest_match_holo")
-    )
 
-    fun generateThingLocationFromConfig(value: String): Location {
-        if (ConfigFeature.instance.config!!.getDouble("thing.${value}.x") == null || ConfigFeature.instance.config!!.getDouble("thing.${value}.y") == null || ConfigFeature.instance.config!!.getDouble("thing.${value}.z") == null || ConfigFeature.instance.config!!.getString("thing.${value}.world") == null) {
-            return Location(Bukkit.getWorld("Spawn"), 0.0, 0.0, 0.0)
-        } else {
-            return Location(Bukkit.getWorld(ConfigFeature.instance.config!!.getString("thing.${value}.world")), ConfigFeature.instance.config!!.getDouble("thing.${value}.x"), ConfigFeature.instance.config!!.getDouble("thing.${value}.y"), ConfigFeature.instance.config!!.getDouble("thing.${value}.z"))
+    companion object {
+        val plugin = JavaPlugin.getPlugin(Kraftwerk::class.java)
+        val gamesPlayed =
+            HologramsAPI.createHologram(plugin, generateThingLocationFromConfig("games_played_holo"))
+        val wins =
+            HologramsAPI.createHologram(plugin, generateThingLocationFromConfig("wins_holo"))
+        val kills =
+            HologramsAPI.createHologram(plugin, generateThingLocationFromConfig("kills_holo"))
+        val diamondsMined =
+            HologramsAPI.createHologram(plugin, generateThingLocationFromConfig("diamonds_mined_holo"))
+        val goldMined = HologramsAPI.createHologram(
+            plugin,
+            generateThingLocationFromConfig("gold_mined_holo")
+        )
+        val gapplesEaten = HologramsAPI.createHologram(
+            plugin,
+            generateThingLocationFromConfig("gapples_eaten_holo")
+        )
+        val highestLevel = HologramsAPI.createHologram(
+            plugin,
+            generateThingLocationFromConfig("highest_level_holo")
+        )
+        val latestMatch = HologramsAPI.createHologram(
+            plugin,
+            generateThingLocationFromConfig("latest_match_holo")
+        )
+
+        fun generateThingLocationFromConfig(value: String): Location {
+            if (ConfigFeature.instance.config!!.getDouble("thing.${value}.x") == null || ConfigFeature.instance.config!!.getDouble("thing.${value}.y") == null || ConfigFeature.instance.config!!.getDouble("thing.${value}.z") == null || ConfigFeature.instance.config!!.getString("thing.${value}.world") == null) {
+                return Location(Bukkit.getWorld("Spawn"), 0.0, 0.0, 0.0)
+            } else {
+                return Location(Bukkit.getWorld(ConfigFeature.instance.config!!.getString("thing.${value}.world")), ConfigFeature.instance.config!!.getDouble("thing.${value}.x"), ConfigFeature.instance.config!!.getDouble("thing.${value}.y"), ConfigFeature.instance.config!!.getDouble("thing.${value}.z"))
+            }
         }
-    }
 
-    override fun run() {
-        timer -= 1
-        if (timer == 0) {
+        fun updateLeaderboards() {
             try {
                 for (hologram in HologramsAPI.getHolograms(plugin)) {
                     if (hologram == gamesPlayed ||
@@ -235,6 +235,13 @@ class Leaderboards : BukkitRunnable() {
                 }
                 latestMatch.appendTextLine(Chat.guiLine)
             }
+        }
+    }
+
+    override fun run() {
+        timer -= 1
+        if (timer == 0) {
+            updateLeaderboards()
             timer = 300
         }
     }

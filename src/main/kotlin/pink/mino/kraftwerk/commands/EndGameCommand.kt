@@ -19,6 +19,7 @@ import pink.mino.kraftwerk.discord.Discord
 import pink.mino.kraftwerk.features.*
 import pink.mino.kraftwerk.utils.Chat
 import pink.mino.kraftwerk.utils.GameState
+import pink.mino.kraftwerk.utils.Leaderboards
 import pink.mino.kraftwerk.utils.MiscUtils
 import java.io.File
 import java.nio.file.Files
@@ -186,6 +187,7 @@ class EndGameCommand : CommandExecutor {
         }, 900L)
         Bukkit.broadcastMessage(Chat.colored(Chat.line))
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wl off")
+        Leaderboards.updateLeaderboards()
         val log = File("./logs/latest.log")
         try {
             if (Kraftwerk.instance.gameLogsChannelId != null) {
