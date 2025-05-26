@@ -417,6 +417,8 @@ class Kraftwerk : ExtendedJavaPlugin() {
             team.unregister()
         }
         Bukkit.getLogger().info("Kraftwerk disabled.")
+        Bukkit.getLogger().info("we don't work operation weed gang is a go")
+        Bukkit.getServer().shutdown()
     }
 
     fun addRecipes() {
