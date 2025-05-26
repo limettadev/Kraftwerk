@@ -126,7 +126,7 @@ class Leaderboards : BukkitRunnable() {
                 highestLevel.appendTextLine(Chat.guiLine)
                 latestMatch.appendTextLine(Chat.colored("${Chat.primaryColor}&lLatest Match"))
                 latestMatch.appendTextLine(Chat.guiLine)
-                with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getDatabase(if (ConfigFeature.instance.config!!.getString("database.mongodb.database-name") == null) "applejuice" else ConfigFeature.instance.config!!.getString("database.mongodb.database-name")).getCollection("stats")) {
+                with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("stats")) {
                     val gp = this.find().sort(descending("gamesPlayed")).limit(10)
                     for ((index, document) in gp.withIndex()) {
                         val profile = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(document["uuid"] as UUID).get()
@@ -176,7 +176,7 @@ class Leaderboards : BukkitRunnable() {
                         goldMined.appendTextLine(Chat.colored("&7No data yet x_x"))
                     }
                 }
-                with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getDatabase(if (ConfigFeature.instance.config!!.getString("database.mongodb.database-name") == null) "applejuice" else ConfigFeature.instance.config!!.getString("database.mongodb.database-name")).getCollection("players")) {
+                with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("players")) {
                     val t = this.find().sort(descending("level")).limit(10)
                     for ((index, document) in t.withIndex()) {
                         val profile = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(document["uuid"] as UUID).get()
@@ -196,7 +196,7 @@ class Leaderboards : BukkitRunnable() {
             } catch (e: MongoException) {
                 e.printStackTrace()
             }
-            with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getDatabase(if (ConfigFeature.instance.config!!.getString("database.mongodb.database-name") == null) "applejuice" else ConfigFeature.instance.config!!.getString("database.mongodb.database-name")).getCollection("matches")) {
+            with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("matches")) {
                 val matches = this.find().sort(descending("startTime")).limit(1)
                 for (match in matches) {
                     latestMatch.appendTextLine(Chat.colored("&e${match.getString("title")}"))
@@ -270,7 +270,7 @@ class StatsHandler : Listener {
 
     fun savePlayerData(statsPlayer: StatsPlayer) {
         try {
-            with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getDatabase(if (ConfigFeature.instance.config!!.getString("database.mongodb.database-name") == null) "applejuice" else ConfigFeature.instance.config!!.getString("database.mongodb.database-name")).getCollection("stats")) {
+            with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("stats")) {
                 val filter = Filters.eq("uuid", statsPlayer.player.uniqueId)
                 val document = Document("uuid", statsPlayer.player.uniqueId)
                     .append("diamondsMined", statsPlayer.diamondsMined)
@@ -328,7 +328,7 @@ class StatsHandler : Listener {
 
     fun loadPlayerData(uuid: UUID, statsPlayer: StatsPlayer) {
         try {
-            with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getDatabase(if (ConfigFeature.instance.config!!.getString("database.mongodb.database-name") == null) "applejuice" else ConfigFeature.instance.config!!.getString("database.mongodb.database-name")).getCollection("stats")) {
+            with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("stats")) {
                 val playerData = find(Filters.eq("uuid", uuid)).first()
                 if (playerData != null) {
                     statsPlayer.diamondsMined = playerData.getInteger("diamondsMined") ?: 0

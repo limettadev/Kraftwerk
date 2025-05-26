@@ -219,7 +219,7 @@ class ScheduleOpening(private val opening: String) : BukkitRunnable() {
             ConfigFeature.instance.data!!.set("whitelist.requests", false)
             ConfigFeature.instance.data!!.set("matchpost.opens", null)
             ConfigFeature.instance.saveData()
-            with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getDatabase(if (ConfigFeature.instance.config!!.getString("database.mongodb.database-name") == null) "applejuice" else ConfigFeature.instance.config!!.getString("database.mongodb.database-name")).getCollection("opened_matches")) {
+            with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("opened_matches")) {
                 val filter = Filters.eq("id", ConfigFeature.instance.data!!.getInt("matchpost.id"))
                 val document = Document("id", ConfigFeature.instance.data!!.getInt("matchpost.id"))
                     .append("server", ConfigFeature.instance.data!!.getString("matchpost.server"))
@@ -321,7 +321,7 @@ class MatchpostCommand : CommandExecutor {
                     "other"
                 }
                 try {
-                    with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getDatabase(if (ConfigFeature.instance.config!!.getString("database.mongodb.database-name") == null) "applejuice" else ConfigFeature.instance.config!!.getString("database.mongodb.database-name")).getCollection("upcoming_matches")) {
+                    with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("upcoming_matches")) {
                         val filter = Filters.eq("id", id)
                         val document = Document("id", id)
                         document.append("host", host)

@@ -90,7 +90,7 @@ class PunishmentFeature {
         fun revokePunishment(punishmentUuid: UUID, type: PunishmentType): Promise<Boolean> {
             return Schedulers.async().supply {
                 val plugin = JavaPlugin.getPlugin(Kraftwerk::class.java)
-                val collection = plugin.dataSource.getDatabase(if (ConfigFeature.instance.config!!.getString("database.mongodb.database-name") == null) "applejuice" else ConfigFeature.instance.config!!.getString("database.mongodb.database-name")).getCollection("punishments")
+                val collection = plugin.dataSource.getCollection("punishments")
 
                 val filter = Filters.and(
                     Filters.eq("playerUniqueId", punishmentUuid),
@@ -116,7 +116,7 @@ class PunishmentFeature {
         }
 
         fun getActivePunishment(player: OfflinePlayer, punishmentType: PunishmentType): Punishment? {
-            with(JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getDatabase(if (ConfigFeature.instance.config!!.getString("database.mongodb.database-name") == null) "applejuice" else ConfigFeature.instance.config!!.getString("database.mongodb.database-name")).getCollection("punishments")) {
+            with(JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("punishments")) {
                 val filter = Filters.and(
                     Filters.eq("playerUniqueId", player.uniqueId),
                     Filters.eq("type", punishmentType.toString()),
@@ -142,7 +142,7 @@ class PunishmentFeature {
         }
 
         fun hasActivePunishment(player: OfflinePlayer, punishmentType: PunishmentType): Boolean {
-            with(JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getDatabase(if (ConfigFeature.instance.config!!.getString("database.mongodb.database-name") == null) "applejuice" else ConfigFeature.instance.config!!.getString("database.mongodb.database-name")).getCollection("punishments")) {
+            with(JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("punishments")) {
                 val filter = Filters.and(
                     Filters.eq("playerUniqueId", player.uniqueId),
                     Filters.eq("type", punishmentType.toString()),
@@ -212,7 +212,7 @@ class PunishmentFeature {
             }
             Schedulers.async().supply {
                 try {
-                    with(JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getDatabase(if (ConfigFeature.instance.config!!.getString("database.mongodb.database-name") == null) "applejuice" else ConfigFeature.instance.config!!.getString("database.mongodb.database-name")).getCollection("punishments")) {
+                    with(JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("punishments")) {
                         val uuid = UUID.randomUUID()
                         val document = Document("uuid", uuid)
                             .append("playerUniqueId", punishment.uuid)

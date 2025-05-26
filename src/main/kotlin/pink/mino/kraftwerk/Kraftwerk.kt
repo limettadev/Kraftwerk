@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import com.mongodb.MongoClient
 import com.mongodb.MongoClientException
 import com.mongodb.MongoClientURI
+import com.mongodb.client.MongoDatabase
 import me.lucko.helper.plugin.ExtendedJavaPlugin
 import me.lucko.helper.utils.Log
 import me.lucko.spark.api.Spark
@@ -59,7 +60,7 @@ class Kraftwerk : ExtendedJavaPlugin() {
 
     lateinit var discordInstance: JDA
     lateinit var statsHandler: StatsHandler
-    lateinit var dataSource: MongoClient
+    lateinit var dataSource: MongoDatabase
     lateinit var redisManager: RedisManager
     lateinit var spark: Spark
     lateinit var profileHandler: ProfileService
@@ -381,9 +382,10 @@ class Kraftwerk : ExtendedJavaPlugin() {
             Log.severe("No database URI set. Please set it in the config.")
             return
         }
-        var client: MongoClient? = null
+        var client: MongoDatabase? = null
         try {
-            client = MongoClient(MongoClientURI(uri))
+            val connectionString = MongoClientURI(uri)
+            client = MongoClient(connectionString).getDatabase(connectionString.database!!)
         } catch (e: MongoClientException) {
             e.printStackTrace()
         }

@@ -76,7 +76,7 @@ class PlayerJoinListener : Listener {
             plugin.profileHandler.saveProfile(profile)
         }
 
-        val collection = plugin.dataSource.getDatabase(if (ConfigFeature.instance.config!!.getString("database.mongodb.database-name") == null) "applejuice" else ConfigFeature.instance.config!!.getString("database.mongodb.database-name")).getCollection("players")
+        val collection = plugin.dataSource.getCollection("players")
 
         with(collection) {
             val matching = find(
