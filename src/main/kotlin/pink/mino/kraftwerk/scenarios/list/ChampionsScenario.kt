@@ -1631,6 +1631,7 @@ class ChampionsScenario : Scenario(
                         .make()
                     inv.result = sword
                 }
+                else -> {}
             }
         }
         if (name == Chat.colored("&5Apprentice Bow")) {
@@ -1652,6 +1653,7 @@ class ChampionsScenario : Scenario(
                     bow.addEnchantment(Enchantment.ARROW_DAMAGE, 3)
                     inv.result = bow.make()
                 }
+                else -> {}
             }
         }
     }

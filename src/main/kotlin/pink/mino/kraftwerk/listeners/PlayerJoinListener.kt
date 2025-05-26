@@ -269,6 +269,14 @@ class PlayerJoinListener : Listener {
             }
         }, 40L)
 
+//        if (Apollo.getPlayerManager().hasSupport(player.uniqueId)) {
+//            val apolloPlayer = Apollo.getPlayerManager().getPlayer(player.uniqueId).get()
+//            val richPresenceModule = Apollo.getModuleManager().getModule(RichPresenceModule::class.java)
+//            val richPresence = ServerRichPresence.builder()
+//                .gameName("UHC")
+//            richPresenceModule.overrideServerRichPresence(apolloPlayer, )
+//        }
+
         if (
             ConfigFeature.instance.config!!.getBoolean("database.redis.enabled")
             && Kraftwerk.instance.redisManager != null

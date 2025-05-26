@@ -224,7 +224,7 @@ class UHCTask : BukkitRunnable() {
                     )
                 }
             }
-
+            else -> {}
         }
     }
 

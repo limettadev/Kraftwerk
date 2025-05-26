@@ -1,8 +1,11 @@
 package pink.mino.kraftwerk.commands
 
-
-import com.lunarclient.bukkitapi.LunarClientAPI
-import com.lunarclient.bukkitapi.nethandler.client.LCPacketTeammates
+import com.lunarclient.apollo.Apollo
+import com.lunarclient.apollo.common.location.ApolloLocation
+import com.lunarclient.apollo.module.team.TeamMember
+import com.lunarclient.apollo.module.team.TeamModule
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.NamedTextColor
 import net.md_5.bungee.api.chat.ClickEvent
 import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.Bukkit
@@ -23,8 +26,7 @@ import pink.mino.kraftwerk.utils.Chat
 import pink.mino.kraftwerk.utils.GameState
 import pink.mino.kraftwerk.utils.PerkChecker
 import pink.mino.kraftwerk.utils.PlayerUtils
-import java.util.*
-import java.util.concurrent.ConcurrentHashMap
+import java.awt.Color
 import java.util.function.Consumer
 
 
@@ -52,8 +54,8 @@ class SendTeamView(val team: Team) : BukkitRunnable() {
             }
             for (player in team.players) {
                 if (player.isOnline) {
-                    if (LunarClientAPI.getInstance().isRunningLunarClient(player as Player)) {
-                        TeamCommand().addTeamInfo(player, list)
+                    if (Apollo.getPlayerManager().hasSupport(player.uniqueId)) {
+                        TeamCommand().addTeamInfo(player as Player, list)
                     }
                 }
             }
@@ -116,18 +118,26 @@ class TeamCommand : CommandExecutor {
     }
 
     fun addTeamInfo(player: Player, playersToAdd: List<Player>) {
-        val map: MutableMap<UUID, Map<String, Double>> = ConcurrentHashMap()
-        playersToAdd.forEach(Consumer { members: Player ->
-            val position: MutableMap<String, Double> =
-                HashMap()
-            if (members.player == null) return@Consumer
-            position["x"] = members.player.location.x
-            position["y"] = members.player.location.y
-            position["z"] = members.player.location.z
-            map[members.uniqueId] = position
+        val members: ArrayList<TeamMember> = arrayListOf()
+        playersToAdd.forEach(Consumer { member: Player ->
+            members.add(TeamMember.builder()
+                .displayName(Component.text()
+                    .content(member.name)
+                    .color(NamedTextColor.WHITE)
+                    .build())
+                .playerUuid(member.uniqueId)
+                .markerColor(Color.WHITE)
+                .location(ApolloLocation.builder()
+                    .world(member.world.name)
+                    .x(member.location.x)
+                    .y(member.location.y)
+                    .z(member.location.z)
+                    .build()
+                )
+                .build())
         })
-        val teammates = LCPacketTeammates(player.uniqueId, 0L, map)
-        LunarClientAPI.getInstance().sendTeammates(player, teammates)
+        val teamModule = Apollo.getModuleManager().getModule(TeamModule::class.java)
+        teamModule.updateTeamMembers(Apollo.getPlayerManager().getPlayer(player.uniqueId).get(), members.toList())
     }
 
     override fun onCommand(sender: CommandSender, cmd: Command, lbl: String, args: Array<String>): Boolean {
@@ -431,7 +441,10 @@ class TeamCommand : CommandExecutor {
                 return true
             }
             TeamsFeature.manager.leaveTeam(player)
-            LunarClientAPI.getInstance().sendTeammates(player, LCPacketTeammates(player.uniqueId, 100L, HashMap()))
+            if (Apollo.getPlayerManager().hasSupport(player.uniqueId)) {
+                val teamModule = Apollo.getModuleManager().getModule(TeamModule::class.java)
+                teamModule.updateTeamMembers(Apollo.getPlayerManager().getPlayer(player.uniqueId).get(), listOf())
+            }
             Chat.sendMessage(player, "${Chat.prefix} You left your team.")
             for (players in team.players) {
                 if (players is Player) {
@@ -515,8 +528,10 @@ class TeamCommand : CommandExecutor {
             for (player in selectedTeam.players) {
                 TeamsFeature.manager.leaveTeam(player)
                 if (player.isOnline) {
-                    LunarClientAPI.getInstance()
-                        .sendTeammates(player as Player, LCPacketTeammates(player.uniqueId, 100L, HashMap()))
+                    if (Apollo.getPlayerManager().hasSupport(player.uniqueId)) {
+                        val teamModule = Apollo.getModuleManager().getModule(TeamModule::class.java)
+                        teamModule.updateTeamMembers(Apollo.getPlayerManager().getPlayer(player.uniqueId).get(), listOf())
+                    }
                 }
             }
             TeamsFeature.manager.deleteTeam(selectedTeam)

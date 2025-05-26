@@ -23,7 +23,6 @@ import pink.mino.kraftwerk.features.*
 import pink.mino.kraftwerk.listeners.*
 import pink.mino.kraftwerk.listeners.donator.CowboyFeature
 import pink.mino.kraftwerk.listeners.donator.MobEggsListener
-import pink.mino.kraftwerk.listeners.lunar.PlayerRegisterListener
 import pink.mino.kraftwerk.scenarios.ScenarioHandler
 import pink.mino.kraftwerk.utils.*
 import redis.clients.jedis.Jedis
@@ -107,7 +106,6 @@ class Kraftwerk : ExtendedJavaPlugin() {
         Bukkit.getServer().pluginManager.registerEvents(CombatLogFeature.instance, this)
         Bukkit.getServer().pluginManager.registerEvents(SpecFeature.instance, this)
         Bukkit.getServer().pluginManager.registerEvents(ShootListener(), this)
-        Bukkit.getServer().pluginManager.registerEvents(PlayerRegisterListener(), this)
         Bukkit.getServer().pluginManager.registerEvents(PortalListener(), this)
         Bukkit.getServer().pluginManager.registerEvents(WorldSwitchListener(), this)
         Bukkit.getServer().pluginManager.registerEvents(StatsFeature(), this)

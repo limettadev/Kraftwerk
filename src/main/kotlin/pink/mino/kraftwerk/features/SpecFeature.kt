@@ -4,7 +4,8 @@ import com.comphenix.protocol.PacketType
 import com.comphenix.protocol.events.ListenerPriority
 import com.comphenix.protocol.events.PacketAdapter
 import com.comphenix.protocol.events.PacketEvent
-import com.lunarclient.bukkitapi.LunarClientAPI
+import com.lunarclient.apollo.Apollo
+import com.lunarclient.apollo.module.staffmod.StaffModModule
 import com.mongodb.MongoException
 import net.md_5.bungee.api.chat.ClickEvent
 import net.md_5.bungee.api.chat.TextComponent
@@ -238,9 +239,11 @@ class SpecFeature : Listener {
         Chat.sendMessage(p, "$prefix You are now in spectator mode.")
 
         Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
-            if (LunarClientAPI.getInstance().isRunningLunarClient(p)) {
+            if (Apollo.getPlayerManager().hasSupport(p.uniqueId)) {
                 Chat.sendMessage(p, "${Chat.dash} &7Your &bLunar Client&7 staff modules have been enabled.")
-                LunarClientAPI.getInstance().giveAllStaffModules(p)
+                val apolloPlayer = Apollo.getPlayerManager().getPlayer(p.uniqueId).get()
+                val staffModule = Apollo.getModuleManager().getModule(StaffModModule::class.java)
+                staffModule.enableAllStaffMods(apolloPlayer)
             }
         }, 5L)
     }
@@ -345,9 +348,11 @@ class SpecFeature : Listener {
         Chat.sendMessage(p, "${prefix} You are now in spectator mode.")
 
         Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
-            if (LunarClientAPI.getInstance().isRunningLunarClient(p)) {
+            if (Apollo.getPlayerManager().hasSupport(p.uniqueId)) {
+                val apolloPlayer = Apollo.getPlayerManager().getPlayer(p.uniqueId).get()
+                val staffModule = Apollo.getModuleManager().getModule(StaffModModule::class.java)
+                staffModule.enableAllStaffMods(apolloPlayer)
                 Chat.sendMessage(p, "${Chat.dash} &7Your &bLunar Client&7 staff modules have been enabled.")
-                LunarClientAPI.getInstance().giveAllStaffModules(p)
             }
         }, 5L)
     }
@@ -385,8 +390,10 @@ class SpecFeature : Listener {
         Scoreboard.setScore(Chat.colored("${Chat.dash} &7Playing..."), PlayerUtils.getPlayingPlayers().size)
 
         Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
-            if (LunarClientAPI.getInstance().isRunningLunarClient(p)) {
-                LunarClientAPI.getInstance().disableAllStaffModules(p)
+            if (Apollo.getPlayerManager().hasSupport(p.uniqueId)) {
+                val apolloPlayer = Apollo.getPlayerManager().getPlayer(p.uniqueId).get()
+                val staffModule = Apollo.getModuleManager().getModule(StaffModModule::class.java)
+                staffModule.disableAllStaffMods(apolloPlayer)
                 Chat.sendMessage(p, "${Chat.dash} &7Your &bLunar Client&7 staff modules have been disabled.")
             }
         }, 5L)
