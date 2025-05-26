@@ -73,7 +73,7 @@ class SpawnFeature : Listener {
         var highestNpc: NPC? = null
         var recentNpc: NPC? = null
 
-        if (ConfigFeature.instance.config!!.getString("thing.recent_purchase_holo.world") != null || ConfigFeature.instance.config!!.getString("buycraft.token") == "") {
+        if (ConfigFeature.instance.config!!.getString("thing.recent_purchase_holo.world") != null && ConfigFeature.instance.config!!.getString("buycraft.token") != "") {
             val recent = HologramsAPI.createHologram(JavaPlugin.getPlugin(Kraftwerk::class.java), Location(
                 Bukkit.getWorld(ConfigFeature.instance.config!!.getString("thing.recent_purchase_holo.world")),
                 ConfigFeature.instance.config!!.getDouble("thing.recent_purchase_holo.x"),
