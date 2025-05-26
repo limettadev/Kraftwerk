@@ -21,7 +21,7 @@ class OpenedMatchesListener : Listener {
     @EventHandler
     fun onWhitelistChange(e: WhitelistStateChangeEvent) {
         try {
-            with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getDatabase("applejuice").getCollection("opened_matches")) {
+            with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getDatabase(if (ConfigFeature.instance.config!!.getString("database.mongodb.database-name") == null) "applejuice" else ConfigFeature.instance.config!!.getString("database.mongodb.database-name")).getCollection("opened_matches")) {
                 val match = this.find().filter(Filters.eq("id", ConfigFeature.instance.data!!.getInt("matchpost.id"))).first() ?: return
                 match["whitelist"] = ConfigFeature.instance.data!!.getBoolean("whitelist.enabled")
                 this.findOneAndReplace(Filters.eq("id", ConfigFeature.instance.data!!.getInt("matchpost.id")),
@@ -37,7 +37,7 @@ class OpenedMatchesListener : Listener {
     @EventHandler
     fun onPvPEnable(e: PvPEnableEvent) {
         try {
-            with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getDatabase("applejuice").getCollection("opened_matches")) {
+            with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getDatabase(if (ConfigFeature.instance.config!!.getString("database.mongodb.database-name") == null) "applejuice" else ConfigFeature.instance.config!!.getString("database.mongodb.database-name")).getCollection("opened_matches")) {
                 val match = this.find().filter(Filters.eq("id", ConfigFeature.instance.data!!.getInt("matchpost.id"))).first() ?: return
                 match["pvp"] = true
                 this.findOneAndReplace(Filters.eq("id", ConfigFeature.instance.data!!.getInt("matchpost.id")),

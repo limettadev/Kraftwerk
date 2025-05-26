@@ -213,7 +213,7 @@ class SpawnFeature : Listener {
     fun saveKit(p: Player) {
         Schedulers.async().run {
             try {
-                with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getDatabase("applejuice").getCollection("kits")) {
+                with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getDatabase(if (ConfigFeature.instance.config!!.getString("database.mongodb.database-name") == null) "applejuice" else ConfigFeature.instance.config!!.getString("database.mongodb.database-name")).getCollection("kits")) {
                     val filter = Filters.eq("uuid", p.uniqueId)
                     val profile = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(p.uniqueId).get()
 

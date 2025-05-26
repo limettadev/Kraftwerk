@@ -35,6 +35,7 @@ buycraft:
 database:
   mongodb:
     uri: '' # THIS IS IDEALLY WHERE YOU WOULD PUT A URI!
+    database-name: applejuice
   redis:
     enabled: false # Enables Redis features on server, i.e. cross-server messaging
     uri: ''

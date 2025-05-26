@@ -108,7 +108,7 @@ class ArenaFeature : Listener {
         p.gameMode = GameMode.SURVIVAL
 
         Schedulers.async().run {
-            with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getDatabase("applejuice").getCollection("kits")) {
+            with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getDatabase(if (ConfigFeature.instance.config!!.getString("database.mongodb.database-name") == null) "applejuice" else ConfigFeature.instance.config!!.getString("database.mongodb.database-name")).getCollection("kits")) {
                 try {
                     val document = find(Filters.eq("uuid", p.uniqueId)).first()!!
                     Schedulers.sync().run {

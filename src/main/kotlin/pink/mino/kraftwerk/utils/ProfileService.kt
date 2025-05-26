@@ -70,7 +70,7 @@ class ProfileService {
     }
 
     fun saveProfile(profile: ImmutableProfile) {
-        with(JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getDatabase("applejuice").getCollection("players")) {
+        with(JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getDatabase(if (ConfigFeature.instance.config!!.getString("database.mongodb.database-name") == null) "applejuice" else ConfigFeature.instance.config!!.getString("database.mongodb.database-name")).getCollection("players")) {
             val filter = Filters.eq("uuid", profile.uniqueId)
             val document = Document("uuid", profile.uniqueId)
                 .append("name", profile.name)
@@ -110,7 +110,7 @@ class ProfileService {
         }
         return Schedulers.async().supply {
             try {
-                with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getDatabase("applejuice").getCollection("players")) {
+                with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getDatabase(if (ConfigFeature.instance.config!!.getString("database.mongodb.database-name") == null) "applejuice" else ConfigFeature.instance.config!!.getString("database.mongodb.database-name")).getCollection("players")) {
                     val filter = Filters.eq("uuid", uniqueId)
                     val document = this.find(filter).first()
                     val p: ImmutableProfile

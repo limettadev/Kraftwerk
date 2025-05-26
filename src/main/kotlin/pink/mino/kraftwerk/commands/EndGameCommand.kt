@@ -82,7 +82,7 @@ class EndGameCommand : CommandExecutor {
         }
         val game = JavaPlugin.getPlugin(Kraftwerk::class.java).game!!
         game.endTime = Date().time
-        with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getDatabase("applejuice").getCollection("matches")) {
+        with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getDatabase(if (ConfigFeature.instance.config!!.getString("database.mongodb.database-name") == null) "applejuice" else ConfigFeature.instance.config!!.getString("database.mongodb.database-name")).getCollection("matches")) {
             val filter = Filters.eq("id", game.id)
             val document = Document("id", game.id)
                 .append("host", host.uniqueId.toString())
@@ -100,7 +100,7 @@ class EndGameCommand : CommandExecutor {
             this.findOneAndReplace(filter, document, FindOneAndReplaceOptions().upsert(true))
         }
         try {
-            with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getDatabase("applejuice").getCollection("opened_matches")) {
+            with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getDatabase(if (ConfigFeature.instance.config!!.getString("database.mongodb.database-name") == null) "applejuice" else ConfigFeature.instance.config!!.getString("database.mongodb.database-name")).getCollection("opened_matches")) {
                 val filter = Filters.eq("id", ConfigFeature.instance.data!!.getInt("matchpost.id"))
                 val document = this.find(filter).first()
                 if (document != null) {
