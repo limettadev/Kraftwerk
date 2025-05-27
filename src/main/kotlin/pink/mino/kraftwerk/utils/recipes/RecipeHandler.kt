@@ -11,17 +11,18 @@ import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.inventory.ShapedRecipe
 import org.bukkit.inventory.ShapelessRecipe
 import pink.mino.kraftwerk.Kraftwerk
+import pink.mino.kraftwerk.scenarios.ScenarioHandler
 import pink.mino.kraftwerk.utils.Chat
 import pink.mino.kraftwerk.utils.recipes.list.*
-import java.util.UUID
+import java.util.*
 
 class RecipeHandler : Listener {
-    val crafts: java.util.HashMap<UUID, HashMap<String, Int>> = hashMapOf()
+    val crafts: HashMap<UUID, HashMap<String, Int>> = hashMapOf()
 
     @EventHandler
     fun onPlayerJoin(e: PlayerJoinEvent) {
-        crafts[e.player.uniqueId] = hashMapOf()
-        //TODO: Add game logic here to prevent crafts from resetting every relog.
+        if (!ScenarioHandler.getActiveScenarios().contains(ScenarioHandler.getScenario("champions"))) return
+        if (crafts[e.player.uniqueId] == null) crafts[e.player.uniqueId] = hashMapOf()
     }
 
     @EventHandler
