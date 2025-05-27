@@ -275,6 +275,7 @@ class UHCTask : BukkitRunnable() {
                         if (ConfigFeature.instance.data!!.getInt("game.starterfood") > 0) {
                             player.inventory.addItem(ItemStack(Material.COOKED_BEEF, ConfigFeature.instance.data!!.getInt("game.starterfood")))
                         }
+                        list.add(player.name)
                     }
                     if (!ConfigOptionHandler.getOption("statless")!!.enabled) XpFeature().add(player, 30.0)
                 }
@@ -290,6 +291,7 @@ class UHCTask : BukkitRunnable() {
                 } else {
                     Bukkit.getWorld(ConfigFeature.instance.data!!.getString("pregen.world")).setGameRuleValue("doDaylightCycle", true.toString())
                 }
+                ConfigFeature.instance.saveData()
             }
             31 -> {
                 for (player in Bukkit.getOnlinePlayers()) {
@@ -503,8 +505,7 @@ class UHCFeature : Listener {
                 }
             }
         }
-        var list = ConfigFeature.instance.data!!.getStringList("game.list")
-        if (list == null) list = ArrayList<String>()
+
         for (player in Bukkit.getOnlinePlayers()) {
             if (!SpecFeature.instance.getSpecs().contains(player.name)) {
                 SpawnFeature.instance.send(player)
@@ -532,8 +533,6 @@ class UHCFeature : Listener {
                 }
             }
         }
-        ConfigFeature.instance.data!!.set("game.list", list)
-        ConfigFeature.instance.saveData()
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wl all")
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wl on")
 
@@ -638,13 +637,11 @@ class UHCFeature : Listener {
                                             }
                                             JavaPlugin.getPlugin(Kraftwerk::class.java).scatterLocs.remove(names[i])
                                             freeze()
-                                            list.add(names[i])
                                         }
                                         i++
                                     } else {
                                         JavaPlugin.getPlugin(Kraftwerk::class.java).scattering = false
                                         Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} &7Successfully scattered all players!"))
-                                        ConfigFeature.instance.data!!.set("game.list", list)
                                         ConfigFeature.instance.saveData()
                                         Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
                                             freeze()

@@ -196,7 +196,7 @@ class PlayerJoinListener : Listener {
                 for (scenario in ScenarioHandler.getActiveScenarios()) {
                     scenario.givePlayer(player)
                 }
-                WhitelistCommand().addWhitelist(player.name.lowercase())
+                WhitelistCommand().addWhitelist(player.name)
                 var list = ConfigFeature.instance.data!!.getStringList("game.list")
                 if (list == null) list = ArrayList<String>()
                 if (!list.contains(player.name)) {
@@ -217,7 +217,7 @@ class PlayerJoinListener : Listener {
                     SpecFeature.instance.joinSpec(player)
                     return
                 }
-                if (!ConfigFeature.instance.data!!.getStringList("game.list").contains(player.name)) {
+                if (!ConfigFeature.instance.data!!.getStringList("game.list").contains(player.name.lowercase()) && !ConfigFeature.instance.data!!.getStringList("game.list").contains(player.name)) {
                     if (SpecFeature.instance.getSpecs().contains(player.name)) {
                         return
                     }
