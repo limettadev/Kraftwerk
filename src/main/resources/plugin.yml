@@ -419,6 +419,10 @@ commands:
       - pl
       - ver
     description: View list of plugins :)
+  recipes:
+    aliases:
+      - recipe
+    description: View Champions' recipes.
 depend:
   - ProtocolLib
   - Vault

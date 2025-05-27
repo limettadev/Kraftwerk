@@ -1,5 +1,7 @@
 package pink.mino.kraftwerk.utils
 
+import org.bukkit.Material
+import org.bukkit.inventory.ItemStack
 import java.awt.Color
 import kotlin.math.floor
 
@@ -57,6 +59,40 @@ class MiscUtils {
             } catch (e: NumberFormatException) {
                 throw IllegalArgumentException("Invalid hex color format: " + hex)
             }
+        }
+
+        fun populateCrafting(gui: GuiBuilder): GuiBuilder {
+            for (i in 0..44) {
+                val blank = ItemBuilder(Material.STAINED_GLASS_PANE)
+                    .noAttributes()
+                    .setDurability(8)
+                    .name(" ")
+                    .make()
+                gui.item(i, blank).onClick runnable@{
+                    it.isCancelled = true
+                }
+            }
+            val result = ItemBuilder(Material.STAINED_GLASS_PANE)
+                .noAttributes()
+                .setDurability(5)
+                .name("&aResult")
+                .addLore("&7Crafting recipe result ->")
+                .make()
+            gui.item(23, result).onClick runnable@{
+                it.isCancelled = true
+            }
+            val slots = listOf(
+                10, 11, 12,
+                19, 20, 21,
+                28, 29, 30,
+                25
+            )
+            for (i in slots) {
+                gui.item(i, ItemStack(Material.AIR)).onClick runnable@{
+                    it.isCancelled = true
+                }
+            }
+            return gui
         }
     }
 }

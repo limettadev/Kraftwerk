@@ -27,6 +27,7 @@ import pink.mino.kraftwerk.listeners.donator.CowboyFeature
 import pink.mino.kraftwerk.listeners.donator.MobEggsListener
 import pink.mino.kraftwerk.scenarios.ScenarioHandler
 import pink.mino.kraftwerk.utils.*
+import pink.mino.kraftwerk.utils.recipes.RecipeCommand
 import redis.clients.jedis.Jedis
 import redis.clients.jedis.JedisPubSub
 import java.nio.file.Files
@@ -230,6 +231,7 @@ class Kraftwerk : ExtendedJavaPlugin() {
         getCommand("unhelpopmute").executor = UnHelpopMuteCommand()
         getCommand("unmute").executor = UnmuteCommand()
         getCommand("plugins").executor = PluginsCommand()
+        getCommand("recipes").executor = RecipeCommand()
         //getCommand("hotbar").executor = HotbarCommand()
 
         /* ProtocolLib stuff */

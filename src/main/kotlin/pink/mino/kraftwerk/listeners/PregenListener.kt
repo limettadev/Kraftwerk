@@ -38,7 +38,7 @@ class PregenListener : Listener {
                     if (!(event.fillTask.refWorld() == null)) {
                         val rounded = (Config.fillTask.percentageCompleted * 100.0).roundToInt() / 100.0
                         for (player in Bukkit.getOnlinePlayers()) {
-                            ActionBar.sendActionBarMessage(player, ChatColor.translateAlternateColorCodes('&', "${Chat.prefix} &7Progress: ${Chat.primaryColor}${rounded}% &8| &7World: &8'${Chat.primaryColor}${Config.fillTask.refWorld()}&8' &8| &8| &7TPS: ${checkTps(
+                            ActionBar.sendActionBarMessage(player, ChatColor.translateAlternateColorCodes('&', "${Chat.prefix} &7Progress: ${Chat.primaryColor}${rounded}% &8| &7World: &8'${Chat.primaryColor}${Config.fillTask.refWorld()}&8' &8| &7TPS: ${checkTps(
                                 (tpsLast10Secs * 100.0).roundToInt() / 100.0
                             )}"))
                         }
