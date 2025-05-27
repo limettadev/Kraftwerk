@@ -42,6 +42,7 @@ class ExcaliburRecipe : Recipe(
     @EventHandler
     fun onPvP(e: EntityDamageByEntityEvent) {
         if (!ScenarioHandler.getActiveScenarios().contains(ScenarioHandler.getScenario("champions"))) return
+        if ((e.damager !is Player)) return
         if ((e.damager as Player).inventory.itemInHand != null && (e.damager as Player).inventory.itemInHand.hasItemMeta() && (e.damager as Player).inventory.itemInHand.itemMeta.displayName == Chat.colored(
                 "&eExcalibur"
             )

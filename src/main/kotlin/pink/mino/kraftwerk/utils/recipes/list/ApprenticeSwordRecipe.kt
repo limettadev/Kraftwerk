@@ -40,6 +40,7 @@ class ApprenticeSwordRecipe : Recipe(
         object : BukkitRunnable() {
             override fun run() {
                 if (!ScenarioHandler.getActiveScenarios().contains(ScenarioHandler.getScenario("champions"))) return
+                if (Kraftwerk.instance.game == null) return
                 for (player in Bukkit.getOnlinePlayers()) {
                     for (item in player.inventory.contents) {
                         if (item == null) continue
