@@ -1,10 +1,10 @@
 package pink.mino.kraftwerk.utils.menus
 
 import com.google.common.base.Preconditions
+import net.minecraft.server.v1_8_R3.EntityPlayer
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftHumanEntity
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 import org.bukkit.scheduler.BukkitRunnable
@@ -104,7 +104,7 @@ abstract class Menu {
                         field = (CraftHumanEntity::class.java).getDeclaredMethod(
                             "openCustomInventory",
                             Inventory::class.java,
-                            CraftPlayer::class.java,
+                            EntityPlayer::class.java,
                             String::class.java
                         )
 
