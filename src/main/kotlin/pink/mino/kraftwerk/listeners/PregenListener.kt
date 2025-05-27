@@ -17,6 +17,14 @@ import pink.mino.kraftwerk.utils.Chat
 import kotlin.math.roundToInt
 
 class PregenListener : Listener {
+    fun checkTps(tps: Double): String {
+        return when {
+            tps >= 19.0 -> "§a$tps"
+            tps >= 16.0 -> "§e$tps"
+            tps >= 10.0 -> "§c$tps"
+            else -> "§4$tps"
+        }
+    }
 
     val prefix = "&8[${Chat.primaryColor}Server&8]&7"
     @EventHandler
