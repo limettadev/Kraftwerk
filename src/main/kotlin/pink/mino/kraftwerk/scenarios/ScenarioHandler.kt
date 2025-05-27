@@ -89,6 +89,11 @@ class ScenarioHandler {
             addScenario(TripleIronScenario())
             addScenario(NoEnchantsScenario())
             addScenario(NoAnvilScenario())
+            addScenario(QuiverScenario())
+            addScenario(SpeedyMinersScenario())
+            addScenario(LifestealScenario())
+            addScenario(MeleeFunScenario())
+            addScenario(ProgressiveSkyHighScenario())
             scenarios.sortWith(Comparator.comparing(Scenario::name))
             for (scenario in getActiveScenarios()) {
                 scenario.onToggle(true)
