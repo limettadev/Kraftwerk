@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import pink.mino.kraftwerk.Kraftwerk
 import pink.mino.kraftwerk.discord.Discord
+import pink.mino.kraftwerk.features.ConfigFeature
 import pink.mino.kraftwerk.utils.Chat
 
 class MemberJoin : ListenerAdapter() {
@@ -12,6 +13,7 @@ class MemberJoin : ListenerAdapter() {
         val member = e.member
         val guild = e.guild
         try {
+            if (ConfigFeature.instance.config!!.getString("discord.guildId") == null || ConfigFeature.instance.config!!.getString("discord.guildId") != guild.id) return
             if (Kraftwerk.instance.welcomeChannelId != null) {
                 Discord.instance!!.getTextChannelById(Kraftwerk.instance.welcomeChannelId!!)!!.sendMessage("Welcome ${member.asMention} to the **${Chat.serverName} Discord**!").queue()
             } else {

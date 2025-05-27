@@ -19,6 +19,7 @@ options:
   whitelist-timer-ffa: 3 # In a hosted FFA game, the whitelist automatically turns on after 3 minutes (by default).
   whitelist-timer-teams: 6 # In a hosted Teams game, the whitelist automatically turns on after 6 minutes (by default).
 discord:
+  guildId: 1284248694169927780 # The ID of the guild that the bot will look for joins on.
   welcomeChannelId: 1284249349651697756
   alertsRoleId: 1284249796751790113
   gameAlertsChannelId: 1284249277157347358
