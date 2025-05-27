@@ -3,6 +3,8 @@ package pink.mino.kraftwerk.listeners
 import com.wimbli.WorldBorder.Config
 import com.wimbli.WorldBorder.Events.WorldBorderFillFinishedEvent
 import com.wimbli.WorldBorder.Events.WorldBorderFillStartEvent
+import me.lucko.spark.api.statistic.StatisticWindow.TicksPerSecond
+import me.lucko.spark.api.statistic.types.DoubleStatistic
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.event.EventHandler
@@ -22,10 +24,15 @@ class PregenListener : Listener {
         object : BukkitRunnable() {
             override fun run() {
                 if (Config.fillTask.valid()) {
+                    (Config.fillTask.percentageCompleted * 100.0).roundToInt() / 100.0
+                    val tps: DoubleStatistic<TicksPerSecond>? = JavaPlugin.getPlugin(Kraftwerk::class.java).spark.tps()
+                    val tpsLast10Secs = tps!!.poll(TicksPerSecond.SECONDS_10)
                     if (!(event.fillTask.refWorld() == null)) {
                         val rounded = (Config.fillTask.percentageCompleted * 100.0).roundToInt() / 100.0
                         for (player in Bukkit.getOnlinePlayers()) {
-                            ActionBar.sendActionBarMessage(player, ChatColor.translateAlternateColorCodes('&', "${Chat.prefix} &7Progress: ${Chat.primaryColor}${rounded}% &8| &7World: &8'${Chat.primaryColor}${Config.fillTask.refWorld()}&8'"))
+                            ActionBar.sendActionBarMessage(player, ChatColor.translateAlternateColorCodes('&', "${Chat.prefix} &7Progress: ${Chat.primaryColor}${rounded}% &8| &7World: &8'${Chat.primaryColor}${Config.fillTask.refWorld()}&8' &8| &8| &7TPS: ${checkTps(
+                                (tpsLast10Secs * 100.0).roundToInt() / 100.0
+                            )}"))
                         }
                     } else {
                         cancel()
@@ -42,6 +49,6 @@ class PregenListener : Listener {
     @EventHandler
     fun on(event: WorldBorderFillFinishedEvent) {
         Bukkit.broadcastMessage(Chat.colored("${prefix} Pregeneration in world '${Chat.primaryColor}${event.world.name}&7' finished."))
-        Bukkit.broadcastMessage(Chat.colored("${prefix} Please wait for TPS to stabilize at ${Chat.primaryColor}20 &7before restarting."))
+        Bukkit.broadcastMessage(Chat.colored("${prefix} Please wait for TPS to stabilize at &a20.00 &7before restarting."))
     }
 }

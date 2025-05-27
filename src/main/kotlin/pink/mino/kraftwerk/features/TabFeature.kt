@@ -18,17 +18,14 @@ import pink.mino.kraftwerk.utils.Chat
 
 class TabFeature : BukkitRunnable() {
     fun checkTps(tps: Double): String {
-        if (tps > 19.0) {
-            return "§a" + tps.toString()
-        } else if (tps < 18.0) {
-            return "§e" + tps.toString()
-        } else if (tps < 16.0) {
-            return "§c" + tps.toString()
-        } else if (tps < 10.0) {
-            return "§4" + tps.toString()
+        return when {
+            tps >= 19.0 -> "§a$tps"
+            tps >= 16.0 -> "§e$tps"
+            tps >= 10.0 -> "§c$tps"
+            else -> "§4$tps"
         }
-        return "&8" + tps.toString()
     }
+
 
     fun checkPing(ping: Int): String {
         return if (ping < 50) {

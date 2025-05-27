@@ -13,7 +13,7 @@ class RedisManager {
         val password = ConfigFeature.instance.config!!.getString("database.redis.password")
         val host = ConfigFeature.instance.config!!.getString("database.redis.host")
         val port = ConfigFeature.instance.config!!.getInt("database.redis.port")
-        val timeout = 2000 // Or any other timeout in milliseconds
+        val timeout = 30000 // Or any other timeout in milliseconds
 
         val poolConfig = JedisPoolConfig()
 
