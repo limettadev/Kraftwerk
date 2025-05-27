@@ -7,6 +7,7 @@ import com.mongodb.MongoClient
 import com.mongodb.MongoClientException
 import com.mongodb.MongoClientURI
 import com.mongodb.client.MongoDatabase
+import me.lucko.helper.Schedulers
 import me.lucko.helper.plugin.ExtendedJavaPlugin
 import me.lucko.helper.utils.Log
 import me.lucko.spark.api.Spark
@@ -273,15 +274,19 @@ class Kraftwerk : ExtendedJavaPlugin() {
                         override fun onMessage(channel: String?, message: String?) {
                             val playerJoinMessage = Gson().fromJson(message!!, PlayerJoinMessage::class.java)
                             if (playerJoinMessage.sessionId != sessionId) {
-                                val player = Bukkit.getPlayer(playerJoinMessage.playerUniqueId)
-                                if (player != null) {
-                                    player.kickPlayer(Chat.colored("&cYou've logged into a new location."))
+                                Schedulers.sync().run {
+                                    val player = Bukkit.getPlayer(playerJoinMessage.playerUniqueId)
+                                    if (player != null) {
+                                        player.kickPlayer(Chat.colored("&cYou've logged into a new location."))
+                                    }
                                 }
                             }
                         }
                     }
-                    redisManager.executeCommand { redis: Jedis ->
-                        redis.subscribe(playerPubSub, "players")
+                    Schedulers.async().run {
+                        redisManager.executeCommand { redis: Jedis ->
+                            redis.subscribe(playerPubSub, "players")
+                        }
                     }
                 }
             }

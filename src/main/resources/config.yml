@@ -37,7 +37,10 @@ database:
     uri: '' # THIS IS IDEALLY WHERE YOU WOULD PUT A URI!
   redis:
     enabled: false # Enables Redis features on server, i.e. cross-server messaging
-    uri: ''
+    user: ''
+    password: ''
+    host: localhost
+    port: 6379
 void:
   enabled: true
   level: 75 # y-level to get teleported at.

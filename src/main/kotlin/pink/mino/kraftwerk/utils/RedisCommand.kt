@@ -1,7 +1,7 @@
-package pink.mino.kraftwerk.utils;
+package pink.mino.kraftwerk.utils
 
-import redis.clients.jedis.Jedis;
+import redis.clients.jedis.Jedis
 
-public interface RedisCommand<T> {
-    T execute(Jedis paramJedis);
+fun interface RedisCommand<T> {
+    fun execute(jedis: Jedis): T
 }

@@ -2,6 +2,7 @@ package pink.mino.kraftwerk.listeners
 
 import com.google.gson.Gson
 import com.mongodb.client.model.Filters
+import me.lucko.helper.Schedulers
 import net.md_5.bungee.api.chat.ClickEvent
 import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.*
@@ -282,17 +283,19 @@ class PlayerJoinListener : Listener {
             && Kraftwerk.instance.redisManager != null
             && ConfigFeature.instance.config!!.getString("chat.serverName") != null
         ) {
-            Kraftwerk.instance.redisManager.executeCommand { redis: Jedis ->
-                redis.publish(
-                    "players",
-                    Gson().toJson(
-                        PlayerJoinMessage(
-                            player.uniqueId,
-                            Kraftwerk.instance.sessionId
+            Schedulers.async().run {
+                Kraftwerk.instance.redisManager.executeCommand { redis: Jedis ->
+                    redis.publish(
+                        "players",
+                        Gson().toJson(
+                            PlayerJoinMessage(
+                                player.uniqueId,
+                                Kraftwerk.instance.sessionId
+                            )
                         )
                     )
-                )
-                null
+                    null
+                }
             }
         }
     }
