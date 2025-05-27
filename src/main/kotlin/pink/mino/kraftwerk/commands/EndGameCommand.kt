@@ -135,6 +135,7 @@ class EndGameCommand : CommandExecutor {
                 team.removePlayer(player)
             }
         }
+        embed.addField("Fill", "${game.fill}", false)
         embed.addField("Matchpost", "https://hosts.uhc.gg/m/${ConfigFeature.instance.data!!.getInt("matchpost.id")}", false)
         try {
             if (Kraftwerk.instance.winnersChannelId != null) {

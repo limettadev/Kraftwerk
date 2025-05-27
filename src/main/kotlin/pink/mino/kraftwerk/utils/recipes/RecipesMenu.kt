@@ -23,7 +23,7 @@ class RecipesMenu : PaginatedMenu() {
             .forEach { recipe ->
                 buttons[count.get()] = object : Button() {
                     override fun getName(p0: Player): String {
-                        return Chat.colored("&b${recipe.name}")
+                        return Chat.colored("${Chat.primaryColor}${recipe.name}")
                     }
 
                     override fun getMaterial(player: Player): Material {
@@ -36,7 +36,7 @@ class RecipesMenu : PaginatedMenu() {
                             " ",
                             Chat.colored("&7${recipe.description}"),
                             " ",
-                            Chat.colored("&bClick to view crafting recipe.")
+                            Chat.colored("${Chat.primaryColor}Click to view crafting recipe.")
                         ).toList()
                     }
 
