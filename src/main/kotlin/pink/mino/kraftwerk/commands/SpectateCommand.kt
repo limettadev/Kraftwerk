@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import pink.mino.kraftwerk.features.SpecFeature
 import pink.mino.kraftwerk.utils.Chat
+import pink.mino.kraftwerk.utils.GameState
 
 class SpectateCommand : CommandExecutor {
     override fun onCommand(
@@ -24,7 +25,7 @@ class SpectateCommand : CommandExecutor {
             sender.sendMessage("You can't use this command as you aren't technically a player.")
             return false
         }
-        if (args.size == 1) {
+        if (args.size == 1 || args.size == 2) {
             if (args[0].lowercase() == "on") {
                 if (SpecFeature.instance.getSpecs().contains(sender.name)) {
                     Chat.sendMessage(sender, "${Chat.prefix} You're already in Spectator mode!")
@@ -46,6 +47,12 @@ class SpectateCommand : CommandExecutor {
                 Chat.sendMessage(sender, "&cPlayer not found.")
                 return false
             }
+
+            if (GameState.currentState == GameState.INGAME && args.size == 2 && args[1] != "CONFIRM") {
+                Chat.sendMessage(sender, "&cYou're about to put someone into Spectator. If they are currently playing, this WILL kill them.\n&cIf you're sure you'd like to do this, use: /spec ${player.name} CONFIRM")
+                return false
+            }
+
             if (SpecFeature.instance.getSpecs().contains(player.name)) {
                 SpecFeature.instance.unspec(player)
                 Chat.sendMessage(sender, "${Chat.prefix} ${Chat.secondaryColor}${player.name}&7 has been removed from Spectator mode.")
