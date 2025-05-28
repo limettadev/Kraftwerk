@@ -184,6 +184,9 @@ class EndGameCommand : CommandExecutor {
         ConfigFeature.instance.worlds!!.set(world.name, null)
         ConfigFeature.instance.saveWorlds()
         Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+            for (player in Bukkit.getOnlinePlayers()) {
+                player.kickPlayer(Chat.colored(if (ConfigFeature.instance.config!!.getString("chat.deathKick") != null) ConfigFeature.instance.config!!.getString("chat.deathKick") else "no death kick message sent but... thanks for playing :3"))
+            }
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "restart")
         }, 900L)
         Bukkit.broadcastMessage(Chat.colored(Chat.line))
