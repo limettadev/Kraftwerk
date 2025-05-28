@@ -41,11 +41,11 @@ class ChatListener : Listener {
     )
 
     val cooldowns = hashMapOf<UUID, Long>()
-    val cooldownTime: Int = 3
+    val cooldownTime: Int = 1
 
     @EventHandler
     fun onPlayerJoin(e: PlayerJoinEvent) {
-        cooldowns[e.player.uniqueId] = System.currentTimeMillis() + 3000
+        cooldowns[e.player.uniqueId] = System.currentTimeMillis() + 1000
     }
 
     @EventHandler(priority = EventPriority.HIGH)
