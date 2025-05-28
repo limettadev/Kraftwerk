@@ -82,22 +82,24 @@ class EndGameCommand : CommandExecutor {
         }
         val game = JavaPlugin.getPlugin(Kraftwerk::class.java).game!!
         game.endTime = Date().time
-        with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("matches")) {
-            val filter = Filters.eq("id", game.id)
-            val document = Document("id", game.id)
-                .append("host", host.uniqueId.toString())
-                .append("title", gameTitle)
-                .append("winners", winnersList)
-                .append("winnerKills", kills)
-                .append("scenarios", game.scenarios)
-                .append("teams", game.team)
-                .append("endTime", game.endTime)
-                .append("startTime", game.startTime)
-                .append("fill", game.fill)
-                .append("milliseconds", game.endTime!! - game.startTime)
-                .append("pveDeaths", game.pve)
+        if (!ConfigOptionHandler.getOption("statless")!!.enabled) {
+            with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("matches")) {
+                val filter = Filters.eq("id", game.id)
+                val document = Document("id", game.id)
+                    .append("host", host.uniqueId.toString())
+                    .append("title", gameTitle)
+                    .append("winners", winnersList)
+                    .append("winnerKills", kills)
+                    .append("scenarios", game.scenarios)
+                    .append("teams", game.team)
+                    .append("endTime", game.endTime)
+                    .append("startTime", game.startTime)
+                    .append("fill", game.fill)
+                    .append("milliseconds", game.endTime!! - game.startTime)
+                    .append("pveDeaths", game.pve)
 
-            this.findOneAndReplace(filter, document, FindOneAndReplaceOptions().upsert(true))
+                this.findOneAndReplace(filter, document, FindOneAndReplaceOptions().upsert(true))
+            }
         }
         try {
             with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("opened_matches")) {
@@ -138,7 +140,7 @@ class EndGameCommand : CommandExecutor {
         embed.addField("Fill", "${game.fill}", false)
         embed.addField("Matchpost", "https://hosts.uhc.gg/m/${ConfigFeature.instance.data!!.getInt("matchpost.id")}", false)
         try {
-            if (Kraftwerk.instance.winnersChannelId != null) {
+            if (Kraftwerk.instance.winnersChannelId != null && !ConfigOptionHandler.getOption("statless")!!.enabled) {
                 Discord.instance!!.getTextChannelById(Kraftwerk.instance.winnersChannelId!!)!!.sendMessageEmbeds(embed.build()).queue()
             } else {
                 Chat.broadcast("Couldn't post winners to Discord because there isn't a channel ID configured.")
