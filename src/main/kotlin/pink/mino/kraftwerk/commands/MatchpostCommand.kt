@@ -126,7 +126,7 @@ class ScheduleBroadcast(private val opening: String) : BukkitRunnable() {
     }
 }
 
-class Opening(private val closing: Long) : BukkitRunnable() {
+class Opening(var closing: Long) : BukkitRunnable() {
     var timer = 0
 
     private fun timeToString(ticks: Long): String {
@@ -215,7 +215,9 @@ class ScheduleOpening(private val opening: String) : BukkitRunnable() {
             }
             Bukkit.broadcastMessage(Chat.colored("${Chat.dash} The whitelist has been turned off automatically @ ${Chat.primaryColor}${opening}&7."))
             cancel()
-            Opening(time).runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, 20L)
+            Kraftwerk.instance.opening = Opening(time)
+            Kraftwerk.instance.opening!!.runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, 20L)
+
             ConfigFeature.instance.data!!.set("whitelist.requests", false)
             ConfigFeature.instance.data!!.set("matchpost.opens", null)
             ConfigFeature.instance.saveData()

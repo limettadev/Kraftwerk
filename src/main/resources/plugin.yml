@@ -423,6 +423,10 @@ commands:
     aliases:
       - recipe
     description: View Champions' recipes.
+  extend:
+    aliases:
+      - ex
+    description: Extend opening timer.
 depend:
   - ProtocolLib
   - Vault

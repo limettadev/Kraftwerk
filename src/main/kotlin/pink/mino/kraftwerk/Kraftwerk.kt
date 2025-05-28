@@ -48,6 +48,7 @@ class Kraftwerk : ExtendedJavaPlugin() {
     private var protocolManager: ProtocolManager? = null
     var vote: Vote? = null
     var game: UHCTask? = null
+    var opening: Opening? = null
     var scheduledOpening: ScheduleOpening? = null
     var scheduledBroadcast: ScheduleBroadcast? = null
     var database: Boolean = false
@@ -232,6 +233,7 @@ class Kraftwerk : ExtendedJavaPlugin() {
         getCommand("unmute").executor = UnmuteCommand()
         getCommand("plugins").executor = PluginsCommand()
         getCommand("recipes").executor = RecipeCommand()
+        getCommand("extend").executor = ExtendCommand()
         //getCommand("hotbar").executor = HotbarCommand()
 
         /* ProtocolLib stuff */
