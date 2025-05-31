@@ -1,5 +1,6 @@
 package pink.mino.kraftwerk.scenarios.list
 
+import me.lucko.helper.Schedulers
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.event.EventHandler
@@ -38,9 +39,11 @@ class FortuneBabiesScenario : Scenario(
         if (!enabled) return
         if (GameState.currentState !== GameState.INGAME) return
         if (types.contains(e.recipe.result.type)) {
-            val item = e.recipe.result
-            item.addEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 1)
-            e.inventory.result = item
+            Schedulers.sync().runLater(Runnable@ {
+                val item = e.recipe.result
+                item.addEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 1)
+                e.inventory.result = item
+            }, 20L)
         }
     }
 }
