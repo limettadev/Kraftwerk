@@ -17,7 +17,7 @@ import pink.mino.kraftwerk.utils.GameState
 import pink.mino.kraftwerk.utils.PlayerUtils
 
 class ProgressiveSkyHighScenario : Scenario(
-    "Progress SkyHigh",
+    "Progressive SkyHigh",
     "After PvP, stay near 0,0 and above Y: 150 or take increasing damage every 45 seconds.",
     "progressiveskyhigh",
     Material.FEATHER

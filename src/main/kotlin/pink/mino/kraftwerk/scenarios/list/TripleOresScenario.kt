@@ -9,7 +9,7 @@ import pink.mino.kraftwerk.utils.GameState
 
 class TripleOresScenario : Scenario(
     "Triple Ores",
-    "Ores drop tripple of what they're supposed to drop.",
+    "Ores drop triple of what they're supposed to drop.",
     "tripleores",
     Material.GOLD_ORE
 ) {
