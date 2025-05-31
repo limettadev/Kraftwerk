@@ -3,7 +3,7 @@ package pink.mino.kraftwerk.discord.listeners
 import me.lucko.helper.Schedulers
 import me.lucko.helper.utils.Log
 import net.dv8tion.jda.api.EmbedBuilder
-import net.dv8tion.jda.api.events.interaction.SlashCommandEvent
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import net.dv8tion.jda.api.utils.MarkdownSanitizer
 import org.bukkit.Bukkit
@@ -13,7 +13,7 @@ import pink.mino.kraftwerk.utils.Chat
 import pink.mino.kraftwerk.utils.MiscUtils
 
 class SlashCommand : ListenerAdapter() {
-    override fun onSlashCommand(event: SlashCommandEvent) {
+    override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) {
         if (event.guild == null) return
         val member = event.member
         val guild = event.guild
@@ -39,12 +39,12 @@ class SlashCommand : ListenerAdapter() {
                 embed.setAuthor("${Chat.serverName} — Toggle alerts", "https://github.com/applejuice-server/Kraftwerk/blob/master/src/main/kotlin/pink/mino/kraftwerk/discord/listeners/SlashCommand.kt", event.jda.selfUser.avatarUrl)
                 if (member!!.roles.contains(event.jda.getRoleById(1129405126889713692))) {
                     if (guild != null) {
-                        guild.getRoleById(1129405126889713692)?.let { guild.removeRoleFromMember(member.id, it) }?.queue()
+                        guild.getRoleById(1129405126889713692)?.let { guild.removeRoleFromMember(member, it) }?.queue()
                     }
                     embed.setDescription("You have disabled matchpost notifications.")
                 } else {
                     if (guild != null) {
-                        guild.getRoleById(1129405126889713692)?.let { guild.addRoleToMember(member.id, it) }?.queue()
+                        guild.getRoleById(1129405126889713692)?.let { guild.addRoleToMember(member, it) }?.queue()
                     }
                     embed.setDescription("You have enabled matchpost notifications.")
                 }

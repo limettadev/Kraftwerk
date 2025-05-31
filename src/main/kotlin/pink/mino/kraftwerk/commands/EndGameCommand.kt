@@ -5,6 +5,7 @@ import com.mongodb.client.model.Filters
 import com.mongodb.client.model.FindOneAndReplaceOptions
 import me.lucko.helper.utils.Log
 import net.dv8tion.jda.api.EmbedBuilder
+import net.dv8tion.jda.api.utils.FileUpload
 import org.bson.Document
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
@@ -198,7 +199,7 @@ class EndGameCommand : CommandExecutor {
         try {
             if (Kraftwerk.instance.gameLogsChannelId != null) {
                 Discord.instance!!.getTextChannelById(Kraftwerk.instance.gameLogsChannelId!!)!!.sendMessage("**${gameTitle}**").queue()
-                Discord.instance!!.getTextChannelById(Kraftwerk.instance.gameLogsChannelId!!)!!.sendFile(log, "game.log").queue()
+                Discord.instance!!.getTextChannelById(Kraftwerk.instance.gameLogsChannelId!!)!!.sendFiles(FileUpload.fromData(log)).queue()
             } else {
                 Log.info("Couldn't post logs to Discord because there's no game logs channel ID configured.")
             }

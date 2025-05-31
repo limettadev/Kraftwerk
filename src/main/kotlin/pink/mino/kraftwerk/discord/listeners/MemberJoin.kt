@@ -20,7 +20,8 @@ class MemberJoin : ListenerAdapter() {
                 Log.info("Can't welcome ${member.effectiveName} (${member.id}) to the Discord server because there's no welcome channel ID configured.")
             }
             if (Kraftwerk.instance.alertsRoleId != null) {
-                guild.getRoleById(Kraftwerk.instance.alertsRoleId!!)?.let { guild.addRoleToMember(member.id, it).queue() }
+                guild.getRoleById(Kraftwerk.instance.alertsRoleId!!)?.let { guild.addRoleToMember(member, it).queue()
+                }
             } else {
                 Log.info("Can't give ${member.effectiveName} (${member.id}) their Alerts role because there isn't one configured..")
             }

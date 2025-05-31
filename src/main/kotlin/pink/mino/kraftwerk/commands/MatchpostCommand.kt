@@ -5,6 +5,7 @@ import com.mongodb.MongoException
 import com.mongodb.client.model.Filters
 import com.mongodb.client.model.FindOneAndReplaceOptions
 import net.dv8tion.jda.api.EmbedBuilder
+import net.dv8tion.jda.api.interactions.components.buttons.Button
 import org.bson.Document
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
@@ -101,11 +102,48 @@ class ScheduleBroadcast(private val opening: String) : BukkitRunnable() {
             if (Kraftwerk.instance.gameAlertsChannelId != null) {
                 Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Matchpost posted on discord!"))
                 if (Kraftwerk.instance.alertsRoleId != null) {
-                    Discord.instance!!.getTextChannelById(Kraftwerk.instance.gameAlertsChannelId!!)!!.sendMessage("<@&${Kraftwerk.instance.alertsRoleId!!}> (Use `/togglematches` to toggle matchpost alerts)").queue()
+                    Discord.instance!!
+                        .getTextChannelById(Kraftwerk.instance.gameAlertsChannelId!!)!!
+                        .sendMessage("<@&${Kraftwerk.instance.alertsRoleId!!}>")
+                        .queue { message ->
+                            message.crosspost().queue()
+                        }
                 } else {
-                    Discord.instance!!.getTextChannelById(Kraftwerk.instance.gameAlertsChannelId!!)!!.sendMessage("@everyone (Use `/togglealerts` to toggle matchpost alerts)").queue()
+                    Discord.instance!!
+                        .getTextChannelById(Kraftwerk.instance.gameAlertsChannelId!!)!!
+                        .sendMessage("@everyone")
+                        .queue { message ->
+                            message.crosspost().queue()
+                        }
                 }
-                Discord.instance!!.getTextChannelById(Kraftwerk.instance.gameAlertsChannelId!!)!!.sendMessageEmbeds(embed.build()).queue()
+                Discord.instance!!
+                    .getTextChannelById(Kraftwerk.instance.gameAlertsChannelId!!)!!
+                    .sendMessageEmbeds(embed.build())
+                    .setActionRow(
+                        Button.primary("toggle_alerts", "Click here to toggle alerts.")
+                    )
+                    .queue { message ->
+                        message.crosspost().queue()
+                    }
+
+                val guild = Discord.instance!!.getGuildById(ConfigFeature.instance.config!!.getString("discord.guildId")!!) ?: return
+
+                val teamName = ConfigFeature.instance.data!!.getString("matchpost.team") ?: "Unknown Mode"
+                val scenarios = scenarios.joinToString(", ")
+                val serverIp = ConfigFeature.instance.config!!.getString("chat.serverIp") ?: "example.net"
+
+                val startTime = OffsetDateTime.now().plusMinutes(15)
+                val endTime = startTime.plusHours(1)
+
+                guild.createScheduledEvent(
+                    "$teamName UHC",
+                    serverIp,
+                    startTime,
+                    endTime
+                )
+                    .setDescription("Scenarios: $scenarios")
+                    .queue()
+
             } else {
                 Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} A matchpost is coming in ${Chat.secondaryColor}15 minutes&7 but there's no configured game alerts channel!"))
             }
@@ -209,7 +247,13 @@ class ScheduleOpening(private val opening: String) : BukkitRunnable() {
             embed.setThumbnail("https://visage.surgeplay.com/bust/512/${host.uniqueId}")
             embed.addField("Game Open!", "The game is now open at `${if (ConfigFeature.instance.config!!.getString("chat.serverIp") != null) ConfigFeature.instance.config!!.getString("chat.serverIp") else "no server ip setup in config tough tits"}`.", false)
             if (Kraftwerk.instance.gameAlertsChannelId != null) {
-                Discord.instance!!.getTextChannelById(Kraftwerk.instance.gameAlertsChannelId!!)!!.sendMessageEmbeds(embed.build()).queue()
+                Discord.instance!!
+                    .getTextChannelById(Kraftwerk.instance.gameAlertsChannelId!!)!!
+                    .sendMessageEmbeds(embed.build())
+                    .queue {
+                        message -> message.crosspost().queue()
+                    }
+
             } else {
                 Chat.broadcast("${Chat.dash} Couldn't post game opening in discord because there's no game alerts channel ID configured.")
             }
