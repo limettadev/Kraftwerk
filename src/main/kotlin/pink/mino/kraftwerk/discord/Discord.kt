@@ -11,6 +11,7 @@ import pink.mino.kraftwerk.discord.listeners.ButtonInteraction
 import pink.mino.kraftwerk.discord.listeners.MemberJoin
 import pink.mino.kraftwerk.discord.listeners.SlashCommand
 import pink.mino.kraftwerk.features.ConfigFeature
+import java.util.*
 import javax.security.auth.login.LoginException
 
 
@@ -24,9 +25,9 @@ class Discord : ListenerAdapter() {
             }
             val jda = JDABuilder.createLight(
                 ConfigFeature.instance.config!!.getString("discord.token"),
-                GatewayIntent.GUILD_MEMBERS,
-                GatewayIntent.GUILD_VOICE_STATES
+
             )
+                .enableIntents(EnumSet.allOf(GatewayIntent::class.java))
                 .enableCache(CacheFlag.VOICE_STATE)
                 .addEventListeners(MemberJoin())
                 .addEventListeners(SlashCommand())
