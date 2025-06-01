@@ -267,22 +267,24 @@ class SpawnFeature : Listener {
         p.allowFlight = false
         p.isFlying = false
         Schedulers.sync().runLater(Runnable@ {
-            if (GameState.currentState == GameState.LOBBY) {
-                if (PerkChecker.checkPerks(p).contains(Perk.SPAWN_FLY)) {
-                    p.allowFlight = true
-                    p.isFlying = true
+            if (p.world.name == Bukkit.getWorld(ConfigFeature.instance.config!!.getString("spawn.world")).name) {
+                if (GameState.currentState == GameState.LOBBY) {
+                    if (PerkChecker.checkPerks(p).contains(Perk.SPAWN_FLY)) {
+                        p.allowFlight = true
+                        p.isFlying = true
+                    }
+                    Promise.start()
+                        .thenApplyAsync {
+                            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(p.uniqueId)
+                        }
+                        .thenAcceptSync {
+                            val xp = (it.get().xp as Double?) ?: 0.0
+                            val xpNeeded = (it.get().xpNeeded as Double?) ?: 0.0
+                            val level = (it.get().level as Int?) ?: 1
+                            p.level = level
+                            p.exp = (xp / xpNeeded).toFloat()
+                        }
                 }
-                Promise.start()
-                    .thenApplyAsync {
-                        JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(p.uniqueId)
-                    }
-                    .thenAcceptSync {
-                        val xp = (it.get().xp as Double?) ?: 0.0
-                        val xpNeeded = (it.get().xpNeeded as Double?) ?: 0.0
-                        val level = (it.get().level as Int?) ?: 1
-                        p.level = level
-                        p.exp = (xp / xpNeeded).toFloat()
-                    }
             }
         },  20L)
         p.foodLevel = 20
