@@ -248,7 +248,9 @@ class ArenaFeature : Listener {
                     } else if (e.damager.type === EntityType.ARROW && (e.damager as Arrow).shooter as Player != e.entity as Player) {
                         val killer = (e.damager as Arrow).shooter as Player
                         val victim = e.entity as Player
-                        killer.addPotionEffect(PotionEffect(PotionEffectType.REGENERATION, 200, 2, true, true))
+                        killer.addPotionEffect(PotionEffect(PotionEffectType.REGENERATION, 20 * 5, 3, true, true))
+                        killer.addPotionEffect(PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20 * 5, 0, true, true))
+
                         val goldenHeads = ItemStack(Material.GOLDEN_APPLE, 1)
                         val meta = goldenHeads.itemMeta
                         meta.displayName = Chat.colored("&6Golden Head")
@@ -361,6 +363,12 @@ class ArenaFeature : Listener {
                 e.isCancelled = true
             }
             EntityType.SPIDER -> {
+                e.isCancelled = true
+            }
+            EntityType.SQUID -> {
+                e.isCancelled = true
+            }
+            EntityType.SLIME -> {
                 e.isCancelled = true
             }
             else -> {}
