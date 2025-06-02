@@ -298,7 +298,7 @@ class MatchpostCommand : CommandExecutor {
                     inputLine = it.readLine()
                 }
                 it.close()
-                return "${response.toString()[12]}${response.toString()[13]}:${response.toString()[15]}${(response.toString().toInt() + 16).toString()[16]}"
+                return "${response.toString()[12]}${response.toString()[13]}:${response.toString()[15]}${(response.toString()[16].toInt() + 16)}"
             }
         }
     }
