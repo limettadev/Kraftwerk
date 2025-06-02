@@ -324,10 +324,6 @@ class MatchpostCommand : CommandExecutor {
                 return false
             }
         }
-        if (args[0].toIntOrNull() == null) {
-            Chat.sendMessage(sender, "&cYou must provide a &ovalid&c matchpost ID.")
-            return false
-        }
         if (args[0] == "fake") {
             Chat.sendMessage(sender, "${Chat.prefix} Okay, making a fake matchpost, this will post in a minute and won't ping anyone on Discord.")
 
@@ -345,6 +341,11 @@ class MatchpostCommand : CommandExecutor {
             ConfigFeature.instance.data!!.set("matchpost.server", "uhc")
             ConfigFeature.instance.data!!.set("matchpost.fake", true)
             ConfigFeature.instance.saveData()
+            return false
+        }
+
+        if (args[0].toIntOrNull() == null) {
+            Chat.sendMessage(sender, "&cYou must provide a &ovalid&c matchpost ID.")
             return false
         }
         val host: String
