@@ -260,6 +260,15 @@ class ConfigCommand : CommandExecutor {
         } else {
             "&b${ConfigFeature.instance.worlds!!.get("${ConfigFeature.instance.data!!.get("pregen.world")}.orerates.diamond")}% Removed"
         }
+
+        val caveRates = ConfigFeature.instance.worlds!!.getInt("${ConfigFeature.instance.data!!.get("pregen.world")}.caveRates")
+        val message = if (caveRates == 7) {
+            "Vanilla"
+        } else {
+            val increase = 7.0 / caveRates
+            val rounded = (increase * 10).toInt() / 10.0  // round to 1 decimal place
+            "${rounded}x Increased"
+        }
         val miningConfig = ItemBuilder(Material.DIAMOND_PICKAXE)
             .name(" &4&lMining Config ")
             .noAttributes()
@@ -268,6 +277,7 @@ class ConfigCommand : CommandExecutor {
             .addLore(" &7Anti-Stone ${Chat.dash} ${Chat.secondaryColor}${getOption("antistone")} ")
             .addLore(" &7Anti-Burn ${Chat.dash} ${Chat.secondaryColor}${getOption("antiburn")} ")
             .addLore(" ")
+            .addLore(" &7Cave Rates ${Chat.dash} ${Chat.secondaryColor}${message} ")
             .addLore(" &7Diamond Ore Rates ${Chat.dash} ${Chat.secondaryColor}${diaRates} ")
             .addLore(" &7Gold Ore Rates ${Chat.dash} ${Chat.secondaryColor}${goldRates} ")
             .addLore(" &7Ores Outside Caves ${Chat.dash} ${Chat.secondaryColor}${if (ConfigFeature.instance.worlds!!.getBoolean("${ConfigFeature.instance.data!!.get("pregen.world")}.oresOutsideCaves")) "&aEnabled" else "&cDisabled"} ")

@@ -254,11 +254,11 @@ class EditPregenCommand : CommandExecutor {
                 it.isCancelled = true
                 if (it.isLeftClick) {
                     pregenConfig.caveRate += 1
-                    if (pregenConfig.caveRate > 6) {
-                        pregenConfig.caveRate = 6
+                    if (pregenConfig.caveRate > 7) {
+                        pregenConfig.caveRate = 7
                     }
                     val meta = it.currentItem.itemMeta
-                    meta.displayName = Chat.colored("&7Cave Rates: ${Chat.primaryColor}${pregenConfig.caveRate}x Increased")
+                    meta.displayName = Chat.colored("&7Cave Frequency: 1 in ${Chat.primaryColor}${pregenConfig.caveRate}")
                     it.currentItem.itemMeta = meta
                 } else {
                     pregenConfig.caveRate -= 1
@@ -266,7 +266,7 @@ class EditPregenCommand : CommandExecutor {
                         pregenConfig.caveRate = 1
                     }
                     val meta = it.currentItem.itemMeta
-                    meta.displayName = Chat.colored("&7Cave Rates: ${Chat.primaryColor}${pregenConfig.caveRate}x Increased")
+                    meta.displayName = Chat.colored("&7Cave Frequency: 1 in ${Chat.primaryColor}${pregenConfig.caveRate}")
                     it.currentItem.itemMeta = meta
                 }
             }

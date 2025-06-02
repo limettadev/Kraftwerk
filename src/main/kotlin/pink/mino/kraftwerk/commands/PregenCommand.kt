@@ -34,7 +34,7 @@ open class PregenConfig(val player: OfflinePlayer, val name: String) {
     var goldore: Int = 0
     var canerate: Int = 25
     var oresOutsideCaves: Boolean = true
-    var caveRate: Int = 2
+    var caveRate: Int = 7
     var caveMinLength: Int = 4
 }
 
