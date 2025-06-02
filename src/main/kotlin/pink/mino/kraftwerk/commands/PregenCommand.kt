@@ -87,10 +87,16 @@ class PregenCommand : CommandExecutor {
             wc.generator("CityWorld")
         }
 
-        val customGenSettings = CustomizedGenerationSettings()
-        customGenSettings.caveFrequency = pregenConfig.caveRate
-        customGenSettings.caveLengthMin = pregenConfig.caveMinLength
-        wc.customGenSettings = customGenSettings
+        try {
+            val customGenSettings = CustomizedGenerationSettings()
+            customGenSettings.caveFrequency = pregenConfig.caveRate
+            customGenSettings.caveLengthMin = pregenConfig.caveMinLength
+            wc.customGenSettings = customGenSettings
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.info("Can't implement custom cave settings, something must be wrong with the Aerosmith JAR.")
+            Chat.sendMessage(pregenConfig.player as Player, "${Chat.prefix} Can't implement custom cave settings, something's wrong with the server JAR.")
+        }
 
         val world = wc.createWorld()
         world.difficulty = Difficulty.HARD
