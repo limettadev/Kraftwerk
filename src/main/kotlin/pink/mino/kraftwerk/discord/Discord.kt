@@ -27,8 +27,15 @@ class Discord : ListenerAdapter() {
                 ConfigFeature.instance.config!!.getString("discord.token"),
 
             )
+                .enableIntents(GatewayIntent.SCHEDULED_EVENTS)
+                .enableIntents(GatewayIntent.GUILD_MEMBERS)
+                .enableIntents(GatewayIntent.GUILD_MESSAGES)
+                .enableIntents(GatewayIntent.MESSAGE_CONTENT)
+                .enableIntents(GatewayIntent.GUILD_PRESENCES)
+                .enableIntents(GatewayIntent.MESSAGE_CONTENT)
                 .enableIntents(EnumSet.allOf(GatewayIntent::class.java))
                 .enableCache(CacheFlag.VOICE_STATE)
+                .enableCache(CacheFlag.SCHEDULED_EVENTS)
                 .addEventListeners(MemberJoin())
                 .addEventListeners(SlashCommand())
                 .addEventListeners(ButtonInteraction())
