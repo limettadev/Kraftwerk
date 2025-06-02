@@ -1,6 +1,7 @@
 package pink.mino.kraftwerk.commands
 
 import com.wimbli.WorldBorder.Config
+import dev.limetta.aerosmith.event.api.world.CustomizedGenerationSettings
 import me.lucko.helper.utils.Log
 import org.bukkit.*
 import org.bukkit.command.Command
@@ -33,6 +34,8 @@ open class PregenConfig(val player: OfflinePlayer, val name: String) {
     var goldore: Int = 0
     var canerate: Int = 25
     var oresOutsideCaves: Boolean = true
+    var caveRate: Int = 2
+    var caveMinLength: Int = 4
 }
 
 class PregenConfigHandler {
@@ -72,6 +75,7 @@ class PregenCommand : CommandExecutor {
         if (pregenConfig.player.isOnline) Chat.sendMessage(pregenConfig.player as Player, "${Chat.prefix} &7Creating world &8'${Chat.secondaryColor}${pregenConfig.name}&8'...")
 
         val wc = WorldCreator(pregenConfig.name)
+
         wc.environment(pregenConfig.type)
         if (pregenConfig.type === World.Environment.NETHER) {
             ConfigFeature.instance.data!!.set("game.nether.nether", true)
@@ -82,6 +86,12 @@ class PregenCommand : CommandExecutor {
         if (pregenConfig.generator == PregenerationGenerationTypes.CITY_WORLD) {
             wc.generator("CityWorld")
         }
+
+        val customGenSettings = CustomizedGenerationSettings()
+        customGenSettings.caveFrequency = pregenConfig.caveRate
+        customGenSettings.caveLengthMin = pregenConfig.caveMinLength
+        wc.customGenSettings = customGenSettings
+
         val world = wc.createWorld()
         world.difficulty = Difficulty.HARD
         Log.info("Created world ${pregenConfig.name}.")
@@ -94,6 +104,8 @@ class PregenCommand : CommandExecutor {
         ConfigFeature.instance.worlds!!.set("${world.name}.orerates.diamond", pregenConfig.diamondore)
         ConfigFeature.instance.worlds!!.set("${world.name}.canerate", pregenConfig.canerate)
         ConfigFeature.instance.worlds!!.set("${world.name}.oresOutsideCaves", pregenConfig.oresOutsideCaves)
+        ConfigFeature.instance.worlds!!.set("${world.name}.caveRates", pregenConfig.caveRate)
+        ConfigFeature.instance.worlds!!.set("${world.name}.caveMinLength", pregenConfig.caveMinLength)
         ConfigFeature.instance.saveWorlds()
 
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
@@ -196,13 +208,14 @@ class PregenCommand : CommandExecutor {
                     .addLore(" ")
                     .addLore("&7Border: ${Chat.primaryColor}±${pregenConfig.border}")
                     .addLore(" ")
-                    .addLore("&7Clear Water:${Chat.primaryColor}${if (pregenConfig.clearWater) "&aEnabled" else "&cDisabled"}")
+                    .addLore("&7Clear Water: ${Chat.primaryColor}${if (pregenConfig.clearWater) "&aEnabled" else "&cDisabled"}")
                     .addLore("&7Clear Trees: ${Chat.primaryColor}${if (pregenConfig.clearTrees) "&aEnabled" else "&cDisabled"}")
                     .addLore("&7Ores Outside Caves: ${Chat.primaryColor}${if (pregenConfig.oresOutsideCaves) "&aEnabled" else "&cDisabled"}")
                     .addLore("&7Rates: ")
                     .addLore(" ${Chat.dot} &6Gold Ore: ${Chat.primaryColor}${pregenConfig.goldore}% Removed")
                     .addLore(" ${Chat.dot} &bDiamond Ore: ${Chat.primaryColor}${pregenConfig.diamondore}% Removed")
                     .addLore(" ${Chat.dot} &aSugar Cane: ${Chat.primaryColor}${pregenConfig.canerate}% Increased")
+                    .addLore(" ${Chat.dot} &aCave Rates: ${Chat.primaryColor}${pregenConfig.caveRate}x Increased")
                     .addLore(Chat.guiLine)
                     .make()
                 val submit = ItemBuilder(Material.EMERALD)

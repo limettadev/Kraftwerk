@@ -156,6 +156,15 @@ class EditPregenCommand : CommandExecutor {
                 .addLore("&8Right Click: &c-5")
                 .addLore(" ")
                 .make()
+            val caveRates = ItemBuilder(Material.COBBLESTONE)
+                .name("&7Cave Rates: ${Chat.primaryColor}${pregenConfig.canerate}x Increased")
+                .addLore("&7Click to change the cave rates.")
+                .addLore(" ")
+                .addLore("&8Left Click: &a+1")
+                .addLore("&8Right Click: &c-1")
+                .addLore(" ")
+                .make()
+
             gui.item(1, oresOutsideCaves).onClick {
                 it.isCancelled = true
                 pregenConfig.oresOutsideCaves = !pregenConfig.oresOutsideCaves
@@ -237,6 +246,27 @@ class EditPregenCommand : CommandExecutor {
                     }
                     val meta = it.currentItem.itemMeta
                     meta.displayName = Chat.colored("&7Cane Rates: ${Chat.primaryColor}${pregenConfig.canerate}% Increased")
+                    it.currentItem.itemMeta = meta
+                }
+            }
+
+            gui.item(7, caveRates).onClick {
+                it.isCancelled = true
+                if (it.isLeftClick) {
+                    pregenConfig.caveRate += 1
+                    if (pregenConfig.caveRate > 6) {
+                        pregenConfig.caveRate = 6
+                    }
+                    val meta = it.currentItem.itemMeta
+                    meta.displayName = Chat.colored("&7Cave Rates: ${Chat.primaryColor}${pregenConfig.caveRate}x Increased")
+                    it.currentItem.itemMeta = meta
+                } else {
+                    pregenConfig.caveRate -= 1
+                    if (pregenConfig.caveRate < 1) {
+                        pregenConfig.caveRate = 1
+                    }
+                    val meta = it.currentItem.itemMeta
+                    meta.displayName = Chat.colored("&7Cave Rates: ${Chat.primaryColor}${pregenConfig.caveRate}x Increased")
                     it.currentItem.itemMeta = meta
                 }
             }
