@@ -10,9 +10,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: write  # Needed to push to another repo using GITHUB_TOKEN
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -36,18 +33,19 @@ jobs:
           path: build/libs/*-all.jar
           if-no-files-found: error
 
-      - name: Push Kraftwerk.jar to uhc-gameserver
+      # ↓↓↓ THIS IS THE PUBLISH PART ↓↓↓
+      - name: Clone target repo
         run: |
           echo "Cloning target repo..."
           git clone https://x-access-token:${{ secrets.TOKEN }}@github.com/limettadev/uhc-gameserver.git target-repo
 
+      - name: Copy built jar and commit
+        run: |
           echo "Copying built jar..."
           cp build/libs/*-all.jar target-repo/plugins/Kraftwerk.jar
-
           cd target-repo
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-
           git add plugins/Kraftwerk.jar
-          git commit -m "Update Kraftwerk.jar from build ${{ github.run_number }}"
+          git commit -m "Update Kraftwerk.jar from build ${{ github.run_number }}" || echo "No changes to commit"
           git push
