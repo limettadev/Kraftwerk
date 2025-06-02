@@ -33,15 +33,15 @@ jobs:
           path: build/libs/*-all.jar
           if-no-files-found: error
 
-      # ↓↓↓ THIS IS THE PUBLISH PART ↓↓↓
+      # ↓↓↓ AUTO-PUBLISH KRAFTWERK JAR TO GAMESERVER ↓↓↓
       - name: Clone target repo
         run: |
           echo "Cloning target repo..."
-          git clone https://x-access-token:${{ secrets.TOKEN }}@github.com/limettadev/uhc-gameserver.git target-repo
+          git clone https://limettadev:${{ secrets.TOKEN }}@github.com/limettadev/uhc-gameserver.git target-repo
 
       - name: Copy built jar and commit
         run: |
-          echo "Copying built jar..."
+          echo "Copying built jar to plugins folder..."
           cp build/libs/*-all.jar target-repo/plugins/Kraftwerk.jar
           cd target-repo
           git config user.name "github-actions[bot]"
