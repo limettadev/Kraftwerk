@@ -157,7 +157,7 @@ class EditPregenCommand : CommandExecutor {
                 .addLore(" ")
                 .make()
             val caveRates = ItemBuilder(Material.COBBLESTONE)
-                .name("&7Cave Rates: ${Chat.primaryColor}${pregenConfig.canerate}x Increased")
+                .name("&7Cave Rates: ${Chat.primaryColor}${pregenConfig.caveRate}x Increased")
                 .addLore("&7Click to change the cave rates.")
                 .addLore(" ")
                 .addLore("&8Left Click: &a+1")
