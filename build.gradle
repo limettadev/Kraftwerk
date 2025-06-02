@@ -29,7 +29,7 @@ dependencies {
     implementation ('me.lucko:helper-profiles:1.2.0')
     implementation ('org.mongodb:mongodb-driver:3.12.11')
     implementation ("me.lucko:spark-api:0.1-SNAPSHOT")
-    implementation files('lib/Aerosmith.jar')
+    implementation files('lib/aerosmith.jar')
     compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.5.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
     implementation ("net.dv8tion:JDA:5.5.1") {
