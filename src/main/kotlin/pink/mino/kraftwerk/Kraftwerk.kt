@@ -301,6 +301,7 @@ class Kraftwerk : ExtendedJavaPlugin() {
         /* Discord */
         try {
             Discord.main()
+            if (!ConfigFeature.instance.data!!.getBoolean("matchpost.fake")) ConfigFeature.instance.data!!.set("matchpost.fake", false)
             if (!ConfigFeature.instance.data!!.getBoolean("matchpost.posted")) ConfigFeature.instance.data!!.set("whitelist.requests", false)
             ConfigFeature.instance.saveData()
             if (!ConfigFeature.instance.data!!.getBoolean("matchpost.cancelled")) {

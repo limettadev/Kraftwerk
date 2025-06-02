@@ -101,20 +101,22 @@ class ScheduleBroadcast(private val opening: String) : BukkitRunnable() {
             embed.addField("Matchpost", "[uhc.gg](https://hosts.uhc.gg/m/${ConfigFeature.instance.data!!.getInt("matchpost.id")})", false)
             if (Kraftwerk.instance.gameAlertsChannelId != null) {
                 Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Matchpost posted on discord!"))
-                if (Kraftwerk.instance.alertsRoleId != null) {
-                    Discord.instance!!
-                        .getTextChannelById(Kraftwerk.instance.gameAlertsChannelId!!)!!
-                        .sendMessage("<@&${Kraftwerk.instance.alertsRoleId!!}>")
-                        .queue { message ->
-                            message.crosspost().queue()
-                        }
-                } else {
-                    Discord.instance!!
-                        .getTextChannelById(Kraftwerk.instance.gameAlertsChannelId!!)!!
-                        .sendMessage("@everyone")
-                        .queue { message ->
-                            message.crosspost().queue()
-                        }
+                if (!ConfigFeature.instance.data!!.getBoolean("matchpost.fake")) {
+                    if (Kraftwerk.instance.alertsRoleId != null) {
+                        Discord.instance!!
+                            .getTextChannelById(Kraftwerk.instance.gameAlertsChannelId!!)!!
+                            .sendMessage("<@&${Kraftwerk.instance.alertsRoleId!!}>")
+                            .queue { message ->
+                                message.crosspost().queue()
+                            }
+                    } else {
+                        Discord.instance!!
+                            .getTextChannelById(Kraftwerk.instance.gameAlertsChannelId!!)!!
+                            .sendMessage("@everyone")
+                            .queue { message ->
+                                message.crosspost().queue()
+                            }
+                    }
                 }
                 Discord.instance!!
                     .getTextChannelById(Kraftwerk.instance.gameAlertsChannelId!!)!!
@@ -283,6 +285,24 @@ class ScheduleOpening(private val opening: String) : BukkitRunnable() {
 }
 
 class MatchpostCommand : CommandExecutor {
+    fun getFakeTime(): String {
+        with(URL("https://hosts.uhc.gg/api/sync").openConnection() as HttpURLConnection) {
+            requestMethod = "GET"
+            setRequestProperty("User-Agent", "Mozilla/5.0")
+            BufferedReader(InputStreamReader(inputStream)).use {
+                val response = StringBuffer()
+
+                var inputLine = it.readLine()
+                while (inputLine != null) {
+                    response.append(inputLine)
+                    inputLine = it.readLine()
+                }
+                it.close()
+                return "${response.toString()[12]}${response.toString()[13]}:${response.toString()[15]}${(response.toString().toInt() + 16).toString()[16]}"
+            }
+        }
+    }
+
     override fun onCommand(
         sender: CommandSender,
         command: Command?,
@@ -306,6 +326,25 @@ class MatchpostCommand : CommandExecutor {
         }
         if (args[0].toIntOrNull() == null) {
             Chat.sendMessage(sender, "&cYou must provide a &ovalid&c matchpost ID.")
+            return false
+        }
+        if (args[0] == "fake") {
+            Chat.sendMessage(sender, "${Chat.prefix} Okay, making a fake matchpost, this will post in a minute and won't ping anyone on Discord.")
+
+            Kraftwerk.instance.scheduledOpening = ScheduleOpening(getFakeTime())
+            Kraftwerk.instance.scheduledOpening!!.runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, (5 * 20).toLong())
+            Kraftwerk.instance.scheduledBroadcast = ScheduleBroadcast(getFakeTime())
+            Kraftwerk.instance.scheduledBroadcast!!.runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, 300L)
+
+            ConfigFeature.instance.data!!.set("matchpost.team", "Chosen To2")
+            ConfigFeature.instance.data!!.set("matchpost.teamsGame", true)
+            ConfigFeature.instance.data!!.set("matchpost.host", "minota")
+            ConfigFeature.instance.data!!.set("matchpost.id", "000000".toInt())
+            ConfigFeature.instance.data!!.set("matchpost.scenarios", listOf("CutClean", "HasteyBoys", "Timber"))
+            ConfigFeature.instance.data!!.set("matchpost.opens", getFakeTime())
+            ConfigFeature.instance.data!!.set("matchpost.server", "uhc")
+            ConfigFeature.instance.data!!.set("matchpost.fake", true)
+            ConfigFeature.instance.saveData()
             return false
         }
         val host: String

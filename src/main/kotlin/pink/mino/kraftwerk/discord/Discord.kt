@@ -11,7 +11,6 @@ import pink.mino.kraftwerk.discord.listeners.ButtonInteraction
 import pink.mino.kraftwerk.discord.listeners.MemberJoin
 import pink.mino.kraftwerk.discord.listeners.SlashCommand
 import pink.mino.kraftwerk.features.ConfigFeature
-import java.util.*
 import javax.security.auth.login.LoginException
 
 
@@ -33,7 +32,6 @@ class Discord : ListenerAdapter() {
                 .enableIntents(GatewayIntent.MESSAGE_CONTENT)
                 .enableIntents(GatewayIntent.GUILD_PRESENCES)
                 .enableIntents(GatewayIntent.MESSAGE_CONTENT)
-                .enableIntents(EnumSet.allOf(GatewayIntent::class.java))
                 .enableCache(CacheFlag.VOICE_STATE)
                 .enableCache(CacheFlag.SCHEDULED_EVENTS)
                 .addEventListeners(MemberJoin())
