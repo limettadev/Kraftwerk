@@ -303,12 +303,12 @@ class MatchpostCommand : CommandExecutor {
         }
     }
 
-    private fun addFifteenMinutes(time: String): String {
+    private fun addFakeTime(time: String): String {
         val parts = time.split(":")
         var hours = parts[0].toInt()
         var minutes = parts[1].toInt()
 
-        minutes += 15
+        minutes += 31
         if (minutes >= 60) {
             minutes -= 60
             hours = (hours + 1) % 24
@@ -351,9 +351,9 @@ class MatchpostCommand : CommandExecutor {
                 Chat.sendMessage(sender, "${Chat.prefix} Cancelled ongoing scheduled opening/broadcast.")
             }
 
-            Kraftwerk.instance.scheduledOpening = ScheduleOpening(addFifteenMinutes(getTime()))
+            Kraftwerk.instance.scheduledOpening = ScheduleOpening(addFakeTime(getTime()))
             Kraftwerk.instance.scheduledOpening!!.runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, (5 * 20).toLong())
-            Kraftwerk.instance.scheduledBroadcast = ScheduleBroadcast(addFifteenMinutes(getTime()))
+            Kraftwerk.instance.scheduledBroadcast = ScheduleBroadcast(addFakeTime(getTime()))
             Kraftwerk.instance.scheduledBroadcast!!.runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, 300L)
 
             ConfigFeature.instance.data!!.set("matchpost.team", "Chosen To2")
@@ -361,7 +361,7 @@ class MatchpostCommand : CommandExecutor {
             ConfigFeature.instance.data!!.set("matchpost.host", "minota")
             ConfigFeature.instance.data!!.set("matchpost.id", "000000".toInt())
             ConfigFeature.instance.data!!.set("matchpost.scenarios", listOf("CutClean", "HasteyBoys", "Timber"))
-            ConfigFeature.instance.data!!.set("matchpost.opens", addFifteenMinutes(getTime()))
+            ConfigFeature.instance.data!!.set("matchpost.opens", addFakeTime(getTime()))
             ConfigFeature.instance.data!!.set("matchpost.server", "uhc")
             ConfigFeature.instance.data!!.set("matchpost.fake", true)
             ConfigFeature.instance.saveData()
