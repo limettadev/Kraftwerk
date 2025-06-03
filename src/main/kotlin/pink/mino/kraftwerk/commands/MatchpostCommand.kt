@@ -50,30 +50,19 @@ class ScheduleBroadcast(private val opening: String) : BukkitRunnable() {
     }
 
     private fun removeFifteenMinutes(time: String): String {
-        val makeSureIsValid: List<String> = time.split(":")
-        var hours: Any = makeSureIsValid[0].toInt()
-        var minutes: Any
-        if (makeSureIsValid[1] == "15") {
-            minutes = 0
-        } else if (makeSureIsValid[1] == "30") {
-            minutes = 15
-        } else if (makeSureIsValid[1] == "45") {
-            minutes = 30
-        } else {
-            minutes = 45
-            hours = if (makeSureIsValid[0].toInt() == 0) {
-                23
-            } else {
-                makeSureIsValid[0].toInt() - 1
-            }
+        val parts = time.split(":")
+        var hours = parts[0].toInt()
+        var minutes = parts[1].toInt()
+
+        minutes -= 15
+        if (minutes < 0) {
+            minutes += 60
+            hours = if (hours == 0) 23 else hours - 1
         }
-        if (hours.toString().length == 1) {
-            hours = "0${hours}"
-        }
-        if (minutes.toString().length == 1) {
-            minutes = "00"
-        }
-        return "${hours}:${minutes}"
+
+        val hoursStr = hours.toString().padStart(2, '0')
+        val minutesStr = minutes.toString().padStart(2, '0')
+        return "$hoursStr:$minutesStr"
     }
 
     override fun run() {
@@ -308,7 +297,7 @@ class MatchpostCommand : CommandExecutor {
         var hours = parts[0].toInt()
         var minutes = parts[1].toInt()
 
-        minutes += 1
+        minutes += 16
         if (minutes >= 60) {
             minutes -= 60
             hours = (hours + 1) % 24
