@@ -93,14 +93,14 @@ class ScheduleBroadcast(private val opening: String) : BukkitRunnable() {
                 if (!ConfigFeature.instance.data!!.getBoolean("matchpost.fake")) {
                     if (Kraftwerk.instance.alertsRoleId != null) {
                         Discord.instance!!
-                            .getTextChannelById(Kraftwerk.instance.gameAlertsChannelId!!)!!
+                            .getNewsChannelById(Kraftwerk.instance.gameAlertsChannelId!!)!!
                             .sendMessage("<@&${Kraftwerk.instance.alertsRoleId!!}>")
                             .queue { message ->
                                 message.crosspost().queue()
                             }
                     } else {
                         Discord.instance!!
-                            .getTextChannelById(Kraftwerk.instance.gameAlertsChannelId!!)!!
+                            .getNewsChannelById(Kraftwerk.instance.gameAlertsChannelId!!)!!
                             .sendMessage("@everyone")
                             .queue { message ->
                                 message.crosspost().queue()
@@ -108,7 +108,7 @@ class ScheduleBroadcast(private val opening: String) : BukkitRunnable() {
                     }
                 }
                 Discord.instance!!
-                    .getTextChannelById(Kraftwerk.instance.gameAlertsChannelId!!)!!
+                    .getNewsChannelById(Kraftwerk.instance.gameAlertsChannelId!!)!!
                     .sendMessageEmbeds(embed.build())
                     .setActionRow(
                         Button.primary("toggle_alerts", "Click here to toggle alerts.")
