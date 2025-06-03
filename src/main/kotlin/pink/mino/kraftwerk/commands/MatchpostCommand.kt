@@ -340,9 +340,9 @@ class MatchpostCommand : CommandExecutor {
                 Chat.sendMessage(sender, "${Chat.prefix} Cancelled ongoing scheduled opening/broadcast.")
             }
 
-            Kraftwerk.instance.scheduledOpening = ScheduleOpening(addFakeTime(addFakeTime(getTime())))
+            Kraftwerk.instance.scheduledOpening = ScheduleOpening(addFakeTime(getTime()))
             Kraftwerk.instance.scheduledOpening!!.runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, (5 * 20).toLong())
-            Kraftwerk.instance.scheduledBroadcast = ScheduleBroadcast(addFakeTime(addFakeTime(getTime())))
+            Kraftwerk.instance.scheduledBroadcast = ScheduleBroadcast(addFakeTime(getTime()))
             Kraftwerk.instance.scheduledBroadcast!!.runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, 300L)
 
             ConfigFeature.instance.data!!.set("matchpost.team", "Chosen To2")
