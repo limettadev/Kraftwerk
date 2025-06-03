@@ -26,6 +26,7 @@ class CancelCommand : CommandExecutor {
         }
         ConfigFeature.instance.data!!.set("matchpost", null)
         ConfigFeature.instance.data!!.set("matchpost.cancelled", true)
+        ConfigFeature.instance.data!!.set("matchpost.fake", false)
         ConfigFeature.instance.data!!.set("whitelist.enabled", true)
         ConfigFeature.instance.data!!.set("whitelist.list", ArrayList<String>())
         ConfigFeature.instance.saveData()
