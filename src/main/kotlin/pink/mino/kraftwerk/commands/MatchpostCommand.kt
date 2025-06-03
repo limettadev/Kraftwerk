@@ -77,7 +77,7 @@ class ScheduleBroadcast(private val opening: String) : BukkitRunnable() {
     }
 
     override fun run() {
-        print("Checking if the time corresponds with the broadcast time... ${removeFifteenMinutes(opening)} & ${getTime()}")
+        print("Checking if the time corresponds with the broadcast time... (broadcast time: ${removeFifteenMinutes(opening)} & now: ${getTime()})")
         if (ConfigFeature.instance.data!!.getString("matchpost.opens") == null) {
             cancel()
         }
@@ -285,7 +285,7 @@ class ScheduleOpening(private val opening: String) : BukkitRunnable() {
 }
 
 class MatchpostCommand : CommandExecutor {
-    fun getFakeTime(): String {
+    fun getTime(): String {
         with(URL("https://hosts.uhc.gg/api/sync").openConnection() as HttpURLConnection) {
             requestMethod = "GET"
             setRequestProperty("User-Agent", "Mozilla/5.0")
@@ -298,9 +298,25 @@ class MatchpostCommand : CommandExecutor {
                     inputLine = it.readLine()
                 }
                 it.close()
-                return "${response.toString()[12]}${response.toString()[13]}:${response.toString()[15]}${(response.toString()[16].toInt() + 16)}"
+                return "${response.toString()[12]}${response.toString()[13]}:${response.toString()[15]}${(response.toString()[16])}"
             }
         }
+    }
+
+    private fun addFifteenMinutes(time: String): String {
+        val parts = time.split(":")
+        var hours = parts[0].toInt()
+        var minutes = parts[1].toInt()
+
+        minutes += 15
+        if (minutes >= 60) {
+            minutes -= 60
+            hours = (hours + 1) % 24
+        }
+
+        val hoursStr = hours.toString().padStart(2, '0')
+        val minutesStr = minutes.toString().padStart(2, '0')
+        return "$hoursStr:$minutesStr"
     }
 
     override fun onCommand(
@@ -327,9 +343,17 @@ class MatchpostCommand : CommandExecutor {
         if (args[0] == "fake") {
             Chat.sendMessage(sender, "${Chat.prefix} Okay, making a fake matchpost, this will post in a minute and won't ping anyone on Discord.")
 
-            Kraftwerk.instance.scheduledOpening = ScheduleOpening(getFakeTime())
+            if (Kraftwerk.instance.scheduledOpening != null) {
+                Kraftwerk.instance.scheduledOpening!!.cancel()
+            }
+            if (Kraftwerk.instance.scheduledBroadcast != null) {
+                Kraftwerk.instance.scheduledBroadcast!!.cancel()
+                Chat.sendMessage(sender, "${Chat.prefix} Cancelled ongoing scheduled opening/broadcast.")
+            }
+
+            Kraftwerk.instance.scheduledOpening = ScheduleOpening(addFifteenMinutes(getTime()))
             Kraftwerk.instance.scheduledOpening!!.runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, (5 * 20).toLong())
-            Kraftwerk.instance.scheduledBroadcast = ScheduleBroadcast(getFakeTime())
+            Kraftwerk.instance.scheduledBroadcast = ScheduleBroadcast(addFifteenMinutes(getTime()))
             Kraftwerk.instance.scheduledBroadcast!!.runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, 300L)
 
             ConfigFeature.instance.data!!.set("matchpost.team", "Chosen To2")
@@ -337,7 +361,7 @@ class MatchpostCommand : CommandExecutor {
             ConfigFeature.instance.data!!.set("matchpost.host", "minota")
             ConfigFeature.instance.data!!.set("matchpost.id", "000000".toInt())
             ConfigFeature.instance.data!!.set("matchpost.scenarios", listOf("CutClean", "HasteyBoys", "Timber"))
-            ConfigFeature.instance.data!!.set("matchpost.opens", getFakeTime())
+            ConfigFeature.instance.data!!.set("matchpost.opens", addFifteenMinutes(getTime()))
             ConfigFeature.instance.data!!.set("matchpost.server", "uhc")
             ConfigFeature.instance.data!!.set("matchpost.fake", true)
             ConfigFeature.instance.saveData()
