@@ -308,7 +308,7 @@ class MatchpostCommand : CommandExecutor {
         var hours = parts[0].toInt()
         var minutes = parts[1].toInt()
 
-        minutes += 16
+        minutes += 1
         if (minutes >= 60) {
             minutes -= 60
             hours = (hours + 1) % 24
