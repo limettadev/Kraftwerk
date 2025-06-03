@@ -308,7 +308,7 @@ class MatchpostCommand : CommandExecutor {
         var hours = parts[0].toInt()
         var minutes = parts[1].toInt()
 
-        minutes += 31
+        minutes += 16
         if (minutes >= 60) {
             minutes -= 60
             hours = (hours + 1) % 24
@@ -351,9 +351,9 @@ class MatchpostCommand : CommandExecutor {
                 Chat.sendMessage(sender, "${Chat.prefix} Cancelled ongoing scheduled opening/broadcast.")
             }
 
-            Kraftwerk.instance.scheduledOpening = ScheduleOpening(addFakeTime(getTime()))
+            Kraftwerk.instance.scheduledOpening = ScheduleOpening(addFakeTime(addFakeTime(getTime())))
             Kraftwerk.instance.scheduledOpening!!.runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, (5 * 20).toLong())
-            Kraftwerk.instance.scheduledBroadcast = ScheduleBroadcast(addFakeTime(getTime()))
+            Kraftwerk.instance.scheduledBroadcast = ScheduleBroadcast(addFakeTime(addFakeTime(getTime())))
             Kraftwerk.instance.scheduledBroadcast!!.runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, 300L)
 
             ConfigFeature.instance.data!!.set("matchpost.team", "Chosen To2")
@@ -470,6 +470,7 @@ class MatchpostCommand : CommandExecutor {
         ConfigFeature.instance.data!!.set("matchpost.scenarios", scenarios)
         ConfigFeature.instance.data!!.set("matchpost.opens", opening)
         ConfigFeature.instance.data!!.set("matchpost.server", server)
+        ConfigFeature.instance.data!!.set("matchpost.fake", false)
         if (Kraftwerk.instance.scheduledOpening != null) {
             Kraftwerk.instance.scheduledOpening!!.cancel()
         }
