@@ -239,7 +239,7 @@ class ScheduleOpening(private val opening: String) : BukkitRunnable() {
             embed.addField("Game Open!", "The game is now open at `${if (ConfigFeature.instance.config!!.getString("chat.serverIp") != null) ConfigFeature.instance.config!!.getString("chat.serverIp") else "no server ip setup in config tough tits"}`.", false)
             if (Kraftwerk.instance.gameAlertsChannelId != null) {
                 Discord.instance!!
-                    .getTextChannelById(Kraftwerk.instance.gameAlertsChannelId!!)!!
+                    .getNewsChannelById(Kraftwerk.instance.gameAlertsChannelId!!)!!
                     .sendMessageEmbeds(embed.build())
                     .queue {
                         message -> message.crosspost().queue()
