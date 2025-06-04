@@ -125,7 +125,7 @@ class EndGameCommand : CommandExecutor {
                     "game.kills.${Bukkit.getOfflinePlayer(it).name}"
                 )
             }]"
-        }
+        } 
         embed.addField("Winners", winners.joinToString(", ", "", "", -1, "...") {
             "**$it** [${
                 ConfigFeature.instance.data!!.getInt(
