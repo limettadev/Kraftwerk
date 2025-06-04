@@ -142,7 +142,7 @@ class EndGameCommand : CommandExecutor {
         embed.addField("Matchpost", "https://hosts.uhc.gg/m/${ConfigFeature.instance.data!!.getInt("matchpost.id")}", false)
         try {
             if (Kraftwerk.instance.winnersChannelId != null && !ConfigOptionHandler.getOption("statless")!!.enabled) {
-                Discord.instance!!.getTextChannelById(Kraftwerk.instance.winnersChannelId!!)!!.sendMessageEmbeds(embed.build()).queue()
+                Discord.instance!!.getNewsChannelById(Kraftwerk.instance.winnersChannelId!!)!!.sendMessageEmbeds(embed.build()).queue()
             } else {
                 Chat.broadcast("Couldn't post winners to Discord because there isn't a channel ID configured.")
             }
