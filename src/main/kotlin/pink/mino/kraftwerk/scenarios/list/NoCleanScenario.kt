@@ -50,6 +50,15 @@ class NoCleanScenario : Scenario(
     }
 
     @EventHandler
+    fun onPlayerDamage(e: org.bukkit.event.entity.EntityDamageEvent) {
+        if (!enabled) return
+        if (GameState.currentState != GameState.INGAME) return
+        if (e.entity.type == EntityType.PLAYER && noClean[e.entity as Player] != null) {
+            e.isCancelled = true
+        }
+    }
+
+    @EventHandler
     fun onPlayerDamage(e: EntityDamageByEntityEvent) {
         if (!enabled) return
         if (GameState.currentState != GameState.INGAME) return
