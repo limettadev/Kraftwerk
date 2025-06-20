@@ -2,6 +2,7 @@ name: Kraftwerk
 authors: [Minota, MrcsM, April]
 version: 1.3.0
 description: Plugin for managing UHCs.
+api-version: 1.13
 main: pink.mino.kraftwerk.Kraftwerk
 commands:
   heal:
@@ -431,4 +432,3 @@ depend:
   - ProtocolLib
   - Vault
   - Citizens
-  - HolographicDisplays

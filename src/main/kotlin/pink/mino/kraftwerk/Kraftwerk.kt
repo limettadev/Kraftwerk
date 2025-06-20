@@ -381,7 +381,9 @@ class Kraftwerk : ExtendedJavaPlugin() {
         ConfigFeature.instance.data!!.set("whitelist.enabled", ConfigFeature.instance.config!!.getBoolean("options.whitelist-after-restart"))
         ConfigFeature.instance.data!!.set("game.list", listOf<Any>())
         ConfigFeature.instance.saveData()
-        Leaderboards().runTaskTimer(this, 0L, 20L)
+        if (Bukkit.getPluginManager().getPlugin("HolographicDisplays") != null) {
+            Leaderboards().runTaskTimer(this, 0L, 20L)
+        }
         Bukkit.getLogger().info("Kraftwerk enabled.")
     }
 
