@@ -27,7 +27,7 @@ class EssenceOfYggdrasilRecipe : Recipe(
 ) {
     init {
         val essenceOfYggdrasil = ItemBuilder(Material.EXP_BOTTLE)
-            .name("&eEssence of Yggdrasil")
+            .name("<yellow>Essence of Yggdrasil")
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(essenceOfYggdrasil, id)).shape("LEL", "GBG", "LRL")
             .setIngredient('L', Material.LAPIS_BLOCK)
@@ -46,10 +46,10 @@ class EssenceOfYggdrasilRecipe : Recipe(
             return
         }
         val name = item.itemMeta.displayName
-        if (name == Chat.colored("&eEssence of Yggdrasil")) {
+        if (name == Chat.colored("<yellow>Essence of Yggdrasil")) {
             inv.result = null
             player.level += 30
-            Chat.sendMessage(player, "&eYou've been blessed by the Essence of Yggdrasil.")
+            Chat.sendMessage(player, "<yellow>You've been blessed by the Essence of Yggdrasil.")
             player.inventory.addItem(ItemStack(Material.ENCHANTMENT_TABLE, 2))
         }
     }

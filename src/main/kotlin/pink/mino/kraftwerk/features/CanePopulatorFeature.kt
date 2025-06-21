@@ -10,9 +10,11 @@ import org.bukkit.event.Listener
 import pink.mino.kraftwerk.events.ChunkModifiableEvent
 import java.util.*
 
+// TODO: Add 1.8 support
+
 class CanePopulatorFeature : Listener {
 
-    private var cane: Material = Material.SUGAR_CANE_BLOCK
+    private var cane: Material = Material.SUGAR_CANE
     private var faces: Array<BlockFace> = arrayOf(BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST)
 
     @EventHandler
@@ -32,7 +34,7 @@ class CanePopulatorFeature : Listener {
                     getHighestBlock(chunk, x, rand.nextInt(16))
                 }
                 if (block == null) continue
-                if (block.type == Material.GRASS || block.type == Material.SAND) {
+                if (block.type == Material.GRASS_BLOCK || block.type == Material.SAND) {
                     createCane(block, rand)
                 }
             }
@@ -56,7 +58,7 @@ class CanePopulatorFeature : Listener {
     private fun getHighestBlock(chunk: Chunk, x: Int, z: Int): Block? {
         var block: Block? = null
         for (i in 127 downTo 0) {
-            if (chunk.getBlock(x, i, z).also { block = it }.typeId != 0) {
+            if (chunk.getBlock(x, i, z).also { block = it }.type != Material.AIR) {
                 return block
             }
         }

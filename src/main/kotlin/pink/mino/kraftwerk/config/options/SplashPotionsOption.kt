@@ -10,12 +10,12 @@ class SplashPotionsOption : ConfigOption(
     "Toggles whether splash potions can be crafted.",
     "nether",
     "splashpotions",
-    Material.SULPHUR
+    Material.GUNPOWDER
 ) {
     @EventHandler
     fun onBrewEvent(e: BrewEvent) {
         if (enabled) return
-        if (e.contents.ingredient.type == Material.SULPHUR) {
+        if (e.contents.ingredient!!.type == Material.GUNPOWDER) {
             e.isCancelled = true
         }
     }

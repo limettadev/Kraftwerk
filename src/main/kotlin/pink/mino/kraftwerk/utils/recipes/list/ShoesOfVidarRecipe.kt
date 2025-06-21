@@ -12,8 +12,8 @@ import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ShapedRecipe
-import pink.mino.kraftwerk.utils.recipes.Recipe
 import pink.mino.kraftwerk.utils.ItemBuilder
+import pink.mino.kraftwerk.utils.recipes.Recipe
 
 class ShoesOfVidarRecipe : Recipe(
     "Shoes of Vidar",
@@ -24,7 +24,7 @@ class ShoesOfVidarRecipe : Recipe(
 ) {
     init {
         val shoesOfVidar = ItemBuilder(Material.DIAMOND_BOOTS)
-            .name("&eShoes of Vidar")
+            .name("<yellow>Shoes of Vidar")
             .addEnchantment(Enchantment.DURABILITY, 3)
             .addEnchantment(Enchantment.DEPTH_STRIDER, 2)
             .addEnchantment(Enchantment.PROTECTION_PROJECTILE, 2)

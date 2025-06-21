@@ -11,8 +11,8 @@ import kotlin.math.roundToInt
 class PMCCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<String>
     ): Boolean {
         if (sender !is Player) {
@@ -30,7 +30,7 @@ class PMCCommand : CommandExecutor {
         if (player.scoreboard.getPlayerTeam(player) != null) {
             for (team in player.scoreboard.getPlayerTeam(player).players) {
                 if (team is Player) {
-                    Chat.sendMessage(team, "§8[${Chat.primaryColor}Team Chat§8] ${ChatColor.WHITE}${sender.name} ${Chat.dash} ${Chat.primaryColor}${player.name}'s&7 location: ${Chat.primaryColor}${x}&7, ${Chat.primaryColor}${y}&7, ${Chat.primaryColor}${z} &8| &7Dimension: ${Chat.primaryColor}${player.world.worldType.toString().uppercase()}")
+                    Chat.sendMessage(team, "§8[${Chat.primaryColor}Team Chat§8] ${ChatColor.WHITE}${sender.name} ${Chat.dash} ${Chat.primaryColor}${player.name}'s<gray> location: ${Chat.primaryColor}${x}<gray>, ${Chat.primaryColor}${y}<gray>, ${Chat.primaryColor}${z} <dark_gray>| <gray>Dimension: ${Chat.primaryColor}${player.world.worldType.toString().uppercase()}")
                 }
             }
         }

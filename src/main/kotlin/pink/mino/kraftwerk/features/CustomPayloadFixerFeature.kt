@@ -43,7 +43,7 @@ class CustomPayloadFixerFeature(plugin: Kraftwerk) {
                 }
             }
         })
-        plugin.server.scheduler.runTaskTimer(plugin, {
+        plugin.server.scheduler.runTaskTimer(plugin, Runnable {
             val iterator: MutableIterator<Map.Entry<Player, Long>> = PACKET_USAGE.entries.iterator()
             while (iterator.hasNext()) {
                 val player = iterator.next().key
@@ -88,14 +88,9 @@ class CustomPayloadFixerFeature(plugin: Kraftwerk) {
             if (player.name.startsWith("UNKNOWN[")) {
                 return
             }
-            Bukkit.getServer().scheduler.runTask(
-                JavaPlugin.getPlugin(Kraftwerk::class.java)
-            ) {
-                JavaPlugin.getPlugin(Kraftwerk::class.java).server.dispatchCommand(
-                    JavaPlugin.getPlugin(Kraftwerk::class.java).server.consoleSender,
-                    "ban " + player.name + " crash_glitch"
-                )
-            }
+            Bukkit.getServer().scheduler.runTask(Kraftwerk.instance, Runnable {
+                Kraftwerk.instance.server.dispatchCommand(Kraftwerk.instance.server.consoleSender, "ban ${player.name} 1y Exploit Usage")
+            })
             JavaPlugin.getPlugin(Kraftwerk::class.java).server.logger
                 .log(Level.WARNING, player.name + " tried to exploit CustomPayload: " + ex.message, ex)
         }

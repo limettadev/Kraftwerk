@@ -30,9 +30,9 @@ class ExodusRecipe : Recipe(
 ) {
     init {
         val exodus = ItemBuilder(Material.DIAMOND_HELMET)
-            .name("&eExodus")
+            .name("<yellow>Exodus")
             .addEnchantment(Enchantment.DURABILITY, 3)
-            .addLore("&7Upon hitting a player with sword or bow, gain Regeneration I for 2.5 seconds, totals to 1 heart per hit.")
+            .addLore("<gray>Upon hitting a player with sword or bow, gain Regeneration I for 2.5 seconds, totals to 1 heart per hit.")
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(exodus, id)).shape("DDD", "DHD", "ECE")
             .setIngredient('D', Material.DIAMOND)
@@ -45,7 +45,7 @@ class ExodusRecipe : Recipe(
     fun onPvP(e: EntityDamageByEntityEvent) {
         if (e.damager is Player && e.entity is Player) {
             if ((e.damager as Player).inventory.helmet != null && (e.damager as Player).inventory.helmet.hasItemMeta() && (e.damager as Player).inventory.helmet.itemMeta.displayName == Chat.colored(
-                    "&eExodus"
+                    "<yellow>Exodus"
                 )
             ) {
                 if (!(e.damager as Player).hasPotionEffect(PotionEffectType.REGENERATION)) {

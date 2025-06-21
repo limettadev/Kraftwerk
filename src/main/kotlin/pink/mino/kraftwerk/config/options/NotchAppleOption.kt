@@ -20,7 +20,7 @@ class NotchAppleOption : ConfigOption(
         }
         val item: ItemStack? = e.currentItem
         if (item != null) {
-            e.isCancelled = item == ItemStack(Material.GOLDEN_APPLE, 1, 1.toShort())
+            e.isCancelled = item == ItemStack(Material.ENCHANTED_GOLDEN_APPLE, 1, 1.toShort())
         }
     }
 }

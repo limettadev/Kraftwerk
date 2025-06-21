@@ -13,12 +13,12 @@ import pink.mino.kraftwerk.utils.MiscUtils
 class TimersCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<out String>
     ): Boolean {
         if (JavaPlugin.getPlugin(Kraftwerk::class.java).game == null) {
-            Chat.sendMessage(sender, "&cNo game is running!")
+            Chat.sendMessage(sender, "<red>No game is running!")
             return true
         }
         val valid = arrayListOf<Scenario>()
@@ -27,11 +27,11 @@ class TimersCommand : CommandExecutor {
         for (scenario in ScenarioHandler.getActiveScenarios()) {
             if (scenario.returnTimer() != null) {
                 valid.add(scenario)
-                Chat.sendCenteredMessage(sender, "&7${scenario.name} &8- ${Chat.secondaryColor}${MiscUtils.timeToString(scenario.returnTimer()!!.toLong())}")
+                Chat.sendCenteredMessage(sender, "<gray>${scenario.name} <dark_gray>- ${Chat.secondaryColor}${MiscUtils.timeToString(scenario.returnTimer()!!.toLong())}")
             }
         }
         if (valid.isEmpty()) {
-            Chat.sendCenteredMessage(sender, "&cNo valid scenarios with timers are running.")
+            Chat.sendCenteredMessage(sender, "<red>No valid scenarios with timers are running.")
         }
         Chat.sendMessage(sender, Chat.line)
         return true

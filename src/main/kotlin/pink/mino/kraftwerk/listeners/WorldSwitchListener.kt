@@ -13,17 +13,17 @@ class WorldSwitchListener : Listener {
     fun onWorldSwitch(e: PlayerChangedWorldEvent) {
         when (e.player.gameMode) {
             GameMode.CREATIVE -> {
-                Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+                Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                     e.player.gameMode = GameMode.CREATIVE
                 }, 1L)
             }
             GameMode.SPECTATOR -> {
-                Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+                Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                     e.player.gameMode = GameMode.SPECTATOR
                 }, 1L)
             }
             GameMode.SURVIVAL -> {
-                Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+                Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                     e.player.gameMode = GameMode.SURVIVAL
                 }, 1L)
             }

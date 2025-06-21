@@ -13,8 +13,8 @@ import pink.mino.kraftwerk.utils.HelpOp
 class HelpOpReplyCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<String>
     ): Boolean {
         if (sender is Player) {
@@ -24,11 +24,11 @@ class HelpOpReplyCommand : CommandExecutor {
             }
         }
         if (args.isEmpty() || args.size <= 1) {
-            Chat.sendMessage(sender, "${Chat.prefix} Invalid usage: ${Chat.secondaryColor}/hr <id> <reply>&7.")
+            Chat.sendMessage(sender, "${Chat.prefix} Invalid usage: ${Chat.secondaryColor}/hr <id> <reply><gray>.")
             return false
         }
         if (args[0].toIntOrNull() == null) {
-            Chat.sendMessage(sender, "${Chat.prefix} Invalid ID: ${Chat.secondaryColor}/hr <id> <reply>&7.")
+            Chat.sendMessage(sender, "${Chat.prefix} Invalid ID: ${Chat.secondaryColor}/hr <id> <reply><gray>.")
             return false
         }
         val message = StringBuilder()
@@ -38,15 +38,15 @@ class HelpOpReplyCommand : CommandExecutor {
         val msg = message.toString().trim()
         val player = HelpOp.getHelpop(args[0].toInt())
         if (player == null) {
-            Chat.sendMessage(sender, "${Chat.prefix} Invalid ID: ${Chat.secondaryColor}/hr <id> <reply>&7.")
+            Chat.sendMessage(sender, "${Chat.prefix} Invalid ID: ${Chat.secondaryColor}/hr <id> <reply><gray>.")
             return false
         }
-        Chat.sendMessage(player, "&8[${Chat.primaryColor}Help-OP&8]${Chat.secondaryColor} ${sender.name}&7 replied with ${Chat.dash} &f&o${msg}")
-        Chat.sendMessage(sender, "&8[${Chat.primaryColor}Help-OP&8]&7 Successfully responded to ${Chat.secondaryColor}${player.name} ${Chat.dash} &f&o${msg}")
+        Chat.sendMessage(player, "<dark_gray>[${Chat.primaryColor}Help-OP<dark_gray>]${Chat.secondaryColor} ${sender.name}<gray> replied with ${Chat.dash} &f&o${msg}")
+        Chat.sendMessage(sender, "<dark_gray>[${Chat.primaryColor}Help-OP<dark_gray>]<gray> Successfully responded to ${Chat.secondaryColor}${player.name} ${Chat.dash} &f&o${msg}")
         HelpOp.answered(args[0].toInt())
         for (p in Bukkit.getOnlinePlayers()) {
             if (SpecFeature.instance.getSpecs().contains(p.name) && p != sender) {
-                if (player.name !== sender.name) Chat.sendMessage(p, "&8[${Chat.primaryColor}Help-OP&8]${Chat.secondaryColor} ${sender.name}&7 responded to ${Chat.secondaryColor}${player.name}&7 ${Chat.dash} &f&o${msg}")
+                if (player.name !== sender.name) Chat.sendMessage(p, "<dark_gray>[${Chat.primaryColor}Help-OP<dark_gray>]${Chat.secondaryColor} ${sender.name}<gray> responded to ${Chat.secondaryColor}${player.name}<gray> ${Chat.dash} &f&o${msg}")
             }
         }
         return true

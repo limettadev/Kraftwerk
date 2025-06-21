@@ -33,7 +33,7 @@ class CommandListener : Listener {
                     return
                 }
                 e.isCancelled = true
-                Chat.sendMessage(e.player, "&cYou don't have permission to perform that command.")
+                Chat.sendMessage(e.player, "<red>You don't have permission to perform that command.")
             }
         }
     }

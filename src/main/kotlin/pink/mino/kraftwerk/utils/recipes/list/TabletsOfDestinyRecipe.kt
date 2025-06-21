@@ -12,8 +12,8 @@ import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ShapedRecipe
-import pink.mino.kraftwerk.utils.recipes.Recipe
 import pink.mino.kraftwerk.utils.ItemBuilder
+import pink.mino.kraftwerk.utils.recipes.Recipe
 
 class TabletsOfDestinyRecipe : Recipe(
     "Tablets of Destiny",
@@ -24,7 +24,7 @@ class TabletsOfDestinyRecipe : Recipe(
 ) {
     init {
         val tabletsOfDestiny = ItemBuilder(Material.ENCHANTED_BOOK)
-            .name("&eTablets of Destiny")
+            .name("<yellow>Tablets of Destiny")
             .toEnchant()
             .addStoredEnchant(Enchantment.DAMAGE_ALL, 3)
             .addStoredEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 4)

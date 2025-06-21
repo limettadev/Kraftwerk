@@ -18,6 +18,6 @@ class NoAnvilScenario : Scenario(
         if (!enabled) return
         val player = e.view.player as? Player ?: return
         e.result = null
-        Chat.sendMessage(player, "&cYou cannot use the anvil in this gamemode.")
+        Chat.sendMessage(player, "<red>You cannot use the anvil in this gamemode.")
     }
 }

@@ -41,7 +41,7 @@ class ConfigFeature private constructor() {
                 Bukkit.getServer().logger.severe(ChatColor.RED.toString() + "Could not create config.yml!")
             }
         }
-        data = YamlConfiguration.loadConfiguration(dfile)
+        data = YamlConfiguration.loadConfiguration(dfile!!)
 
         wfile = File(p.dataFolder, "worlds.yml")
         if (!wfile!!.exists()) {
@@ -51,7 +51,7 @@ class ConfigFeature private constructor() {
                 Bukkit.getServer().logger.severe(ChatColor.RED.toString() + "Could not create worlds.yml!")
             }
         }
-        worlds = YamlConfiguration.loadConfiguration(wfile)
+        worlds = YamlConfiguration.loadConfiguration(wfile!!)
 
         val configFile = File(Kraftwerk.instance.dataFolder, "config.yml")
         if (!(configFile.exists())) {
@@ -72,7 +72,7 @@ class ConfigFeature private constructor() {
      */
     fun saveData() {
         try {
-            data!!.save(dfile)
+            data!!.save(dfile!!)
             val configFile = File(Kraftwerk.instance.dataFolder, "config.yml")
             config!!.save(configFile)
         } catch (ex: IOException) {
@@ -84,7 +84,7 @@ class ConfigFeature private constructor() {
      * Reloads the data file.
      */
     fun reloadData() {
-        data = YamlConfiguration.loadConfiguration(dfile)
+        data = YamlConfiguration.loadConfiguration(dfile!!)
     }
 
     companion object {
@@ -93,13 +93,13 @@ class ConfigFeature private constructor() {
 
     fun saveWorlds() {
         try {
-            worlds!!.save(wfile)
+            worlds!!.save(wfile!!)
         } catch (ex: IOException) {
             Bukkit.getServer().logger.severe(ChatColor.RED.toString() + "Could not save worlds.yml!")
         }
     }
 
     fun reloadWorlds() {
-        worlds = YamlConfiguration.loadConfiguration(wfile)
+        worlds = YamlConfiguration.loadConfiguration(wfile!!)
     }
 }

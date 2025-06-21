@@ -37,8 +37,8 @@ class StatsCommand : CommandExecutor {
 
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<String>
     ): Boolean {
         if (sender !is Player) {
@@ -53,7 +53,7 @@ class StatsCommand : CommandExecutor {
         }
         Promise.start()
             .thenRunSync runnable@ {
-                Chat.sendMessage(sender, "${Chat.prefix} &7Loading stats for ${Chat.secondaryColor}${target.name}&7...")
+                Chat.sendMessage(sender, "${Chat.prefix} <gray>Loading stats for ${Chat.secondaryColor}${target.name}<gray>...")
             }
             .thenApplyAsync {
                 JavaPlugin.getPlugin(Kraftwerk::class.java).statsHandler.lookupStatsPlayer(target)
@@ -62,20 +62,20 @@ class StatsCommand : CommandExecutor {
                 val ores = ItemBuilder(Material.DIAMOND_ORE)
                     .name(" ${Chat.primaryColor}&lOres")
                     .addLore(" ")
-                    .addLore(" &7Diamonds Mined ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.diamondsMined}")
-                    .addLore(" &7Gold Mined ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.goldMined}")
-                    .addLore(" &7Iron Mined ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.ironMined}")
+                    .addLore(" <gray>Diamonds Mined ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.diamondsMined}")
+                    .addLore(" <gray>Gold Mined ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.goldMined}")
+                    .addLore(" <gray>Iron Mined ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.ironMined}")
                     .addLore(" ")
                     .make()
                 val general = ItemBuilder(Material.DIAMOND)
                     .name(" ${Chat.primaryColor}&lGeneral")
                     .addLore(" ")
-                    .addLore(" &7Kills ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.kills}")
-                    .addLore(" &7Deaths ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.deaths}")
+                    .addLore(" <gray>Kills ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.kills}")
+                    .addLore(" <gray>Deaths ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.deaths}")
                     .addLore(" ")
-                    .addLore(" &7Wins ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.wins}")
-                    .addLore(" &7KDR ${Chat.dash} ${Chat.secondaryColor}${round((statsPlayer.kills.toDouble() / statsPlayer.deaths.toDouble()))}")
-                    .addLore(" &7Games Played ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.gamesPlayed}")
+                    .addLore(" <gray>Wins ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.wins}")
+                    .addLore(" <gray>KDR ${Chat.dash} ${Chat.secondaryColor}${round((statsPlayer.kills.toDouble() / statsPlayer.deaths.toDouble()))}")
+                    .addLore(" <gray>Games Played ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.gamesPlayed}")
                     .addLore(" ")
                     .noAttributes()
                     .make()
@@ -83,39 +83,39 @@ class StatsCommand : CommandExecutor {
                     .noAttributes()
                     .name(" ${Chat.primaryColor}&lPvP")
                     .addLore(" ")
-                    .addLore(" &7Damage Dealt ${Chat.dash } ${Chat.secondaryColor}${round(statsPlayer.damageDealt)}❤")
-                    .addLore(" &7Damage Taken ${Chat.dash } ${Chat.secondaryColor}${round(statsPlayer.damageTaken)}❤")
+                    .addLore(" <gray>Damage Dealt ${Chat.dash } ${Chat.secondaryColor}${round(statsPlayer.damageDealt)}❤")
+                    .addLore(" <gray>Damage Taken ${Chat.dash } ${Chat.secondaryColor}${round(statsPlayer.damageTaken)}❤")
                     .addLore(" ")
-                    .addLore(" &7Bow Shots ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.bowShots}")
-                    .addLore(" &8&o(${statsPlayer.bowMisses} misses, ${statsPlayer.bowHits} hits)")
+                    .addLore(" <gray>Bow Shots ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.bowShots}")
+                    .addLore(" <dark_gray>&o(${statsPlayer.bowMisses} misses, ${statsPlayer.bowHits} hits)")
                     .addLore(" ")
-                    .addLore(" &7Melee Hits ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.meleeHits}")
+                    .addLore(" <gray>Melee Hits ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.meleeHits}")
                     .addLore(" ")
                     .make()
                 val arena = ItemBuilder(Material.IRON_SWORD)
                     .noAttributes()
                     .name(" ${Chat.primaryColor}&lArena")
                     .addLore(" ")
-                    .addLore(" &7Kills ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.arenaKills}")
-                    .addLore(" &7Deaths ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.arenaDeaths}")
-                    .addLore(" &7Highest Killstreak ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.highestArenaKs}")
+                    .addLore(" <gray>Kills ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.arenaKills}")
+                    .addLore(" <gray>Deaths ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.arenaDeaths}")
+                    .addLore(" <gray>Highest Killstreak ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.highestArenaKs}")
                     .addLore(" ")
                     .make()
                 val misc = ItemBuilder(Material.WORKBENCH)
                     .name(" ${Chat.primaryColor}&lMisc.")
                     .addLore(" ")
-                    .addLore(" &7Times Enchanted ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.timesEnchanted}")
-                    .addLore(" &7Times Crafted  ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.timesCrafted}")
-                    .addLore(" &7Nether Travels  ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.timesNether}")
+                    .addLore(" <gray>Times Enchanted ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.timesEnchanted}")
+                    .addLore(" <gray>Times Crafted  ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.timesCrafted}")
+                    .addLore(" <gray>Nether Travels  ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.timesNether}")
 
-                    .addLore(" &7Gapples Eaten ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.gapplesEaten}")
-                    .addLore(" &7Gapples Crafted ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.gapplesEaten}")
+                    .addLore(" <gray>Gapples Eaten ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.gapplesEaten}")
+                    .addLore(" <gray>Gapples Crafted ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.gapplesEaten}")
                     .addLore(" ")
                     .make()
 
                 val skull = ItemBuilder(Material.SKULL_ITEM)
                     .name("${Chat.secondaryColor}${statsPlayer.player.name}")
-                    .addLore("&7The statistics for ${Chat.secondaryColor}${statsPlayer.player.name}&7.")
+                    .addLore("<gray>The statistics for ${Chat.secondaryColor}${statsPlayer.player.name}<gray>.")
                     .toSkull()
                     .setOwner(statsPlayer.player.name)
                     .make()
@@ -123,16 +123,16 @@ class StatsCommand : CommandExecutor {
                 val staff = ItemBuilder(Material.IRON_BLOCK)
                     .name(" ${Chat.primaryColor}&lStaff")
                     .addLore(" ")
-                    .addLore(" &7Time Spectated ${Chat.dash} ${Chat.secondaryColor}${timeToString(round(statsPlayer.timeSpectated.toDouble() / 1000).toLong())} ")
-                    .addLore(" &7Thank Yous ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.thankYous}")
+                    .addLore(" <gray>Time Spectated ${Chat.dash} ${Chat.secondaryColor}${timeToString(round(statsPlayer.timeSpectated.toDouble() / 1000).toLong())} ")
+                    .addLore(" <gray>Thank Yous ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.thankYous}")
                     .addLore(" ")
                     .make()
 
                 val resetStats = ItemBuilder(Material.BARRIER)
-                    .name(" &4&lReset Stats &7(Donator Perk)")
+                    .name(" &4&lReset Stats <gray>(Donator Perk)")
                     .addLore(" ")
-                    .addLore(" &7Clicking this will allow you to reset your statistics. ")
-                    .addLore(" &c&lWARNING:&c Doing this is a dangerous action! ")
+                    .addLore(" <gray>Clicking this will allow you to reset your statistics. ")
+                    .addLore(" <red>&lWARNING:<red> Doing this is a dangerous action! ")
                     .addLore(" ")
                     .make()
 
@@ -164,12 +164,12 @@ class StatsCommand : CommandExecutor {
 
                             val accept = ItemBuilder(Material.WOOL)
                                 .setDurability(5)
-                                .name("&aAccept")
-                                .addLore("&7Accept and reset your stats.")
+                                .name("<green>Accept")
+                                .addLore("<gray>Accept and reset your stats.")
                             val decline = ItemBuilder(Material.WOOL)
                                 .setDurability(14)
-                                .name("&cDecline")
-                                .addLore("&7Decline & go back to your stats page.")
+                                .name("<red>Decline")
+                                .addLore("<gray>Decline & go back to your stats page.")
                                 .make()
 
                             gui.item(3, accept.make()).onClick runnable@ {
@@ -197,7 +197,7 @@ class StatsCommand : CommandExecutor {
                                 Kraftwerk.instance.statsHandler.savePlayerData(statsPlayer)
 
                                 sender.closeInventory()
-                                sender.sendTitle(Chat.colored("&4RESET STATS!"), Chat.colored("&7Your statistics have been reset!"))
+                                sender.sendTitle(Chat.colored("&4RESET STATS!"), Chat.colored("<gray>Your statistics have been reset!"))
                                 Chat.sendMessage(sender, "${Chat.prefix} Your stats have been reset!")
                                 sender.playSound(sender.location, Sound.ANVIL_LAND, 1f, 1f)
                             }
@@ -206,7 +206,7 @@ class StatsCommand : CommandExecutor {
                             }
                             sender.openInventory(gui.make())
                         } else {
-                            Chat.sendMessage(sender, "&c&2Donator &cranks can reset their stats. Buy it at the store &e${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store url setup in config tough tits"}")
+                            Chat.sendMessage(sender, "<red>&2Donator <red>ranks can reset their stats. Buy it at the store <yellow>${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store url setup in config tough tits"}")
                         }
                     }
                 }

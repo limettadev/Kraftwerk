@@ -21,25 +21,25 @@ class MeetupBlockDecayOption : ConfigOption(
         if (!enabled) return
         if (JavaPlugin.getPlugin(Kraftwerk::class.java).game == null) return
         if (JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.timer <= JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.meetup) return
-        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
             BlockAnimation().blockCrackAnimation(e.player, e.block, 1)
-            Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+            Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                 BlockAnimation().blockCrackAnimation(e.player, e.block, 2)
-                Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+                Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                     BlockAnimation().blockCrackAnimation(e.player, e.block, 3)
-                    Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+                    Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                         BlockAnimation().blockCrackAnimation(e.player, e.block, 4)
-                        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+                        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                             BlockAnimation().blockCrackAnimation(e.player, e.block, 5)
-                            Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+                            Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                                 BlockAnimation().blockCrackAnimation(e.player, e.block, 6)
-                                Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+                                Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                                     BlockAnimation().blockCrackAnimation(e.player, e.block, 7)
-                                    Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+                                    Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                                         BlockAnimation().blockCrackAnimation(e.player, e.block, 8)
-                                        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+                                        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                                             BlockAnimation().blockCrackAnimation(e.player, e.block, 9)
-                                            Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+                                            Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                                                 BlockAnimation().blockBreakAnimation(null, e.block)
                                                 e.block.type = Material.AIR
                                             }, 40L)

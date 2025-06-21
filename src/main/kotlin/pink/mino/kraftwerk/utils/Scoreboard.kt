@@ -1,5 +1,6 @@
 package pink.mino.kraftwerk.utils
 
+import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.scoreboard.DisplaySlot
 import org.bukkit.scoreboard.Objective
@@ -28,7 +29,8 @@ class Scoreboard {
             if (sb.getObjective("killboard") == null) {
                 kills = sb.registerNewObjective("killboard", "dummy")
             }
-            kills!!.displayName = Chat.colored(Chat.scoreboardTitle)
+            // Use Adventure Component for display name
+            kills!!.displayName(Component.text(Chat.scoreboardTitle!!))
             kills!!.displaySlot = DisplaySlot.SIDEBAR
         }
     }

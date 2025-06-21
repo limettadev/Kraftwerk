@@ -13,11 +13,11 @@ import me.lucko.helper.utils.Log
 import me.lucko.spark.api.Spark
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.entities.Activity
+import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.*
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ShapedRecipe
 import org.bukkit.inventory.meta.ItemMeta
-import org.bukkit.material.MaterialData
 import pink.mino.kraftwerk.commands.*
 import pink.mino.kraftwerk.config.ConfigOptionHandler
 import pink.mino.kraftwerk.discord.Discord
@@ -129,112 +129,112 @@ class Kraftwerk : ExtendedJavaPlugin() {
         //Bukkit.getServer().pluginManager.registerEvents(MLGFeature(), this)
 
         /* Registering commands */
-        getCommand("clear").executor = ClearInventoryCommand()
-        getCommand("cleareffects").executor = ClearPotionEffectsCommand()
-        getCommand("feed").executor = FeedCommand()
-        getCommand("heal").executor = HealCommand()
-        getCommand("fly").executor = FlyCommand()
-        getCommand("pregen").executor = PregenCommand()
-        getCommand("config").executor = ConfigCommand()
-        getCommand("editconfig").executor = EditConfigCommand()
-        getCommand("world").executor = WorldCommand()
-        getCommand("clearchat").executor = ClearChatCommand()
-        getCommand("whitelist").executor = WhitelistCommand()
-        getCommand("regenarena").executor = RegenArenaCommand()
-        getCommand("start").executor = StartCommand()
-        getCommand("border").executor = BorderCommand()
-        getCommand("end").executor = EndGameCommand()
-        getCommand("winner").executor = WinnerCommand()
-        getCommand("latescatter").executor = LatescatterCommand()
-        getCommand("matchpost").executor = MatchpostCommand()
-        getCommand("scenariomanager").executor = ScenarioManagerCommand()
-        getCommand("spectate").executor = SpectateCommand()
-        getCommand("specchat").executor = SpecChatCommand()
-        getCommand("helpop").executor = HelpOpCommand()
-        getCommand("helpopreply").executor = HelpOpReplyCommand()
-        getCommand("tppos").executor = TeleportPositionCommand()
-        getCommand("tp").executor = TeleportCommand()
-        getCommand("cancel").executor = CancelCommand()
-        getCommand("near").executor = NearbyCommand()
-        getCommand("startvote").executor = StartVoteCommand()
-        getCommand("force").executor = ForceCommand()
-        getCommand("respawn").executor = RespawnCommand()
-        getCommand("editpregen").executor = EditPregenCommand()
-        getCommand("generate").executor = GenerateCommand()
-        getCommand("giveitems").executor = GiveItemsCommand()
-        getCommand("invsee").executor = InvseeCommand()
-        getCommand("helpoplist").executor = HelpopListCommand()
-        getCommand("game").executor = GameCommand()
-        getCommand("setspawn").executor = SetSpawnCommand()
-        getCommand("orgs").executor = OrganizedFightsCommand()
+        getCommand("clear")!!.setExecutor(ClearInventoryCommand())
+        getCommand("cleareffects")!!.setExecutor(ClearPotionEffectsCommand())
+        getCommand("feed")!!.setExecutor(FeedCommand())
+        getCommand("heal")!!.setExecutor(HealCommand())
+        getCommand("fly")!!.setExecutor(FlyCommand())
+        getCommand("pregen")!!.setExecutor(PregenCommand())
+        getCommand("config")!!.setExecutor(ConfigCommand())
+        getCommand("editconfig")!!.setExecutor(EditConfigCommand())
+        getCommand("world")!!.setExecutor(WorldCommand())
+        getCommand("clearchat")!!.setExecutor(ClearChatCommand())
+        getCommand("whitelist")!!.setExecutor(WhitelistCommand())
+        getCommand("regenarena")!!.setExecutor(RegenArenaCommand())
+        getCommand("start")!!.setExecutor(StartCommand())
+        getCommand("border")!!.setExecutor(BorderCommand())
+        getCommand("end")!!.setExecutor(EndGameCommand())
+        getCommand("winner")!!.setExecutor(WinnerCommand())
+        getCommand("latescatter")!!.setExecutor(LatescatterCommand())
+        getCommand("matchpost")!!.setExecutor(MatchpostCommand())
+        getCommand("scenariomanager")!!.setExecutor(ScenarioManagerCommand())
+        getCommand("spectate")!!.setExecutor(SpectateCommand())
+        getCommand("specchat")!!.setExecutor(SpecChatCommand())
+        getCommand("helpop")!!.setExecutor(HelpOpCommand())
+        getCommand("helpopreply")!!.setExecutor(HelpOpReplyCommand())
+        getCommand("tppos")!!.setExecutor(TeleportPositionCommand())
+        getCommand("tp")!!.setExecutor(TeleportCommand())
+        getCommand("cancel")!!.setExecutor(CancelCommand())
+        getCommand("near")!!.setExecutor(NearbyCommand())
+        getCommand("startvote")!!.setExecutor(StartVoteCommand())
+        getCommand("force")!!.setExecutor(ForceCommand())
+        getCommand("respawn")!!.setExecutor(RespawnCommand())
+        getCommand("editpregen")!!.setExecutor(EditPregenCommand())
+        getCommand("generate")!!.setExecutor(GenerateCommand())
+        getCommand("giveitems")!!.setExecutor(GiveItemsCommand())
+        getCommand("invsee")!!.setExecutor(InvseeCommand())
+        getCommand("helpoplist")!!.setExecutor(HelpopListCommand())
+        getCommand("game")!!.setExecutor(GameCommand())
+        getCommand("setspawn")!!.setExecutor(SetSpawnCommand())
+        getCommand("orgs")!!.setExecutor(OrganizedFightsCommand())
 
-        getCommand("gm").executor = GamemodeCommand()
-        getCommand("gamemode").executor = GamemodeCommand()
-        getCommand("gma").executor = GamemodeCommand()
-        getCommand("gms").executor = GamemodeCommand()
-        getCommand("gmsp").executor = GamemodeCommand()
-        getCommand("gmc").executor = GamemodeCommand()
+        getCommand("gm")!!.setExecutor(GamemodeCommand())
+        getCommand("gamemode")!!.setExecutor(GamemodeCommand())
+        getCommand("gma")!!.setExecutor(GamemodeCommand())
+        getCommand("gms")!!.setExecutor(GamemodeCommand())
+        getCommand("gmsp")!!.setExecutor(GamemodeCommand())
+        getCommand("gmc")!!.setExecutor(GamemodeCommand())
 
-        getCommand("msg").executor = MessageCommand()
-        getCommand("reply").executor = ReplyCommand()
-        getCommand("team").executor = TeamCommand()
-        getCommand("health").executor = HealthCommand()
-        getCommand("pm").executor = PMCommand()
-        getCommand("pmc").executor = PMCCommand()
-        getCommand("pmores").executor = PMOresCommand()
-        getCommand("pmminedores").executor = PMMOresCommand()
-        getCommand("spawn").executor = SpawnCommand()
-        getCommand("killtop").executor = KillTopCommand()
-        getCommand("scenarios").executor = ScenarioCommand()
-        getCommand("discord").executor = DiscordCommand()
-        getCommand("apply").executor = ApplyCommand()
-        getCommand("teaminventory").executor = TeamInventoryCommand()
-        getCommand("moles").executor = MolesCommand()
-        getCommand("molekit").executor = MoleKitCommand()
-        getCommand("molechat").executor = MoleChatCommand()
-        getCommand("moleloc").executor = MoleLocationCommand()
-        getCommand("molelist").executor = MolesListCommand()
-        getCommand("store").executor = StoreCommand()
-        getCommand("rules").executor = RulesCommand()
-        getCommand("statistics").executor = StatsCommand()
-        getCommand("ping").executor = PingCommand()
-        getCommand("voteyes").executor = VoteYesCommand()
-        getCommand("voteno").executor = VoteNoCommand()
-        getCommand("donator").executor = DonatorCommand()
-        getCommand("fullbright").executor = FullbrightCommand()
-        getCommand("timers").executor = TimersCommand()
-        getCommand("arena").executor = ArenaCommand()
-        getCommand("deathloc").executor = DeathLocCommand()
-        getCommand("media").executor = MediaCommand()
-        getCommand("enemyrecon").executor = EnemyReconCommand()
-        getCommand("ignore").executor = IgnoreCommand()
-        getCommand("profile").executor = ProfileCommand()
-        getCommand("portalloc").executor = PortalPosCommand()
-        getCommand("chat").executor = ChatCommand()
-        getCommand("staffchat").executor = StaffChatCommand()
-        getCommand("emotes").executor = EmotesCommand()
-        getCommand("redstone").executor = RedstoneCommand()
-        getCommand("lapis").executor = LapisCommand()
-        getCommand("granttag").executor = GrantTagCommand()
-        getCommand("thanks").executor = ThanksCommand()
-        getCommand("fight").executor = FightCommand()
-        getCommand("resethealth").executor = ResetHealthCommand()
-        getCommand("buildmode").executor = BuildModeCommand()
-        getCommand("setthing").executor = SetThingCommand()
-        getCommand("alts").executor = AltsCommand()
-        getCommand("ban").executor = BanCommand()
-        getCommand("kick").executor = KickCommand()
-        getCommand("mute").executor = MuteCommand()
-        getCommand("helpopmute").executor = HelpopMuteCommand()
-        getCommand("disqualify").executor = DisqualifyCommand()
-        getCommand("warn").executor = WarnCommand()
-        getCommand("unban").executor = UnbanCommand()
-        getCommand("unhelpopmute").executor = UnHelpopMuteCommand()
-        getCommand("unmute").executor = UnmuteCommand()
-        getCommand("plugins").executor = PluginsCommand()
-        getCommand("recipes").executor = RecipeCommand()
-        getCommand("extend").executor = ExtendCommand()
-        //getCommand("hotbar").executor = HotbarCommand()
+        getCommand("msg")!!.setExecutor(MessageCommand())
+        getCommand("reply")!!.setExecutor(ReplyCommand())
+        getCommand("team")!!.setExecutor(TeamCommand())
+        getCommand("health")!!.setExecutor(HealthCommand())
+        getCommand("pm")!!.setExecutor(PMCommand())
+        getCommand("pmc")!!.setExecutor(PMCCommand())
+        getCommand("pmores")!!.setExecutor(PMOresCommand())
+        getCommand("pmminedores")!!.setExecutor(PMMOresCommand())
+        getCommand("spawn")!!.setExecutor(SpawnCommand())
+        getCommand("killtop")!!.setExecutor(KillTopCommand())
+        getCommand("scenarios")!!.setExecutor(ScenarioCommand())
+        getCommand("discord")!!.setExecutor(DiscordCommand())
+        getCommand("apply")!!.setExecutor(ApplyCommand())
+        getCommand("teaminventory")!!.setExecutor(TeamInventoryCommand())
+        getCommand("moles")!!.setExecutor(MolesCommand())
+        getCommand("molekit")!!.setExecutor(MoleKitCommand())
+        getCommand("molechat")!!.setExecutor(MoleChatCommand())
+        getCommand("moleloc")!!.setExecutor(MoleLocationCommand())
+        getCommand("molelist")!!.setExecutor(MolesListCommand())
+        getCommand("store")!!.setExecutor(StoreCommand())
+        getCommand("rules")!!.setExecutor(RulesCommand())
+        getCommand("statistics")!!.setExecutor(StatsCommand())
+        getCommand("ping")!!.setExecutor(PingCommand())
+        getCommand("voteyes")!!.setExecutor(VoteYesCommand())
+        getCommand("voteno")!!.setExecutor(VoteNoCommand())
+        getCommand("donator")!!.setExecutor(DonatorCommand())
+        getCommand("fullbright")!!.setExecutor(FullbrightCommand())
+        getCommand("timers")!!.setExecutor(TimersCommand())
+        getCommand("arena")!!.setExecutor(ArenaCommand())
+        getCommand("deathloc")!!.setExecutor(DeathLocCommand())
+        getCommand("media")!!.setExecutor(MediaCommand())
+        getCommand("enemyrecon")!!.setExecutor(EnemyReconCommand())
+        getCommand("ignore")!!.setExecutor(IgnoreCommand())
+        getCommand("profile")!!.setExecutor(ProfileCommand())
+        getCommand("portalloc")!!.setExecutor(PortalPosCommand())
+        getCommand("chat")!!.setExecutor(ChatCommand())
+        getCommand("staffchat")!!.setExecutor(StaffChatCommand())
+        getCommand("emotes")!!.setExecutor(EmotesCommand())
+        getCommand("redstone")!!.setExecutor(RedstoneCommand())
+        getCommand("lapis")!!.setExecutor(LapisCommand())
+        getCommand("granttag")!!.setExecutor(GrantTagCommand())
+        getCommand("thanks")!!.setExecutor(ThanksCommand())
+        getCommand("fight")!!.setExecutor(FightCommand())
+        getCommand("resethealth")!!.setExecutor(ResetHealthCommand())
+        getCommand("buildmode")!!.setExecutor(BuildModeCommand())
+        getCommand("setthing")!!.setExecutor(SetThingCommand())
+        getCommand("alts")!!.setExecutor(AltsCommand())
+        getCommand("ban")!!.setExecutor(BanCommand())
+        getCommand("kick")!!.setExecutor(KickCommand())
+        getCommand("mute")!!.setExecutor(MuteCommand())
+        getCommand("helpopmute")!!.setExecutor(HelpopMuteCommand())
+        getCommand("disqualify")!!.setExecutor(DisqualifyCommand())
+        getCommand("warn")!!.setExecutor(WarnCommand())
+        getCommand("unban")!!.setExecutor(UnbanCommand())
+        getCommand("unhelpopmute")!!.setExecutor(UnHelpopMuteCommand())
+        getCommand("unmute")!!.setExecutor(UnmuteCommand())
+        getCommand("plugins")!!.setExecutor(PluginsCommand())
+        getCommand("recipes")!!.setExecutor(RecipeCommand())
+        getCommand("extend")!!.setExecutor(ExtendCommand())
+        //getCommand("hotbar")!!.setExecutor(HotbarCommand()
 
         /* ProtocolLib stuff */
         if (Bukkit.getPluginManager().getPlugin("ProtocolLib") == null) {
@@ -281,7 +281,7 @@ class Kraftwerk : ExtendedJavaPlugin() {
                                 Schedulers.sync().run {
                                     val player = Bukkit.getPlayer(playerJoinMessage.playerUniqueId)
                                     if (player != null) {
-                                        player.kickPlayer(Chat.colored("&cYou've logged into a new location."))
+                                        player.kick(Chat.colored("<red>You've logged into a new location."))
                                     }
                                 }
                             }
@@ -305,18 +305,18 @@ class Kraftwerk : ExtendedJavaPlugin() {
             ConfigFeature.instance.saveData()
             if (!ConfigFeature.instance.data!!.getBoolean("matchpost.cancelled")) {
                 if (ConfigFeature.instance.data!!.getString("matchpost.opens") != null) {
-                    scheduledBroadcast = ScheduleBroadcast(ConfigFeature.instance.data!!.getString("matchpost.opens"))
+                    scheduledBroadcast = ScheduleBroadcast(ConfigFeature.instance.data!!.getString("matchpost.opens")!!)
                     scheduledBroadcast!!.runTaskTimer(this, 0L, 300L)
-                    scheduledOpening = ScheduleOpening(ConfigFeature.instance.data!!.getString("matchpost.opens"))
+                    scheduledOpening = ScheduleOpening(ConfigFeature.instance.data!!.getString("matchpost.opens")!!)
                     scheduledOpening!!.runTaskTimer(this, 0L, 300L)
 
                 }
                 if (ConfigFeature.instance.data!!.getString("matchpost.host") == null) {
-                    Discord.instance!!.presence.activity = Activity.playing(if (ConfigFeature.instance.config!!.getString("chat.serverIp") != null) ConfigFeature.instance.config!!.getString("chat.serverIp") else "no server ip setup in config tough tits")
+                    Discord.instance!!.presence.activity = Activity.playing(if (ConfigFeature.instance.config!!.getString("chat.serverIp") != null) ConfigFeature.instance.config!!.getString("chat.serverIp")!! else "no server ip setup in config tough tits")
                 }
-                else Discord.instance!!.presence.activity = Activity.playing(ConfigFeature.instance.data!!.getString("matchpost.host"))
+                else Discord.instance!!.presence.activity = Activity.playing(ConfigFeature.instance.data!!.getString("matchpost.host")!!)
             } else {
-                Discord.instance!!.presence.activity = Activity.playing(if (ConfigFeature.instance.config!!.getString("chat.serverIp") != null) ConfigFeature.instance.config!!.getString("chat.serverIp") else "no server ip setup in config tough tits")
+                Discord.instance!!.presence.activity = Activity.playing(if (ConfigFeature.instance.config!!.getString("chat.serverIp") != null) ConfigFeature.instance.config!!.getString("chat.serverIp")!! else "no server ip setup in config tough tits")
                 ConfigFeature.instance.data!!.set("matchpost.cancelled", null)
                 ConfigFeature.instance.saveData()
             }
@@ -355,11 +355,11 @@ class Kraftwerk : ExtendedJavaPlugin() {
                 server.createWorld(WorldCreator(world))
             } else {
                 val wc = WorldCreator(world)
-                if (ConfigFeature.instance.worlds!!.getString("${world}.type").lowercase() == "normal") {
+                if (ConfigFeature.instance.worlds!!.getString("${world}.type")!!.lowercase() == "normal") {
                     wc.environment(World.Environment.NORMAL)
-                } else if (ConfigFeature.instance.worlds!!.getString("${world}.type").lowercase() == "nether") {
+                } else if (ConfigFeature.instance.worlds!!.getString("${world}.type")!!.lowercase() == "nether") {
                     wc.environment(World.Environment.NETHER)
-                } else if (ConfigFeature.instance.worlds!!.getString("${world}.type").lowercase() == "end") {
+                } else if (ConfigFeature.instance.worlds!!.getString("${world}.type")!!.lowercase() == "end") {
                     wc.environment(World.Environment.THE_END)
                 } else {
                     wc.environment(World.Environment.NORMAL)
@@ -432,42 +432,40 @@ class Kraftwerk : ExtendedJavaPlugin() {
         Bukkit.getServer().shutdown()
     }
 
+    // TODO: ADD 1.8 SUPPORT
     fun addRecipes() {
-        val mater = MaterialData(Material.SKULL_ITEM)
-        mater.data = 3.toByte()
+        val mater = Material.PLAYER_HEAD
         val head = ItemStack(Material.GOLDEN_APPLE)
         val meta: ItemMeta = head.itemMeta
-        meta.displayName = ChatColor.GOLD.toString() + "Golden Head"
+        meta.displayName(MiniMessage.miniMessage().deserialize("<gold>Golden Head"))
         meta.lore = listOf(ChatColor.DARK_PURPLE.toString() + "Some say consuming the head of a", ChatColor.DARK_PURPLE.toString() + "fallen foe strengthens the blood.")
         head.itemMeta = meta
         val goldenHead: ShapedRecipe = ShapedRecipe(head).shape("@@@", "@*@", "@@@").setIngredient('@', Material.GOLD_INGOT).setIngredient('*', mater)
         Bukkit.getServer().addRecipe(goldenHead)
 
-        val wools = ArrayList(
-            listOf(
-                ItemStack(Material.WOOL, 1, 0),
-                ItemStack(Material.WOOL, 1, 1),
-                ItemStack(Material.WOOL, 1, 2),
-                ItemStack(Material.WOOL, 1, 3),
-                ItemStack(Material.WOOL, 1, 4),
-                ItemStack(Material.WOOL, 1, 5),
-                ItemStack(Material.WOOL, 1, 6),
-                ItemStack(Material.WOOL, 1, 7),
-                ItemStack(Material.WOOL, 1, 8),
-                ItemStack(Material.WOOL, 1, 9),
-                ItemStack(Material.WOOL, 1, 10),
-                ItemStack(Material.WOOL, 1, 11),
-                ItemStack(Material.WOOL, 1, 12),
-                ItemStack(Material.WOOL, 1, 13),
-                ItemStack(Material.WOOL, 1, 14),
-                ItemStack(Material.WOOL, 1, 15)
-            )
+        val woolMaterials = listOf(
+            Material.WHITE_WOOL,
+            Material.ORANGE_WOOL,
+            Material.MAGENTA_WOOL,
+            Material.LIGHT_BLUE_WOOL,
+            Material.YELLOW_WOOL,
+            Material.LIME_WOOL,
+            Material.PINK_WOOL,
+            Material.GRAY_WOOL,
+            Material.LIGHT_GRAY_WOOL,
+            Material.CYAN_WOOL,
+            Material.PURPLE_WOOL,
+            Material.BLUE_WOOL,
+            Material.BROWN_WOOL,
+            Material.GREEN_WOOL,
+            Material.RED_WOOL,
+            Material.BLACK_WOOL
         )
 
-        for (wool in wools) {
-            val recipe = ShapedRecipe(ItemStack(Material.STRING))
+        for (woolMaterial in woolMaterials) {
+            val recipe = ShapedRecipe(NamespacedKey.randomKey(), ItemStack(Material.STRING))
                 .shape("AA", "AA")
-                .setIngredient('A', wool.data)
+                .setIngredient('A', woolMaterial)
             Bukkit.addRecipe(recipe)
         }
     }

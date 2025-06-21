@@ -1,8 +1,8 @@
 package pink.mino.kraftwerk.listeners
 
-import net.minecraft.server.v1_8_R3.EntityLiving
+import net.minecraft.server.level.ServerPlayer
 import org.bukkit.Bukkit
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
+import org.bukkit.craftbukkit.entity.CraftPlayer
 import org.bukkit.entity.Arrow
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
@@ -20,20 +20,20 @@ class ShootListener : Listener {
     @EventHandler
     fun onShoot(e: EntityDamageByEntityEvent) {
         if (e.damager.type == EntityType.ARROW && ((e.damager as Arrow).shooter) is Player && e.entity.type == EntityType.PLAYER) {
-            Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+            Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                 val shooter = ((e.damager as Arrow).shooter) as Player
                 val victim = e.entity as Player
-                val el: EntityLiving = (victim as CraftPlayer).handle
-                val health = floor(victim.health / 2 * 10 + el.absorptionHearts / 2 * 10)
+                val el: ServerPlayer = (victim as CraftPlayer).handle
+                val health = floor(victim.health / 2 * 10 + el.absorptionAmount / 2 * 10)
                 val color = HealthChatColorer.returnHealth(health)
                 val preference = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(shooter.uniqueId)!!.projectileMessages
                 if (ScenarioHandler.getActiveScenarios().contains(ScenarioHandler.getScenario("parafusion"))) {
-                    return@runTaskLater
+                    return@Runnable
                 } else {
                     if (preference == "CHAT") {
-                        Chat.sendMessage(shooter, "${Chat.dash} ${Chat.secondaryColor}${victim.name}&7 is at ${color}${health}%&7!")
+                        Chat.sendMessage(shooter, "${Chat.dash} ${Chat.secondaryColor}${victim.name}<gray> is at ${color}${health}%<gray>!")
                     } else if (preference == "SUBTITLE") {
-                        shooter.sendTitle(Chat.colored("&7"), Chat.colored("${Chat.secondaryColor}${victim.name}&7 is at ${color}${health}%&7!"))
+                        shooter.sendTitle(Chat.colored("<gray>"), Chat.colored("${Chat.secondaryColor}${victim.name}<gray> is at ${color}${health}%<gray>!"))
                     }
                 }
             }, 1L)

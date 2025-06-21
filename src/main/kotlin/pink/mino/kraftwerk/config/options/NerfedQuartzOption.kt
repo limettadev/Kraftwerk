@@ -10,12 +10,12 @@ class NerfedQuartzOption : ConfigOption(
     "Halves the XP of Quartz.",
     "nether",
     "nerfedquartz",
-    Material.QUARTZ_ORE
+    Material.NETHER_QUARTZ_ORE
 ) {
     @EventHandler
     fun onBlockBreak(e: BlockBreakEvent) {
         if (!enabled) return
-        if (e.block.type != Material.QUARTZ_ORE) return
+        if (e.block.type != Material.NETHER_QUARTZ_ORE) return
         e.expToDrop = e.expToDrop / 2
     }
 }

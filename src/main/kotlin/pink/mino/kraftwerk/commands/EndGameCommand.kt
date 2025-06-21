@@ -6,6 +6,7 @@ import com.mongodb.client.model.FindOneAndReplaceOptions
 import me.lucko.helper.utils.Log
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.utils.FileUpload
+import net.kyori.adventure.title.Title
 import org.bson.Document
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
@@ -30,38 +31,38 @@ import java.util.*
 class EndGameCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<String>
     ): Boolean {
         if (sender is Player) {
             if (!sender.hasPermission("uhc.staff")) {
-                Chat.sendMessage(sender, "&cYou don't have permission to use this command.")
+                Chat.sendMessage(sender, "<red>You don't have permission to use this command.")
                 return false
             }
         }
         GameState.currentState = GameState.LOBBY
         val winners = ConfigFeature.instance.data!!.getStringList("game.winners")
         if (winners.isEmpty()) {
-            Chat.sendMessage(sender, "&cYou have no winners set! You need to set them using /winner <player>!")
+            Chat.sendMessage(sender, "<red>You have no winners set! You need to set them using /winner <player>!")
             return false
         }
         val winnersList = arrayListOf<String>()
         val kills = hashMapOf<String, Int>()
-        val host = Bukkit.getOfflinePlayer(ConfigFeature.instance.data!!.getString("game.host"))
+        val host = Bukkit.getOfflinePlayer(ConfigFeature.instance.data!!.getString("game.host")!!)
 
         for (player in Bukkit.getOnlinePlayers()) {
             if (winners.contains(player.name)) {
-                player.sendTitle(Chat.colored("&6&lVICTORY!"), Chat.colored("&7Congratulations, you won the game!"))
+                player.showTitle(Title.title(Chat.colored("&6&lVICTORY!"), Chat.colored("<gray>Congratulations, you won the game!")))
             } else {
-                player.sendTitle(Chat.colored("${Chat.primaryColor}&lGAME OVER!"), Chat.colored("&7The game has concluded!"))
+                player.showTitle(Title.title(Chat.colored("${Chat.primaryColor}&lGAME OVER!"), Chat.colored("<gray>The game has concluded!")))
             }
         }
 
         for (winner in winners) {
             val player = Bukkit.getOfflinePlayer(winner)
             if (player == null) {
-                Chat.sendMessage(sender, "&cInvalid player '${winner}', not adding to winner's list.")
+                Chat.sendMessage(sender, "<red>Invalid player '${winner}', not adding to winner's list.")
             } else {
                 winnersList.add(player.uniqueId.toString())
                 kills[player.uniqueId.toString()] = ConfigFeature.instance.data!!.getInt("game.kills." + player.name)
@@ -116,7 +117,7 @@ class EndGameCommand : CommandExecutor {
             e.printStackTrace()
         }
         val embed = EmbedBuilder()
-        embed.setColor(MiscUtils.hexToColor(ConfigFeature.instance.config!!.getString("discord.embed-color")))
+        embed.setColor(MiscUtils.hexToColor(ConfigFeature.instance.config!!.getString("discord.embed-color")!!))
         embed.setTitle(ConfigFeature.instance.data!!.getString("matchpost.host"))
         embed.setThumbnail("https://visage.surgeplay.com/bust/512/${host.uniqueId}")
         winners.joinToString(", ", "", "", -1, "...") {
@@ -161,19 +162,19 @@ class EndGameCommand : CommandExecutor {
         ConfigFeature.instance.data!!.set("matchpost.host", null)
         ConfigFeature.instance.data!!.set("matchpost.posted", null)
         ConfigFeature.instance.saveData()
-        Bukkit.broadcastMessage(Chat.colored(Chat.line))
+        Bukkit.broadcast(Chat.colored(Chat.line))
         for (player in Bukkit.getOnlinePlayers()) {
             if (SpecFeature.instance.isSpec(player)) SpecFeature.instance.unspec(player)
             SpawnFeature.instance.send(player)
             Chat.sendCenteredMessage(player, "${Chat.primaryColor}&lGAME OVER!")
             Chat.sendMessage(player, " ")
-            Chat.sendCenteredMessage(player, "&7Congratulations to the winners: ${Chat.secondaryColor}${winners.joinToString(", ")}&7!")
-            Chat.sendCenteredMessage(player, "&7The server will restart in ${Chat.secondaryColor}45 seconds&7.")
+            Chat.sendCenteredMessage(player, "<gray>Congratulations to the winners: ${Chat.secondaryColor}${winners.joinToString(", ")}<gray>!")
+            Chat.sendCenteredMessage(player, "<gray>The server will restart in ${Chat.secondaryColor}45 seconds<gray>.")
         }
         for (world in Bukkit.getWorlds()) {
             world.pvp = true
         }
-        val world = Bukkit.getWorld(ConfigFeature.instance.data!!.getString("pregen.world"))
+        val world = Bukkit.getWorld(ConfigFeature.instance.data!!.getString("pregen.world")!!)!!
         Bukkit.getServer().unloadWorld(world.name, true)
         for (file in Bukkit.getServer().worldContainer.listFiles()!!) {
             if (file.name.lowercase() == world.name.lowercase()) {
@@ -186,13 +187,13 @@ class EndGameCommand : CommandExecutor {
         ConfigFeature.instance.saveData()
         ConfigFeature.instance.worlds!!.set(world.name, null)
         ConfigFeature.instance.saveWorlds()
-        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
             for (player in Bukkit.getOnlinePlayers()) {
-                player.kickPlayer(Chat.colored(if (ConfigFeature.instance.config!!.getString("chat.deathKick") != null) ConfigFeature.instance.config!!.getString("chat.deathKick") else "no death kick message sent but... thanks for playing :3"))
+                player.kick(Chat.colored(if (ConfigFeature.instance.config!!.getString("chat.deathKick") != null) ConfigFeature.instance.config!!.getString("chat.deathKick")!! else "no death kick message sent but... thanks for playing :3"))
             }
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "restart")
         }, 900L)
-        Bukkit.broadcastMessage(Chat.colored(Chat.line))
+        Bukkit.broadcast(Chat.colored(Chat.line))
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wl off")
         Leaderboards.updateLeaderboards()
         val log = File("./logs/latest.log")

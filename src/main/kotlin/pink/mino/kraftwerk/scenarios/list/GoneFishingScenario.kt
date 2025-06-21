@@ -51,7 +51,7 @@ class GoneFishingScenario : Scenario(
     fun onEnchant(e: EnchantItemEvent) {
         if (enabled) {
             e.isCancelled = true
-            Chat.sendMessage(e.enchanter, "&cYou can't enchant this item in a Gone Fishin' game!")
+            Chat.sendMessage(e.enchanter, "<red>You can't enchant this item in a Gone Fishin' game!")
         }
     }
 }

@@ -8,5 +8,5 @@ class PortalTrappingOption : ConfigOption(
     "Portal trapping allows players to trap nether portals.",
     "rules",
     "portaltrapping",
-    Material.PISTON_BASE
+    Material.PISTON
 )

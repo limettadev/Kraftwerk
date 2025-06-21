@@ -32,9 +32,9 @@ class RecipesMenu : PaginatedMenu() {
 
                     override fun getDescription(p0: Player): List<String> {
                         return mutableListOf(
-                            Chat.colored("&7Crafts: ${Chat.primaryColor}${recipe.crafts}"),
+                            Chat.colored("<gray>Crafts: ${Chat.primaryColor}${recipe.crafts}"),
                             " ",
-                            Chat.colored("&7${recipe.description}"),
+                            Chat.colored("<gray>${recipe.description}"),
                             " ",
                             Chat.colored("${Chat.primaryColor}Click to view crafting recipe.")
                         ).toList()

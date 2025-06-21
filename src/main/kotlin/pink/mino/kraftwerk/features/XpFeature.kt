@@ -35,7 +35,7 @@ class XpFeature : Listener {
                     Log.info("${p.name} leveled up to Level ${it.get().level}")
                     val reward = Random.nextInt(25, 75)
                     it.get().coins += reward
-                    Chat.sendMessage(p as CommandSender, "&8[&bLeveling&8]&7 You leveled up to &bLevel ${it.get().level}&7! You gained &6⚜ ${(reward)}&7 as a reward.")
+                    Chat.sendMessage(p as CommandSender, "<dark_gray>[&bLeveling<dark_gray>]<gray> You leveled up to &bLevel ${it.get().level}<gray>! You gained &6⚜ ${(reward)}<gray> as a reward.")
                 }
             }
     }
@@ -43,7 +43,7 @@ class XpFeature : Listener {
     fun onPlayerDeath(e: PlayerDeathEvent) {
         if (GameState.currentState != GameState.INGAME) return
         if (ConfigOptionHandler.getOption("statless")!!.enabled) return
-        if (e.entity.killer != null && e.entity.killer.type == EntityType.PLAYER) {
+        if (e.entity.killer != null && e.entity.killer!!.type == EntityType.PLAYER) {
             add(e.entity.killer as Player, 15.0)
         }
     }

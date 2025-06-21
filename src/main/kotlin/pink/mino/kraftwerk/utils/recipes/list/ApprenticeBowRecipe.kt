@@ -24,9 +24,9 @@ class ApprenticeBowRecipe : Recipe(
     init {
         val apprenticeBow = ItemBuilder(Material.BOW)
             .name("&5Apprentice Bow")
-            .addLore("&7Gains &fPower I&7 after 10 minutes&7.")
-            .addLore("&7Gains &fPower II&7 after 20 minutes&7.")
-            .addLore("&7Gains &fPower III&7 after 40 minutes&7.")
+            .addLore("<gray>Gains &fPower I<gray> after 10 minutes<gray>.")
+            .addLore("<gray>Gains &fPower II<gray> after 20 minutes<gray>.")
+            .addLore("<gray>Gains &fPower III<gray> after 40 minutes<gray>.")
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(apprenticeBow, id)).shape(" RS", "R S", " RS")
             .setIngredient('R', Material.REDSTONE_TORCH_ON)

@@ -11,8 +11,8 @@ import pink.mino.kraftwerk.utils.Chat
 class PingCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<String>
     ): Boolean {
         if (sender !is Player && args.isEmpty()) {
@@ -25,10 +25,10 @@ class PingCommand : CommandExecutor {
             Bukkit.getPlayer(args[0])
         }
         if (player == null) {
-            Chat.sendMessage(sender, "&cInvalid player!")
+            Chat.sendMessage(sender, "<red>Invalid player!")
         }
         val ping = (player as CraftPlayer).handle.ping
-        Chat.sendMessage(sender, "${Chat.prefix} ${Chat.secondaryColor}${player.name}'s&7 ping is ${Chat.secondaryColor}${ping}ms&7.")
+        Chat.sendMessage(sender, "${Chat.prefix} ${Chat.secondaryColor}${player.name}'s<gray> ping is ${Chat.secondaryColor}${ping}ms<gray>.")
         return true
     }
 }

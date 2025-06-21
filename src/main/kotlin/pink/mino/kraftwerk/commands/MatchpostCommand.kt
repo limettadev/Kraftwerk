@@ -75,14 +75,14 @@ class ScheduleBroadcast(private val opening: String) : BukkitRunnable() {
         }
         if (getTime() == removeFifteenMinutes(opening)) {
             cancel()
-            val host = Bukkit.getOfflinePlayer(ConfigFeature.instance.data!!.getString("game.host"))
+            val host = Bukkit.getOfflinePlayer(ConfigFeature.instance.data!!.getString("game.host")!!)
             var embed = EmbedBuilder()
-            embed.setColor(MiscUtils.hexToColor(ConfigFeature.instance.config!!.getString("discord.embed-color")))
+            embed.setColor(MiscUtils.hexToColor(ConfigFeature.instance.config!!.getString("discord.embed-color")!!))
             embed.setTitle(ConfigFeature.instance.data!!.getString("matchpost.host"))
             embed.setThumbnail("https://visage.surgeplay.com/bust/512/${host.uniqueId}")
             val scenarios = ConfigFeature.instance.data!!.getStringList("matchpost.scenarios")
             val fr = (System.currentTimeMillis() / 1000L) + (900000L) / 1000L
-            embed.addField("Teams", ConfigFeature.instance.data!!.getString("matchpost.team"), false)
+            embed.addField("Teams", ConfigFeature.instance.data!!.getString("matchpost.team")!!, false)
             embed.addField("Scenarios", scenarios.joinToString(", "), false)
             var flag = ":flag_${ConfigFeature.instance.config!!.getString("discord.flag")}:"
             embed.addField("IP", "$flag `${if (ConfigFeature.instance.config!!.getString("chat.serverIp") != null) ConfigFeature.instance.config!!.getString("chat.serverIp") else "no server ip setup in config tough tits"}` (1.8.x)", false)
@@ -136,11 +136,11 @@ class ScheduleBroadcast(private val opening: String) : BukkitRunnable() {
                     .queue()
 
             } else {
-                Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} A matchpost is coming in ${Chat.secondaryColor}15 minutes&7 but there's no configured game alerts channel!"))
+                Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} A matchpost is coming in ${Chat.secondaryColor}15 minutes<gray> but there's no configured game alerts channel!"))
             }
             if (ConfigFeature.instance.config!!.getBoolean("options.whitelist-after-restart")) {
                 embed = EmbedBuilder()
-                embed.setColor(MiscUtils.hexToColor(ConfigFeature.instance.config!!.getString("discord.embed-color")))
+                embed.setColor(MiscUtils.hexToColor(ConfigFeature.instance.config!!.getString("discord.embed-color")!!))
                 embed.setTitle(ConfigFeature.instance.data!!.getString("matchpost.host"))
                 embed.setThumbnail("https://visage.surgeplay.com/bust/512/${host.uniqueId}")
                 embed.addField("Pre-whitelists are on!", "You are now allowed to use the command `/wl` to request to pre-whitelist yourself in the server!", false)
@@ -230,10 +230,10 @@ class ScheduleOpening(private val opening: String) : BukkitRunnable() {
             } else {
                 time = (ConfigFeature.instance.config!!.getLong("options.whitelist-timer-ffa") * 60)
             }
-            val host = Bukkit.getOfflinePlayer(ConfigFeature.instance.data!!.getString("game.host"))
+            val host = Bukkit.getOfflinePlayer(ConfigFeature.instance.data!!.getString("game.host")!!)
             val embed = EmbedBuilder()
             embed.addField("Matchpost", "https://hosts.uhc.gg/m/${ConfigFeature.instance.data!!.getInt("matchpost.id")}", false)
-            embed.setColor(MiscUtils.hexToColor(ConfigFeature.instance.config!!.getString("discord.embed-color")))
+            embed.setColor(MiscUtils.hexToColor(ConfigFeature.instance.config!!.getString("discord.embed-color")!!))
             embed.setTitle(ConfigFeature.instance.data!!.getString("matchpost.host"))
             embed.setThumbnail("https://visage.surgeplay.com/bust/512/${host.uniqueId}")
             embed.addField("Game Open!", "The game is now open at `${if (ConfigFeature.instance.config!!.getString("chat.serverIp") != null) ConfigFeature.instance.config!!.getString("chat.serverIp") else "no server ip setup in config tough tits"}`.", false)
@@ -248,7 +248,7 @@ class ScheduleOpening(private val opening: String) : BukkitRunnable() {
             } else {
                 Chat.broadcast("${Chat.dash} Couldn't post game opening in discord because there's no game alerts channel ID configured.")
             }
-            Bukkit.broadcastMessage(Chat.colored("${Chat.dash} The whitelist has been turned off automatically @ ${Chat.primaryColor}${opening}&7."))
+            Bukkit.broadcastMessage(Chat.colored("${Chat.dash} The whitelist has been turned off automatically @ ${Chat.primaryColor}${opening}<gray>."))
             cancel()
             Kraftwerk.instance.opening = Opening(time)
             Kraftwerk.instance.opening!!.runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, 20L)
@@ -310,8 +310,8 @@ class MatchpostCommand : CommandExecutor {
 
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<String>
     ): Boolean {
         if (sender is Player) {
@@ -322,10 +322,10 @@ class MatchpostCommand : CommandExecutor {
         }
         if (args.isEmpty()) {
             if (sender.hasPermission("uhc.staff.matchpost")) {
-                Chat.sendMessage(sender, "&cYou must provide a valid matchpost ID.")
+                Chat.sendMessage(sender, "<red>You must provide a valid matchpost ID.")
                 return false
             } else {
-                Chat.sendMessage(sender, "${Chat.prefix} Matchpost: &chttps://hosts.uhc.gg/m/${ConfigFeature.instance.data!!.getInt("matchpost.id")}")
+                Chat.sendMessage(sender, "${Chat.prefix} Matchpost: <red>https://hosts.uhc.gg/m/${ConfigFeature.instance.data!!.getInt("matchpost.id")}")
                 return false
             }
         }
@@ -358,7 +358,7 @@ class MatchpostCommand : CommandExecutor {
         }
 
         if (args[0].toIntOrNull() == null) {
-            Chat.sendMessage(sender, "&cYou must provide a &ovalid&c matchpost ID.")
+            Chat.sendMessage(sender, "<red>You must provide a &ovalid<red> matchpost ID.")
             return false
         }
         val host: String
@@ -374,7 +374,7 @@ class MatchpostCommand : CommandExecutor {
             setRequestProperty("User-Agent", "Mozilla/5.0")
 
             if (responseCode == 404) {
-                Chat.sendMessage(sender, "&cInvalid match.")
+                Chat.sendMessage(sender, "<red>Invalid match.")
                 return false
             }
             BufferedReader(InputStreamReader(inputStream)).use {

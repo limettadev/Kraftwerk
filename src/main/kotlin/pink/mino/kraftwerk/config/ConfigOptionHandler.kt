@@ -85,7 +85,7 @@ class ConfigOptionHandler {
             configOptions.add(configOption)
             Bukkit.getPluginManager().registerEvents(configOption, JavaPlugin.getPlugin(Kraftwerk::class.java))
             if (configOption.command) {
-                JavaPlugin.getPlugin(Kraftwerk::class.java).getCommand(configOption.commandName).executor = configOption.executor
+                JavaPlugin.getPlugin(Kraftwerk::class.java).getCommand(configOption.commandName)!!.setExecutor(configOption.executor)
             }
         }
     }

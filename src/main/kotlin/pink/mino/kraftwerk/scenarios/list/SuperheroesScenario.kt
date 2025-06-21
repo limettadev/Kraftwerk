@@ -27,12 +27,12 @@ class SuperheroesScenario : Scenario(
     Material.NETHER_STAR
 ){
     val superheroes: HashMap<OfflinePlayer, PotionEffectType> = hashMapOf()
-    val prefix = "&8[${Chat.primaryColor}Superheroes&8]&7"
+    val prefix = "<dark_gray>[${Chat.primaryColor}Superheroes<dark_gray>]<gray>"
 
     override fun givePlayer(player: Player) {
         if (superheroes[player] != null) {
             givePower(player)
-            Chat.sendMessage(player, "$prefix Your assigned power is: ${Chat.secondaryColor}${superheroes[player]!!.name}&7.")
+            Chat.sendMessage(player, "$prefix Your assigned power is: ${Chat.secondaryColor}${superheroes[player]!!.name}<gray>.")
         } else {
             val pool = arrayListOf(
                 PotionEffectType.HEALTH_BOOST,
@@ -55,7 +55,7 @@ class SuperheroesScenario : Scenario(
             val hero = pool[Random.nextInt(pool.size)]
             superheroes[player] = hero
             givePower(player)
-            Chat.sendMessage(player, "$prefix Your assigned power is: ${Chat.secondaryColor}${hero.name}&7.")
+            Chat.sendMessage(player, "$prefix Your assigned power is: ${Chat.secondaryColor}${hero.name}<gray>.")
         }
     }
 
@@ -82,7 +82,7 @@ class SuperheroesScenario : Scenario(
                             if (player.isOnline) {
                                 superheroes[player as Player] = hero
                                 pool.remove(hero)
-                                Chat.sendMessage(player, "$prefix Your assigned power is: ${Chat.secondaryColor}${hero.name}&7.")
+                                Chat.sendMessage(player, "$prefix Your assigned power is: ${Chat.secondaryColor}${hero.name}<gray>.")
                                 givePower(player)
                             }
                         } catch(_: Error) {}
@@ -105,7 +105,7 @@ class SuperheroesScenario : Scenario(
                 }
                 val hero = pool[Random.nextInt(pool.size)]
                 superheroes[player as Player] = hero
-                Chat.sendMessage(player, "$prefix Your assigned power is: ${Chat.secondaryColor}${hero.name}&7.")
+                Chat.sendMessage(player, "$prefix Your assigned power is: ${Chat.secondaryColor}${hero.name}<gray>.")
                 givePower(player)
             }
         }
@@ -113,7 +113,7 @@ class SuperheroesScenario : Scenario(
 
     override fun onStart() {
         if (!enabled) return
-        Chat.broadcast("${Chat.prefix} Powers will be assigned in ${Chat.secondaryColor}10 seconds&7.")
+        Chat.broadcast("${Chat.prefix} Powers will be assigned in ${Chat.secondaryColor}10 seconds<gray>.")
         Schedulers.sync().runLater({
             assignPowers()
         }, 20 * 10L)

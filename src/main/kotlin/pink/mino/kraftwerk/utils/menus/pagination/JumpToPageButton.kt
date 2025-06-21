@@ -13,7 +13,7 @@ class JumpToPageButton @ConstructorProperties(value = ["page", "menu"]) construc
 ) :
     Button() {
     override fun getName(player: Player): String {
-        return Chat.colored("&ePage " + page)
+        return Chat.colored("<yellow>Page " + page)
     }
 
     override fun getDescription(player: Player): List<String> {

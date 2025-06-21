@@ -70,12 +70,12 @@ class RespawnCommand : CommandExecutor {
     ): Boolean {
         if (sender is Player) {
             if (!sender.hasPermission("uhc.staff.revive")) {
-                Chat.sendMessage(sender, "&cYou don't have permission to use this command.")
+                Chat.sendMessage(sender, "<red>You don't have permission to use this command.")
                 return false
             }
         }
         if (GameState.currentState != GameState.INGAME) {
-            Chat.sendMessage(sender, "&cYou can't use this command while there is no game running.")
+            Chat.sendMessage(sender, "<red>You can't use this command while there is no game running.")
             return false
         }
         if (args.isEmpty()) {
@@ -100,12 +100,12 @@ class RespawnCommand : CommandExecutor {
             for ((index, player) in RespawnFeature.instance.respawnablePlayers.withIndex()) {
                 val skull = ItemBuilder(Material.SKULL_ITEM)
                     .name("&d${Bukkit.getOfflinePlayer(player).name}")
-                    .addLore("&7Location: ${Chat.primaryColor}${floor(RespawnFeature.instance.locations[player]!!.x)}&7, ${Chat.primaryColor}${floor(RespawnFeature.instance.locations[player]!!.y)}&7, ${Chat.primaryColor}${floor(RespawnFeature.instance.locations[player]!!.z)}")
-                    .addLore("&7Cause: ${Chat.primaryColor}${RespawnFeature.instance.causes[player].toString()
+                    .addLore("<gray>Location: ${Chat.primaryColor}${floor(RespawnFeature.instance.locations[player]!!.x)}<gray>, ${Chat.primaryColor}${floor(RespawnFeature.instance.locations[player]!!.y)}<gray>, ${Chat.primaryColor}${floor(RespawnFeature.instance.locations[player]!!.z)}")
+                    .addLore("<gray>Cause: ${Chat.primaryColor}${RespawnFeature.instance.causes[player].toString()
                         .uppercase(Locale.getDefault())}")
                     .addLore(" ")
-                    .addLore("${Chat.primaryColor}Left Click&7 to teleport to the player's death location.")
-                    .addLore("&aRight Click&7 to respawn the player.")
+                    .addLore("${Chat.primaryColor}Left Click<gray> to teleport to the player's death location.")
+                    .addLore("<green>Right Click<gray> to respawn the player.")
                     .toSkull()
                     .setOwner(Bukkit.getOfflinePlayer(player).name)
                     .make()
@@ -122,11 +122,11 @@ class RespawnCommand : CommandExecutor {
         } else {
             val player = Bukkit.getPlayer(args[0])
             if (player == null) {
-                Chat.sendMessage(sender, "&cYou must insert a valid player to respawn.")
+                Chat.sendMessage(sender, "<red>You must insert a valid player to respawn.")
                 return false
             }
             if (!RespawnFeature.instance.respawnablePlayers.contains(player.uniqueId)) {
-                Chat.sendMessage(sender, "&c${player.name} is not a respawnable player.")
+                Chat.sendMessage(sender, "<red>${player.name} is not a respawnable player.")
                 return false
             }
             if (SpecFeature.instance.isSpec(player)) {
@@ -177,8 +177,8 @@ class RespawnCommand : CommandExecutor {
             ConfigFeature.instance.saveData()
             WhitelistCommand().addWhitelist(player.name.lowercase())
             player.addPotionEffect(PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 300, 1000, true, false))
-            Chat.sendMessage(player, "${Chat.prefix} You have been respawned by ${Chat.secondaryColor}${sender.name}&7.")
-            Chat.sendMessage(sender, "${Chat.prefix} ${Chat.secondaryColor}${player.name}&7 has been respawned.")
+            Chat.sendMessage(player, "${Chat.prefix} You have been respawned by ${Chat.secondaryColor}${sender.name}<gray>.")
+            Chat.sendMessage(sender, "${Chat.prefix} ${Chat.secondaryColor}${player.name}<gray> has been respawned.")
             PlayerRespawnListener.deathKicks[player.uniqueId]!!.cancelDeathKick()
         }
         return true

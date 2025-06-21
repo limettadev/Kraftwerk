@@ -72,7 +72,7 @@ class PregenCommand : CommandExecutor {
                 }
             }
         }
-        if (pregenConfig.player.isOnline) Chat.sendMessage(pregenConfig.player as Player, "${Chat.prefix} &7Creating world &8'${Chat.secondaryColor}${pregenConfig.name}&8'...")
+        if (pregenConfig.player.isOnline) Chat.sendMessage(pregenConfig.player as Player, "${Chat.prefix} <gray>Creating world <dark_gray>'${Chat.secondaryColor}${pregenConfig.name}<dark_gray>'...")
 
         val wc = WorldCreator(pregenConfig.name)
 
@@ -134,7 +134,7 @@ class PregenCommand : CommandExecutor {
             )
         }, 5L)
 
-        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "${Chat.prefix} &7Pregeneration started in &8'${Chat.secondaryColor}${pregenConfig.name}&8'&7."))
+        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "${Chat.prefix} <gray>Pregeneration started in <dark_gray>'${Chat.secondaryColor}${pregenConfig.name}<dark_gray>'<gray>."))
         //PregenActionBarFeature().runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, 20L)
         val blocks = BlockUtil().getBlocks(Bukkit.getWorld(pregenConfig.name).spawnLocation.block, 100)
         if (blocks != null) {
@@ -159,7 +159,7 @@ class PregenCommand : CommandExecutor {
         ConfigFeature.instance.data!!.set("pregen.border", pregenConfig.border)
         ConfigFeature.instance.data!!.set("world.list", list)
         ConfigFeature.instance.saveData()
-        if (pregenConfig.player.isOnline) Chat.sendMessage(pregenConfig.player as Player, "${Chat.prefix} &7Your world has been set as the default UHC world, to change this, use ${Chat.secondaryColor}/w worlds&7.")
+        if (pregenConfig.player.isOnline) Chat.sendMessage(pregenConfig.player as Player, "${Chat.prefix} <gray>Your world has been set as the default UHC world, to change this, use ${Chat.secondaryColor}/w worlds<gray>.")
 
     }
 
@@ -171,11 +171,11 @@ class PregenCommand : CommandExecutor {
             }
         }
         if (args.isEmpty()) {
-            Chat.sendMessage(sender, "${Chat.prefix} &7Usage: ${Chat.primaryColor}/pregen <name>&7.")
+            Chat.sendMessage(sender, "${Chat.prefix} <gray>Usage: ${Chat.primaryColor}/pregen <name><gray>.")
             return false
         } else {
             if (blacklistNames.contains(args[0].lowercase())) {
-                Chat.sendMessage(sender, "&cYou cannot use that as a world name.")
+                Chat.sendMessage(sender, "<red>You cannot use that as a world name.")
                 return false
             }
             if (args[0] == "cancel") {
@@ -191,10 +191,10 @@ class PregenCommand : CommandExecutor {
             } else if (args[0] == "pause") {
                 if (Config.fillTask.valid()) {
                     if (Config.fillTask.isPaused) {
-                        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} &a&oResuming&7 the pregeneration task."))
+                        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} <green>&oResuming<gray> the pregeneration task."))
                         Config.fillTask.pause(false)
                     } else {
-                        Chat.sendMessage(sender, "${Chat.prefix} &c&lPausing&7 the pregeneration task.")
+                        Chat.sendMessage(sender, "${Chat.prefix} <red>&lPausing<gray> the pregeneration task.")
                         Config.fillTask.pause(true)
                     }
                 } else {
@@ -202,44 +202,44 @@ class PregenCommand : CommandExecutor {
                 }
             } else {
                 val gui = GuiBuilder().name("&4Pregeneration Config").rows(1).owner(sender as Player)
-                Chat.sendMessage(sender, "${Chat.prefix} &7Opening pregeneration config for &7'${Chat.secondaryColor}${args[0]}&7'...")
+                Chat.sendMessage(sender, "${Chat.prefix} <gray>Opening pregeneration config for <gray>'${Chat.secondaryColor}${args[0]}<gray>'...")
                 val player = sender
                 val pregenConfig = PregenConfigHandler.addConfig(player, PregenConfig(player, args[0]))
                 val config = ItemBuilder(Material.GRASS)
                     .name("${Chat.primaryColor}Configuration")
                     .addLore(Chat.guiLine)
-                    .addLore("&7Name: '${Chat.primaryColor}${pregenConfig.name}&7'")
-                    .addLore("&7Type: ${Chat.primaryColor}${pregenConfig.type.name.uppercase()}")
-                    .addLore("&7Generator: ${Chat.primaryColor}${pregenConfig.generator.name.uppercase()}")
+                    .addLore("<gray>Name: '${Chat.primaryColor}${pregenConfig.name}<gray>'")
+                    .addLore("<gray>Type: ${Chat.primaryColor}${pregenConfig.type.name.uppercase()}")
+                    .addLore("<gray>Generator: ${Chat.primaryColor}${pregenConfig.generator.name.uppercase()}")
                     .addLore(" ")
-                    .addLore("&7Border: ${Chat.primaryColor}±${pregenConfig.border}")
+                    .addLore("<gray>Border: ${Chat.primaryColor}±${pregenConfig.border}")
                     .addLore(" ")
-                    .addLore("&7Clear Water: ${Chat.primaryColor}${if (pregenConfig.clearWater) "&aEnabled" else "&cDisabled"}")
-                    .addLore("&7Clear Trees: ${Chat.primaryColor}${if (pregenConfig.clearTrees) "&aEnabled" else "&cDisabled"}")
-                    .addLore("&7Ores Outside Caves: ${Chat.primaryColor}${if (pregenConfig.oresOutsideCaves) "&aEnabled" else "&cDisabled"}")
-                    .addLore("&7Rates: ")
+                    .addLore("<gray>Clear Water: ${Chat.primaryColor}${if (pregenConfig.clearWater) "<green>Enabled" else "<red>Disabled"}")
+                    .addLore("<gray>Clear Trees: ${Chat.primaryColor}${if (pregenConfig.clearTrees) "<green>Enabled" else "<red>Disabled"}")
+                    .addLore("<gray>Ores Outside Caves: ${Chat.primaryColor}${if (pregenConfig.oresOutsideCaves) "<green>Enabled" else "<red>Disabled"}")
+                    .addLore("<gray>Rates: ")
                     .addLore(" ${Chat.dot} &6Gold Ore: ${Chat.primaryColor}${pregenConfig.goldore}% Removed")
                     .addLore(" ${Chat.dot} &bDiamond Ore: ${Chat.primaryColor}${pregenConfig.diamondore}% Removed")
-                    .addLore(" ${Chat.dot} &aSugar Cane: ${Chat.primaryColor}${pregenConfig.canerate}% Increased")
-                    .addLore(" ${Chat.dot} &aCave Rates: ${Chat.primaryColor}${pregenConfig.caveRate}x Increased")
+                    .addLore(" ${Chat.dot} <green>Sugar Cane: ${Chat.primaryColor}${pregenConfig.canerate}% Increased")
+                    .addLore(" ${Chat.dot} <green>Cave Rates: ${Chat.primaryColor}${pregenConfig.caveRate}x Increased")
                     .addLore(Chat.guiLine)
                     .make()
                 val submit = ItemBuilder(Material.EMERALD)
-                    .name("&aCreate")
-                    .addLore("&7Submit your configuration & generate")
-                    .addLore("&7a new world based on its settings.")
+                    .name("<green>Create")
+                    .addLore("<gray>Submit your configuration & generate")
+                    .addLore("<gray>a new world based on its settings.")
                     .make()
                 val changeGeneration = ItemBuilder(Material.REDSTONE)
                     .name("${Chat.primaryColor}Change Generation")
-                    .addLore("&7Change the generation type of this world.")
+                    .addLore("<gray>Change the generation type of this world.")
                     .make()
                 val changeBorder = ItemBuilder(Material.IRON_INGOT)
                     .name("${Chat.primaryColor}Change Border")
-                    .addLore("&7Change the border size of this world.")
+                    .addLore("<gray>Change the border size of this world.")
                     .make()
                 val changeVarious = ItemBuilder(Material.PAPER)
                     .name("${Chat.primaryColor}Change Settings")
-                    .addLore("&7Change various settings of this world.")
+                    .addLore("<gray>Change various settings of this world.")
                     .make()
                 gui.item(3, changeGeneration).onClick {
                     it.isCancelled = true

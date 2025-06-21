@@ -12,13 +12,13 @@ import pink.mino.kraftwerk.utils.GameState
 class StartCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<String>
     ): Boolean {
         if (sender is Player) {
             if (!sender.hasPermission("uhc.staff.start")) {
-                Chat.sendMessage(sender, "&cYou don't have permission to use this command.")
+                Chat.sendMessage(sender, "<red>You don't have permission to use this command.")
                 return false
             }
         }
@@ -27,11 +27,11 @@ class StartCommand : CommandExecutor {
             return false
         }
         if (GameState.currentState != GameState.LOBBY) {
-            Chat.sendMessage(sender, "&cA game is currently occurring right now.")
+            Chat.sendMessage(sender, "<red>A game is currently occurring right now.")
             return false
         }
         if (ConfigFeature.instance.data!!.getString("pregen.world") == null) {
-            Chat.sendMessage(sender, "&cThere is no world currently setup.")
+            Chat.sendMessage(sender, "<red>There is no world currently setup.")
             return false
         }
         if (args[0] == "ffa" || args[0] == "teams") {

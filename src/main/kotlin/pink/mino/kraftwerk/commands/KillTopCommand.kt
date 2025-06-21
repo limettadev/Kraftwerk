@@ -12,20 +12,20 @@ import java.util.*
 class KillTopCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<String>
     ): Boolean {
         if (GameState.currentState != GameState.INGAME) {
-            Chat.sendMessage(sender, "&cYou can't use this command right now.")
+            Chat.sendMessage(sender, "<red>You can't use this command right now.")
             return false
         }
         if (ConfigFeature.instance.data!!.get("game.kills") == null) {
-            Chat.sendMessage(sender, "&cThere are no kills yet.")
+            Chat.sendMessage(sender, "<red>There are no kills yet.")
             return false
         }
         val map = LinkedHashMap<String, Int>()
-        for (key in ConfigFeature.instance.data!!.getConfigurationSection("game.kills").getKeys(false)) {
+        for (key in ConfigFeature.instance.data!!.getConfigurationSection("game.kills")!!.getKeys(false)) {
             map[key] = ConfigFeature.instance.data!!.getInt("game.kills.${key}")
         }
         val entries: List<Map.Entry<String, Int>> = ArrayList<Map.Entry<String, Int>>(map.entries)
@@ -36,7 +36,7 @@ class KillTopCommand : CommandExecutor {
         Chat.sendCenteredMessage(sender, "${Chat.primaryColor}&lKill Leaderboard")
         Chat.sendMessage(sender , " ")
         for ((key, value) in entries) {
-            Chat.sendCenteredMessage(sender, "&7${key} ${Chat.dash} ${Chat.secondaryColor}${value}")
+            Chat.sendCenteredMessage(sender, "<gray>${key} ${Chat.dash} ${Chat.secondaryColor}${value}")
         }
         Chat.sendMessage(sender, Chat.line)
         return true

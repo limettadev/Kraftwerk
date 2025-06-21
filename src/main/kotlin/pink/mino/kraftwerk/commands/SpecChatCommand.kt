@@ -13,8 +13,8 @@ import pink.mino.kraftwerk.utils.Chat
 class SpecChatCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<String>
     ): Boolean {
         if (SpecFeature.instance.getSpecs().contains(sender.name)) {
@@ -27,9 +27,9 @@ class SpecChatCommand : CommandExecutor {
                 message.append("${ChatColor.GRAY}${element}").append(" " + ChatColor.GRAY)
             }
             val msg = message.toString().trim()
-            SpecFeature.instance.specChat("&8[${Chat.primaryColor}Spec Chat&8] &f${sender.name} ${Chat.dash} &f${msg}")
+            SpecFeature.instance.specChat("<dark_gray>[${Chat.primaryColor}Spec Chat<dark_gray>] &f${sender.name} ${Chat.dash} &f${msg}")
         } else {
-            sender.sendMessage(Chat.colored("&cYou aren't in spectator mode!"))
+            sender.sendMessage(Chat.colored("<red>You aren't in spectator mode!"))
             return false
         }
         return true

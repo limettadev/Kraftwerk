@@ -115,7 +115,7 @@ class PlayerJoinListener : Listener {
     @EventHandler
     fun onPlayerJoin(e: PlayerJoinEvent) {
         val player = e.player
-        Scoreboard.setScore(Chat.colored("${Chat.dash} &7Playing..."), PlayerUtils.getPlayingPlayers().size)
+        Scoreboard.setScore(Chat.colored("${Chat.dash} <gray>Playing..."), PlayerUtils.getPlayingPlayers().size)
 
         for (online in Bukkit.getOnlinePlayers()) {
             if (online != player) {
@@ -125,13 +125,13 @@ class PlayerJoinListener : Listener {
         }
 
         val group: String = vaultChat!!.getPrimaryGroup(player)
-        val prefix: String = if (vaultChat!!.getGroupPrefix(player.world, group) != "&7") Chat.colored(vaultChat!!.getGroupPrefix(player.world, group)) else Chat.colored("&a")
-        e.joinMessage = ChatColor.translateAlternateColorCodes('&', "&8(&2+&8)&r ${prefix}${player.displayName} &8[&2${Bukkit.getOnlinePlayers().size}&8/&2${Bukkit.getServer().maxPlayers}&8]")
+        val prefix: String = if (vaultChat!!.getGroupPrefix(player.world, group) != "<gray>") Chat.colored(vaultChat!!.getGroupPrefix(player.world, group)) else Chat.colored("<green>")
+        e.joinMessage = ChatColor.translateAlternateColorCodes('&', "<dark_gray>(&2+<dark_gray>)&r ${prefix}${player.displayName} <dark_gray>[&2${Bukkit.getOnlinePlayers().size}<dark_gray>/&2${Bukkit.getServer().maxPlayers}<dark_gray>]")
         /*Schedulers.sync().runLater({
-            Chat.sendMessage(player, "&8➡ &7Please consider donating to the server to keep it up for another month! The store link is &ehttps://applejuice.tebex.io&7 or just use &c/buy&7!")
+            Chat.sendMessage(player, "<dark_gray>➡ <gray>Please consider donating to the server to keep it up for another month! The store link is <yellow>https://applejuice.tebex.io<gray> or just use <red>/buy<gray>!")
         }, 1L)*/
         if (GameState.currentState == GameState.LOBBY) {
-            Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+            Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                 SpawnFeature.instance.send(player)
                 if (PerkChecker.checkPerks(player).contains(Perk.SPAWN_FLY)) {
                     player.allowFlight = true
@@ -155,7 +155,7 @@ class PlayerJoinListener : Listener {
                 if (GameState.currentState == GameState.WAITING || UHCFeature().scattering) {
                     UHCFeature().freeze()
                 }
-                player.teleport(scatter[player.name.lowercase()])
+                player.teleport(scatter[player.name.lowercase()]!!)
                 scatter.remove(player.name.lowercase())
                 if (TeamsFeature.manager.getTeam(player) != null) {
                     for (entry in TeamsFeature.manager.getTeam(player)!!.entries) {
@@ -169,8 +169,8 @@ class PlayerJoinListener : Listener {
                     }
                 }
 
-                Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Automatically late scattered ${Chat.primaryColor}${player.name}&7."))
-                player.playSound(player.location, Sound.WOOD_CLICK, 10F, 1F)
+                Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Automatically late scattered ${Chat.primaryColor}${player.name}<gray>."))
+                player.playSound(player.location, Sound.BLOCK_LEVER_CLICK, 10F, 1F)
                 player.maxHealth = 20.0
                 player.health = player.maxHealth
                 player.isFlying = false
@@ -179,9 +179,13 @@ class PlayerJoinListener : Listener {
                 player.saturation = 20F
                 player.gameMode = GameMode.SURVIVAL
                 player.inventory.clear()
-                player.inventory.armorContents = null
+                player.inventory.helmet = ItemStack(Material.AIR)
+                player.inventory.chestplate = ItemStack(Material.AIR)
+                player.inventory.leggings = ItemStack(Material.AIR)
+                player.inventory.boots = ItemStack(Material.AIR)
+                player.inventory.setItemInOffHand(ItemStack(Material.AIR))
                 player.enderChest.clear()
-                player.itemOnCursor = ItemStack(Material.AIR)
+                player.setItemOnCursor(ItemStack(Material.AIR))
                 val openInventory = player.openInventory
                 if (openInventory.type == InventoryType.CRAFTING) {
                     openInventory.topInventory.clear()
@@ -190,7 +194,7 @@ class PlayerJoinListener : Listener {
                 for (effect in effects) {
                     player.removePotionEffect(effect.type)
                 }
-                player.addPotionEffect(PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 300, 1000, true, false))
+                player.addPotionEffect(PotionEffect(PotionEffectType.RESISTANCE, 300, 1000, true, false))
                 player.inventory.setItem(0, ItemStack(Material.COOKED_BEEF, ConfigFeature.instance.data!!.getInt("game.starterfood")))
                 JavaPlugin.getPlugin(Kraftwerk::class.java).statsHandler.getStatsPlayer(player)!!.gamesPlayed++
                 for (scenario in ScenarioHandler.getActiveScenarios()) {
@@ -221,10 +225,10 @@ class PlayerJoinListener : Listener {
                     if (SpecFeature.instance.getSpecs().contains(player.name)) {
                         return
                     }
-                    Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+                    Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                         SpawnFeature.instance.send(player)
                     }, 1L)
-                    SpecFeature.instance.specChat("${Chat.secondaryColor}${player.name}&7 hasn't been late-scattered, sending them to spawn.")
+                    SpecFeature.instance.specChat("${Chat.secondaryColor}${player.name}<gray> hasn't been late-scattered, sending them to spawn.")
                     val comp = TextComponent(Chat.colored("${Chat.dash} &d&lLatescatter player?"))
                     val comp2 = TextComponent(Chat.colored("${Chat.dash} ${Chat.primaryColor}&lInsert latescatter command?"))
                     comp.clickEvent = ClickEvent(
@@ -245,25 +249,25 @@ class PlayerJoinListener : Listener {
                 }
             }
         }
-        if (GameState.currentState != GameState.WAITING && player.hasPotionEffect(PotionEffectType.JUMP) &&
+        if (GameState.currentState != GameState.WAITING && player.hasPotionEffect(PotionEffectType.JUMP_BOOST) &&
             player.hasPotionEffect(PotionEffectType.BLINDNESS) &&
-            player.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE) &&
-            player.hasPotionEffect(PotionEffectType.SLOW_DIGGING) &&
-            player.hasPotionEffect(PotionEffectType.SLOW) &&
+            player.hasPotionEffect(PotionEffectType.RESISTANCE) &&
+            player.hasPotionEffect(PotionEffectType.MINING_FATIGUE) &&
+            player.hasPotionEffect(PotionEffectType.SLOWNESS) &&
             player.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
-            player.removePotionEffect(PotionEffectType.JUMP)
+            player.removePotionEffect(PotionEffectType.JUMP_BOOST)
             player.removePotionEffect(PotionEffectType.BLINDNESS)
-            player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE)
-            player.removePotionEffect(PotionEffectType.SLOW_DIGGING)
-            player.removePotionEffect(PotionEffectType.SLOW)
+            player.removePotionEffect(PotionEffectType.RESISTANCE)
+            player.removePotionEffect(PotionEffectType.MINING_FATIGUE)
+            player.removePotionEffect(PotionEffectType.SLOWNESS)
             player.removePotionEffect(PotionEffectType.INVISIBILITY)
         }
-        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
             if (JavaPlugin.getPlugin(Kraftwerk::class.java).fullbright.contains(e.player.name.lowercase())) {
                 player.addPotionEffect(PotionEffect(PotionEffectType.NIGHT_VISION, 1028391820, 0, false, false))
             }
         }, 5L)
-        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
             checkAndMergeAlts(player)
             if (!(player as Player).hasPermission("uhc.staff")) {
                 checkEvaders(player)

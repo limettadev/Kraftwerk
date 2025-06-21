@@ -97,7 +97,7 @@ abstract class Button {
                 }
 
                 override fun getName(player: Player): String {
-                    return "&7"
+                    return "<gray>"
                 }
 
                 override fun getDescription(player: Player): List<String> {

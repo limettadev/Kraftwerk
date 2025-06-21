@@ -27,8 +27,8 @@ class DeathsScytheRecipe : Recipe(
 ) {
     init {
         val deathsScythe = ItemBuilder(Material.IRON_HOE)
-            .name("&eDeath's Scythe")
-            .addLore("&7Damage dealt will be 20% of the target's current health, bypassses armor")
+            .name("<yellow>Death's Scythe")
+            .addLore("<gray>Damage dealt will be 20% of the target's current health, bypassses armor")
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(deathsScythe, id)).shape(" HH", " BW", "B  ")
             .setIngredient('H', Material.SKULL_ITEM, 3)
@@ -40,7 +40,7 @@ class DeathsScytheRecipe : Recipe(
     fun onPvP(e: EntityDamageByEntityEvent) {
         if (e.damager is Player && e.entity is Player) {
             if ((e.damager as Player).inventory.itemInHand != null && (e.damager as Player).inventory.itemInHand.hasItemMeta() && (e.damager as Player).inventory.itemInHand.itemMeta.displayName == Chat.colored(
-                    "&eDeath's Scythe"
+                    "<yellow>Death's Scythe"
                 )
             ) {
                 (e.entity as Player).damage((e.entity as Player).health * .2)

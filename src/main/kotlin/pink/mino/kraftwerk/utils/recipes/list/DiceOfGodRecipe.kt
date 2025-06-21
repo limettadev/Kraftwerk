@@ -31,8 +31,8 @@ class DiceOfGodRecipe : Recipe(
 ) {
     init {
         val diceOfGod = ItemBuilder(Material.ENDER_PORTAL_FRAME)
-            .name("&eDice of God")
-            .addLore("&7Grants a random Extra Ultimate.")
+            .name("<yellow>Dice of God")
+            .addLore("<gray>Grants a random Extra Ultimate.")
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(diceOfGod, id)).shape("CHC", "CJC", "CCC")
             .setIngredient('C', Material.MOSSY_COBBLESTONE)
@@ -49,7 +49,7 @@ class DiceOfGodRecipe : Recipe(
             return
         }
         val name = item.itemMeta.displayName
-        if (name == Chat.colored("&eDice of God")) {
+        if (name == Chat.colored("<yellow>Dice of God")) {
             val block: Block? = player.getTargetBlock(null as Set<Material?>?, 10)
             if (block == null || block.type !== Material.WORKBENCH) {
                 Chat.sendMessage(player, "${Chat.prefix} You are not looking at a crafting table.")

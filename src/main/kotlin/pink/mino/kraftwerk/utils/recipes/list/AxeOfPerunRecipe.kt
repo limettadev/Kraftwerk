@@ -29,7 +29,7 @@ class AxeOfPerunRecipe : Recipe(
 
     init {
         val axeOfPerun = ItemBuilder(Material.DIAMOND_AXE)
-            .name("&eAxe of Perun")
+            .name("<yellow>Axe of Perun")
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(axeOfPerun, id)).shape("DTF", "DS ", " S ")
             .setIngredient('D', Material.DIAMOND)
@@ -41,7 +41,7 @@ class AxeOfPerunRecipe : Recipe(
     @EventHandler
     fun onPvP(e: EntityDamageByEntityEvent) {
         if ((e.damager as Player).inventory.itemInHand != null && (e.damager as Player).inventory.itemInHand.hasItemMeta() && (e.damager as Player).inventory.itemInHand.itemMeta.displayName == Chat.colored(
-                "&eAxe of Perun"
+                "<yellow>Axe of Perun"
             )
         ) {
             if (perunCooldownsMap[e.damager as Player] == null || perunCooldownsMap[e.damager as Player]!! < System.currentTimeMillis()) {

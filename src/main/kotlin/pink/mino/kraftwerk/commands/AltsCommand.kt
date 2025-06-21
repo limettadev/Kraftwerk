@@ -1,7 +1,6 @@
 package pink.mino.kraftwerk.commands
 
 import org.bukkit.Bukkit
-import org.bukkit.ChatColor
 import org.bukkit.OfflinePlayer
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -22,9 +21,9 @@ class AltsCommand : CommandExecutor {
         val baseName = player.name ?: "Unknown"
 
         return when {
-            hasBan -> "${ChatColor.RED}$baseName"
-            hasMute -> "${ChatColor.YELLOW}$baseName"
-            else -> "${ChatColor.GREEN}$baseName"
+            hasBan -> "<red>$baseName"
+            hasMute -> "<yellow>$baseName"
+            else -> "<green>$baseName"
         }
     }
 
@@ -36,7 +35,7 @@ class AltsCommand : CommandExecutor {
     ): Boolean {
 
         if (sender is Player && !sender.hasPermission("uhc.staff.alts")){
-            Chat.sendMessage(sender, "&cYou don't have permission to use this command.")
+            Chat.sendMessage(sender, "<red>You don't have permission to use this command.")
             return false
         }
 
@@ -51,7 +50,7 @@ class AltsCommand : CommandExecutor {
             }
             sender is Player -> sender.uniqueId
             else -> {
-                Chat.sendMessage(sender, "${Chat.prefix} &7Usage: /alts <player>")
+                Chat.sendMessage(sender, "${Chat.prefix} <gray>Usage: /alts <player>")
                 return true
             }
         }
@@ -59,14 +58,14 @@ class AltsCommand : CommandExecutor {
         val profile = Kraftwerk.instance.profileHandler.getProfile(targetUuid)
 
         if (profile == null) {
-            Chat.sendMessage(sender, "${Chat.prefix} &7Profile not found for that player.")
+            Chat.sendMessage(sender, "${Chat.prefix} <gray>Profile not found for that player.")
             return true
         }
 
         val alts = profile.alts
 
         if (alts.isEmpty()) {
-            Chat.sendMessage(sender, "${Chat.prefix} &7${Chat.secondaryColor}${Bukkit.getOfflinePlayer(targetUuid).name ?: "Unknown"}&7's alts: None")
+            Chat.sendMessage(sender, "${Chat.prefix} <gray>${Chat.secondaryColor}${Bukkit.getOfflinePlayer(targetUuid).name ?: "Unknown"}<gray>'s alts: None")
             return true
         }
 
@@ -74,7 +73,7 @@ class AltsCommand : CommandExecutor {
             .joinToString(", ") { it }
 
         val mainNameColored = getColoredPlayerName(Bukkit.getOfflinePlayer(targetUuid))
-        Chat.sendMessage(sender, "${Chat.prefix} &7$mainNameColored&7's alts: $altNames")
+        Chat.sendMessage(sender, "${Chat.prefix} <gray>$mainNameColored<gray>'s alts: $altNames")
 
         return true
     }

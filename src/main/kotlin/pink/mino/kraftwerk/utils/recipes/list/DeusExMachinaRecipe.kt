@@ -42,7 +42,7 @@ class DeusExMachinaRecipe : Recipe(
             if (tag.getString("uhcId") != null) {
                 if (tag.getString("uhcId") == "deus_ex_machina") {
                     player.health = player.health / 2
-                    Chat.sendMessage(player, "&eYour health has been siphoned to create a Deus Ex Machina.")
+                    Chat.sendMessage(player, "<yellow>Your health has been siphoned to create a Deus Ex Machina.")
                 }
             }
         }

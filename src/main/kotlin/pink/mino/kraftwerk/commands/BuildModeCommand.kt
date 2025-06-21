@@ -11,7 +11,7 @@ class BuildModeCommand : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (sender is Player) {
             if (!sender.hasPermission("uhc.admin.buildmode")) {
-                Chat.sendMessage(sender, "&cOnly admins can execute this command.")
+                Chat.sendMessage(sender, "<red>Only admins can execute this command.")
                 return false
             }
         }
@@ -20,11 +20,11 @@ class BuildModeCommand : CommandExecutor {
             return true
         }
         if (Kraftwerk.instance.buildMode[sender.uniqueId] == false || Kraftwerk.instance.buildMode[sender.uniqueId] == null) {
-            Chat.sendMessage(sender, "${Chat.prefix} Build mode has been &aenabled&7.")
+            Chat.sendMessage(sender, "${Chat.prefix} Build mode has been <green>enabled<gray>.")
             Kraftwerk.instance.buildMode[sender.uniqueId] = true
             return true
         } else {
-            Chat.sendMessage(sender, "${Chat.prefix} Build mode has been &cdisabled&7.")
+            Chat.sendMessage(sender, "${Chat.prefix} Build mode has been <red>disabled<gray>.")
             Kraftwerk.instance.buildMode[sender.uniqueId] = false
             return true
         }

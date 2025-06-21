@@ -12,18 +12,18 @@ import pink.mino.kraftwerk.utils.GameState
 class WinnerCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<String>
     ): Boolean {
         if (sender is Player) {
             if (!sender.hasPermission("uhc.staff.winner")) {
-                Chat.sendMessage(sender, "&cYou don't have permission to use this command.")
+                Chat.sendMessage(sender, "<red>You don't have permission to use this command.")
                 return false
             }
         }
         if (GameState.currentState != GameState.INGAME) {
-            Chat.sendMessage(sender, "&cYou can't do this right now.")
+            Chat.sendMessage(sender, "<red>You can't do this right now.")
             return false
         }
         var winners = ConfigFeature.instance.data!!.getStringList("game.winners")
@@ -42,7 +42,7 @@ class WinnerCommand : CommandExecutor {
         for (argument in args) {
             val player = Bukkit.getOfflinePlayer(argument)
             if (player == null) {
-                Chat.sendMessage(sender, "&cInvalid player '${argument}', please provide a valid player.")
+                Chat.sendMessage(sender, "<red>Invalid player '${argument}', please provide a valid player.")
                 return false
             }
             if (winners.contains(player.name)) {
@@ -50,7 +50,7 @@ class WinnerCommand : CommandExecutor {
                 ConfigFeature.instance.data!!.set("game.winners", winners)
                 Chat.sendMessage(
                     sender,
-                    "${Chat.prefix} ${Chat.secondaryColor}${player.name}&7 has been removed from the winner list.\n&7New list: ${Chat.secondaryColor}${
+                    "${Chat.prefix} ${Chat.secondaryColor}${player.name}<gray> has been removed from the winner list.\n<gray>New list: ${Chat.secondaryColor}${
                         winners.joinToString(", ")
                     }"
                 )
@@ -59,7 +59,7 @@ class WinnerCommand : CommandExecutor {
                 ConfigFeature.instance.data!!.set("game.winners", winners)
                 Chat.sendMessage(
                     sender,
-                    "${Chat.prefix} ${Chat.secondaryColor}${player.name}&7 has been added to the winner list.\n&7New list: ${Chat.secondaryColor}${
+                    "${Chat.prefix} ${Chat.secondaryColor}${player.name}<gray> has been added to the winner list.\n<gray>New list: ${Chat.secondaryColor}${
                         winners.joinToString(", ")
                     }"
                 )

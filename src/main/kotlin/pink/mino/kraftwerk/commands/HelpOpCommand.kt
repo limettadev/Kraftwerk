@@ -1,7 +1,5 @@
 package pink.mino.kraftwerk.commands
 
-import net.md_5.bungee.api.chat.ClickEvent
-import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.command.Command
@@ -21,8 +19,8 @@ class HelpOpCommand : CommandExecutor {
 
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<String>
     ): Boolean {
         if (sender !is Player) {
@@ -34,7 +32,7 @@ class HelpOpCommand : CommandExecutor {
             val remaining = mutePunishment.expiresAt - System.currentTimeMillis()
             if (remaining > 0) {
                 val timeLeft = PunishmentFeature.timeToString(remaining)
-                sender.sendMessage(Chat.colored("&cYou are help-op muted for another $timeLeft. Reason: ${mutePunishment.reason}"))
+                sender.sendMessage(Chat.colored("<red>You are help-op muted for another $timeLeft. Reason: ${mutePunishment.reason}"))
                 return false
             }
         }
@@ -43,7 +41,7 @@ class HelpOpCommand : CommandExecutor {
         if (cooldowns.containsKey(sender.name)) {
             val secondsLeft: Long = cooldowns[sender.name]!! / 1000 + cooldownTime - System.currentTimeMillis() / 1000
             if (secondsLeft > 0) {
-                sender.sendMessage(Chat.colored("&cYou can't use this command for another $secondsLeft second(s)!"))
+                sender.sendMessage(Chat.colored("<red>You can't use this command for another $secondsLeft second(s)!"))
                 return false
             }
         }
@@ -57,23 +55,24 @@ class HelpOpCommand : CommandExecutor {
         }
         val msg = message.toString().trim()
         val id = HelpOp.addHelpop(sender, msg)
-        Chat.sendMessage(sender, "${Chat.prefix} Successfully sent your ${Chat.primaryColor}help-op&7, please wait for someone to answer it!")
-        val text = TextComponent(Chat.colored("&8[${Chat.primaryColor}Help-OP&8] &8[${Chat.primaryColor}#${id}&8] ${Chat.secondaryColor}${sender.name} ${Chat.dash}&7 $msg"))
-        text.clickEvent = ClickEvent(
-            ClickEvent.Action.SUGGEST_COMMAND,
-            "/hr $id "
-        )
+        Chat.sendMessage(sender, "${Chat.prefix} Successfully sent your ${Chat.primaryColor}help-op<gray>, please wait for someone to answer it!")
+        val text = net.kyori.adventure.text.Component.text()
+            .append(Chat.colored("<dark_gray>[${Chat.primaryColor}Help-OP<dark_gray>] <dark_gray>[${Chat.primaryColor}#${id}<dark_gray>] ${Chat.secondaryColor}${sender.name} ${Chat.dash}<gray> $msg"))
+            .clickEvent(net.kyori.adventure.text.event.ClickEvent.suggestCommand("/hr $id "))
+            .build()
 
         if (GameState.currentState != GameState.INGAME) {
             for (player in Bukkit.getOnlinePlayers()) {
                 if (player.hasPermission("uhc.staff")) {
-                    player?.spigot()?.sendMessage(text)
+                    player.sendMessage(text)
                 }
             }
         } else {
             for (name in SpecFeature.instance.getSpecs()) {
                 val player = Bukkit.getPlayer(name)
-                player?.spigot()?.sendMessage(text)
+                if (player != null && player.isOnline) {
+                    player!!.sendMessage(text)
+                }
             }
         }
         cooldowns[sender.name] = System.currentTimeMillis()

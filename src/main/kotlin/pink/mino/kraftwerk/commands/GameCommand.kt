@@ -17,8 +17,8 @@ import pink.mino.kraftwerk.utils.MiscUtils
 class GameCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<out String>
     ): Boolean {
         if (sender !is Player) {
@@ -26,39 +26,39 @@ class GameCommand : CommandExecutor {
             return true
         }
         if (!sender.hasPermission("uhc.staff.game")) {
-            Chat.sendMessage(sender, "&cYou do not have permission to use this command!")
+            Chat.sendMessage(sender, "<red>You do not have permission to use this command!")
             return true
         }
         if (JavaPlugin.getPlugin(Kraftwerk::class.java).game == null) {
-            Chat.sendMessage(sender, "&cThere is no game running!")
+            Chat.sendMessage(sender, "<red>There is no game running!")
             return true
         }
         val gui = GuiBuilder().name("${Chat.primaryColor}Game Manager").owner(sender).rows(3)
         var pause = ItemBuilder(Material.TRIPWIRE_HOOK)
             .name("${Chat.primaryColor}Pause Game")
-            .addLore("&7Click here to temporarily pause the game.")
-            .addLore("&7If the game is already paused, this will unpause it.")
+            .addLore("<gray>Click here to temporarily pause the game.")
+            .addLore("<gray>If the game is already paused, this will unpause it.")
             .make()
         var cancel = ItemBuilder(Material.BARRIER)
             .name("${Chat.primaryColor}Cancel Game")
-            .addLore("&7Click here to cancel the game.")
-            .addLore("&7This will stop the game task, but it will not kick any players.")
+            .addLore("<gray>Click here to cancel the game.")
+            .addLore("<gray>This will stop the game task, but it will not kick any players.")
             .make()
-        var timer = ItemBuilder(Material.WATCH)
+        var timer = ItemBuilder(Material.CLOCK)
             .name("${Chat.primaryColor}Game Information")
-            .addLore("&7Time Elapsed: ${Chat.secondaryColor}${MiscUtils.timeToString(JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.timer.toLong())}")
-            .addLore("&7Current Event: ${Chat.secondaryColor}${JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.currentEvent.name}")
+            .addLore("<gray>Time Elapsed: ${Chat.secondaryColor}${MiscUtils.timeToString(JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.timer.toLong())}")
+            .addLore("<gray>Current Event: ${Chat.secondaryColor}${JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.currentEvent.name}")
         if (JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.paused) {
-            timer.addLore("&c&lTHE GAME IS PAUSED")
+            timer.addLore("<red>&lTHE GAME IS PAUSED")
         }
         gui.item(10, pause).onClick runnable@ {
             it.isCancelled = true
             if (JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.paused) {
                 JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.paused = false
-                Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} The game has been &aunpaused&7."))
+                Bukkit.broadcast(Chat.colored("${Chat.prefix} The game has been <green>unpaused<gray>."))
             } else {
                 JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.paused = true
-                Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} The game has been &cpaused&7."))
+                Bukkit.broadcast(Chat.colored("${Chat.prefix} The game has been <red>paused<gray>."))
             }
         }
         gui.item(16, cancel).onClick runnable@ {
@@ -66,7 +66,7 @@ class GameCommand : CommandExecutor {
             sender.closeInventory()
             JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.cancel()
             JavaPlugin.getPlugin(Kraftwerk::class.java).game = null
-            Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} The game has been &ccancelled&7."))
+            Bukkit.broadcast(Chat.colored("${Chat.prefix} The game has been <red>cancelled<gray>."))
         }
         gui.item(13, timer.make()).onClick runnable@ {
             it.isCancelled = true
@@ -79,24 +79,24 @@ class GameCommand : CommandExecutor {
                     cancel()
                     return
                 }
-                if (sender.openInventory.title != "&cGame Manager") {
+                if (sender.openInventory.title != "<red>Game Manager") {
                     cancel()
                     return
                 }
                 pause = ItemBuilder(Material.TRIPWIRE_HOOK)
-                    .name("&cPause Game")
-                    .addLore("&7Click here to temporarily pause the game.")
-                    .addLore("&7If the game is already paused, this will unpause it.")
+                    .name("<red>Pause Game")
+                    .addLore("<gray>Click here to temporarily pause the game.")
+                    .addLore("<gray>If the game is already paused, this will unpause it.")
                     .make()
                 cancel = ItemBuilder(Material.BARRIER)
-                    .name("&cCancel Game")
-                    .addLore("&7Click here to cancel the game.")
-                    .addLore("&7This will stop the game task, but it will not kick any players.")
+                    .name("<red>Cancel Game")
+                    .addLore("<gray>Click here to cancel the game.")
+                    .addLore("<gray>This will stop the game task, but it will not kick any players.")
                     .make()
-                timer = ItemBuilder(Material.WATCH)
-                    .name("&cGame Information")
-                    .addLore("&7Time Elapsed: ${Chat.secondaryColor}${MiscUtils.timeToString(JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.timer.toLong())}")
-                    .addLore("&7Current Event: ${Chat.secondaryColor}${JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.currentEvent.name}")
+                timer = ItemBuilder(Material.CLOCK)
+                    .name("<red>Game Information")
+                    .addLore("<gray>Time Elapsed: ${Chat.secondaryColor}${MiscUtils.timeToString(JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.timer.toLong())}")
+                    .addLore("<gray>Current Event: ${Chat.secondaryColor}${JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.currentEvent.name}")
                 if (JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.paused) {
                     timer.addLore("${Chat.primaryColor}&lTHE GAME IS PAUSED")
                 }

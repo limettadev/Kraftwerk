@@ -15,7 +15,7 @@ class StrengthPotionOption : ConfigOption(
     @EventHandler
     fun onBrewEvent(e: BrewEvent) {
         if (enabled) return
-        if (e.contents.ingredient.type == Material.BLAZE_POWDER) {
+        if (e.contents.ingredient!!.type == Material.BLAZE_POWDER) {
             e.isCancelled = true
         }
     }

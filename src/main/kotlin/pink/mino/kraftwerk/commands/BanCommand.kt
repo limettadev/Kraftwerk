@@ -14,14 +14,14 @@ import java.util.*
 
 class BanCommand : CommandExecutor {
 
-    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
+    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (!sender.hasPermission("uhc.staff.ban")) {
-            sender.sendMessage(Chat.colored("&cYou do not have permission to use this command."))
+            sender.sendMessage(Chat.colored("<red>You do not have permission to use this command."))
             return true
         }
 
         if (args == null || args.size < 3) {
-            sender.sendMessage(Chat.colored("&cUsage: /ban <player> [-s] <duration> <reason...>"))
+            sender.sendMessage(Chat.colored("<red>Usage: /ban <player> [-s] <duration> <reason...>"))
             return true
         }
 
@@ -32,12 +32,12 @@ class BanCommand : CommandExecutor {
 
         if (targetPlayerOnline != null) { // Target is online
             if (targetPlayerOnline == sender) {
-                Chat.sendMessage(sender, "&cYou cannot punish yourself.")
+                Chat.sendMessage(sender, "<red>You cannot punish yourself.")
                 return true
             }
 
             if (targetPlayerOnline.hasPermission("uhc.staff")) {
-                Chat.sendMessage(sender, "&cYou cannot punish another staff member who is currently online.")
+                Chat.sendMessage(sender, "<red>You cannot punish another staff member who is currently online.")
                 return true
             }
         }
@@ -51,7 +51,7 @@ class BanCommand : CommandExecutor {
         }
 
         if (args.size <= durationArgIndex) {
-            sender.sendMessage(Chat.colored("&cMissing duration argument."))
+            sender.sendMessage(Chat.colored("<red>Missing duration argument."))
             return true
         }
 
@@ -59,12 +59,12 @@ class BanCommand : CommandExecutor {
         val durationMillis = PunishmentFeature.parseDurationToMillis(durationArg)
 
         if (durationMillis == null) {
-            sender.sendMessage(Chat.colored("&cInvalid duration format. Try something like 1d, 2h, 30m, 1w, 1mo, etc."))
+            sender.sendMessage(Chat.colored("<red>Invalid duration format. Try something like 1d, 2h, 30m, 1w, 1mo, etc."))
             return true
         }
 
         if (args.size <= durationArgIndex + 1) {
-            sender.sendMessage(Chat.colored("&cMissing reason for the ban."))
+            sender.sendMessage(Chat.colored("<red>Missing reason for the ban."))
             return true
         }
 
@@ -85,11 +85,11 @@ class BanCommand : CommandExecutor {
 
         // Notify appropriately
         if (!hasSilentFlag) {
-            Bukkit.broadcastMessage(Chat.colored("&c${target.name} has been banned for ${durationArg}. Reason: $reason"))
+            Bukkit.broadcast(Chat.colored("<red>${target.name} has been banned for ${durationArg}. Reason: $reason"))
         } else {
             for (player in Bukkit.getOnlinePlayers()) {
                 if (player.hasPermission("uhc.staff")) {
-                    player.sendMessage(Chat.colored("&7[Silent] &c${target.name} has been banned for ${durationArg}. Reason: $reason"))
+                    player.sendMessage(Chat.colored("<gray>[Silent] <red>${target.name} has been banned for ${durationArg}. Reason: $reason"))
                 }
             }
         }

@@ -1,8 +1,12 @@
 package pink.mino.kraftwerk.utils
 
-import net.minecraft.server.v1_8_R3.EntityLiving
+// TODO: ADD 1.8 SUPPORT
+
+import net.minecraft.server.level.ServerPlayer
+//import net.minecraft.server.v1_8_R3.EntityLiving
 import org.bukkit.Bukkit
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
+import org.bukkit.craftbukkit.entity.CraftPlayer
+//import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import pink.mino.kraftwerk.features.SpecFeature
@@ -20,8 +24,8 @@ class PlayerUtils {
         }
 
         fun getHealth(player: Player): String {
-            val el: EntityLiving = (player as CraftPlayer).handle
-            val health = floor(player.health / 2 * 10 + el.absorptionHearts / 2 * 10)
+            val el: ServerPlayer = (player as CraftPlayer).handle
+            val health = floor(player.health / 2 * 10 + el.absorptionAmount / 2 * 10)
             val color = HealthChatColorer.returnHealth(health)
             return "${color}${health}%"
         }

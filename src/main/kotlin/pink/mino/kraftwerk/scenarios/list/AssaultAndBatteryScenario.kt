@@ -19,7 +19,7 @@ class AssaultAndBatteryScenario : Scenario(
 ) {
     val melee = arrayListOf<UUID>()
     val ranged = arrayListOf<UUID>()
-    val prefix = "&8[${Chat.primaryColor}Assault and Battery&8]&7"
+    val prefix = "<dark_gray>[${Chat.primaryColor}Assault and Battery<dark_gray>]<gray>"
 
     override fun onStart() {
         for (team in TeamsFeature.manager.getTeams()) {
@@ -69,7 +69,7 @@ class AssaultAndBatteryScenario : Scenario(
         if (!enabled) return
         if (GameState.currentState != GameState.INGAME) return
         if (e.entity is Player && e.damager is Player) {
-            val player = e.entity as Player
+            e.entity as Player
             val damager = e.damager as Player
             if (!melee.contains(damager.uniqueId) && TeamsFeature.manager.getTeam(damager) != null) {
                 e.isCancelled = true
@@ -77,7 +77,7 @@ class AssaultAndBatteryScenario : Scenario(
                 return
             }
         } else if (e.entity is Player && e.damager is org.bukkit.entity.Projectile) {
-            val player = e.entity as Player
+            e.entity as Player
             val damager = (e.damager as org.bukkit.entity.Projectile).shooter as Player
             if (!ranged.contains(damager.uniqueId) && TeamsFeature.manager.getTeam(damager) != null) {
                 e.isCancelled = true

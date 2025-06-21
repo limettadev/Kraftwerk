@@ -63,8 +63,8 @@ class TeamsFeature private constructor() : Listener {
      * @param player the player joining.
      */
     fun joinTeam(teamName: String?, player: Player?) {
-        val team: Team = sb.getTeam(teamName)
-        team.addPlayer(player)
+        val team = sb.getTeam(teamName!!)
+        team!!.addPlayer(player as Player)
         Bukkit.getPluginManager().callEvent(TeamJoinEvent(team, player!!))
     }
 

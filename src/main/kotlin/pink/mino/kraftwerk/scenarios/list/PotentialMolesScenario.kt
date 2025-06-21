@@ -14,16 +14,16 @@ class PotentialMolesScenario : Scenario(
     "potential_moles",
     Material.IRON_SPADE
 ) {
-    val prefix = "&8[${Chat.primaryColor}Potential Moles&8]&7"
+    val prefix = "<dark_gray>[${Chat.primaryColor}Potential Moles<dark_gray>]<gray>"
 
     fun assignMoles() {
         MolesScenario.instance.moleTeam = TeamsFeature.manager.createTeam()
-        val list = ArrayList<Player>()
+        ArrayList<Player>()
         for (player in Bukkit.getOnlinePlayers()) {
             val random = Random.nextBoolean()
             if (random == true) {
                 MolesScenario.instance.moles[player.uniqueId] = false
-                Chat.sendMessage(player, "$prefix You are the ${Chat.secondaryColor}mole&7! Use ${Chat.secondaryColor}/mole help&7 to see mole commands.")
+                Chat.sendMessage(player, "$prefix You are the ${Chat.secondaryColor}mole<gray>! Use ${Chat.secondaryColor}/mole help<gray> to see mole commands.")
             }
 
         }

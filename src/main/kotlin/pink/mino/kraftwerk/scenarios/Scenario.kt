@@ -28,12 +28,12 @@ abstract class Scenario(
     fun toggle() {
         enabled = !enabled
         val changerText: String = if (enabled) {
-            "&aenabled"
+            "<green>enabled"
         } else {
-            "&cdisabled"
+            "<red>disabled"
         }
         onToggle(enabled)
-        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} &e$name&7 has been $changerText&7."))
+        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} <yellow>$name<gray> has been $changerText<gray>."))
         ConfigFeature.instance.data!!.set("game.scenarios.$id", enabled)
         ConfigFeature.instance.saveData()
     }
@@ -42,12 +42,12 @@ abstract class Scenario(
     fun setEnabled(to: Boolean) {
         enabled = to
         val changerText: String = if (enabled) {
-                "&aenabled"
+                "<green>enabled"
             } else {
-                "&cdisabled"
+                "<red>disabled"
             }
         onToggle(to)
-        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} &d$name&7 has been $changerText&7."))
+        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} &d$name<gray> has been $changerText<gray>."))
         ConfigFeature.instance.data!!.set("game.scenarios.$id", to)
         ConfigFeature.instance.saveData()
     }

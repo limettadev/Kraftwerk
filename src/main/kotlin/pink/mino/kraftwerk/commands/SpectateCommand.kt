@@ -11,13 +11,13 @@ import pink.mino.kraftwerk.utils.GameState
 class SpectateCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<String>
     ): Boolean {
         if (sender is Player) {
             if (!sender.hasPermission("uhc.staff.spec")) {
-                Chat.sendMessage(sender, "&cYou don't have permission to use this command.")
+                Chat.sendMessage(sender, "<red>You don't have permission to use this command.")
                 return false
             }
         }
@@ -44,21 +44,21 @@ class SpectateCommand : CommandExecutor {
             }
             val player = sender.server.getPlayer(args[0])
             if (player == null) {
-                Chat.sendMessage(sender, "&cPlayer not found.")
+                Chat.sendMessage(sender, "<red>Player not found.")
                 return false
             }
 
             if (GameState.currentState == GameState.INGAME && args.size == 2 && args[1] != "CONFIRM") {
-                Chat.sendMessage(sender, "&cYou're about to put someone into Spectator. If they are currently playing, this WILL kill them.\n&cIf you're sure you'd like to do this, use: /spec ${player.name} CONFIRM")
+                Chat.sendMessage(sender, "<red>You're about to put someone into Spectator. If they are currently playing, this WILL kill them.\n<red>If you're sure you'd like to do this, use: /spec ${player.name} CONFIRM")
                 return false
             }
 
             if (SpecFeature.instance.getSpecs().contains(player.name)) {
                 SpecFeature.instance.unspec(player)
-                Chat.sendMessage(sender, "${Chat.prefix} ${Chat.secondaryColor}${player.name}&7 has been removed from Spectator mode.")
+                Chat.sendMessage(sender, "${Chat.prefix} ${Chat.secondaryColor}${player.name}<gray> has been removed from Spectator mode.")
             } else {
                 SpecFeature.instance.spec(player)
-                Chat.sendMessage(sender, "${Chat.prefix} ${Chat.secondaryColor}${player.name}&7 has been set to Spectator mode.")
+                Chat.sendMessage(sender, "${Chat.prefix} ${Chat.secondaryColor}${player.name}<gray> has been set to Spectator mode.")
             }
         } else {
             if (SpecFeature.instance.getSpecs().contains(sender.name)) {

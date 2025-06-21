@@ -162,13 +162,13 @@ class OPLootCratesScenario : Scenario(
                     )
                 ) return
                 if (itemStack.amount > 1) {
-                    Chat.sendMessage(p, "${Chat.prefix} &7You can only open one lootcrate at a time!")
+                    Chat.sendMessage(p, "${Chat.prefix} <gray>You can only open one lootcrate at a time!")
                     return
                 }
                 val stack = generateTier1()[Random.nextInt(generateTier1().size)]
                 p.inventory.itemInHand = null
                 p.inventory.addItem(stack)
-                Chat.sendMessage(p, "${Chat.prefix} You have received ${Chat.primaryColor}${stack.amount} ${stack.type.name}&7 from your lootcrate!")
+                Chat.sendMessage(p, "${Chat.prefix} You have received ${Chat.primaryColor}${stack.amount} ${stack.type.name}<gray> from your lootcrate!")
             } else if (itemStack.type == Material.ENDER_CHEST) {
                 if (!itemStack.itemMeta.displayName.equals(
                         Chat.colored("${Chat.primaryColor}Tier II Loot Crate"),
@@ -176,13 +176,13 @@ class OPLootCratesScenario : Scenario(
                     )
                 ) return
                 if (itemStack.amount > 1) {
-                    Chat.sendMessage(p, "${Chat.prefix} &7You can only open one loot-crate at a time!")
+                    Chat.sendMessage(p, "${Chat.prefix} <gray>You can only open one loot-crate at a time!")
                     return
                 }
                 val stack = generateTier2()[Random.nextInt(generateTier2().size)]
                 p.inventory.itemInHand = null
                 p.inventory.addItem(stack)
-                Chat.sendMessage(p, "${Chat.prefix} You have received ${Chat.primaryColor}${stack.amount} ${stack.type.name}&7 from your lootcrate!")
+                Chat.sendMessage(p, "${Chat.prefix} You have received ${Chat.primaryColor}${stack.amount} ${stack.type.name}<gray> from your lootcrate!")
             }
         }
     }
@@ -192,23 +192,23 @@ class OPLootCratesScenario : Scenario(
         var meta = tier1Chest.itemMeta
         meta.displayName = Chat.colored("${Chat.primaryColor}Tier I Loot Crate")
         meta.lore = listOf(
-            "&7Right-click to redeem a Tier I item!"
+            "<gray>Right-click to redeem a Tier I item!"
         )
         tier1Chest.itemMeta = meta
         val tier2Chest = ItemStack(Material.ENDER_CHEST)
         meta = tier2Chest.itemMeta
         meta.displayName = Chat.colored("${Chat.primaryColor}Tier II Loot Crate")
         meta.lore = listOf(
-            "&7Right-click to redeem a Tier II item!"
+            "<gray>Right-click to redeem a Tier II item!"
         )
         tier2Chest.itemMeta = meta
         val chance = Random.nextInt(2)
         if (chance == 1) {
             player.inventory.addItem(tier1Chest)
-            Chat.sendMessage(player, "${Chat.prefix} You've been given a ${Chat.primaryColor}Tier I&7 Loot Crate.")
+            Chat.sendMessage(player, "${Chat.prefix} You've been given a ${Chat.primaryColor}Tier I<gray> Loot Crate.")
         } else {
             player.inventory.addItem(tier2Chest)
-            Chat.sendMessage(player, "${Chat.prefix} You've been given a ${Chat.primaryColor}Tier II&7 Loot Crate.")
+            Chat.sendMessage(player, "${Chat.prefix} You've been given a ${Chat.primaryColor}Tier II<gray> Loot Crate.")
         }
         player.playSound(player.location, Sound.NOTE_PLING, 10F, 1F)
     }
@@ -241,14 +241,14 @@ class OPLootCratesScenario : Scenario(
         var meta = tier1Chest.itemMeta
         meta.displayName = Chat.colored("${Chat.primaryColor}Tier I Loot Crate")
         meta.lore = listOf(
-            "&7Right-click to redeem a Tier I item!"
+            "<gray>Right-click to redeem a Tier I item!"
         )
         tier1Chest.itemMeta = meta
         val tier2Chest = ItemStack(Material.ENDER_CHEST)
         meta = tier2Chest.itemMeta
         meta.displayName = Chat.colored("${Chat.primaryColor}Tier II Loot Crate")
         meta.lore = listOf(
-            "&7Right-click to redeem a Tier II item!"
+            "<gray>Right-click to redeem a Tier II item!"
         )
         tier2Chest.itemMeta = meta
         for (player in Bukkit.getOnlinePlayers()) {
@@ -258,10 +258,10 @@ class OPLootCratesScenario : Scenario(
                 val chance = Random.nextInt(2)
                 if (chance == 1) {
                     player.inventory.addItem(tier1Chest)
-                    Chat.sendMessage(player, "${Chat.prefix} You've been given a ${Chat.primaryColor}Tier I&7 Loot Crate.")
+                    Chat.sendMessage(player, "${Chat.prefix} You've been given a ${Chat.primaryColor}Tier I<gray> Loot Crate.")
                 } else {
                     player.inventory.addItem(tier2Chest)
-                    Chat.sendMessage(player, "${Chat.prefix} You've been given a ${Chat.primaryColor}Tier II&7 Loot Crate.")
+                    Chat.sendMessage(player, "${Chat.prefix} You've been given a ${Chat.primaryColor}Tier II<gray> Loot Crate.")
                 }
             }
             player.playSound(player.location, Sound.NOTE_PLING, 10F, 1F)

@@ -63,7 +63,7 @@ class MiscUtils {
 
         fun populateCrafting(gui: GuiBuilder): GuiBuilder {
             for (i in 0..44) {
-                val blank = ItemBuilder(Material.STAINED_GLASS_PANE)
+                val blank = ItemBuilder(Material.LIME_STAINED_GLASS_PANE)
                     .noAttributes()
                     .setDurability(8)
                     .name(" ")
@@ -72,11 +72,11 @@ class MiscUtils {
                     it.isCancelled = true
                 }
             }
-            val result = ItemBuilder(Material.STAINED_GLASS_PANE)
+            val result = ItemBuilder(Material.LIME_STAINED_GLASS_PANE)
                 .noAttributes()
                 .setDurability(5)
-                .name("&aResult")
-                .addLore("&7Crafting recipe result ->")
+                .name("<green>Result")
+                .addLore("<gray>Crafting recipe result ->")
                 .make()
             gui.item(23, result).onClick runnable@{
                 it.isCancelled = true

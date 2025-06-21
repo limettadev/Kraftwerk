@@ -31,7 +31,7 @@ class AuctionScenario : Scenario(
     var owners: MutableList<String> = mutableListOf()
     var diamondAmount: HashMap<Player, Int> = hashMapOf() // stores owners and their diamonds
     var ownerArea: HashMap<Player, Location> = hashMapOf()
-    val prefix = "&8[${Chat.primaryColor}Auction&8]&7 "
+    val prefix = "<dark_gray>[${Chat.primaryColor}Auction<dark_gray>]<gray> "
     var maxDiamonds = 50
     var highestBid = -1
     var highestBidder: Player? = null
@@ -94,17 +94,17 @@ class AuctionScenario : Scenario(
 
                     val player = Bukkit.getPlayer(args[1])
                     if (player == null) {
-                        Chat.sendMessage(sender, prefix + "&cPlayer not found.")
+                        Chat.sendMessage(sender, prefix + "<red>Player not found.")
                         return false
                     }
 
                     if (owners.contains(player.name.lowercase())) {
-                        Chat.sendMessage(sender, prefix + "${Chat.primaryColor}${player.name} &7is already an owner.")
+                        Chat.sendMessage(sender, prefix + "${Chat.primaryColor}${player.name} <gray>is already an owner.")
                         return false
                     }
 
                     if (owners.size >= 8) {
-                        Chat.sendMessage(sender, prefix + "&cThere are already 8 owners.")
+                        Chat.sendMessage(sender, prefix + "<red>There are already 8 owners.")
                         return false
                     }
 
@@ -113,7 +113,7 @@ class AuctionScenario : Scenario(
                     ownerArea[player] = areas[owners.size]!!
                     diamondAmount[player] = maxDiamonds
                     TeamsFeature.manager.createTeam(player)
-                    Bukkit.broadcastMessage(Chat.colored(prefix + "${TeamsFeature.manager.getTeam(player)!!.prefix}${player.name} &7has been made the bidder for ${TeamsFeature.manager.getTeam(player)!!.displayName}&7."))
+                    Bukkit.broadcastMessage(Chat.colored(prefix + "${TeamsFeature.manager.getTeam(player)!!.prefix}${player.name} <gray>has been made the bidder for ${TeamsFeature.manager.getTeam(player)!!.displayName}<gray>."))
                 }
                 "remove" -> {
                     if (args.size < 2) {
@@ -121,12 +121,12 @@ class AuctionScenario : Scenario(
                         return false
                     }
                     if (!owners.contains(args[1].lowercase())) {
-                        Chat.sendMessage(sender, prefix + "${Chat.primaryColor}${args[1]} &7is not an owner.")
+                        Chat.sendMessage(sender, prefix + "${Chat.primaryColor}${args[1]} <gray>is not an owner.")
                         return false
                     }
                     owners.remove(args[1].lowercase())
                     diamondAmount.remove(Bukkit.getPlayer(args[1]))
-                    Bukkit.broadcastMessage(Chat.colored(prefix + "${Chat.primaryColor}${args[1]} &7is no longer an owner."))
+                    Bukkit.broadcastMessage(Chat.colored(prefix + "${Chat.primaryColor}${args[1]} <gray>is no longer an owner."))
                     val offlinePlayer = Bukkit.getOfflinePlayer(args[1])
                     TeamsFeature.manager.deleteTeam(TeamsFeature.manager.getTeam(offlinePlayer)!!)
                     if (offlinePlayer.isOnline) {
@@ -147,11 +147,11 @@ class AuctionScenario : Scenario(
                                 )
                             }
                         }
-                        Chat.sendMessage(sender, prefix + "&7All buyers have been given their diamonds.")
+                        Chat.sendMessage(sender, prefix + "<gray>All buyers have been given their diamonds.")
                         return true
                     }
                     if (biddingInProgress) {
-                        Chat.sendMessage(sender, prefix + "&cBidding is in progress. Should've changed this before bidding started.")
+                        Chat.sendMessage(sender, prefix + "<red>Bidding is in progress. Should've changed this before bidding started.")
                         return false
                     }
                     try {
@@ -159,9 +159,9 @@ class AuctionScenario : Scenario(
                         if (maxDiamonds < 1) {
                             maxDiamonds = 1
                         }
-                        Bukkit.broadcastMessage(Chat.colored(prefix + "The amount of diamonds has been set to ${Chat.primaryColor}$maxDiamonds&7."))
+                        Bukkit.broadcastMessage(Chat.colored(prefix + "The amount of diamonds has been set to ${Chat.primaryColor}$maxDiamonds<gray>."))
                     } catch (e: NumberFormatException) {
-                        Chat.sendMessage(sender, prefix + "${Chat.primaryColor}${args[1]} &7is not a valid number.")
+                        Chat.sendMessage(sender, prefix + "${Chat.primaryColor}${args[1]} <gray>is not a valid number.")
                     }
                 }
                 "refund" -> {
@@ -179,12 +179,12 @@ class AuctionScenario : Scenario(
 
                     val player = Bukkit.getPlayer(buyer)
                     if (player == null) {
-                        Chat.sendMessage(sender, prefix + "${Chat.primaryColor}The buyer '${buyer}' &7is not online to receive the refund.")
+                        Chat.sendMessage(sender, prefix + "${Chat.primaryColor}The buyer '${buyer}' <gray>is not online to receive the refund.")
                         return false
                     }
                     PlayerUtils.bulkItems(player, arrayListOf(ItemStack(Material.DIAMOND, playerCost)))
-                    Chat.sendMessage(sender, prefix + "&7The buyer '${buyer}' &7has been refunded ${Chat.primaryColor}$playerCost &7diamonds.")
-                    Chat.sendMessage(player, prefix + "&7You have been refunded ${Chat.primaryColor}$playerCost &7diamonds for ${Chat.primaryColor}$refund&7.")
+                    Chat.sendMessage(sender, prefix + "<gray>The buyer '${buyer}' <gray>has been refunded ${Chat.primaryColor}$playerCost <gray>diamonds.")
+                    Chat.sendMessage(player, prefix + "<gray>You have been refunded ${Chat.primaryColor}$playerCost <gray>diamonds for ${Chat.primaryColor}$refund<gray>.")
                 }
                 "reset" -> {
                     owners.clear()
@@ -195,22 +195,22 @@ class AuctionScenario : Scenario(
                     currentPlayer = null
                     biddingInProgress = false
                     bidTime = 8
-                    Chat.sendMessage(sender, prefix + "&7Auction has been reset.")
+                    Chat.sendMessage(sender, prefix + "<gray>Auction has been reset.")
                 }
                 "start" -> {
                     if (task != null && Bukkit.getScheduler().isCurrentlyRunning(task!!.taskId)) {
-                        Chat.sendMessage(sender, prefix + "&cAuction is already in progress.")
+                        Chat.sendMessage(sender, prefix + "<red>Auction is already in progress.")
                         return false
                     }
                     if (biddingInProgress) {
-                        Chat.sendMessage(sender, prefix + "&cBidding is already in progress..")
+                        Chat.sendMessage(sender, prefix + "<red>Bidding is already in progress..")
                         return false
                     }
                     if (owners.isEmpty()) {
-                        Chat.sendMessage(sender, prefix + "&cThere are no owners.")
+                        Chat.sendMessage(sender, prefix + "<red>There are no owners.")
                         return false
                     }
-                    Bukkit.broadcastMessage(Chat.colored(prefix + "This auction will give a max of ${Chat.primaryColor}$maxDiamonds &7diamonds to ${Chat.primaryColor}bidders&7."))
+                    Bukkit.broadcastMessage(Chat.colored(prefix + "This auction will give a max of ${Chat.primaryColor}$maxDiamonds <gray>diamonds to ${Chat.primaryColor}bidders<gray>."))
                     Bukkit.broadcastMessage(Chat.colored(prefix + "The timer will begin counting down once the first bidder bids."))
                     GameState.currentState = GameState.WAITING
                     object : BukkitRunnable() {
@@ -229,14 +229,14 @@ class AuctionScenario : Scenario(
                                             val winner = highestBidder
 
                                             if (winner == null) {
-                                                Bukkit.broadcastMessage(Chat.colored(prefix + "&cNo one has bid on the auction, restarting..."))
+                                                Bukkit.broadcastMessage(Chat.colored(prefix + "<red>No one has bid on the auction, restarting..."))
                                                 return
                                             }
 
                                             val slave = currentPlayer
 
                                             if (slave == null) {
-                                                Bukkit.broadcastMessage(Chat.colored(prefix + "&cCouldn't find the player, restarting..."))
+                                                Bukkit.broadcastMessage(Chat.colored(prefix + "<red>Couldn't find the player, restarting..."))
                                                 return
                                             }
 
@@ -246,14 +246,14 @@ class AuctionScenario : Scenario(
                                                 Chat.sendMessage(sender, prefix + "Could not join team.")
                                                 return
                                             }
-                                            Bukkit.broadcastMessage(Chat.colored(prefix + "${Chat.primaryColor}${slave.name} &7was sold to ${Chat.primaryColor}${winner.name} &7for ${Chat.primaryColor}${highestBid} &7diamonds."))
+                                            Bukkit.broadcastMessage(Chat.colored(prefix + "${Chat.primaryColor}${slave.name} <gray>was sold to ${Chat.primaryColor}${winner.name} <gray>for ${Chat.primaryColor}${highestBid} <gray>diamonds."))
                                             diamondAmount[winner] = diamondAmount[winner]!! - highestBid
                                             TeamsFeature.manager.joinTeam(TeamsFeature.manager.getTeam(winner)!!.name, slave)
                                             cost[slave.name.lowercase()] = highestBid
                                             purchasedBy[slave.name.lowercase()] = winner.name.lowercase()
                                             WhitelistCommand().addWhitelist(slave.name)
                                             slave.teleport(ownerArea[winner]!!)
-                                            Chat.sendMessage(winner, prefix + "You won the auction for ${Chat.primaryColor}${slave.name}&7! You have ${Chat.primaryColor}${diamondAmount[winner]!!} &7diamonds left.")
+                                            Chat.sendMessage(winner, prefix + "You won the auction for ${Chat.primaryColor}${slave.name}<gray>! You have ${Chat.primaryColor}${diamondAmount[winner]!!} <gray>diamonds left.")
                                             return
                                         }
                                         if (bidTime >= 0) {
@@ -261,12 +261,12 @@ class AuctionScenario : Scenario(
                                                 if (highestBid == -1) {
                                                     ActionBar.sendActionBarMessage(
                                                         player,
-                                                        Chat.colored(prefix + "Current Player ${Chat.dash} ${Chat.primaryColor}${currentPlayer?.name} &8| &7Highest Bid ${Chat.dash} ${Chat.primaryColor}N/A &7from &4N/A &8(&7Time Left: ${Chat.primaryColor}${bidTime}s&8)")
+                                                        Chat.colored(prefix + "Current Player ${Chat.dash} ${Chat.primaryColor}${currentPlayer?.name} <dark_gray>| <gray>Highest Bid ${Chat.dash} ${Chat.primaryColor}N/A <gray>from &4N/A <dark_gray>(<gray>Time Left: ${Chat.primaryColor}${bidTime}s<dark_gray>)")
                                                     )
                                                 } else {
                                                     ActionBar.sendActionBarMessage(
                                                         player,
-                                                        Chat.colored(prefix + "Current Player ${Chat.dash} ${Chat.primaryColor}${currentPlayer?.name} &8| &7Highest Bid ${Chat.dash} ${Chat.primaryColor}${highestBid} &7from &4${highestBidder?.name} &8(&7Time Left: ${Chat.primaryColor}${bidTime}s&8)")
+                                                        Chat.colored(prefix + "Current Player ${Chat.dash} ${Chat.primaryColor}${currentPlayer?.name} <dark_gray>| <gray>Highest Bid ${Chat.dash} ${Chat.primaryColor}${highestBid} <gray>from &4${highestBidder?.name} <dark_gray>(<gray>Time Left: ${Chat.primaryColor}${bidTime}s<dark_gray>)")
                                                     )
                                                 }
                                             }
@@ -293,18 +293,18 @@ class AuctionScenario : Scenario(
                                             highestBid = -1
                                             highestBidder = null
                                             bidTime = 8
-                                            Bukkit.broadcastMessage(Chat.colored(prefix + "${Chat.primaryColor}${currentPlayer!!.name} &7is now up for auction! Use ${Chat.primaryColor}/bid&7."))
+                                            Bukkit.broadcastMessage(Chat.colored(prefix + "${Chat.primaryColor}${currentPlayer!!.name} <gray>is now up for auction! Use ${Chat.primaryColor}/bid<gray>."))
                                             for (player in Bukkit.getOnlinePlayers()) {
                                                 if (owners.contains(player.name.lowercase())) {
-                                                    player.sendMessage(Chat.colored(prefix + "You currently have ${Chat.primaryColor}${diamondAmount[player]!!} &7diamonds to bid with."))
+                                                    player.sendMessage(Chat.colored(prefix + "You currently have ${Chat.primaryColor}${diamondAmount[player]!!} <gray>diamonds to bid with."))
                                                 }
-                                                ActionBar.sendActionBarMessage(player, Chat.colored(prefix + "${Chat.primaryColor}${currentPlayer!!.name} &7is now up for auction! Use ${Chat.primaryColor}/bid&7."))
+                                                ActionBar.sendActionBarMessage(player, Chat.colored(prefix + "${Chat.primaryColor}${currentPlayer!!.name} <gray>is now up for auction! Use ${Chat.primaryColor}/bid<gray>."))
                                             }
                                             currentPlayer!!.teleport(playerBuying)
                                             return
                                         }
                                         if (bidTime < 4) {
-                                            Bukkit.broadcastMessage(Chat.colored(prefix + "Bidding ends in ${Chat.primaryColor}${bidTime} &7seconds."))
+                                            Bukkit.broadcastMessage(Chat.colored(prefix + "Bidding ends in ${Chat.primaryColor}${bidTime} <gray>seconds."))
                                         }
                                     }
                                 }
@@ -312,18 +312,18 @@ class AuctionScenario : Scenario(
                                 cancel()
                                 return
                             }
-                            Bukkit.broadcastMessage(Chat.colored(prefix + "Bidding starts in ${Chat.primaryColor}${timeLeft} &7seconds."))
+                            Bukkit.broadcastMessage(Chat.colored(prefix + "Bidding starts in ${Chat.primaryColor}${timeLeft} <gray>seconds."))
                             timeLeft--
                         }
                     }.runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0, 20)
                 }
                 "stop" -> {
                     if (task == null || !Bukkit.getScheduler().isCurrentlyRunning(task!!.taskId)) {
-                        Chat.sendMessage(sender, prefix + "&cBidding is not running.")
+                        Chat.sendMessage(sender, prefix + "<red>Bidding is not running.")
                         return false
                     }
                     if (!biddingInProgress) {
-                        Chat.sendMessage(sender, prefix + "&cBidding is not running.")
+                        Chat.sendMessage(sender, prefix + "<red>Bidding is not running.")
                         return false
                     }
                     task!!.cancel()
@@ -382,7 +382,7 @@ class AuctionScenario : Scenario(
 
             highestBid = amount
             highestBidder = sender
-            Bukkit.broadcastMessage(Chat.colored(prefix + "${TeamsFeature.manager.getTeam(sender)!!.prefix}${sender.name} &7has bid ${Chat.primaryColor}${amount} &7diamonds."))
+            Bukkit.broadcastMessage(Chat.colored(prefix + "${TeamsFeature.manager.getTeam(sender)!!.prefix}${sender.name} <gray>has bid ${Chat.primaryColor}${amount} <gray>diamonds."))
             if (bidTime <= 5) {
                 bidTime += 3
             }

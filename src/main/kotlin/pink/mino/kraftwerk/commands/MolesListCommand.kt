@@ -13,8 +13,8 @@ import pink.mino.kraftwerk.utils.GameState
 class MolesListCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<String>
     ): Boolean {
         if (sender !is Player) {
@@ -22,15 +22,15 @@ class MolesListCommand : CommandExecutor {
             return false
         }
         if (!ScenarioHandler.getActiveScenarios().contains(ScenarioHandler.getScenario("moles"))) {
-            Chat.sendMessage(sender, "${Chat.prefix} ${Chat.primaryColor}Moles&7 isn't enabled!")
+            Chat.sendMessage(sender, "${Chat.prefix} ${Chat.primaryColor}Moles<gray> isn't enabled!")
             return false
         }
         if (GameState.currentState != GameState.INGAME) {
-            Chat.sendMessage(sender, "${Chat.prefix} ${Chat.primaryColor}Moles&7 isn't available right now!")
+            Chat.sendMessage(sender, "${Chat.prefix} ${Chat.primaryColor}Moles<gray> isn't available right now!")
             return false
         }
         if (MolesScenario.instance.moles[sender.uniqueId] == null && !SpecFeature.instance.getSpecs().contains(sender.name)) {
-            Chat.sendMessage(sender, "${Chat.prefix} &7You aren't a mole or a Spectator!")
+            Chat.sendMessage(sender, "${Chat.prefix} <gray>You aren't a mole or a Spectator!")
             return false
         }
         Chat.sendMessage(sender, "${Chat.prefix} Moles list: ${MolesScenario.instance.getMoles().joinToString(", ")}")

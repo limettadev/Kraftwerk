@@ -34,7 +34,7 @@ class ChestOfFateRecipe : Recipe(
 ) {
     init {
         val chestOfFate = ItemBuilder(Material.CHEST)
-            .name("&eChest of Fate")
+            .name("<yellow>Chest of Fate")
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(chestOfFate, id)).shape("WWW", "WHW", "WWW")
             .setIngredient('W', Material.WOOD)
@@ -52,7 +52,7 @@ class ChestOfFateRecipe : Recipe(
                 if (tag.getString("uhcId") == "chest_of_fate") {
                     val block: Block? = player.getTargetBlock(null as Set<Material?>?, 10)
                     if (block == null || block.type !== Material.WORKBENCH) {
-                        Chat.sendMessage(player, "&cYou are not looking at a crafting table.")
+                        Chat.sendMessage(player, "<red>You are not looking at a crafting table.")
                         e.isCancelled = true
                         return
                     }

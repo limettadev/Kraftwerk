@@ -8,5 +8,5 @@ class StripminingOption: ConfigOption(
     "Allows people to mine in a straight line under Y: 32",
     "rules",
     "stripmining",
-    Material.GOLD_PICKAXE
+    Material.GOLDEN_PICKAXE
 )

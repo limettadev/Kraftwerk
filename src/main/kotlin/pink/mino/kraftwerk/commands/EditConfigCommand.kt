@@ -1,5 +1,6 @@
 package pink.mino.kraftwerk.commands
 
+import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.Material
@@ -19,14 +20,14 @@ import pink.mino.kraftwerk.utils.ItemBuilder
 class EditConfigCommand : CommandExecutor {
 
     override fun onCommand(
-        sender: CommandSender?,
-        command: Command?,
-        label: String?,
+        sender: CommandSender,
+        command: Command,
+        label: String,
         args: Array<String>
     ): Boolean {
         if (sender is Player) {
             if (!sender.hasPermission("uhc.staff")) {
-                Chat.sendMessage(sender, "&cYou don't have permission to use this command.")
+                Chat.sendMessage(sender, "<red>You don't have permission to use this command.")
                 return false
             }
         }
@@ -38,7 +39,7 @@ class EditConfigCommand : CommandExecutor {
             size = 17
             val rates = ItemBuilder(Material.FLINT)
                 .name("${Chat.primaryColor}Rates")
-                .addLore("&7Click here to edit rates.")
+                .addLore("<gray>Click here to edit rates.")
                 .make()
             gui.item(0, rates).onClick runnable@ {
                 it.isCancelled = true
@@ -47,7 +48,7 @@ class EditConfigCommand : CommandExecutor {
             }
             val settings = ItemBuilder(Material.LAVA_BUCKET)
                 .name("${Chat.primaryColor}Settings")
-                .addLore("&7Click here to edit general options.")
+                .addLore("<gray>Click here to edit general options.")
                 .make()
             gui.item(1, settings).onClick runnable@ {
                 it.isCancelled = true
@@ -56,7 +57,7 @@ class EditConfigCommand : CommandExecutor {
             }
             val teams = ItemBuilder(Material.DIAMOND_SWORD)
                 .name("${Chat.primaryColor}Teams")
-                .addLore("&7Click here to edit teams.")
+                .addLore("<gray>Click here to edit teams.")
                 .make()
             gui.item(2, teams).onClick runnable@ {
                 it.isCancelled = true
@@ -65,7 +66,7 @@ class EditConfigCommand : CommandExecutor {
             }
             val starterFood = ItemBuilder(Material.COOKED_BEEF)
                 .name("${Chat.primaryColor}Starter Food")
-                .addLore("&7Click here to edit starter food.")
+                .addLore("<gray>Click here to edit starter food.")
                 .make()
             gui.item(3, starterFood).onClick runnable@ {
                 it.isCancelled = true
@@ -74,16 +75,16 @@ class EditConfigCommand : CommandExecutor {
             }
             val host = ItemBuilder(Material.COMPASS)
                 .name("${Chat.primaryColor}Host")
-                .addLore("&7Click here to set yourself as the host.")
+                .addLore("<gray>Click here to set yourself as the host.")
                 .make()
             gui.item(4, host).onClick runnable@ {
                 it.isCancelled = true
                 player.closeInventory()
                 Bukkit.dispatchCommand(player, "editconfig host")
             }
-            val events = ItemBuilder(Material.WATCH)
+            val events = ItemBuilder(Material.CLOCK)
                 .name("${Chat.primaryColor}Events")
-                .addLore("&7Click here to edit events.")
+                .addLore("<gray>Click here to edit events.")
                 .make()
             gui.item(5, events).onClick runnable@ {
                 it.isCancelled = true
@@ -92,7 +93,7 @@ class EditConfigCommand : CommandExecutor {
             }
             val nether = ItemBuilder(Material.NETHER_STAR)
                 .name("${Chat.primaryColor}Nether")
-                .addLore("&7Click here to edit nether options.")
+                .addLore("<gray>Click here to edit nether options.")
                 .make()
             gui.item(6, nether).onClick runnable@ {
                 it.isCancelled = true
@@ -101,7 +102,7 @@ class EditConfigCommand : CommandExecutor {
             }
             val rules = ItemBuilder(Material.PAPER)
                 .name("${Chat.primaryColor}Rules")
-                .addLore("&7Click here to edit rules.")
+                .addLore("<gray>Click here to edit rules.")
                 .make()
             gui.item(7, rules).onClick runnable@ {
                 it.isCancelled = true
@@ -110,7 +111,7 @@ class EditConfigCommand : CommandExecutor {
             }
             val specials = ItemBuilder(Material.BLAZE_POWDER)
                 .name("${Chat.primaryColor}Special Options")
-                .addLore("&7Click here to edit special options.")
+                .addLore("<gray>Click here to edit special options.")
                 .make()
             gui.item(8, specials).onClick runnable@ {
                 it.isCancelled = true
@@ -125,19 +126,19 @@ class EditConfigCommand : CommandExecutor {
                 if (option.category === "options") {
                     val item = ItemStack(option.material)
                     val itemMeta = item.itemMeta
-                    var color: String = if (option.enabled) "&a"
-                    else "&c"
-                    itemMeta.displayName = Chat.colored("${color}${option.name}")
-                    itemMeta.lore = Chat.scenarioTextWrap(Chat.colored("&7${option.description}"), 40)
+                    var color: String = if (option.enabled) "<green>"
+                    else "<red>"
+                    itemMeta.displayName(MiniMessage.miniMessage().deserialize("${color}${option.name}"))
+                    itemMeta.lore(Chat.scenarioTextWrap("<gray>${option.description}", 40).toList())
                     item.itemMeta = itemMeta
                     gui.item(iterator, item).onClick runnable@ {
                         it.isCancelled = true
                         ConfigOptionHandler.getOption(option.id)?.toggle()
-                        color = if (option.enabled) "&a"
-                        else "&c"
-                        val meta = it.currentItem.itemMeta
-                        meta.displayName = Chat.colored("${color}${option.name}")
-                        it.currentItem.itemMeta = meta
+                        color = if (option.enabled) "<green>"
+                        else "<red>"
+                        val meta = it.currentItem!!.itemMeta
+                        meta.displayName(MiniMessage.miniMessage().deserialize("${color}${option.name}"))
+                        it.currentItem!!.itemMeta = meta
                     }
                     iterator++
                 }
@@ -150,19 +151,19 @@ class EditConfigCommand : CommandExecutor {
                 if (option.category === "nether") {
                     val item = ItemStack(option.material)
                     val itemMeta = item.itemMeta
-                    var color: String = if (option.enabled) "&a"
-                    else "&c"
-                    itemMeta.displayName = Chat.colored("${color}${option.name}")
-                    itemMeta.lore = Chat.scenarioTextWrap(Chat.colored("&7${option.description}"), 40)
+                    var color: String = if (option.enabled) "<green>"
+                    else "<red>"
+                    itemMeta.displayName(MiniMessage.miniMessage().deserialize("${color}${option.name}"))
+                    itemMeta.lore(Chat.scenarioTextWrap("<gray>${option.description}", 40))
                     item.itemMeta = itemMeta
                     gui.item(iterator, item).onClick runnable@ {
                         it.isCancelled = true
                         ConfigOptionHandler.getOption(option.id)?.toggle()
-                        color = if (option.enabled) "&a"
-                        else "&c"
-                        val meta = it.currentItem.itemMeta
-                        meta.displayName = Chat.colored("${color}${option.name}")
-                        it.currentItem.itemMeta = meta
+                        color = if (option.enabled) "<green>"
+                        else "<red>"
+                        val meta = it.currentItem!!.itemMeta
+                        meta.displayName(MiniMessage.miniMessage().deserialize("${color}${option.name}"))
+                        it.currentItem!!.itemMeta = meta
                     }
                     iterator++
                 }
@@ -175,19 +176,19 @@ class EditConfigCommand : CommandExecutor {
                 if (option.category === "rules") {
                     val item = ItemStack(option.material)
                     val itemMeta = item.itemMeta
-                    var color: String = if (option.enabled) "&a"
-                    else "&c"
-                    itemMeta.displayName = Chat.colored("${color}${option.name}")
-                    itemMeta.lore = Chat.scenarioTextWrap(Chat.colored("&7${option.description}"), 40)
+                    var color: String = if (option.enabled) "<green>"
+                    else "<red>"
+                    itemMeta.displayName(MiniMessage.miniMessage().deserialize("${color}${option.name}"))
+                    itemMeta.lore(Chat.scenarioTextWrap("<gray>${option.description}", 40))
                     item.itemMeta = itemMeta
                     gui.item(iterator, item).onClick runnable@ {
                         it.isCancelled = true
                         ConfigOptionHandler.getOption(option.id)?.toggle()
-                        color = if (option.enabled) "&a"
-                        else "&c"
-                        val meta = it.currentItem.itemMeta
-                        meta.displayName = Chat.colored("${color}${option.name}")
-                        it.currentItem.itemMeta = meta
+                        color = if (option.enabled) "<green>"
+                        else "<red>"
+                        val meta = it.currentItem!!.itemMeta
+                        meta.displayName(MiniMessage.miniMessage().deserialize("${color}${option.name}"))
+                        it.currentItem!!.itemMeta = meta
                     }
                     iterator++
                 }
@@ -202,35 +203,35 @@ class EditConfigCommand : CommandExecutor {
             val fhMeta = finalHeal.itemMeta
             val pvpMeta = pvp.itemMeta
             val muMeta = meetup.itemMeta
-            fhMeta.displayName = Chat.colored("${Chat.primaryColor}Final Heal")
-            pvpMeta.displayName = Chat.colored("${Chat.primaryColor}PvP")
-            muMeta.displayName = Chat.colored("${Chat.primaryColor}Meetup")
+            fhMeta.displayName(MiniMessage.miniMessage().deserialize("${Chat.primaryColor}Final Heal"))
+            pvpMeta.displayName(MiniMessage.miniMessage().deserialize("${Chat.primaryColor}PvP"))
+            muMeta.displayName(MiniMessage.miniMessage().deserialize("${Chat.primaryColor}Meetup"))
 
-            fhMeta.lore = listOf(
-                Chat.colored("&7Final Heal happens in ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.events.final-heal")} minutes&7."),
-                "",
-                Chat.colored("&8Left Click&7 to add &aone&7."),
-                Chat.colored("&8Right Click&7 to subtract &cone&7.")
-            )
-            pvpMeta.lore = listOf(
-                Chat.colored("&7PvP happens in ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.events.pvp") + ConfigFeature.instance.data!!.getInt("game.events.final-heal")} minutes&7."),
-                "",
-                Chat.colored("&8Left Click&7 to add &aone&7."),
-                Chat.colored("&8Right Click&7 to subtract &cone&7.")
-            )
-            muMeta.lore = listOf(
-                Chat.colored("&7Meetup happens in ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.events.pvp") + ConfigFeature.instance.data!!.getInt("game.events.final-heal") + ConfigFeature.instance.data!!.getInt("game.events.meetup")} minutes&7."),
-                "",
-                Chat.colored("&8Left Click&7 to add &aone&7."),
-                Chat.colored("&8Right Click&7 to subtract &cone&7.")
-            )
+            fhMeta.lore(listOf(
+                Chat.colored("<gray>Final Heal happens in ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.events.final-heal")} minutes<gray>."),
+                Chat.colored(""),
+                Chat.colored("<dark_gray>Left Click<gray> to add <green>one<gray>."),
+                Chat.colored("<dark_gray>Right Click<gray> to subtract <red>one<gray>.")
+            ))
+            pvpMeta.lore(listOf(
+                Chat.colored("<gray>PvP happens in ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.events.pvp") + ConfigFeature.instance.data!!.getInt("game.events.final-heal")} minutes<gray>."),
+                Chat.colored(""),
+                Chat.colored("<dark_gray>Left Click<gray> to add <green>one<gray>."),
+                Chat.colored("<dark_gray>Right Click<gray> to subtract <red>one<gray>.")
+            ))
+            muMeta.lore(listOf(
+                Chat.colored("<gray>Meetup happens in ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.events.pvp") + ConfigFeature.instance.data!!.getInt("game.events.final-heal") + ConfigFeature.instance.data!!.getInt("game.events.meetup")} minutes<gray>."),
+                Chat.colored(""),
+                Chat.colored("<dark_gray>Left Click<gray> to add <green>one<gray>."),
+                Chat.colored("<dark_gray>Right Click<gray> to subtract <red>one<gray>.")
+            ))
 
             val bs = ItemBuilder(Material.BEDROCK)
                 .name("${Chat.primaryColor}Border Shrinks")
-                .addLore("&7The border begins to shrink in ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.events.pvp") + ConfigFeature.instance.data!!.getInt("game.events.final-heal") + ConfigFeature.instance.data!!.getInt("game.events.borderShrink")} minutes&7.")
+                .addLore("<gray>The border begins to shrink in ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.events.pvp") + ConfigFeature.instance.data!!.getInt("game.events.final-heal") + ConfigFeature.instance.data!!.getInt("game.events.borderShrink")} minutes<gray>.")
                 .addLore(" ")
-                .addLore("&8Left Click&7 to add &aone&7.")
-                .addLore("&8Right Click&7 to subtract &cone&7.")
+                .addLore("<dark_gray>Left Click<gray> to add <green>one<gray>.")
+                .addLore("<dark_gray>Right Click<gray> to subtract <red>one<gray>.")
                 .make()
 
             finalHeal.itemMeta = fhMeta
@@ -241,14 +242,14 @@ class EditConfigCommand : CommandExecutor {
                 if (it.click.isLeftClick) {
                     ConfigFeature.instance.data!!.set("game.events.final-heal", ConfigFeature.instance.data!!.getInt("game.events.final-heal") + 1)
                     ConfigFeature.instance.saveData()
-                    val meta = it.currentItem.itemMeta
-                    meta.lore = listOf(
-                        Chat.colored(Chat.colored("&7Final Heal happens in ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.events.final-heal")} minutes&7.")),
-                        "",
-                        Chat.colored("&8Left Click&7 to add &aone&7."),
-                        Chat.colored("&8Right Click&7 to subtract &cone&7.")
-                    )
-                    it.currentItem.itemMeta = meta
+                    val meta = it.currentItem!!.itemMeta
+                    meta.lore(listOf(
+                        Chat.colored("<gray>Final Heal happens in ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.events.final-heal")} minutes<gray>."),
+                        Chat.colored(""),
+                        Chat.colored("<dark_gray>Left Click<gray> to add <green>one<gray>."),
+                        Chat.colored("<dark_gray>Right Click<gray> to subtract <red>one<gray>.")
+                    ))
+                    it.currentItem!!.itemMeta = meta
                 } else if (it.click.isRightClick) {
                     if (ConfigFeature.instance.data!!.getInt("game.events.final-heal") <= 1) {
                         Chat.sendMessage(player, "${Chat.prefix} Can't subtract, this timer is already at 1 minute.")
@@ -256,14 +257,14 @@ class EditConfigCommand : CommandExecutor {
                     }
                     ConfigFeature.instance.data!!.set("game.events.final-heal", ConfigFeature.instance.data!!.getInt("game.events.final-heal") - 1)
                     ConfigFeature.instance.saveData()
-                    val meta = it.currentItem.itemMeta
-                    meta.lore = listOf(
-                        Chat.colored(Chat.colored("&7Final Heal happens in ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.events.final-heal")} minutes&7.")),
-                        "",
-                        Chat.colored("&8Left Click&7 to add &aone&7."),
-                        Chat.colored("&8Right Click&7 to subtract &cone&7.")
-                    )
-                    it.currentItem.itemMeta = meta
+                    val meta = it.currentItem!!.itemMeta
+                    meta.lore(listOf(
+                        Chat.colored("<gray>Final Heal happens in ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.events.final-heal")} minutes<gray>."),
+                        Chat.colored(""),
+                        Chat.colored("<dark_gray>Left Click<gray> to add <green>one<gray>."),
+                        Chat.colored("<dark_gray>Right Click<gray> to subtract <red>one<gray>.")
+                    ))
+                    it.currentItem!!.itemMeta = meta
                 }
             }
             gui.item(3, pvp).onClick runnable@ {
@@ -271,15 +272,15 @@ class EditConfigCommand : CommandExecutor {
                 if (it.click.isLeftClick) {
                     ConfigFeature.instance.data!!.set("game.events.pvp", ConfigFeature.instance.data!!.getInt("game.events.pvp") + 1)
                     ConfigFeature.instance.saveData()
-                    val meta = it.currentItem.itemMeta
+                    val meta = it.currentItem!!.itemMeta
                     meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-                    meta.lore = listOf(
-                        Chat.colored(Chat.colored("&7PvP happens in ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.events.final-heal") + ConfigFeature.instance.data!!.getInt("game.events.pvp")} minutes&7.")),
-                        "",
-                        Chat.colored("&8Left Click&7 to add &aone&7."),
-                        Chat.colored("&8Right Click&7 to subtract &cone&7.")
-                    )
-                    it.currentItem.itemMeta = meta
+                    meta.lore(mutableListOf(
+                        Chat.colored("<gray>PvP happens in ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.events.final-heal") + ConfigFeature.instance.data!!.getInt("game.events.pvp")} minutes<gray>."),
+                        Chat.colored(""),
+                        Chat.colored("<dark_gray>Left Click<gray> to add <green>one<gray>."),
+                        Chat.colored("<dark_gray>Right Click<gray> to subtract <red>one<gray>.")
+                    ))
+                    it.currentItem!!.itemMeta = meta
                 } else if (it.click.isRightClick) {
                     if (ConfigFeature.instance.data!!.getInt("game.events.pvp") <= 1) {
                         Chat.sendMessage(player, "${Chat.prefix} Can't subtract, this timer is already at 1 minute.")
@@ -287,15 +288,15 @@ class EditConfigCommand : CommandExecutor {
                     }
                     ConfigFeature.instance.data!!.set("game.events.pvp", ConfigFeature.instance.data!!.getInt("game.events.pvp") - 1)
                     ConfigFeature.instance.saveData()
-                    val meta = it.currentItem.itemMeta
+                    val meta = it.currentItem!!.itemMeta
                     meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-                    meta.lore = listOf(
-                        Chat.colored(Chat.colored("&7PvP happens in ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.events.final-heal") + ConfigFeature.instance.data!!.getInt("game.events.pvp")} minutes&7.")),
-                        "",
-                        Chat.colored("&8Left Click&7 to add &aone&7."),
-                        Chat.colored("&8Right Click&7 to subtract &cone&7.")
-                    )
-                    it.currentItem.itemMeta = meta
+                    meta.lore(listOf(
+                        Chat.colored("<gray>PvP happens in ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.events.final-heal") + ConfigFeature.instance.data!!.getInt("game.events.pvp")} minutes<gray>."),
+                        Chat.colored(""),
+                        Chat.colored("<dark_gray>Left Click<gray> to add <green>one<gray>."),
+                        Chat.colored("<dark_gray>Right Click<gray> to subtract <red>one<gray>.")
+                    ))
+                    it.currentItem!!.itemMeta = meta
                 }
             }
             gui.item(4, meetup).onClick runnable@ {
@@ -303,14 +304,14 @@ class EditConfigCommand : CommandExecutor {
                 if (it.click.isLeftClick) {
                     ConfigFeature.instance.data!!.set("game.events.meetup", ConfigFeature.instance.data!!.getInt("game.events.meetup") + 1)
                     ConfigFeature.instance.saveData()
-                    val meta = it.currentItem.itemMeta
-                    meta.lore = listOf(
-                        Chat.colored(Chat.colored("&7Meetup happens in ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.events.pvp") + ConfigFeature.instance.data!!.getInt("game.events.final-heal") + ConfigFeature.instance.data!!.getInt("game.events.meetup")} minutes&7.")),
-                        "",
-                        Chat.colored("&8Left Click&7 to add &aone&7."),
-                        Chat.colored("&8Right Click&7 to subtract &cone&7.")
-                    )
-                    it.currentItem.itemMeta = meta
+                    val meta = it.currentItem!!.itemMeta
+                    meta.lore(listOf(
+                        Chat.colored("<gray>Meetup happens in ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.events.pvp") + ConfigFeature.instance.data!!.getInt("game.events.final-heal") + ConfigFeature.instance.data!!.getInt("game.events.meetup")} minutes<gray>."),
+                        Chat.colored(""),
+                        Chat.colored("<dark_gray>Left Click<gray> to add <green>one<gray>."),
+                        Chat.colored("<dark_gray>Right Click<gray> to subtract <red>one<gray>.")
+                    ))
+                    it.currentItem!!.itemMeta = meta
                 } else if (it.click.isRightClick) {
                     if (ConfigFeature.instance.data!!.getInt("game.events.meetup") <= 1) {
                         Chat.sendMessage(player, "${Chat.prefix} Can't subtract, this timer is already at 1 minute.")
@@ -318,14 +319,14 @@ class EditConfigCommand : CommandExecutor {
                     }
                     ConfigFeature.instance.data!!.set("game.events.meetup", ConfigFeature.instance.data!!.getInt("game.events.meetup") - 1)
                     ConfigFeature.instance.saveData()
-                    val meta = it.currentItem.itemMeta
-                    meta.lore = listOf(
-                        Chat.colored(Chat.colored("&7Meetup happens in ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.events.pvp") + ConfigFeature.instance.data!!.getInt("game.events.final-heal") + ConfigFeature.instance.data!!.getInt("game.events.meetup")} minutes&7.")),
-                        "",
-                        Chat.colored("&8Left Click&7 to add &aone&7."),
-                        Chat.colored("&8Right Click&7 to subtract &cone&7.")
-                    )
-                    it.currentItem.itemMeta = meta
+                    val meta = it.currentItem!!.itemMeta
+                    meta.lore(listOf(
+                        Chat.colored("<gray>Meetup happens in ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.events.pvp") + ConfigFeature.instance.data!!.getInt("game.events.final-heal") + ConfigFeature.instance.data!!.getInt("game.events.meetup")} minutes<gray>."),
+                        Chat.colored(""),
+                        Chat.colored("<dark_gray>Left Click<gray> to add <green>one<gray>."),
+                        Chat.colored("<dark_gray>Right Click<gray> to subtract <red>one<gray>.")
+                    ))
+                    it.currentItem!!.itemMeta = meta
                 }
             }
             gui.item(5, bs).onClick runnable@ {
@@ -333,14 +334,14 @@ class EditConfigCommand : CommandExecutor {
                 if (it.click.isLeftClick) {
                     ConfigFeature.instance.data!!.set("game.events.borderShrink", ConfigFeature.instance.data!!.getInt("game.events.borderShrink") + 1)
                     ConfigFeature.instance.saveData()
-                    val meta = it.currentItem.itemMeta
-                    meta.lore = listOf(
-                        Chat.colored("&7The border begins to shrink in ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.events.pvp") + ConfigFeature.instance.data!!.getInt("game.events.final-heal") + ConfigFeature.instance.data!!.getInt("game.events.borderShrink")} minutes&7."),
-                        "",
-                        Chat.colored("&8Left Click&7 to add &aone&7."),
-                        Chat.colored("&8Right Click&7 to subtract &cone&7.")
-                    )
-                    it.currentItem.itemMeta = meta
+                    val meta = it.currentItem!!.itemMeta
+                    meta.lore(listOf(
+                        Chat.colored("<gray>The border begins to shrink in ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.events.pvp") + ConfigFeature.instance.data!!.getInt("game.events.final-heal") + ConfigFeature.instance.data!!.getInt("game.events.borderShrink")} minutes<gray>."),
+                        Chat.colored(""),
+                        Chat.colored("<dark_gray>Left Click<gray> to add <green>one<gray>."),
+                        Chat.colored("<dark_gray>Right Click<gray> to subtract <red>one<gray>.")
+                    ))
+                    it.currentItem!!.itemMeta = meta
                 } else if (it.click.isRightClick) {
                     if (ConfigFeature.instance.data!!.getInt("game.events.borderShrink") <= 1) {
                         Chat.sendMessage(player, "${Chat.prefix} Can't subtract, this timer is already at 1 minute.")
@@ -348,48 +349,48 @@ class EditConfigCommand : CommandExecutor {
                     }
                     ConfigFeature.instance.data!!.set("game.events.borderShrink", ConfigFeature.instance.data!!.getInt("game.events.borderShrink") - 1)
                     ConfigFeature.instance.saveData()
-                    val meta = it.currentItem.itemMeta
-                    meta.lore = listOf(
-                        Chat.colored("&7The border begins to shrink in ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.events.pvp") + ConfigFeature.instance.data!!.getInt("game.events.final-heal") + ConfigFeature.instance.data!!.getInt("game.events.borderShrink")} minutes&7."),
-                        "",
-                        Chat.colored("&8Left Click&7 to add &aone&7."),
-                        Chat.colored("&8Right Click&7 to subtract &cone&7.")
-                    )
-                    it.currentItem.itemMeta = meta
+                    val meta = it.currentItem!!.itemMeta
+                    meta.lore(listOf(
+                        Chat.colored("<gray>The border begins to shrink in ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.events.pvp") + ConfigFeature.instance.data!!.getInt("game.events.final-heal") + ConfigFeature.instance.data!!.getInt("game.events.borderShrink")} minutes<gray>."),
+                        Chat.colored(""),
+                        Chat.colored("<dark_gray>Left Click<gray> to add <green>one<gray>."),
+                        Chat.colored("<dark_gray>Right Click<gray> to subtract <red>one<gray>.")
+                    ))
+                    it.currentItem!!.itemMeta = meta
                 }
             }
         } else if (args[0].lowercase() == "host") {
             ConfigFeature.instance.data!!.set("game.host", player.name)
             ConfigFeature.instance.saveData()
-            Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} &e${player.name}&7 has set themself as the host."))
-            player.playSound(player.location, Sound.LEVEL_UP, 10.toFloat(), 1.toFloat())
+            Bukkit.broadcast(Chat.colored("${Chat.prefix} <yellow>${player.name}<gray> has set themself as the host."))
+            player.playSound(player.location, Sound.ENTITY_PLAYER_LEVELUP, 10.toFloat(), 1.toFloat())
             return true
         } else if (args[0].lowercase() == "starterfood") {
             gui = GuiBuilder().rows(1).name(ChatColor.translateAlternateColorCodes('&', "${Chat.primaryColor}Edit UHC Config")).owner(sender)
             size = 8
             val starterFood = ItemStack(Material.COOKED_BEEF)
             val starterFoodMeta = starterFood.itemMeta
-            starterFoodMeta.displayName = Chat.colored("${Chat.primaryColor}Starter Food")
-            starterFoodMeta.lore = listOf(
-                Chat.colored(Chat.colored("&7Starter Food ${Chat.dash} ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.starterfood")}")),
-                "",
-                Chat.colored("&8Left Click&7 to add &aone&7."),
-                Chat.colored("&8Right Click&7 to subtract &cone&7.")
-            )
+            starterFoodMeta.displayName(MiniMessage.miniMessage().deserialize("${Chat.primaryColor}Starter Food"))
+            starterFoodMeta.lore(listOf(
+                Chat.colored("<gray>Starter Food ${Chat.dash} ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.starterfood")}"),
+                Chat.colored(""),
+                Chat.colored("<dark_gray>Left Click<gray> to add <green>one<gray>."),
+                Chat.colored("<dark_gray>Right Click<gray> to subtract <red>one<gray>.")
+            ))
             starterFood.itemMeta = starterFoodMeta
             gui.item(4, starterFood).onClick runnable@ {
                 it.isCancelled = true
                 if (it.click.isLeftClick) {
                     ConfigFeature.instance.data!!.set("game.starterfood", ConfigFeature.instance.data!!.getInt("game.starterfood") + 1)
                     ConfigFeature.instance.saveData()
-                    val meta = it.currentItem.itemMeta
-                    meta.lore = listOf(
-                        Chat.colored(Chat.colored("&7Starter Food ${Chat.dash} ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.starterfood")}")),
-                        "",
-                        Chat.colored("&8Left Click&7 to add &aone&7."),
-                        Chat.colored("&8Right Click&7 to subtract &cone&7.")
-                    )
-                    it.currentItem.itemMeta = meta
+                    val meta = it.currentItem!!.itemMeta
+                    meta.lore(listOf(
+                        Chat.colored("<gray>Starter Food ${Chat.dash} ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.starterfood")}"),
+                        Chat.colored(""),
+                        Chat.colored("<dark_gray>Left Click<gray> to add <green>one<gray>."),
+                        Chat.colored("<dark_gray>Right Click<gray> to subtract <red>one<gray>.")
+                    ))
+                    it.currentItem!!.itemMeta = meta
                 } else if (it.click.isRightClick) {
                     if (ConfigFeature.instance.data!!.getInt("game.starterfood") <= 1) {
                         Chat.sendMessage(player, "${Chat.prefix} Can't subtract, this count is already at 1 starter food.")
@@ -397,14 +398,14 @@ class EditConfigCommand : CommandExecutor {
                     }
                     ConfigFeature.instance.data!!.set("game.starterfood", ConfigFeature.instance.data!!.getInt("game.starterfood") - 1)
                     ConfigFeature.instance.saveData()
-                    val meta = it.currentItem.itemMeta
-                    meta.lore = listOf(
-                        Chat.colored(Chat.colored("&7Starter Food ${Chat.dash} ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.starterfood")}")),
-                        "",
-                        Chat.colored("&8Left Click&7 to add &aone&7."),
-                        Chat.colored("&8Right Click&7 to subtract &cone&7.")
-                    )
-                    it.currentItem.itemMeta = meta
+                    val meta = it.currentItem!!.itemMeta
+                    meta.lore(listOf(
+                        Chat.colored("<gray>Starter Food ${Chat.dash} ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.starterfood")}"),
+                        Chat.colored(""),
+                        Chat.colored("<dark_gray>Left Click<gray> to add <green>one<gray>."),
+                        Chat.colored("<dark_gray>Right Click<gray> to subtract <red>one<gray>.")
+                    ))
+                    it.currentItem!!.itemMeta = meta
                 }
             }
         } else if (args[0].lowercase() == "teams") {
@@ -412,14 +413,14 @@ class EditConfigCommand : CommandExecutor {
             size = 26
             val teamSize = ItemStack(Material.IRON_SWORD, ConfigFeature.instance.data!!.getInt("game.teamSize"))
             val teamSizeMeta = teamSize.itemMeta
-            teamSizeMeta.displayName = Chat.colored("${Chat.primaryColor}Team Size")
+            teamSizeMeta.displayName(MiniMessage.miniMessage().deserialize("${Chat.primaryColor}Team Size"))
             teamSizeMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-            teamSizeMeta.lore = listOf(
-                Chat.colored("&7Team Size ${Chat.dash} ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.teamSize")}"),
-                "",
-                Chat.colored("&8Left Click&7 to add &aone&7."),
-                Chat.colored("&8Right Click&7 to subtract &cone&7.")
-            )
+            teamSizeMeta.lore(listOf(
+                Chat.colored("<gray>Team Size ${Chat.dash} ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.teamSize")}"),
+                Chat.colored(""),
+                Chat.colored("<dark_gray>Left Click<gray> to add <green>one<gray>."),
+                Chat.colored("<dark_gray>Right Click<gray> to subtract <red>one<gray>.")
+            ))
             teamSize.itemMeta = teamSizeMeta
             gui.item(10, teamSize).onClick runnable@ {
                 it.isCancelled = true
@@ -430,17 +431,17 @@ class EditConfigCommand : CommandExecutor {
                     }
                     ConfigFeature.instance.data!!.set("game.teamSize", ConfigFeature.instance.data!!.getInt("game.teamSize") + 1)
                     ConfigFeature.instance.saveData()
-                    val meta = it.currentItem.itemMeta
-                    val item = ItemStack(it.currentItem.type, ConfigFeature.instance.data!!.getInt("game.teamSize"))
-                    meta.displayName = Chat.colored("${Chat.primaryColor}Team Size")
-                    meta.lore = listOf(
-                        Chat.colored("&7Team Size ${Chat.dash} ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.teamSize")}"),
-                        "",
-                        Chat.colored("&8Left Click&7 to add &aone&7."),
-                        Chat.colored("&8Right Click&7 to subtract &cone&7.")
-                    )
+                    val meta = it.currentItem!!.itemMeta
+                    val item = ItemStack(it.currentItem!!.type, ConfigFeature.instance.data!!.getInt("game.teamSize"))
+                    meta.displayName(MiniMessage.miniMessage().deserialize("${Chat.primaryColor}Team Size"))
+                    meta.lore(listOf(
+                        Chat.colored("<gray>Team Size ${Chat.dash} ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.teamSize")}"),
+                        Chat.colored(""),
+                        Chat.colored("<dark_gray>Left Click<gray> to add <green>one<gray>."),
+                        Chat.colored("<dark_gray>Right Click<gray> to subtract <red>one<gray>.")
+                    ))
                     it.currentItem = item
-                    it.currentItem.itemMeta = meta
+                    it.currentItem!!.itemMeta = meta
                 } else if (it.click.isRightClick) {
                     if (ConfigFeature.instance.data!!.getInt("game.teamSize") <= 1) {
                         Chat.sendMessage(player, "${Chat.prefix} Can't add, this count is already at 1.")
@@ -448,43 +449,43 @@ class EditConfigCommand : CommandExecutor {
                     }
                     ConfigFeature.instance.data!!.set("game.teamSize", ConfigFeature.instance.data!!.getInt("game.teamSize") - 1)
                     ConfigFeature.instance.saveData()
-                    val meta = it.currentItem.itemMeta
-                    val item = ItemStack(it.currentItem.type, ConfigFeature.instance.data!!.getInt("game.teamSize"))
-                    meta.displayName = Chat.colored("${Chat.primaryColor}Team Size")
-                    meta.lore = listOf(
-                        Chat.colored("&7Team Size ${Chat.dash} ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.teamSize")}"),
-                        "",
-                        Chat.colored("&8Left Click&7 to add &aone&7."),
-                        Chat.colored("&8Right Click&7 to subtract &cone&7.")
-                    )
+                    val meta = it.currentItem!!.itemMeta
+                    val item = ItemStack(it.currentItem!!.type, ConfigFeature.instance.data!!.getInt("game.teamSize"))
+                    meta.displayName(MiniMessage.miniMessage().deserialize("${Chat.primaryColor}Team Size"))
+                    meta.lore(listOf(
+                        Chat.colored("<gray>Team Size ${Chat.dash} ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.teamSize")}"),
+                        Chat.colored(""),
+                        Chat.colored("<dark_gray>Left Click<gray> to add <green>one<gray>."),
+                        Chat.colored("<dark_gray>Right Click<gray> to subtract <red>one<gray>.")
+                    ))
                     it.currentItem = item
-                    it.currentItem.itemMeta = meta
+                    it.currentItem!!.itemMeta = meta
                 }
             }
             val teamManagement: ItemStack = if (ConfigFeature.instance.data!!.getBoolean("game.ffa")) {
-                ItemStack(Material.WOOL, 1, 14)
+                ItemStack(Material.RED_WOOL, 1)
             } else {
-                ItemStack(Material.WOOL, 1, 5)
+                ItemStack(Material.LIME_WOOL, 1)
             }
             val teamManagementMeta = teamManagement.itemMeta
-            teamManagementMeta.displayName = Chat.colored("${Chat.primaryColor}Team Management")
+            teamManagementMeta.displayName(MiniMessage.miniMessage().deserialize("${Chat.primaryColor}Team Management"))
             var status = if (ConfigFeature.instance.data!!.getBoolean("game.ffa")) {
-                "&cDisabled"
+                "<red>Disabled"
             } else {
-                "&aEnabled"
+                "<green>Enabled"
             }
-            teamManagementMeta.lore = listOf(
-                Chat.colored("&7Status: $status"),
-                "",
-                Chat.colored("&8Left Click&7 to toggle.")
-            )
+            teamManagementMeta.lore(listOf(
+                Chat.colored("<gray>Status: $status"),
+                Chat.colored(""),
+                Chat.colored("<dark_gray>Left Click<gray> to toggle.")
+            ))
             teamManagement.itemMeta = teamManagementMeta
             gui.item(12, teamManagement).onClick runnable@ {
                 it.isCancelled = true
                 status = if (ConfigFeature.instance.data!!.getBoolean("game.ffa")) {
-                    "&aEnabled"
+                    "<green>Enabled"
                 } else {
-                    "&cDisabled"
+                    "<red>Disabled"
                 }
                 if (ConfigFeature.instance.data!!.getBoolean("game.ffa")) {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "team management on")
@@ -492,29 +493,29 @@ class EditConfigCommand : CommandExecutor {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "team management off")
                 }
                 val wool: ItemStack = if (ConfigFeature.instance.data!!.getBoolean("game.ffa")) {
-                    ItemStack(Material.WOOL, 1, 14)
+                    ItemStack(Material.RED_WOOL, 1)
                 } else {
-                    ItemStack(Material.WOOL, 1, 5)
+                    ItemStack(Material.LIME_WOOL, 1)
                 }
                 it.currentItem = wool
-                val meta = it.currentItem.itemMeta
-                meta.lore = listOf(
-                    Chat.colored("&7Status: $status"),
-                    "",
-                    Chat.colored("&8Left Click&7 to toggle.")
-                )
-                meta.displayName = Chat.colored("${Chat.primaryColor}Team Management")
-                it.currentItem.itemMeta = meta
+                val meta = it.currentItem!!.itemMeta
+                meta.lore(listOf(
+                    Chat.colored("<gray>Status: $status"),
+                    Chat.colored(""),
+                    Chat.colored("<dark_gray>Left Click<gray> to toggle.")
+                ))
+                meta.displayName(MiniMessage.miniMessage().deserialize("${Chat.primaryColor}Team Management"))
+                it.currentItem!!.itemMeta = meta
             }
-            val randomizeTeams = ItemStack(Material.EYE_OF_ENDER)
+            val randomizeTeams = ItemStack(Material.ENDER_EYE)
             val randomizeTeamsMeta = randomizeTeams.itemMeta
-            randomizeTeamsMeta.displayName = Chat.colored("${Chat.primaryColor}Randomize Teams")
-            randomizeTeamsMeta.lore = listOf(
-                Chat.colored("&7Click to randomize all players into teams of ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.teamSize")}&7."),
-                "",
-                Chat.colored("&4&lWARNING&7 All players that are not"),
-                Chat.colored("&7going to play must be in Spectator mode.")
-            )
+            randomizeTeamsMeta.displayName(MiniMessage.miniMessage().deserialize("${Chat.primaryColor}Randomize Teams"))
+            randomizeTeamsMeta.lore(listOf(
+                Chat.colored("<gray>Click to randomize all players into teams of ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.teamSize")}<gray>."),
+                Chat.colored(""),
+                Chat.colored("&4&lWARNING<gray> All players that are not"),
+                Chat.colored("<gray>going to play must be in Spectator mode.")
+            ))
             randomizeTeams.itemMeta = randomizeTeamsMeta
             gui.item(14, randomizeTeams).onClick runnable@ {
                 it.isCancelled = true
@@ -523,12 +524,12 @@ class EditConfigCommand : CommandExecutor {
 
             val resetTeams = ItemStack(Material.BARRIER)
             val resetTeamsMeta = randomizeTeams.itemMeta
-            resetTeamsMeta.displayName = Chat.colored("${Chat.primaryColor}Reset Teams")
-            resetTeamsMeta.lore = listOf(
-                Chat.colored("&7Click to reset all teams."),
-                "",
-                Chat.colored("&4&lWARNING&7 This is probably a bad idea!")
-            )
+            resetTeamsMeta.displayName(MiniMessage.miniMessage().deserialize("${Chat.primaryColor}Reset Teams"))
+            resetTeamsMeta.lore(listOf(
+                Chat.colored("<gray>Click to reset all teams."),
+                Chat.colored(""),
+                Chat.colored("&4&lWARNING<gray> This is probably a bad idea!")
+            ))
             resetTeams.itemMeta = resetTeamsMeta
             gui.item(16, resetTeams).onClick runnable@ {
                 it.isCancelled = true
@@ -539,13 +540,13 @@ class EditConfigCommand : CommandExecutor {
             size = 8
             val flintRates = ItemStack(Material.FLINT)
             val flintRatesMeta = flintRates.itemMeta
-            flintRatesMeta.displayName = Chat.colored("${Chat.primaryColor}Flint Rates")
-            flintRatesMeta.lore = listOf(
-                Chat.colored(Chat.colored("&7Flint Rates ${Chat.dash} ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.rates.flint")}%")),
-                "",
-                Chat.colored("&8Left Click&7 to add &aone&7."),
-                Chat.colored("&8Right Click&7 to subtract &cone&7.")
-            )
+            flintRatesMeta.displayName(MiniMessage.miniMessage().deserialize("${Chat.primaryColor}Flint Rates"))
+            flintRatesMeta.lore(listOf(
+                Chat.colored("<gray>Flint Rates ${Chat.dash} ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.rates.flint")}%"),
+                Chat.colored(""),
+                Chat.colored("<dark_gray>Left Click<gray> to add <green>one<gray>."),
+                Chat.colored("<dark_gray>Right Click<gray> to subtract <red>one<gray>.")
+            ))
             flintRates.itemMeta = flintRatesMeta
             gui.item(3, flintRates).onClick runnable@ {
                 it.isCancelled = true
@@ -556,14 +557,14 @@ class EditConfigCommand : CommandExecutor {
                     }
                     ConfigFeature.instance.data!!.set("game.rates.flint", ConfigFeature.instance.data!!.getInt("game.rates.flint") + 1)
                     ConfigFeature.instance.saveData()
-                    val meta = it.currentItem.itemMeta
-                    meta.lore = listOf(
-                        Chat.colored(Chat.colored("&7Flint Rates ${Chat.dash} ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.rates.flint")}%")),
-                        "",
-                        Chat.colored("&8Left Click&7 to add &aone&7."),
-                        Chat.colored("&8Right Click&7 to subtract &cone&7.")
-                    )
-                    it.currentItem.itemMeta = meta
+                    val meta = it.currentItem!!.itemMeta
+                    meta.lore(listOf(
+                        Chat.colored("<gray>Flint Rates ${Chat.dash} ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.rates.flint")}%"),
+                        Chat.colored(""),
+                        Chat.colored("<dark_gray>Left Click<gray> to add <green>one<gray>."),
+                        Chat.colored("<dark_gray>Right Click<gray> to subtract <red>one<gray>.")
+                    ))
+                    it.currentItem!!.itemMeta = meta
                 } else if (it.click.isRightClick) {
                     if (ConfigFeature.instance.data!!.getInt("game.rates.flint") <= 1) {
                         Chat.sendMessage(player, "${Chat.prefix} Can't subtract, this count is already at 1%.")
@@ -571,25 +572,25 @@ class EditConfigCommand : CommandExecutor {
                     }
                     ConfigFeature.instance.data!!.set("game.rates.flint", ConfigFeature.instance.data!!.getInt("game.rates.flint") - 1)
                     ConfigFeature.instance.saveData()
-                    val meta = it.currentItem.itemMeta
-                    meta.lore = listOf(
-                        Chat.colored(Chat.colored("&7Flint Rates ${Chat.dash} ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.rates.flint")}%")),
-                        "",
-                        Chat.colored("&8Left Click&7 to add &aone&7."),
-                        Chat.colored("&8Right Click&7 to subtract &cone&7.")
-                    )
-                    it.currentItem.itemMeta = meta
+                    val meta = it.currentItem!!.itemMeta
+                    meta.lore(listOf(
+                        Chat.colored("<gray>Flint Rates ${Chat.dash} ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.rates.flint")}%"),
+                        Chat.colored(""),
+                        Chat.colored("<dark_gray>Left Click<gray> to add <green>one<gray>."),
+                        Chat.colored("<dark_gray>Right Click<gray> to subtract <red>one<gray>.")
+                    ))
+                    it.currentItem!!.itemMeta = meta
                 }
             }
             val appleRates = ItemStack(Material.APPLE)
             val appleRatesMeta = appleRates.itemMeta
-            appleRatesMeta.displayName = Chat.colored("${Chat.primaryColor}Apple Rates")
-            appleRatesMeta.lore = listOf(
-                Chat.colored(Chat.colored("&7Apple Rates ${Chat.dash} ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.rates.apple")}%")),
-                "",
-                Chat.colored("&8Left Click&7 to add &aone&7."),
-                Chat.colored("&8Right Click&7 to subtract &cone&7.")
-            )
+            appleRatesMeta.displayName(MiniMessage.miniMessage().deserialize("${Chat.primaryColor}Apple Rates"))
+            appleRatesMeta.lore(listOf(
+                Chat.colored("<gray>Apple Rates ${Chat.dash} ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.rates.apple")}%"),
+                Chat.colored(""),
+                Chat.colored("<dark_gray>Left Click<gray> to add <green>one<gray>."),
+                Chat.colored("<dark_gray>Right Click<gray> to subtract <red>one<gray>.")
+            ))
             appleRates.itemMeta = appleRatesMeta
             gui.item(5, appleRates).onClick runnable@ {
                 it.isCancelled = true
@@ -600,14 +601,14 @@ class EditConfigCommand : CommandExecutor {
                     }
                     ConfigFeature.instance.data!!.set("game.rates.apple", ConfigFeature.instance.data!!.getInt("game.rates.apple") + 1)
                     ConfigFeature.instance.saveData()
-                    val meta = it.currentItem.itemMeta
-                    meta.lore = listOf(
-                        Chat.colored(Chat.colored("&7Apple Rates ${Chat.dash} ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.rates.apple")}%")),
-                        "",
-                        Chat.colored("&8Left Click&7 to add &aone&7."),
-                        Chat.colored("&8Right Click&7 to subtract &cone&7.")
-                    )
-                    it.currentItem.itemMeta = meta
+                    val meta = it.currentItem!!.itemMeta
+                    meta.lore(listOf(
+                        Chat.colored("<gray>Apple Rates ${Chat.dash} ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.rates.apple")}%"),
+                        Chat.colored(""),
+                        Chat.colored("<dark_gray>Left Click<gray> to add <green>one<gray>."),
+                        Chat.colored("<dark_gray>Right Click<gray> to subtract <red>one<gray>.")
+                    ))
+                    it.currentItem!!.itemMeta = meta
                 } else if (it.click.isRightClick) {
                     if (ConfigFeature.instance.data!!.getInt("game.rates.apple") <= 1) {
                         Chat.sendMessage(player, "${Chat.prefix} Can't subtract, this count is already at 1%.")
@@ -615,14 +616,14 @@ class EditConfigCommand : CommandExecutor {
                     }
                     ConfigFeature.instance.data!!.set("game.rates.apple", ConfigFeature.instance.data!!.getInt("game.rates.apple") - 1)
                     ConfigFeature.instance.saveData()
-                    val meta = it.currentItem.itemMeta
-                    meta.lore = listOf(
-                        Chat.colored(Chat.colored("&7Apple Rates ${Chat.dash} ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.rates.apple")}%")),
-                        "",
-                        Chat.colored("&8Left Click&7 to add &aone&7."),
-                        Chat.colored("&8Right Click&7 to subtract &cone&7.")
-                    )
-                    it.currentItem.itemMeta = meta
+                    val meta = it.currentItem!!.itemMeta
+                    meta.lore(listOf(
+                        Chat.colored("<gray>Apple Rates ${Chat.dash} ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.rates.apple")}%"),
+                        Chat.colored(""),
+                        Chat.colored("<dark_gray>Left Click<gray> to add <green>one<gray>."),
+                        Chat.colored("<dark_gray>Right Click<gray> to subtract <red>one<gray>.")
+                    ))
+                    it.currentItem!!.itemMeta = meta
                 }
             }
         }  else if (args[0].lowercase() == "specials") {
@@ -633,19 +634,19 @@ class EditConfigCommand : CommandExecutor {
                 if (option.category === "specials") {
                     val item = ItemStack(option.material)
                     val itemMeta = item.itemMeta
-                    var color: String = if (option.enabled) "&a"
-                    else "&c"
-                    itemMeta.displayName = Chat.colored("${color}${option.name}")
-                    itemMeta.lore = Chat.scenarioTextWrap(Chat.colored("&7${option.description}"), 40)
+                    var color: String = if (option.enabled) "<green>"
+                    else "<red>"
+                    itemMeta.displayName(MiniMessage.miniMessage().deserialize("${color}${option.name}"))
+                    itemMeta.lore(Chat.scenarioTextWrap("<gray>${option.description}", 40))
                     item.itemMeta = itemMeta
                     gui.item(iterator, item).onClick runnable@ {
                         it.isCancelled = true
                         ConfigOptionHandler.getOption(option.id)?.toggle()
-                        color = if (option.enabled) "&a"
-                        else "&c"
-                        val meta = it.currentItem.itemMeta
-                        meta.displayName = Chat.colored("${color}${option.name}")
-                        it.currentItem.itemMeta = meta
+                        color = if (option.enabled) "<green>"
+                        else "<red>"
+                        val meta = it.currentItem!!.itemMeta
+                        meta.displayName(MiniMessage.miniMessage().deserialize("${color}${option.name}"))
+                        it.currentItem!!.itemMeta = meta
                     }
                     iterator++
                 }
@@ -653,10 +654,10 @@ class EditConfigCommand : CommandExecutor {
         }
         val back = ItemStack(Material.ARROW)
         val backMeta = back.itemMeta
-        backMeta.displayName = Chat.colored("&cBack")
-        backMeta.lore = listOf(
-            Chat.colored("&7Go back to the UHC config editing menu.")
-        )
+        backMeta.displayName(MiniMessage.miniMessage().deserialize("<red>Back"))
+        backMeta.lore(listOf(
+            Chat.colored("<gray>Go back to the UHC config editing menu.")
+        ))
         back.itemMeta = backMeta
         gui!!.item(size, back).onClick runnable@ {
             it.isCancelled = true

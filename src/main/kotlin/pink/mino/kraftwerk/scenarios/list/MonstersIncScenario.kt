@@ -30,7 +30,7 @@ class MonstersIncScenario : Scenario(
         Material.WOOD_DOOR
     )
 
-    val prefix = "&8[${Chat.primaryColor}Monsters Inc.&8]&7"
+    val prefix = "<dark_gray>[${Chat.primaryColor}Monsters Inc.<dark_gray>]<gray>"
     @EventHandler
     fun onBlockPlace(e: BlockPlaceEvent) {
         if (!enabled) return

@@ -57,7 +57,7 @@ class MobEggsListener : Listener{
 
         // find a better way to find a spawn loc, because with no ai, it'll just fly in the air where it lands
         val entity = world.spawnEntity(LocationUtils.getHighestBlock(loc).add(0.0, 1.0, 0.0), entityType)
-        entity.customName = Chat.colored("&6${player.name}'s &e${entityType.name}")
+        entity.customName = Chat.colored("&6${player.name}'s <yellow>${entityType.name}")
         if (entity is LivingEntity) {
             noAI(entity)
         }
@@ -79,18 +79,18 @@ class MobEggsListener : Listener{
         if (event.item.type != Material.EGG) return
         val player = event.player
         if (!PerkChecker.checkPerk(player, "mobEggs")) {
-            player.sendMessage(Chat.colored("&cYou do not have the Mob Eggs perk, buy a rank on the store at &eapplejuice.tebex.io&c!"))
+            player.sendMessage(Chat.colored("<red>You do not have the Mob Eggs perk, buy a rank on the store at <yellow>applejuice.tebex.io<red>!"))
             event.isCancelled = true
             return
         }
 
         if (event.item.amount == 1) {
-            Chat.sendMessage(player, "&8[&2$$$&8] &7You have no more mob eggs! Giving you more in &c10 seconds&7!")
+            Chat.sendMessage(player, "<dark_gray>[&2$$$<dark_gray>] <gray>You have no more mob eggs! Giving you more in <red>10 seconds<gray>!")
             val mobEggs = ItemBuilder(Material.EGG)
-                .name("&2Mob Eggs &7(Throw)")
-                .addLore("&7Throw these eggs in the Spawn to spawn mobs!")
-                .addLore("&7&oMobs last for 10 seconds.")
-                .addLore("&7&oEggs replenish after 10 seconds of no eggs.")
+                .name("&2Mob Eggs <gray>(Throw)")
+                .addLore("<gray>Throw these eggs in the Spawn to spawn mobs!")
+                .addLore("<gray>&oMobs last for 10 seconds.")
+                .addLore("<gray>&oEggs replenish after 10 seconds of no eggs.")
                 .setAmount(5)
                 .make()
             Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {

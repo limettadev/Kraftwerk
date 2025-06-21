@@ -11,10 +11,10 @@ class PermadayOption : ConfigOption(
     "The game will always be day, and the daylight cycle will be disabled.",
     "options",
     "permaday",
-    Material.YELLOW_FLOWER
+    Material.DANDELION
 ) {
     override fun onToggle(to: Boolean) {
-        val world = Bukkit.getWorld(ConfigFeature.instance.data!!.getString("pregen.world"))
+        val world = Bukkit.getWorld(ConfigFeature.instance.data!!.getString("pregen.world")!!)
         if (world == null) {
             Bukkit.broadcastMessage("${Chat.prefix} Permaday cannot be toggled while there is no overworld world!")
             return

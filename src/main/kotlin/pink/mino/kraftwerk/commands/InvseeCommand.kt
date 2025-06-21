@@ -15,10 +15,10 @@ import pink.mino.kraftwerk.utils.GuiBuilder
 class InvseeCommand : CommandExecutor {
 
     override fun onCommand(
-        sender: CommandSender?,
-        command: Command?,
-        label: String?,
-        args: Array<out String>?
+        sender: CommandSender,
+        command: Command,
+        label: String,
+        args: Array<out String>
     ): Boolean {
         if (sender !is Player) {
             sender!!.sendMessage("You must be a player to use this command!")
@@ -26,7 +26,7 @@ class InvseeCommand : CommandExecutor {
         }
 
         if (!SpecFeature.instance.isSpec(sender)) {
-            Chat.sendMessage(sender, "&cYou must be a spectator to use this command!")
+            Chat.sendMessage(sender, "<red>You must be a spectator to use this command!")
             return false
         }
 
@@ -38,19 +38,19 @@ class InvseeCommand : CommandExecutor {
         val target = sender.server.getPlayer(args[0])
 
         if (target == null) {
-            Chat.sendMessage(sender, "&cPlayer not online!")
+            Chat.sendMessage(sender, "<red>Player not online!")
             return false
         }
 
         if (SpecFeature.instance.isSpec(target)) {
-            Chat.sendMessage(sender, "&cYou cannot see the inventory of a spectator!")
+            Chat.sendMessage(sender, "<red>You cannot see the inventory of a spectator!")
             return false
         }
 
         val gui = GuiBuilder().rows(5).name(ChatColor.translateAlternateColorCodes('&', "${target.name}'s Inventory"))
         sender.openInventory(gui.make())
         InvSeeFeature(sender, target).runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0, 20L)
-        Chat.sendMessage(sender, "${Chat.prefix} You have opened the inventory of ${Chat.primaryColor}${target.name}&7.")
+        Chat.sendMessage(sender, "${Chat.prefix} You have opened the inventory of ${Chat.primaryColor}${target.name}<gray>.")
         return true
     }
 

@@ -18,11 +18,10 @@ import pink.mino.kraftwerk.utils.LocationUtils
 class PortalListener : Listener {
     @EventHandler
     fun on(event: PlayerPortalEvent) {
-        val agent = event.portalTravelAgent
         val player = event.player
         val from: Location = event.from
         val fromWorld: World = from.world
-        if (!LocationUtils.hasBlockNearby(Material.PORTAL, from)) {
+        if (!LocationUtils.hasBlockNearby(Material.NETHER_PORTAL, from)) {
             return
         }
         val fromName = fromWorld.name
@@ -30,7 +29,7 @@ class PortalListener : Listener {
             World.Environment.NORMAL -> fromName + "_nether"
             World.Environment.NETHER -> {
                 if (!fromName.endsWith("_nether")) {
-                    Chat.sendMessage(player, "${Chat.prefix} &7You don't appear to be in the nether. Please helpop if this is incorrect.")
+                    Chat.sendMessage(player, "${Chat.prefix} <gray>You don't appear to be in the nether. Please helpop if this is incorrect.")
                     return
                 }
                 fromName.substring(0, fromName.length - 7)
@@ -39,16 +38,16 @@ class PortalListener : Listener {
         }
         val targetWorld = Bukkit.getWorld(targetName)
         if (targetWorld == null) {
-            Chat.sendMessage(player, Chat.prefix + "&7The nether hasn't been generated for this world.")
+            Chat.sendMessage(player, Chat.prefix + "<gray>The nether hasn't been generated for this world.")
             return
         }
         if (!ConfigFeature.instance.data!!.getBoolean("game.nether.nether")) {
-            Chat.sendMessage(player, Chat.prefix + "&7The nether is currently disabled.")
+            Chat.sendMessage(player, Chat.prefix + "<gray>The nether is currently disabled.")
             return
         }
         JavaPlugin.getPlugin(Kraftwerk::class.java).statsHandler.getStatsPlayer(player)!!.timesNether
         val multiplier = if (fromWorld.environment === World.Environment.NETHER) 8.0 else 0.125
-        var to: Location? = Location(
+        var to = Location(
             targetWorld,
             from.x * multiplier,
             from.y,
@@ -56,13 +55,11 @@ class PortalListener : Listener {
             from.yaw,
             from.pitch
         )
-        to!!.chunk.load(true)
-        to = agent.findOrCreate(to)
-        to = LocationUtils.findSafeLocationInsideBorder(to, 10, agent)
-        if (to == null || to.y < 0) {
-            Chat.sendMessage(player, "${Chat.prefix} &7Couldn't find a safe place inside of the overworld, defaulting to 0,0.")
-            to = agent.findOrCreate(Location(targetWorld, 0.0, 100.0, 0.0))
-            to = LocationUtils.findSafeLocationInsideBorder(to, 10, agent)
+        to.chunk.load(true)
+        to = LocationUtils.findSafeLocationInsideBorder(to, 10)
+        if (to.y < 0) {
+            Chat.sendMessage(player, "${Chat.prefix} <gray>Couldn't find a safe place inside of the overworld, defaulting to 0,0.")
+            to = LocationUtils.findSafeLocationInsideBorder(Location(targetWorld, 0.0, 100.0, 0.0), 10)
             event.to = to
         } else {
             event.to = to
@@ -71,15 +68,14 @@ class PortalListener : Listener {
 
     @EventHandler
     fun onEntityPortal(event: EntityPortalEvent) {
-        val agent = event.portalTravelAgent
         val from: Location = event.from
         val fromWorld: World = from.world
-        if (!LocationUtils.hasBlockNearby(Material.PORTAL, from)) {
+        if (!LocationUtils.hasBlockNearby(Material.NETHER_PORTAL, from)) {
             return
         }
         val fromName = fromWorld.name
         val targetName: String = when (fromWorld.environment) {
-            World.Environment.NORMAL -> fromWorld.toString() + "_nether"
+            World.Environment.NORMAL -> fromWorld.name + "_nether"
             World.Environment.NETHER -> {
                 if (!fromName.endsWith("_nether")) {
                     return
@@ -90,7 +86,7 @@ class PortalListener : Listener {
         }
         val targetWorld = Bukkit.getWorld(targetName) ?: return
         val multiplier = if (fromWorld.environment === World.Environment.NETHER) 8.0 else 0.125
-        var to: Location? = Location(
+        var to = Location(
             targetWorld,
             from.x * multiplier,
             from.y,
@@ -98,11 +94,9 @@ class PortalListener : Listener {
             from.yaw,
             from.pitch
         )
-        to = agent.findOrCreate(to)
-        to = LocationUtils.findSafeLocationInsideBorder(to, 10, agent)
-        if (to == null || to.y < 0) {
-            to = agent.findOrCreate(Location(targetWorld, 0.0, 100.0, 0.0))
-            to = LocationUtils.findSafeLocationInsideBorder(to, 10, agent)
+        to = LocationUtils.findSafeLocationInsideBorder(to, 10)
+        if (to.y < 0) {
+            to = LocationUtils.findSafeLocationInsideBorder(Location(targetWorld, 0.0, 100.0, 0.0), 10)
             event.to = to
         } else {
             event.to = to

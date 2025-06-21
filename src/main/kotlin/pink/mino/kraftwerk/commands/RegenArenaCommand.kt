@@ -14,14 +14,14 @@ import java.nio.file.Path
 
 class RegenArenaCommand : CommandExecutor {
     override fun onCommand(
-        sender: CommandSender?,
-        command: Command?,
-        label: String?,
+        sender: CommandSender,
+        command: Command,
+        label: String,
         args: Array<String>
     ): Boolean {
         if (sender is Player) {
             if (!sender.hasPermission("uhc.admin.regenarena")) {
-                Chat.sendMessage(sender, "&cOnly admins can execute this command.")
+                Chat.sendMessage(sender, "<red>Only admins can execute this command.")
                 return false
             }
         }

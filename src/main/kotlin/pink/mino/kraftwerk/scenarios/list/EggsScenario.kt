@@ -64,7 +64,7 @@ class EggsScenario : Scenario(
         if (event.action != Action.RIGHT_CLICK_AIR && event.action != Action.RIGHT_CLICK_BLOCK) return
         if (canUse) return
         event.isCancelled = true
-        Chat.sendMessage(event.player, "&cYou can't use eggs until PvP.")
+        Chat.sendMessage(event.player, "<red>You can't use eggs until PvP.")
     }
 
     @EventHandler

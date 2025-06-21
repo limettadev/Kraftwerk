@@ -14,8 +14,8 @@ class ThanksCommand : CommandExecutor {
 
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<out String>
     ): Boolean {
         if (sender !is Player) {
@@ -23,17 +23,17 @@ class ThanksCommand : CommandExecutor {
             return false
         }
         if (Kraftwerk.instance.game == null) {
-            Chat.sendMessage(sender, "&cThere is no game running at the moment.")
+            Chat.sendMessage(sender, "<red>There is no game running at the moment.")
             return false
         }
         if (thanked.contains(sender.uniqueId)) {
-            Chat.sendMessage(sender, "&cYou already thanked the host this game.")
+            Chat.sendMessage(sender, "<red>You already thanked the host this game.")
             return false
         }
         val player = Bukkit.getOfflinePlayer(Kraftwerk.instance.game!!.host)
         Kraftwerk.instance.statsHandler.lookupStatsPlayer(player).thankYous++
         thanked.add(sender.uniqueId)
-        Chat.broadcast("${Chat.prefix} ${Chat.secondaryColor}${sender.name}&7 has &dthanked&7 the host! &8(${Chat.secondaryColor}${thanked.size}&8)")
+        Chat.broadcast("${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has &dthanked<gray> the host! <dark_gray>(${Chat.secondaryColor}${thanked.size}<dark_gray>)")
         return true
     }
 }

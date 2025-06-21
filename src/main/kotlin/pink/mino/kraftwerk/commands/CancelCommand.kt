@@ -14,8 +14,8 @@ import pink.mino.kraftwerk.utils.Chat
 class CancelCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<String>
     ): Boolean {
         if (sender is Player) {
@@ -30,10 +30,10 @@ class CancelCommand : CommandExecutor {
         ConfigFeature.instance.data!!.set("whitelist.enabled", true)
         ConfigFeature.instance.data!!.set("whitelist.list", ArrayList<String>())
         ConfigFeature.instance.saveData()
-        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "restart")
         }, 900L)
-        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} The game has now been cancelled, the server will restart in ${Chat.secondaryColor}45 seconds&7."))
+        Bukkit.broadcast(Chat.colored("${Chat.prefix} The game has now been cancelled, the server will restart in ${Chat.secondaryColor}45 seconds<gray>."))
         return true
     }
 

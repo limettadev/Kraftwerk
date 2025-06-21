@@ -33,19 +33,19 @@ abstract class ConfigOption(
         enabled = !enabled
         val changerText: String = if (category === "rules") {
             if (enabled) {
-                "&aallowed"
+                "<green>allowed"
             } else {
-                "&cdisallowed"
+                "<red>disallowed"
             }
         } else {
             if (enabled) {
-                "&aenabled"
+                "<green>enabled"
             } else {
-                "&cdisabled"
+                "<red>disabled"
             }
         }
         onToggle(enabled)
-        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} &e$name&7 is now $changerText&7."))
+        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} <yellow>$name<gray> is now $changerText<gray>."))
         ConfigFeature.instance.data!!.set("game.$category.$id", enabled)
         ConfigFeature.instance.saveData()
     }
@@ -55,19 +55,19 @@ abstract class ConfigOption(
         enabled = to
         val changerText: String = if (category === "rules") {
             if (enabled) {
-                "&aallowed"
+                "<green>allowed"
             } else {
-                "&cdisallowed"
+                "<red>disallowed"
             }
         } else {
             if (enabled) {
-                "&aenabled"
+                "<green>enabled"
             } else {
-                "&cdisabled"
+                "<red>disabled"
             }
         }
         onToggle(to)
-        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} &e$name&7 is now $changerText&7."))
+        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} <yellow>$name<gray> is now $changerText<gray>."))
         ConfigFeature.instance.data!!.set("game.$category.$id", to)
         ConfigFeature.instance.saveData()
     }

@@ -26,8 +26,8 @@ class SwitcherooScenario : Scenario(
             val victimLoc = victim.location
             shooter.teleport(victimLoc)
             victim.teleport(shooterLoc)
-            Chat.sendMessage(victim, "&8[${Chat.primaryColor}Switcheroo&8]&7 You swapped positions with ${Chat.secondaryColor}${shooter.name}&7!")
-            Chat.sendMessage(shooter, "&8[${Chat.primaryColor}Switcheroo&8]&7 You swapped positions with ${Chat.secondaryColor}${victim.name}&7!")
+            Chat.sendMessage(victim, "<dark_gray>[${Chat.primaryColor}Switcheroo<dark_gray>]<gray> You swapped positions with ${Chat.secondaryColor}${shooter.name}<gray>!")
+            Chat.sendMessage(shooter, "<dark_gray>[${Chat.primaryColor}Switcheroo<dark_gray>]<gray> You swapped positions with ${Chat.secondaryColor}${victim.name}<gray>!")
         }
     }
 }

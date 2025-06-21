@@ -10,8 +10,8 @@ import pink.mino.kraftwerk.utils.Chat
 class StaffChatCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<out String>
     ): Boolean {
         if (sender.hasPermission("uhc.staff")) {
@@ -26,11 +26,11 @@ class StaffChatCommand : CommandExecutor {
             val msg = message.toString().trim()
             for (player in Bukkit.getOnlinePlayers()) {
                 if (player.hasPermission("uhc.staff")) {
-                    Chat.sendMessage(player, "&8[${Chat.primaryColor}Staff Chat&8] ${Chat.secondaryColor}${sender.name} ${Chat.dash} &f&o${msg}")
+                    Chat.sendMessage(player, "<dark_gray>[${Chat.primaryColor}Staff Chat<dark_gray>] ${Chat.secondaryColor}${sender.name} ${Chat.dash} &f&o${msg}")
                 }
             }
         } else {
-            sender.sendMessage(Chat.colored("&cYou aren't in spectator mode!"))
+            sender.sendMessage(Chat.colored("<red>You aren't in spectator mode!"))
             return false
         }
         return true

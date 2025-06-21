@@ -33,7 +33,7 @@ class AndurilRecipe : Recipe(
             override fun run() {
                 for (player in Bukkit.getOnlinePlayers()) {
                     if (player.inventory.itemInHand != null && player.inventory.itemInHand.hasItemMeta() && player.inventory.itemInHand.itemMeta.displayName == Chat.colored(
-                            "&eAndūril"
+                            "<yellow>Andūril"
                         )
                     ) {
                         player.addPotionEffect(PotionEffect(PotionEffectType.SPEED, (20 * 2).toInt(), 0, false, true))
@@ -48,7 +48,7 @@ class AndurilRecipe : Recipe(
             }
         }.runTaskTimer(Kraftwerk.instance, 0L, 20L)
         val anduril = ItemBuilder(Material.IRON_SWORD)
-            .name("&eAndūril")
+            .name("<yellow>Andūril")
             .addEnchantment(Enchantment.DAMAGE_ALL, 2)
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(anduril, id)).shape("FIF", "FIF", "FBF")

@@ -14,8 +14,8 @@ import pink.mino.kraftwerk.utils.GameState
 class TeamInventoryCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<String>
     ): Boolean {
         if (sender !is Player) {
@@ -23,11 +23,11 @@ class TeamInventoryCommand : CommandExecutor {
             return false
         }
         if (!ScenarioHandler.getScenario("teaminventory")!!.enabled) {
-            Chat.sendMessage(sender, "${Chat.prefix} ${Chat.primaryColor}Team Inventory&7 isn't enabled at the moment.")
+            Chat.sendMessage(sender, "${Chat.prefix} ${Chat.primaryColor}Team Inventory<gray> isn't enabled at the moment.")
             return false
         }
         if (GameState.currentState != GameState.INGAME) {
-            Chat.sendMessage(sender, "${Chat.prefix} ${Chat.primaryColor}Team Inventory&7 cannot be used at the moment.")
+            Chat.sendMessage(sender, "${Chat.prefix} ${Chat.primaryColor}Team Inventory<gray> cannot be used at the moment.")
             return false
         }
 

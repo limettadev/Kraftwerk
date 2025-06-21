@@ -38,25 +38,25 @@ class RecipeHandler : Listener {
                     crafts[player.uniqueId]!![getRecipe(tag.getString("uhcId"))!!.id] = crafts[player.uniqueId]!![getRecipe(tag.getString("uhcId"))!!.id]!! - 1
                     Chat.sendMessage(
                         player,
-                        "$prefix You crafted a &9${item.itemMeta.displayName}&e! &8(&b${
+                        "$prefix You crafted a &9${item.itemMeta.displayName}<yellow>! <dark_gray>(&b${
                             crafts[player.uniqueId]!![getRecipe(tag.getString("uhcId"))!!.id]!!
-                        }&8/&b${getRecipe(tag.getString("uhcId"))!!.crafts}&8)"
+                        }<dark_gray>/&b${getRecipe(tag.getString("uhcId"))!!.crafts}<dark_gray>)"
                     )
                     Log.info("[Recipes] Allowing player to craft ${getRecipe(tag.getString("uhcId"))!!.id.uppercase()} recipe.")
                     craftItem.tag.remove("uhcId")
                     e.inventory.result = CraftItemStack.asBukkitCopy(craftItem)
                 } else {
                     if (crafts[player.uniqueId]!![getRecipe(tag.getString("uhcId"))!!.id]!! <= 0) {
-                        Chat.sendMessage(player, "$prefix &7You ran out of crafts for this item!")
+                        Chat.sendMessage(player, "$prefix <gray>You ran out of crafts for this item!")
                         e.isCancelled = true
                         return
                     }
                     crafts[player.uniqueId]!![getRecipe(tag.getString("uhcId"))!!.id] = crafts[player.uniqueId]!![getRecipe(tag.getString("uhcId"))!!.id]!! - 1
                     Chat.sendMessage(
                         player,
-                        "$prefix &eYou crafted a &9${item.itemMeta.displayName}&e! &8(&b${
+                        "$prefix <yellow>You crafted a &9${item.itemMeta.displayName}<yellow>! <dark_gray>(&b${
                             crafts[player.uniqueId]!![getRecipe(tag.getString("uhcId"))!!.id]!!
-                        }&8/&b${getRecipe(tag.getString("uhcId"))!!.crafts}&8)"
+                        }<dark_gray>/&b${getRecipe(tag.getString("uhcId"))!!.crafts}<dark_gray>)"
                     )
                     Log.info("[Recipes] Allowing player to craft ${getRecipe(tag.getString("uhcId"))!!.id.uppercase()} recipe.")
                     craftItem.tag.remove("uhcId")
@@ -68,7 +68,7 @@ class RecipeHandler : Listener {
 
     companion object {
         var recipes = ArrayList<Recipe>()
-        val prefix = "&8[${Chat.primaryColor}&lUHC&8]&7"
+        val prefix = "<dark_gray>[${Chat.primaryColor}&lUHC<dark_gray>]<gray>"
 
         fun setup() {
             recipes = arrayListOf()

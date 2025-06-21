@@ -15,12 +15,12 @@ import java.util.*
 class HelpopMuteCommand : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (!sender.hasPermission("uhc.staff.helpopmute")) {
-            sender.sendMessage(Chat.colored("&cYou don't have permission to do that."))
+            sender.sendMessage(Chat.colored("<red>You don't have permission to do that."))
             return true
         }
 
         if (args.size < 3) {
-            sender.sendMessage(Chat.colored("&cUsage: /helpopmute <player> [-s] <duration> <reason>"))
+            sender.sendMessage(Chat.colored("<red>Usage: /helpopmute <player> [-s] <duration> <reason>"))
             return true
         }
 
@@ -29,12 +29,12 @@ class HelpopMuteCommand : CommandExecutor {
 
         if (targetPlayerOnline != null) { // Target is online
             if (targetPlayerOnline == sender) {
-                Chat.sendMessage(sender, "&cYou cannot punish yourself.")
+                Chat.sendMessage(sender, "<red>You cannot punish yourself.")
                 return true
             }
 
             if (targetPlayerOnline.hasPermission("uhc.staff")) {
-                Chat.sendMessage(sender, "&cYou cannot punish another staff member who is currently online.")
+                Chat.sendMessage(sender, "<red>You cannot punish another staff member who is currently online.")
                 return true
             }
         }
@@ -48,14 +48,14 @@ class HelpopMuteCommand : CommandExecutor {
         }
 
         if (args.size <= index + 1) {
-            sender.sendMessage(Chat.colored("&cUsage: /helpopmute <player> [-s] <duration> <reason>"))
+            sender.sendMessage(Chat.colored("<red>Usage: /helpopmute <player> [-s] <duration> <reason>"))
             return true
         }
 
         val durationStr = args[index]
         val durationMillis = PunishmentFeature.parseDurationToMillis(durationStr)
         if (durationMillis == null) {
-            sender.sendMessage(Chat.colored("&cInvalid duration '$durationStr'. Use formats like 10m, 1h, 2d."))
+            sender.sendMessage(Chat.colored("<red>Invalid duration '$durationStr'. Use formats like 10m, 1h, 2d."))
             return true
         }
 
@@ -74,14 +74,14 @@ class HelpopMuteCommand : CommandExecutor {
 
         PunishmentFeature.punish(target, punishment)
 
-        val message = Chat.colored("&c${target.name} has been help-op muted for ${PunishmentFeature.timeToString(durationMillis)}. Reason: $reason")
+        val message = Chat.colored("<red>${target.name} has been help-op muted for ${PunishmentFeature.timeToString(durationMillis)}. Reason: $reason")
 
         if (!silent) {
             Bukkit.broadcast(message, "uhc.staff")
         } else {
             for (player in Bukkit.getOnlinePlayers()) {
                 if (player.hasPermission("uhc.staff")) {
-                    player.sendMessage(Chat.colored("&7[Silent] $message"))
+                    player.sendMessage(Chat.colored("<gray>[Silent] $message"))
                 }
             }
         }

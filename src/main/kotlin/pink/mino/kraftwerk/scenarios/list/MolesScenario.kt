@@ -23,7 +23,7 @@ class MolesScenario : Scenario(
         val instance = MolesScenario()
     }
 
-    val prefix = "&8[${Chat.primaryColor}Moles&8]&7"
+    val prefix = "<dark_gray>[${Chat.primaryColor}Moles<dark_gray>]<gray>"
     val moles: HashMap<UUID, Boolean> = HashMap()
     var moleTeam: Team? = null
 
@@ -47,9 +47,9 @@ class MolesScenario : Scenario(
         for (mole in moles) {
             val player = Bukkit.getOfflinePlayer(mole.key)
             if (player.isOnline) {
-                list.add(Chat.colored("&a${player.name}&7"))
+                list.add(Chat.colored("<green>${player.name}<gray>"))
             } else {
-                list.add(Chat.colored("&c${player.name}&7"))
+                list.add(Chat.colored("<red>${player.name}<gray>"))
             }
         }
         return list
@@ -72,7 +72,7 @@ class MolesScenario : Scenario(
                 for ((index, teammate) in list.withIndex()) {
                     if (index == teammateIndex) {
                         moles[teammate.uniqueId] = false
-                        Chat.sendMessage(teammate, "$prefix You are the ${Chat.secondaryColor}mole&7! Use ${Chat.secondaryColor}/mole help&7 to see mole commands.")
+                        Chat.sendMessage(teammate, "$prefix You are the ${Chat.secondaryColor}mole<gray>! Use ${Chat.secondaryColor}/mole help<gray> to see mole commands.")
                     }
                 }
             }

@@ -32,7 +32,7 @@ class PMCommand : CommandExecutor {
 
             for (team in sender.scoreboard.getPlayerTeam(sender).players) {
                 if (team is Player) {
-                    Chat.sendMessage(team, "&8[${Chat.primaryColor}Team Chat&8] ${PlayerUtils.getPrefix(sender)}${sender.name} ${Chat.dash} &7&o${msg}")
+                    Chat.sendMessage(team, "<dark_gray>[${Chat.primaryColor}Team Chat<dark_gray>] ${PlayerUtils.getPrefix(sender)}${sender.name} ${Chat.dash} <gray>&o${msg}")
                 }
             }
         }

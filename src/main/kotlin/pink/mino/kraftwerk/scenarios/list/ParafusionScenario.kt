@@ -20,7 +20,7 @@ class ParafusionScenario : Scenario(
     "parafusion",
     Material.BEACON
 ) {
-    val prefix = "&8[${Chat.primaryColor}Parafusion&8]&7"
+    val prefix = "<dark_gray>[${Chat.primaryColor}Parafusion<dark_gray>]<gray>"
     var brokenBlocks: HashMap<UUID, HashSet<Block>> = HashMap<UUID, HashSet<Block>>()
 
     @EventHandler
@@ -51,7 +51,7 @@ class ParafusionScenario : Scenario(
                     }
                 }
             }
-            Bukkit.broadcastMessage(Chat.colored("$prefix &f???&7 found &b$diamonds diamonds&7. &8(${Chat.primaryColor}x: ${floor(e.player.location.x)}&7, ${Chat.primaryColor}y: ${floor(e.player.location.y)}&7, ${Chat.primaryColor}z: ${floor(e.player.location.z)}&8)"))
+            Bukkit.broadcastMessage(Chat.colored("$prefix &f???<gray> found &b$diamonds diamonds<gray>. <dark_gray>(${Chat.primaryColor}x: ${floor(e.player.location.x)}<gray>, ${Chat.primaryColor}y: ${floor(e.player.location.y)}<gray>, ${Chat.primaryColor}z: ${floor(e.player.location.z)}<dark_gray>)"))
         } else if (e.block.type == Material.GOLD_ORE) {
             var gold = 0
             for (x in -2..1) {
@@ -73,7 +73,7 @@ class ParafusionScenario : Scenario(
                     }
                 }
             }
-            Bukkit.broadcastMessage(Chat.colored("$prefix &f???&7 found &6$gold gold&7. &8(${Chat.primaryColor}x: ${floor(e.player.location.x)}&7, ${Chat.primaryColor}y: ${floor(e.player.location.y)}&7, ${Chat.primaryColor}z: ${floor(e.player.location.z)}&8)"))
+            Bukkit.broadcastMessage(Chat.colored("$prefix &f???<gray> found &6$gold gold<gray>. <dark_gray>(${Chat.primaryColor}x: ${floor(e.player.location.x)}<gray>, ${Chat.primaryColor}y: ${floor(e.player.location.y)}<gray>, ${Chat.primaryColor}z: ${floor(e.player.location.z)}<dark_gray>)"))
         }
     }
 
@@ -81,14 +81,14 @@ class ParafusionScenario : Scenario(
     fun onPlayerDeath(e: PlayerDeathEvent) {
         if (!enabled) return
         if (GameState.currentState != GameState.INGAME) return
-        Bukkit.broadcastMessage(Chat.colored("$prefix &f???&7 died. &8(${Chat.primaryColor}x: ${floor(e.entity.location.x)}&7, ${Chat.primaryColor}y: ${floor(e.entity.location.y)}&7, ${Chat.primaryColor}z: ${floor(e.entity.location.z)}&8)"))
+        Bukkit.broadcastMessage(Chat.colored("$prefix &f???<gray> died. <dark_gray>(${Chat.primaryColor}x: ${floor(e.entity.location.x)}<gray>, ${Chat.primaryColor}y: ${floor(e.entity.location.y)}<gray>, ${Chat.primaryColor}z: ${floor(e.entity.location.z)}<dark_gray>)"))
     }
 
     @EventHandler
     fun onPlayerConsume(e: PlayerItemConsumeEvent) {
         if (!enabled) return
         if (GameState.currentState != GameState.INGAME) return
-        if (e.item.type == Material.GOLDEN_APPLE) Bukkit.broadcastMessage(Chat.colored("$prefix &f???&7 ate a &6Golden Apple&7. &8(${Chat.primaryColor}x: ${floor(e.player.location.x)}&7, ${Chat.primaryColor}y: ${floor(e.player.location.y)}&7, ${Chat.primaryColor}z: ${floor(e.player.location.z)}&8)"))
+        if (e.item.type == Material.GOLDEN_APPLE) Bukkit.broadcastMessage(Chat.colored("$prefix &f???<gray> ate a &6Golden Apple<gray>. <dark_gray>(${Chat.primaryColor}x: ${floor(e.player.location.x)}<gray>, ${Chat.primaryColor}y: ${floor(e.player.location.y)}<gray>, ${Chat.primaryColor}z: ${floor(e.player.location.z)}<dark_gray>)"))
     }
 
     @EventHandler
@@ -97,13 +97,13 @@ class ParafusionScenario : Scenario(
         if (GameState.currentState != GameState.INGAME) return
         when (e.inventory.result.type) {
             Material.ANVIL -> {
-                Bukkit.broadcastMessage(Chat.colored("$prefix &f???&7 crafted an &fAnvil&7. &8(${Chat.primaryColor}x: ${floor(e.whoClicked.location.x)}&7, ${Chat.primaryColor}y: ${floor(e.whoClicked.location.y)}&7, ${Chat.primaryColor}z: ${floor(e.whoClicked.location.z)}&8)"))
+                Bukkit.broadcastMessage(Chat.colored("$prefix &f???<gray> crafted an &fAnvil<gray>. <dark_gray>(${Chat.primaryColor}x: ${floor(e.whoClicked.location.x)}<gray>, ${Chat.primaryColor}y: ${floor(e.whoClicked.location.y)}<gray>, ${Chat.primaryColor}z: ${floor(e.whoClicked.location.z)}<dark_gray>)"))
             }
             Material.GOLDEN_APPLE -> {
-                Bukkit.broadcastMessage(Chat.colored("$prefix &f???&7 crafted a &6Golden Apple&7. &8(${Chat.primaryColor}x: ${floor(e.whoClicked.location.x)}&7, ${Chat.primaryColor}y: ${floor(e.whoClicked.location.y)}&7, ${Chat.primaryColor}z: ${floor(e.whoClicked.location.z)}&8)"))
+                Bukkit.broadcastMessage(Chat.colored("$prefix &f???<gray> crafted a &6Golden Apple<gray>. <dark_gray>(${Chat.primaryColor}x: ${floor(e.whoClicked.location.x)}<gray>, ${Chat.primaryColor}y: ${floor(e.whoClicked.location.y)}<gray>, ${Chat.primaryColor}z: ${floor(e.whoClicked.location.z)}<dark_gray>)"))
             }
             Material.ENCHANTMENT_TABLE -> {
-                Bukkit.broadcastMessage(Chat.colored("$prefix &f???&7 crafted an &dEnchantment Table&7. &8(${Chat.primaryColor}x: ${floor(e.whoClicked.location.x)}&7, ${Chat.primaryColor}y: ${floor(e.whoClicked.location.y)}&7, ${Chat.primaryColor}z: ${floor(e.whoClicked.location.z)}&8)"))
+                Bukkit.broadcastMessage(Chat.colored("$prefix &f???<gray> crafted an &dEnchantment Table<gray>. <dark_gray>(${Chat.primaryColor}x: ${floor(e.whoClicked.location.x)}<gray>, ${Chat.primaryColor}y: ${floor(e.whoClicked.location.y)}<gray>, ${Chat.primaryColor}z: ${floor(e.whoClicked.location.z)}<dark_gray>)"))
             }
             else -> {}
         }

@@ -12,8 +12,8 @@ import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ShapedRecipe
-import pink.mino.kraftwerk.utils.recipes.Recipe
 import pink.mino.kraftwerk.utils.ItemBuilder
+import pink.mino.kraftwerk.utils.recipes.Recipe
 
 class HideOfLeviathanRecipe : Recipe(
     "Hide of Leviathan",
@@ -24,7 +24,7 @@ class HideOfLeviathanRecipe : Recipe(
 ) {
     init {
         val hideOfLeviathan = ItemBuilder(Material.DIAMOND_LEGGINGS)
-            .name("&eHide of Leviathan")
+            .name("<yellow>Hide of Leviathan")
             .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4)
             .addEnchantment(Enchantment.OXYGEN, 3)
             .addEnchantment(Enchantment.WATER_WORKER, 1)

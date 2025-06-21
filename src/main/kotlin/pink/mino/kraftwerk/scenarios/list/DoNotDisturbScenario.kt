@@ -32,7 +32,7 @@ class DoNotDisturbScenario : Scenario(
         if (hashMap.containsKey(damager.uniqueId)) {
             if (player.uniqueId != hashMap[damager.uniqueId]) {
                 event.isCancelled = true
-                damager.sendMessage(Chat.colored("&cYou can't hit that player, he isn't linked to you!"))
+                damager.sendMessage(Chat.colored("<red>You can't hit that player, he isn't linked to you!"))
                 return
             }
         } else {
@@ -43,10 +43,10 @@ class DoNotDisturbScenario : Scenario(
                     hashMap.remove(player.uniqueId)
                     hashMap.remove(damager.uniqueId)
                     if (player != null) {
-                        player.sendMessage(Chat.colored("&cYour Do Not Disturb has expired."))
+                        player.sendMessage(Chat.colored("<red>Your Do Not Disturb has expired."))
                     }
                     if (damager != null) {
-                        damager.sendMessage(Chat.colored("&cYour Do Not Disturb has expired."))
+                        damager.sendMessage(Chat.colored("<red>Your Do Not Disturb has expired."))
                     }
                 }
             }.runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), 15 * 20L)

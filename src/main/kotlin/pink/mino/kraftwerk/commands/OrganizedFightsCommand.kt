@@ -44,8 +44,8 @@ class OrganizedFights : Listener {
                 }${Bukkit.getOfflinePlayer(it).name}"
             )
         }
-        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${PlayerUtils.getPrefix(player)}${player.name}&7 has been assigned to fight!"))
-        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} &7&oAssigned players: ${list.joinToString("&7, &r")}"))
+        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${PlayerUtils.getPrefix(player)}${player.name}<gray> has been assigned to fight!"))
+        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} <gray>&oAssigned players: ${list.joinToString("<gray>, &r")}"))
     }
 
     fun removePlayer(player: Player) {
@@ -65,8 +65,8 @@ class OrganizedFights : Listener {
                 }${Bukkit.getOfflinePlayer(it).name}"
             )
         }
-        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${PlayerUtils.getPrefix(player)}${player.name}&7 has been removed from the fight!"))
-        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} &7&oAssigned players: ${list.joinToString("&7, &r")}"))
+        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${PlayerUtils.getPrefix(player)}${player.name}<gray> has been removed from the fight!"))
+        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} <gray>&oAssigned players: ${list.joinToString("<gray>, &r")}"))
     }
 
     @EventHandler
@@ -78,7 +78,7 @@ class OrganizedFights : Listener {
                 if (assigned.contains(player.uniqueId) && assigned.contains(damager.uniqueId)) {
                     return
                 } else {
-                    Chat.sendMessage(damager, "&cYou can't damage players while not being assigned!")
+                    Chat.sendMessage(damager, "<red>You can't damage players while not being assigned!")
                     event.isCancelled = true
                 }
             }
@@ -92,7 +92,7 @@ class OrganizedFights : Listener {
                     if (assigned.contains(player.uniqueId) && assigned.contains(damager.uniqueId)) {
                         return
                     } else {
-                        Chat.sendMessage(damager, "&cYou can't damage players while not being assigned!")
+                        Chat.sendMessage(damager, "<red>You can't damage players while not being assigned!")
                         event.isCancelled = true
                     }
                 }
@@ -104,13 +104,13 @@ class OrganizedFights : Listener {
 class OrganizedFightsCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<String>
     ): Boolean {
         if (sender is Player) {
             if (!sender.hasPermission("uhc.staff.orgs")) {
-                sender.sendMessage(Chat.colored("&cYou don't have permission to use this command!"))
+                sender.sendMessage(Chat.colored("<red>You don't have permission to use this command!"))
                 return true
             }
         }
@@ -124,7 +124,7 @@ class OrganizedFightsCommand : CommandExecutor {
                 Chat.sendMessage(player, Chat.colored(Chat.line))
                 Chat.sendMessage(player, " ")
                 Chat.sendCenteredMessage(player, "${Chat.primaryColor}&lORGANIZED FIGHTS HAS BEEN ENABLED!")
-                Chat.sendMessage(player, "&7Organized Fights has been enabled, PvP is now disabled. Please standby for more instructions.")
+                Chat.sendMessage(player, "<gray>Organized Fights has been enabled, PvP is now disabled. Please standby for more instructions.")
                 Chat.sendMessage(player, " ")
                 Chat.sendMessage(player, Chat.colored(Chat.line))
                 player.playSound(player.location, Sound.ENDERDRAGON_GROWL, 1F, 1F)
@@ -135,7 +135,7 @@ class OrganizedFightsCommand : CommandExecutor {
                 Chat.sendMessage(player, Chat.colored(Chat.line))
                 Chat.sendMessage(player, " ")
                 Chat.sendCenteredMessage(player, "${Chat.primaryColor}&lORGANIZED FIGHTS HAS BEEN DISABLED!")
-                Chat.sendMessage(player, "&7Organized Fights has been disabled, PvP is now enabled.")
+                Chat.sendMessage(player, "<gray>Organized Fights has been disabled, PvP is now enabled.")
                 Chat.sendMessage(player, " ")
                 Chat.sendMessage(player, Chat.colored(Chat.line))
                 player.playSound(player.location, Sound.ENDERDRAGON_GROWL, 1F, 1F)
@@ -147,7 +147,7 @@ class OrganizedFightsCommand : CommandExecutor {
             }
             val player = Bukkit.getPlayer(args[1])
             if (player == null) {
-                Chat.sendMessage(sender, "${Chat.prefix} &cPlayer not found!")
+                Chat.sendMessage(sender, "${Chat.prefix} <red>Player not found!")
                 return true
             }
             OrganizedFights.instance.addPlayer(player)
@@ -158,7 +158,7 @@ class OrganizedFightsCommand : CommandExecutor {
             }
             val player = Bukkit.getPlayer(args[1])
             if (player == null) {
-                Chat.sendMessage(sender, "${Chat.prefix} &cPlayer not found!")
+                Chat.sendMessage(sender, "${Chat.prefix} <red>Player not found!")
                 return true
             }
             OrganizedFights.instance.removePlayer(player)

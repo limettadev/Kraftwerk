@@ -14,8 +14,8 @@ class FightCommand : CommandExecutor {
 
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<out String>
     ): Boolean {
         if (sender !is Player) {
@@ -23,23 +23,23 @@ class FightCommand : CommandExecutor {
             return false
         }
         if (Kraftwerk.instance.game == null) {
-            Chat.sendMessage(sender, "&cThere is no game running at the moment.")
+            Chat.sendMessage(sender, "<red>There is no game running at the moment.")
             return false
         }
         if (Kraftwerk.instance.game!!.pvpHappened == false) {
-            Chat.sendMessage(sender, "&cPvP hasn't occurred yet.")
+            Chat.sendMessage(sender, "<red>PvP hasn't occurred yet.")
             return false
         }
         val cooldownTime = 300
         if (cooldowns.containsKey(sender.uniqueId)) {
             val secondsLeft: Long = cooldowns[sender.uniqueId]!! / 1000 + cooldownTime - System.currentTimeMillis() / 1000
             if (secondsLeft > 0) {
-                sender.sendMessage(Chat.colored("&cYou can't use this command for another $secondsLeft second(s)!"))
+                sender.sendMessage(Chat.colored("<red>You can't use this command for another $secondsLeft second(s)!"))
                 return false
             }
         }
         cooldowns[sender.uniqueId] = System.currentTimeMillis()
-        Chat.broadcast("&8[${Chat.primaryColor}&lPvP&8] &f${sender.name}&7 is looking for a fight at ${Chat.secondaryColor}X: ${floor(sender.location.x)}&7, ${Chat.secondaryColor}Y: ${floor(sender.location.y)}&7, ${Chat.secondaryColor}Z: ${floor(sender.location.z)}&7!")
+        Chat.broadcast("<dark_gray>[${Chat.primaryColor}&lPvP<dark_gray>] &f${sender.name}<gray> is looking for a fight at ${Chat.secondaryColor}X: ${floor(sender.location.x)}<gray>, ${Chat.secondaryColor}Y: ${floor(sender.location.y)}<gray>, ${Chat.secondaryColor}Z: ${floor(sender.location.z)}<gray>!")
         return true
     }
 }

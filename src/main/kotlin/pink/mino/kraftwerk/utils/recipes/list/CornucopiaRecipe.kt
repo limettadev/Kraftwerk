@@ -28,7 +28,7 @@ class CornucopiaRecipe : Recipe(
 ) {
     init {
         val cornucopia = ItemBuilder(Material.GOLDEN_CARROT)
-            .name("&eCornucopia")
+            .name("<yellow>Cornucopia")
             .setAmount(3)
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(cornucopia, id)).shape("CCC", "CGC", "CCC")
@@ -38,7 +38,7 @@ class CornucopiaRecipe : Recipe(
 
     @EventHandler
     fun onItemConsume(e: PlayerItemConsumeEvent) {
-        if (e.item.hasItemMeta() && e.item.itemMeta.displayName == Chat.colored("&eCornucopia")) {
+        if (e.item.hasItemMeta() && e.item.itemMeta.displayName == Chat.colored("<yellow>Cornucopia")) {
             e.player.addPotionEffect(
                 PotionEffect(PotionEffectType.SATURATION, (10 * 60) * 20, 0, true, true)
             )

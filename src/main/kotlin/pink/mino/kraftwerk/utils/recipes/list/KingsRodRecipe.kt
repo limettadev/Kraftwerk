@@ -12,8 +12,8 @@ import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ShapedRecipe
-import pink.mino.kraftwerk.utils.recipes.Recipe
 import pink.mino.kraftwerk.utils.ItemBuilder
+import pink.mino.kraftwerk.utils.recipes.Recipe
 
 class KingsRodRecipe : Recipe(
     "King's Rod",
@@ -24,7 +24,7 @@ class KingsRodRecipe : Recipe(
 ) {
     init {
         val kingsRod = ItemBuilder(Material.FISHING_ROD)
-            .name("&eKing's Rod")
+            .name("<yellow>King's Rod")
             .addEnchantment(Enchantment.LUCK, 10)
             .addEnchantment(Enchantment.LURE, 5)
             .addEnchantment(Enchantment.DURABILITY, 10)

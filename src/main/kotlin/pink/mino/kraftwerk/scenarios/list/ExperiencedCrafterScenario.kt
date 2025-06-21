@@ -32,7 +32,7 @@ class ExperiencedCrafterScenario : Scenario(
         }
 
         if (player.level < cost) {
-            Chat.sendMessage(player, "&cYou need $cost experience levels to craft this item.")
+            Chat.sendMessage(player, "<red>You need $cost experience levels to craft this item.")
             e.isCancelled = true
             return
         }
@@ -41,7 +41,7 @@ class ExperiencedCrafterScenario : Scenario(
         Bukkit.getScheduler().runTaskLater(Kraftwerk.instance, Runnable {
             if (e.isCancelled) return@Runnable
             player.level -= cost
-            Chat.sendMessage(player, "&eYou spent $cost experience level${if (cost > 1) "s" else ""} crafting ${item.name.replace('_', ' ').lowercase().replaceFirstChar { it.uppercase() }}.")
+            Chat.sendMessage(player, "<yellow>You spent $cost experience level${if (cost > 1) "s" else ""} crafting ${item.name.replace('_', ' ').lowercase().replaceFirstChar { it.uppercase() }}.")
         }, 20L)
     }
 

@@ -13,10 +13,10 @@ import pink.mino.kraftwerk.utils.Chat
 class FullbrightCommand : CommandExecutor {
 
     override fun onCommand(
-        sender: CommandSender?,
-        command: Command?,
-        label: String?,
-        args: Array<out String>?
+        sender: CommandSender,
+        command: Command,
+        label: String,
+        args: Array<out String>
     ): Boolean {
         if (sender !is Player) {
             sender!!.sendMessage("You must be a player to use this command!")
@@ -25,11 +25,11 @@ class FullbrightCommand : CommandExecutor {
         val player = sender
         if (player.hasPotionEffect(PotionEffectType.NIGHT_VISION)) {
             player.removePotionEffect(PotionEffectType.NIGHT_VISION)
-            Chat.sendMessage(player, "${Chat.prefix} You have &cdisabled &7your fullbright.")
+            Chat.sendMessage(player, "${Chat.prefix} You have <red>disabled <gray>your fullbright.")
             JavaPlugin.getPlugin(Kraftwerk::class.java).fullbright.remove(player.name.lowercase())
         } else {
             player.addPotionEffect(PotionEffect(PotionEffectType.NIGHT_VISION, 1028391820, 0, false, false))
-            Chat.sendMessage(player, "${Chat.prefix} You have &aenabled &7your fullbright.")
+            Chat.sendMessage(player, "${Chat.prefix} You have <green>enabled <gray>your fullbright.")
             JavaPlugin.getPlugin(Kraftwerk::class.java).fullbright.add(player.name.lowercase())
         }
         return true

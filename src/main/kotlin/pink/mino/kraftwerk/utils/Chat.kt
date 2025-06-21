@@ -1,6 +1,8 @@
 package pink.mino.kraftwerk.utils
 
 import DefaultFontInfo
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.command.CommandSender
@@ -11,22 +13,22 @@ class Chat {
     companion object {
         private const val CENTER_PX = 154
 
-        val secondaryColor = if (ConfigFeature.instance.config!!.getString("chat.secondaryColor") != null) ConfigFeature.instance.config!!.getString("chat.secondaryColor") else "&f"
-        val primaryColor = if (ConfigFeature.instance.config!!.getString("chat.primaryColor") != null) ConfigFeature.instance.config!!.getString("chat.primaryColor") else "&c"
+        val secondaryColor = if (ConfigFeature.instance.config!!.getString("chat.secondaryColor") != null) ConfigFeature.instance.config!!.getString("chat.secondaryColor") else "<white>"
+        val primaryColor = if (ConfigFeature.instance.config!!.getString("chat.primaryColor") != null) ConfigFeature.instance.config!!.getString("chat.primaryColor") else "<red>"
         val serverName = if (ConfigFeature.instance.config!!.getString("chat.serverName") != null) ConfigFeature.instance.config!!.getString("chat.serverName") else "applejuice"
-        val scoreboardTitle = if (ConfigFeature.instance.config!!.getString("chat.scoreboardTitle") != null) ConfigFeature.instance.config!!.getString("chat.scoreboardTitle") else "&capple&ajuice"
-        val prefix = if (ConfigFeature.instance.config!!.getString("chat.prefix") != null) (ConfigFeature.instance.config!!.getString("chat.prefix")) else "&8[&cUHC&8]&7"
-        const val dash = "§8»&7"
-        const val dot = "§8●§7"
-        const val line = "§8§m-----------------------------------------------------"
-        const val guiLine = "§8§m-------------------"
+        val scoreboardTitle = if (ConfigFeature.instance.config!!.getString("chat.scoreboardTitle") != null) ConfigFeature.instance.config!!.getString("chat.scoreboardTitle") else "<red>apple<green>juice"
+        val prefix = if (ConfigFeature.instance.config!!.getString("chat.prefix") != null) (ConfigFeature.instance.config!!.getString("chat.prefix")) else "<dark_gray>[<red>UHC<dark_gray>]<gray>"
+        const val dash = "<dark_gray>»<gray>"
+        const val dot = "<dark_gray>●<gray>"
+        const val line = "<dark_gray><strikethrough>-----------------------------------------------------"
+        const val guiLine = "<dark_gray><strikethrough>-------------------"
 
-        fun colored(message: String): String {
-            return (ChatColor.translateAlternateColorCodes('&', message))
+        fun colored(message: String): Component {
+            return MiniMessage.miniMessage().deserialize(message)
         }
 
         fun broadcast(message: String) {
-            Bukkit.broadcastMessage(colored(message))
+            Bukkit.broadcast(colored(message))
         }
 
         fun clear() {
@@ -39,19 +41,19 @@ class Chat {
             }
         }
 
-        fun scenarioTextWrap(text: String, width: Int): ArrayList<String> {
+        fun scenarioTextWrap(text: String, width: Int): ArrayList<Component> {
             val words = text.split(" ")
-            val lines = ArrayList<String>()
+            val lines = ArrayList<Component>()
             var currentLine = ""
             for (word in words) {
                 if (currentLine.length + word.length + 1 > width) {
-                    lines.add(colored("&7${currentLine}"))
-                    currentLine = "&7$word "
+                    lines.add(colored("<gray>${currentLine}"))
+                    currentLine = "<gray>$word "
                 } else {
-                    currentLine += "&7$word "
+                    currentLine += "<gray>$word "
                 }
             }
-            lines.add(colored("&7${currentLine}"))
+            lines.add(colored("<gray>${currentLine}"))
             return lines
         }
 
@@ -111,7 +113,7 @@ class Chat {
         fun sendCenteredMessage(player: CommandSender, message: String?) {
             var text = message
             if (text == null || text == "") player.sendMessage("")
-            text = ChatColor.translateAlternateColorCodes('&', message)
+            text = ChatColor.translateAlternateColorCodes('&', message!!)
             var messagePxSize = 0
             var previousCode = false
             var isBold = false
@@ -147,7 +149,7 @@ class Chat {
         fun sendMessage(player: CommandSender, message: String?) {
             var text = message
             if (text == null || text == "") player.sendMessage("")
-            text = ChatColor.translateAlternateColorCodes('&', message)
+            text = ChatColor.translateAlternateColorCodes('&', message!!)
             player.sendMessage(text)
         }
     }

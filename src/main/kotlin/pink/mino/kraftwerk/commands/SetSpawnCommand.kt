@@ -10,8 +10,8 @@ import pink.mino.kraftwerk.utils.Chat
 class SetSpawnCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<out String>
     ): Boolean {
         if (sender !is Player) {
@@ -19,7 +19,7 @@ class SetSpawnCommand : CommandExecutor {
             return true
         }
         if (!sender.hasPermission("uhc.staff.spawn")) {
-            Chat.sendMessage(sender, "&cYou do not have permission to use this command.")
+            Chat.sendMessage(sender, "<red>You do not have permission to use this command.")
             return true
         }
         ConfigFeature.instance.data!!.set("config.spawn.x", sender.location.x)
@@ -29,7 +29,7 @@ class SetSpawnCommand : CommandExecutor {
         ConfigFeature.instance.data!!.set("config.spawn.pitch", sender.location.pitch)
         ConfigFeature.instance.data!!.set("config.spawn.world", sender.location.world.name)
         ConfigFeature.instance.saveData()
-        Chat.sendMessage(sender, "${Chat.prefix} The spawn has been set to your location, use ${Chat.primaryColor}/spawn&7 to teleport to the new location.")
+        Chat.sendMessage(sender, "${Chat.prefix} The spawn has been set to your location, use ${Chat.primaryColor}/spawn<gray> to teleport to the new location.")
         return true
     }
 }

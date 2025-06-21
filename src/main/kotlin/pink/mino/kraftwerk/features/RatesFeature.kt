@@ -19,7 +19,7 @@ class RatesFeature : Listener {
                     e.block.drops.clear()
                     e.block.world.dropItemNaturally(e.block.location.add(0.5, 0.5, 0.5), ItemStack(Material.FLINT))
                 }
-            } else if (e.block.type == Material.LEAVES || e.block.type == Material.LEAVES_2) {
+            } else if (e.block.type.name.contains("LEAVES")) {
                 if ((Random().nextDouble() * 100) < ConfigFeature.instance.data!!.getInt("game.rates.apple")) {
                     e.block.type = Material.AIR
                     e.block.drops.clear()
@@ -31,7 +31,7 @@ class RatesFeature : Listener {
 
     @EventHandler
     fun onLeavesDecay(e: LeavesDecayEvent) {
-        if (e.block.type == Material.LEAVES || e.block.type == Material.LEAVES_2) {
+        if (e.block.type.name.contains("LEAVES")) {
             if ((Random().nextDouble() * 100) < ConfigFeature.instance.data!!.getInt("game.rates.apple")) {
                 e.block.type = Material.AIR
                 e.block.drops.clear()

@@ -8,5 +8,5 @@ class NoBrandingOption : ConfigOption(
     "Removes applejuice-related branding.",
     "options",
     "nobranding",
-    Material.FLOWER_POT_ITEM
-) {}
+    Material.FLOWER_POT
+)

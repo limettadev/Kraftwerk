@@ -53,7 +53,7 @@ class DaredevilRecipe : Recipe(
             return
         }
         val name = item.itemMeta.displayName
-        if (name == Chat.colored("&eDaredevil")) {
+        if (name == Chat.colored("<yellow>Daredevil")) {
             val block: Block? = player.getTargetBlock(null as Set<Material?>?, 10)
             if (block == null || block.type !== Material.WORKBENCH) {
                 player.sendMessage("${Chat.prefix} You are not looking at a crafting table.")
@@ -64,7 +64,7 @@ class DaredevilRecipe : Recipe(
             event.view.topInventory.clear()
             block.type = Material.AIR
             val h = player.world.spawn(block.location, Horse::class.java)
-            h.customName = Chat.colored("&eDaredevil")
+            h.customName = Chat.colored("<yellow>Daredevil")
             h.variant = Horse.Variant.SKELETON_HORSE
             h.maxHealth = 50.0
             h.health = 50.0

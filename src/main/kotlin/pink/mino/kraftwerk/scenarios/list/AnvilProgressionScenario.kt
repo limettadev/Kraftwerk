@@ -40,7 +40,7 @@ class AnvilProgressionScenario : Scenario(
         val remaining = anvils[uuid] ?: 0
         if (remaining < 1) {
             e.result = null
-            Chat.sendMessage(player, "&cYou have no anvil uses left.")
+            Chat.sendMessage(player, "<red>You have no anvil uses left.")
         }
     }
 
@@ -50,15 +50,15 @@ class AnvilProgressionScenario : Scenario(
         if (!enabled) return
         if (GameState.currentState != GameState.INGAME) return
         if (e.entity.killer == null) return
-        if (e.entity.killer.type == EntityType.PLAYER) {
+        if (e.entity.killer!!.type == EntityType.PLAYER) {
             val killer = e.entity.killer as Player
             if (anvils[killer.uniqueId] == null) {
                 anvils[killer.uniqueId] = 1
             } else {
                 anvils[killer.uniqueId] = anvils[killer.uniqueId]!! + 1
             }
-            Chat.sendMessage(killer, "${Chat.prefix} You have gained an anvil use! (Anvils: ${Chat.secondaryColor}${anvils[killer.uniqueId]}&7)")
-        } else if (e.entity.killer.type == EntityType.ARROW && (e.entity as Arrow).shooter is Player) {
+            Chat.sendMessage(killer, "${Chat.prefix} You have gained an anvil use! (Anvils: ${Chat.secondaryColor}${anvils[killer.uniqueId]}<gray>)")
+        } else if (e.entity.killer!!.type == EntityType.ARROW && (e.entity as Arrow).shooter is Player) {
             val killer = (e.entity as Arrow).shooter as Player
             if (anvils[killer.uniqueId] == null) {
                 anvils[killer.uniqueId] = 1

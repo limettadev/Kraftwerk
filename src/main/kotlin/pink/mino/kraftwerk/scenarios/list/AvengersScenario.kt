@@ -34,7 +34,7 @@ class AvengersScenario : Scenario(
     Material.DIAMOND_SWORD
 ) {
     val superheroes: HashMap<Player, String> = hashMapOf()
-    val prefix = "&8[${Chat.primaryColor}Avengers&8]&7"
+    val prefix = "<dark_gray>[${Chat.primaryColor}Avengers<dark_gray>]<gray>"
     var cooldowns = HashMap<String, Long>()
     var pvpEnabled: Boolean = false
 
@@ -55,7 +55,7 @@ class AvengersScenario : Scenario(
         val hero = pool[Random.nextInt(pool.size)]
         superheroes[player] = hero
         giveAvengers(player)
-        Chat.sendMessage(player, "$prefix Your assigned Avenger is: ${Chat.secondaryColor}${hero}&7.")
+        Chat.sendMessage(player, "$prefix Your assigned Avenger is: ${Chat.secondaryColor}${hero}<gray>.")
     }
 
     fun assignAvengers() {
@@ -87,7 +87,7 @@ class AvengersScenario : Scenario(
                             val hero = pool[Random.nextInt(pool.size)]
                             superheroes[player as Player] = hero
                             pool.remove(hero)
-                            Chat.sendMessage(player, "$prefix Your assigned Avenger is: ${Chat.secondaryColor}${hero}&7.")
+                            Chat.sendMessage(player, "$prefix Your assigned Avenger is: ${Chat.secondaryColor}${hero}<gray>.")
                         } catch(_: Error) {}
                     }
                 }
@@ -117,8 +117,8 @@ class AvengersScenario : Scenario(
                 val superSoldierMeta = superSoldier.itemMeta
                 superSoldierMeta.displayName = Chat.colored("${Chat.primaryColor}Super Soldier Serum")
                 superSoldierMeta.lore = listOf(
-                    Chat.colored("&7Right-click: Gives all your teammates strength for 10s."),
-                    Chat.colored("&7Cooldown: 40 seconds")
+                    Chat.colored("<gray>Right-click: Gives all your teammates strength for 10s."),
+                    Chat.colored("<gray>Cooldown: 40 seconds")
                 )
                 superSoldier.itemMeta = superSoldierMeta
                 player.inventory.addItem(superSoldier)
@@ -133,16 +133,16 @@ class AvengersScenario : Scenario(
                 val spideySenseMeta = spideySense.itemMeta
                 spideySenseMeta.displayName = Chat.colored("${Chat.primaryColor}Spidey Sense")
                 spideySenseMeta.lore = listOf(
-                    Chat.colored("&7Right-click: View all players within a 150 block radius."),
-                    Chat.colored("&7Cooldown: 20 seconds")
+                    Chat.colored("<gray>Right-click: View all players within a 150 block radius."),
+                    Chat.colored("<gray>Cooldown: 20 seconds")
                 )
                 spideySense.itemMeta = spideySenseMeta
                 val webShooter = ItemStack(Material.WEB)
                 val webShooterMeta = webShooter.itemMeta
                 webShooterMeta.displayName = Chat.colored("${Chat.primaryColor}Web Shooter")
                 webShooterMeta.lore = listOf(
-                    Chat.colored("&7Right-click: Gives slowness to nearby enemies."),
-                    Chat.colored("&7Passive: Makes a webcage whenever you kill someone.")
+                    Chat.colored("<gray>Right-click: Gives slowness to nearby enemies."),
+                    Chat.colored("<gray>Passive: Makes a webcage whenever you kill someone.")
                 )
                 webShooter.itemMeta = webShooterMeta
                 player.inventory.addItem(webShooter)
@@ -162,8 +162,8 @@ class AvengersScenario : Scenario(
                 val bloodRushMeta = bloodRush.itemMeta
                 bloodRushMeta.displayName = Chat.colored("${Chat.primaryColor}Blood Rush")
                 bloodRushMeta.lore = listOf(
-                    Chat.colored("&7Right-click: Receive ${Chat.primaryColor}12 seconds&7 of Speed IV & Jump Boost II&7."),
-                    Chat.colored("&7Cooldown: 50 seconds")
+                    Chat.colored("<gray>Right-click: Receive ${Chat.primaryColor}12 seconds<gray> of Speed IV & Jump Boost II<gray>."),
+                    Chat.colored("<gray>Cooldown: 50 seconds")
                 )
                 bloodRush.itemMeta = bloodRushMeta
                 player.inventory.addItem(bloodRush)
@@ -180,11 +180,11 @@ class AvengersScenario : Scenario(
                 player.addPotionEffect(PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 99999999, 0, false, false))
                 val stormbreaker = ItemStack(Material.IRON_AXE)
                 val stormbreakerMeta = stormbreaker.itemMeta
-                stormbreakerMeta.displayName = Chat.colored("&cStormbreaker")
+                stormbreakerMeta.displayName = Chat.colored("<red>Stormbreaker")
                 stormbreakerMeta.spigot().isUnbreakable = true
                 stormbreakerMeta.lore = listOf(
-                    Chat.colored("&7Right-click: Smite everyone within a 7 block radius."),
-                    Chat.colored("&7Cooldown: 50 seconds")
+                    Chat.colored("<gray>Right-click: Smite everyone within a 7 block radius."),
+                    Chat.colored("<gray>Cooldown: 50 seconds")
                 )
                 stormbreaker.itemMeta = stormbreakerMeta
                 player.inventory.addItem(stormbreaker)
@@ -197,10 +197,10 @@ class AvengersScenario : Scenario(
                 player.addPotionEffect(PotionEffect(PotionEffectType.SPEED, 99999999, 0, false, false))
                 val repulsorTech = ItemStack(Material.MAGMA_CREAM)
                 val repulsorTechMeta = repulsorTech.itemMeta
-                repulsorTechMeta.displayName = Chat.colored("&cRepulsor Tech Mark LXXXV")
+                repulsorTechMeta.displayName = Chat.colored("<red>Repulsor Tech Mark LXXXV")
                 repulsorTechMeta.lore = listOf(
-                    Chat.colored("&Right-click: Grants flight for &d5 seconds&7 & all players &cfire resistance&7 for &d20 seconds&7."),
-                    Chat.colored("&760 second cooldown")
+                    Chat.colored("&Right-click: Grants flight for &d5 seconds<gray> & all players <red>fire resistance<gray> for &d20 seconds<gray>."),
+                    Chat.colored("<gray>60 second cooldown")
                 )
                 repulsorTech.itemMeta = repulsorTechMeta
                 player.inventory.addItem(repulsorTech)
@@ -211,10 +211,10 @@ class AvengersScenario : Scenario(
                 bowMeta.spigot().isUnbreakable = true
                 bowMeta.addEnchant(Enchantment.ARROW_INFINITE, 1, false)
                 bowMeta.addEnchant(Enchantment.ARROW_DAMAGE, 2, false)
-                bowMeta.displayName = Chat.colored("&cHoyt Gamemaster 2")
+                bowMeta.displayName = Chat.colored("<red>Hoyt Gamemaster 2")
                 bowMeta.lore = listOf(
-                    Chat.colored("&7Left-click: Has a 50% chance to fire &cFireball&7."),
-                    Chat.colored("&7Passive: Heals &c2%&7 of your health upon shooting someone with an arrow.")
+                    Chat.colored("<gray>Left-click: Has a 50% chance to fire <red>Fireball<gray>."),
+                    Chat.colored("<gray>Passive: Heals <red>2%<gray> of your health upon shooting someone with an arrow.")
                 )
                 val chestplate = ItemStack(Material.IRON_CHESTPLATE)
                 val chestplateMeta = chestplate.itemMeta
@@ -280,14 +280,14 @@ class AvengersScenario : Scenario(
                     if (cooldowns.containsKey(e.player.name)) {
                         val secondsLeft: Long = cooldowns[e.player.name]!! / 1000 + cooldownTime - System.currentTimeMillis() / 1000
                         if (secondsLeft > 0) {
-                            e.player.sendMessage(Chat.colored("&cYou can't use this ability for another $secondsLeft second(s)!"))
+                            e.player.sendMessage(Chat.colored("<red>You can't use this ability for another $secondsLeft second(s)!"))
                             return
                         }
                     }
                     cooldowns[e.player.name] = System.currentTimeMillis()
                     for (teammate in TeamsFeature.manager.getTeam(e.player)!!.players) {
                         if (teammate.isOnline) {
-                            Chat.sendMessage((teammate as Player), "$prefix Your teammate ${Chat.secondaryColor}${e.player.name}&7 has given your ${Chat.primaryColor}Strength I&7 for 10 seconds.")
+                            Chat.sendMessage((teammate as Player), "$prefix Your teammate ${Chat.secondaryColor}${e.player.name}<gray> has given your ${Chat.primaryColor}Strength I<gray> for 10 seconds.")
                             teammate.addPotionEffect(PotionEffect(PotionEffectType.INCREASE_DAMAGE, 200, 0, true, true))
                         }
                     }
@@ -301,7 +301,7 @@ class AvengersScenario : Scenario(
                         if (cooldowns.containsKey(e.player.name)) {
                             val secondsLeft: Long = cooldowns[e.player.name]!! / 1000 + cooldownTime - System.currentTimeMillis() / 1000
                             if (secondsLeft > 0) {
-                                e.player.sendMessage(Chat.colored("&cYou can't use this ability for another $secondsLeft second(s)!"))
+                                e.player.sendMessage(Chat.colored("<red>You can't use this ability for another $secondsLeft second(s)!"))
                                 return
                             }
                         }
@@ -312,20 +312,20 @@ class AvengersScenario : Scenario(
                                 nearbyPlayers.add(entity as Player)
                             }
                         }
-                        Chat.sendMessage(e.player, "$prefix There are &f${nearbyPlayers.size} players&7 near you.")
+                        Chat.sendMessage(e.player, "$prefix There are &f${nearbyPlayers.size} players<gray> near you.")
                         if (nearbyPlayers.size == 0) {
                             Chat.sendMessage(e.player, "$prefix No players found nearby...")
                             return
                         }
                         cooldowns[e.player.name] = System.currentTimeMillis()
                     }
-                    if (e.item.itemMeta.displayName == Chat.colored("&cWeb Shooter")) {
+                    if (e.item.itemMeta.displayName == Chat.colored("<red>Web Shooter")) {
                         e.isCancelled = true
                         val cooldownTime = 25
                         if (cooldowns.containsKey(e.player.name)) {
                             val secondsLeft: Long = cooldowns[e.player.name]!! / 1000 + cooldownTime - System.currentTimeMillis() / 1000
                             if (secondsLeft > 0) {
-                                e.player.sendMessage(Chat.colored("&cYou can't use this ability for another $secondsLeft second(s)!"))
+                                e.player.sendMessage(Chat.colored("<red>You can't use this ability for another $secondsLeft second(s)!"))
                                 return
                             }
                         }
@@ -343,10 +343,10 @@ class AvengersScenario : Scenario(
                         for (player in nearbyPlayers) {
                             if (player != e.player) {
                                 player.addPotionEffect(PotionEffect(PotionEffectType.SLOW, 160, 0, true, false))
-                                Chat.sendMessage(player, "$prefix You've been slowed from &f${e.player.name}&7's Web Shooter.")
+                                Chat.sendMessage(player, "$prefix You've been slowed from &f${e.player.name}<gray>'s Web Shooter.")
                             }
                         }
-                        Chat.sendMessage(e.player, "$prefix Slowed down &f${nearbyPlayers.size} players&7.")
+                        Chat.sendMessage(e.player, "$prefix Slowed down &f${nearbyPlayers.size} players<gray>.")
                         cooldowns[e.player.name] = System.currentTimeMillis()
                     }
                 }
@@ -358,12 +358,12 @@ class AvengersScenario : Scenario(
                         if (cooldowns.containsKey(e.player.name)) {
                             val secondsLeft: Long = cooldowns[e.player.name]!! / 1000 + cooldownTime - System.currentTimeMillis() / 1000
                             if (secondsLeft > 0) {
-                                e.player.sendMessage(Chat.colored("&cYou can't use this ability for another $secondsLeft second(s)!"))
+                                e.player.sendMessage(Chat.colored("<red>You can't use this ability for another $secondsLeft second(s)!"))
                                 return
                             }
                         }
                         if (!pvpEnabled) {
-                            Chat.sendMessage(e.player, "&cYou can't use this ability before PvP.")
+                            Chat.sendMessage(e.player, "<red>You can't use this ability before PvP.")
                             return
                         }
                         val near = e.player.getNearbyEntities(5.0, 5.0, 5.0)
@@ -378,7 +378,7 @@ class AvengersScenario : Scenario(
                         for (player in nearby) {
                             if (TeamsFeature.manager.getTeam(player) != TeamsFeature.manager.getTeam(e.player) && player != e.player) {
                                 e.player.world.strikeLightning(player.location)
-                                Chat.sendMessage(player, "$prefix You've been smited by &f${e.player.name}&7's Stormbreaker.")
+                                Chat.sendMessage(player, "$prefix You've been smited by &f${e.player.name}<gray>'s Stormbreaker.")
                             }
                         }
                         cooldowns[e.player.name] = System.currentTimeMillis()
@@ -393,7 +393,7 @@ class AvengersScenario : Scenario(
                         if (cooldowns.containsKey(e.player.name)) {
                             val secondsLeft: Long = cooldowns[e.player.name]!! / 1000 + cooldownTime - System.currentTimeMillis() / 1000
                             if (secondsLeft > 0) {
-                                e.player.sendMessage(Chat.colored("&cYou can't use this ability for another $secondsLeft second(s)!"))
+                                e.player.sendMessage(Chat.colored("<red>You can't use this ability for another $secondsLeft second(s)!"))
                                 return
                             }
                         }
@@ -418,18 +418,18 @@ class AvengersScenario : Scenario(
                         if (cooldowns.containsKey(e.player.name)) {
                             val secondsLeft: Long = cooldowns[e.player.name]!! / 1000 + cooldownTime - System.currentTimeMillis() / 1000
                             if (secondsLeft > 0) {
-                                e.player.sendMessage(Chat.colored("&cYou can't use this ability for another $secondsLeft second(s)!"))
+                                e.player.sendMessage(Chat.colored("<red>You can't use this ability for another $secondsLeft second(s)!"))
                                 return
                             }
                         }
                         cooldowns[e.player.name] = System.currentTimeMillis()
                         e.player.allowFlight = true
                         e.player.isFlying = true
-                        Chat.sendMessage(e.player, "$prefix You've been given ${Chat.primaryColor}5 seconds&7 of flight.")
+                        Chat.sendMessage(e.player, "$prefix You've been given ${Chat.primaryColor}5 seconds<gray> of flight.")
                         for (player in Bukkit.getOnlinePlayers()) {
                             if (player == e.player) continue
                             if (TeamsFeature.manager.getTeam(player) != null && TeamsFeature.manager.getTeam(player) == TeamsFeature.manager.getTeam(e.player)) {
-                                Chat.sendMessage(player, "$prefix You've been given ${Chat.primaryColor}20 seconds&7 of Fire Resistance by ${Chat.secondaryColor}${e.player.name}&7.")
+                                Chat.sendMessage(player, "$prefix You've been given ${Chat.primaryColor}20 seconds<gray> of Fire Resistance by ${Chat.secondaryColor}${e.player.name}<gray>.")
                                 player.addPotionEffect(PotionEffect(PotionEffectType.FIRE_RESISTANCE, 400, 0, true, false))
                             }
                         }

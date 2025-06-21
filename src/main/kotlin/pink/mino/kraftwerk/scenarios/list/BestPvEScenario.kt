@@ -54,7 +54,7 @@ class BestPvEScenario : Scenario(
 
     override fun givePlayer(player: Player) {
         list.add(player.uniqueId)
-        Chat.sendMessage(player, "${Chat.prefix} You've been added to the &eBest PvE&7 list!")
+        Chat.sendMessage(player, "${Chat.prefix} You've been added to the <yellow>Best PvE<gray> list!")
     }
 
     override fun onStart() {
@@ -63,7 +63,7 @@ class BestPvEScenario : Scenario(
         for (player in Bukkit.getOnlinePlayers()) {
             if (!SpecFeature.instance.getSpecs().contains(player.name)) {
                 list.add(player.uniqueId)
-                Chat.sendMessage(player, "${Chat.prefix} You've been added to the &eBest PvE&7 list!")
+                Chat.sendMessage(player, "${Chat.prefix} You've been added to the <yellow>Best PvE<gray> list!")
             }
         }
     }
@@ -73,7 +73,7 @@ class BestPvEScenario : Scenario(
         if (!enabled && GameState.currentState != GameState.INGAME) return
         if (e.entity is Player && e.finalDamage >= 0.0 && list.contains(e.entity.uniqueId)) {
             list.remove(e.entity.uniqueId)
-            Chat.sendMessage(e.entity, "${Chat.prefix} You've been removed from the &eBest PvE&7 list for taking damage!")
+            Chat.sendMessage(e.entity, "${Chat.prefix} You've been removed from the <yellow>Best PvE<gray> list for taking damage!")
         }
     }
 }

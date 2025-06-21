@@ -31,12 +31,12 @@ class BloodlustRecipe : Recipe(
 
     init {
         val bloodlust = ItemBuilder(Material.DIAMOND_SWORD)
-            .name("&eBloodlust")
+            .name("<yellow>Bloodlust")
             .addEnchantment(Enchantment.DAMAGE_ALL, 1)
-            .addLore("&7Gains Sharpness II After 1 kill")
-            .addLore("&7Gains Sharpness III after 3 kill")
-            .addLore("&7Gains Sharpness IV after 6 kill")
-            .addLore("&7Gains Sharpness V after 10 kill")
+            .addLore("<gray>Gains Sharpness II After 1 kill")
+            .addLore("<gray>Gains Sharpness III after 3 kill")
+            .addLore("<gray>Gains Sharpness IV after 6 kill")
+            .addLore("<gray>Gains Sharpness V after 10 kill")
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(bloodlust, id)).shape("RDR", "RSR", "RXR")
             .setIngredient('R', Material.REDSTONE_BLOCK)
@@ -50,7 +50,7 @@ class BloodlustRecipe : Recipe(
         if (e.entity.killer == null) return
         if (e.entity.killer !is Player) return
         if (e.entity.killer.itemInHand != null && e.entity.killer.itemInHand.hasItemMeta() && e.entity.killer.itemInHand.itemMeta.displayName == Chat.colored(
-                "&eBloodlust"
+                "<yellow>Bloodlust"
             )
         ) {
             if (kills[e.entity.killer.uniqueId] == null) {

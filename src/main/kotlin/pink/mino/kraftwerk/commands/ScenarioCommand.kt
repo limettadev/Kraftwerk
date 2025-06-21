@@ -14,8 +14,8 @@ import pink.mino.kraftwerk.utils.GuiBuilder
 class ScenarioCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<String>
     ): Boolean {
         if (sender !is Player) {
@@ -34,14 +34,14 @@ class ScenarioCommand : CommandExecutor {
         } else if (ScenarioHandler.getActiveScenarios().size > 45) {
             size = 6
         }
-        val gui = GuiBuilder().rows(size).name(Chat.colored("&8Active Scenarios")).owner(sender)
+        val gui = GuiBuilder().rows(size).name(Chat.colored("<dark_gray>Active Scenarios")).owner(sender)
         for ((index, scenario) in ScenarioHandler.getActiveScenarios().withIndex()) {
             val item = ItemStack(scenario.material)
             val meta = item.itemMeta
-            val color: String = if (scenario.enabled) "&a"
-            else "&c"
+            val color: String = if (scenario.enabled) "<green>"
+            else "<red>"
             meta.displayName = Chat.colored("${color}${scenario.name}")
-            meta.lore = Chat.scenarioTextWrap(Chat.colored("&7${scenario.description}"), 40)
+            meta.lore = Chat.scenarioTextWrap(Chat.colored("<gray>${scenario.description}"), 40)
             meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
             item.itemMeta = meta
             gui.item(index, item).onClick runnable@ {

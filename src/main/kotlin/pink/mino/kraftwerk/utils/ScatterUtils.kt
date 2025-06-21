@@ -1,9 +1,11 @@
 package pink.mino.kraftwerk.utils
 
-import org.bukkit.*
+import org.bukkit.Bukkit
+import org.bukkit.Location
+import org.bukkit.Material
+import org.bukkit.World
 import pink.mino.kraftwerk.features.SpecFeature
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 /**
@@ -12,9 +14,8 @@ import kotlin.collections.ArrayList
  */
 class ScatterUtils {
     private val nospawn: Array<Material> = arrayOf<Material>(
-        Material.STATIONARY_WATER,
         Material.WATER,
-        Material.STATIONARY_LAVA,
+        Material.WATER,
         Material.LAVA,
         Material.CACTUS
     )
@@ -44,7 +45,7 @@ class ScatterUtils {
                 }
                 min -= if (!close && isValid(loc.clone())) {
                     val y: Double = LocationUtils.highestTeleportableYAtLocation(loc)
-                    loc.setY(y + 2)
+                    loc.y = y + 2
                     locs.add(loc)
                     break
                 } else {
@@ -80,7 +81,7 @@ class ScatterUtils {
                 }
                 min -= if (!close && isValid(loc.clone())) {
                     val y: Double = LocationUtils.highestTeleportableYAtLocation(loc)
-                    loc.setY(y + 2)
+                    loc.y = y + 2
                     locs.add(loc)
                     break
                 } else {
@@ -92,10 +93,10 @@ class ScatterUtils {
     }
 
     private fun isValid(loc: Location): Boolean {
-        loc.setY(loc.getWorld().getHighestBlockYAt(loc).toDouble())
-        val m: Material = loc.add(0.0, -1.0, 0.0).getBlock().getType()
+        loc.y = loc.world.getHighestBlockYAt(loc).toDouble()
+        val m: Material = loc.add(0.0, -1.0, 0.0).block.type
         var vaild = true
-        if (loc.getBlockY() < 60) {
+        if (loc.blockY < 60) {
             vaild = false
         }
         for (no in nospawn) {

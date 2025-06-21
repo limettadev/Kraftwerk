@@ -8,5 +8,5 @@ class StalkingOption : ConfigOption(
     "Stalking allows people to be with another person and follow them before PvP.",
     "rules",
     "stalking",
-    Material.SULPHUR
+    Material.GUNPOWDER
 )

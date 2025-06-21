@@ -26,7 +26,7 @@ class ReplyCommand : CommandExecutor {
         }
         val uuid = ReplyTo.getRepliedTo(sender.uniqueId)
         if (args.isEmpty()) {
-            Chat.sendMessage(sender, "&cYou need to send a message.")
+            Chat.sendMessage(sender, "<red>You need to send a message.")
             return false
         }
 
@@ -34,13 +34,13 @@ class ReplyCommand : CommandExecutor {
         for (i in 0 until args.size) message += args[i] + " "
         val target = Bukkit.getPlayer(uuid)
         if (target == null) {
-            Chat.sendMessage(sender, "&cYou need a valid user to send this to.")
+            Chat.sendMessage(sender, "<red>You need a valid user to send this to.")
             return false
         }
 
         val list = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(target.uniqueId)!!.ignored
         if (list.contains(sender.uniqueId)) {
-            Chat.sendMessage(sender, "&cThis person has you on their ignore list.")
+            Chat.sendMessage(sender, "<red>This person has you on their ignore list.")
             return false
         }
         val mutePunishment = PunishmentFeature.getActivePunishment(sender, PunishmentType.MUTE)
@@ -48,7 +48,7 @@ class ReplyCommand : CommandExecutor {
             val remaining = mutePunishment.expiresAt - System.currentTimeMillis()
             if (remaining > 0) {
                 val timeLeft = PunishmentFeature.timeToString(remaining)
-                sender.sendMessage(Chat.colored("&cYou are muted for another $timeLeft. Reason: ${mutePunishment.reason}"))
+                sender.sendMessage(Chat.colored("<red>You are muted for another $timeLeft. Reason: ${mutePunishment.reason}"))
                 return false
             }
         }
@@ -56,8 +56,8 @@ class ReplyCommand : CommandExecutor {
         ReplyTo.setRepliedTo(sender.uniqueId, target.uniqueId)
         ReplyTo.setRepliedTo(target.uniqueId, sender.uniqueId)
 
-        Chat.sendMessage(sender, "&7To: &f${target.displayName} &8- &7$message")
-        Chat.sendMessage(target, "&7From: &f${sender.displayName} &8- &7$message")
+        Chat.sendMessage(sender, "<gray>To: &f${target.displayName} <dark_gray>- <gray>$message")
+        Chat.sendMessage(target, "<gray>From: &f${sender.displayName} <dark_gray>- <gray>$message")
 
         target.playSound(target.location, Sound.NOTE_PLING, 10.toFloat(), 0.toFloat())
         return true

@@ -24,7 +24,7 @@ class RecipeCommand : CommandExecutor {
             return true
         }
         if (!ScenarioHandler.getActiveScenarios().contains(ScenarioHandler.getScenario("champions"))) {
-            Chat.sendMessage(sender, "&cChampions is not enabled.")
+            Chat.sendMessage(sender, "<red>Champions is not enabled.")
             return false
         }
         if (args.isEmpty()) {
@@ -43,7 +43,7 @@ class RecipeCommand : CommandExecutor {
         )
         val data = RecipeHandler.getRecipe(args[0])
         if (data == null) {
-            Chat.sendMessage(sender, "&cInvalid recipe!")
+            Chat.sendMessage(sender, "<red>Invalid recipe!")
             return false
         }
         if (data.recipe is ShapedRecipe) {
@@ -106,8 +106,8 @@ class RecipeCommand : CommandExecutor {
             }
         }
         val back = ItemBuilder(Material.ARROW)
-            .name("&cBack")
-            .addLore("&7Go back")
+            .name("<red>Back")
+            .addLore("<gray>Go back")
             .make()
         gui.item(44, back).onClick runnable@{
             sender.closeInventory()
@@ -116,7 +116,7 @@ class RecipeCommand : CommandExecutor {
             }, 1L)
             return@runnable
         }
-        Chat.sendMessage(sender, "${Chat.prefix} Opening ${Chat.primaryColor}${data.name}&e recipe...")
+        Chat.sendMessage(sender, "${Chat.prefix} Opening ${Chat.primaryColor}${data.name}<yellow> recipe...")
         sender.openInventory(gui.make())
         return true
     }

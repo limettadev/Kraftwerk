@@ -30,8 +30,8 @@ class ExcaliburRecipe : Recipe(
 
     init {
         val excalibur = ItemBuilder(Material.DIAMOND_SWORD)
-            .name("&eExcalibur")
-            .addLore("&72 hearts of true damage on hit, 5 seconds cooldown")
+            .name("<yellow>Excalibur")
+            .addLore("<gray>2 hearts of true damage on hit, 5 seconds cooldown")
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(excalibur, id)).shape("SBS", "STS", "SDS")
             .setIngredient('S', Material.SOUL_SAND)
@@ -44,7 +44,7 @@ class ExcaliburRecipe : Recipe(
         if (!ScenarioHandler.getActiveScenarios().contains(ScenarioHandler.getScenario("champions"))) return
         if ((e.damager !is Player)) return
         if ((e.damager as Player).inventory.itemInHand != null && (e.damager as Player).inventory.itemInHand.hasItemMeta() && (e.damager as Player).inventory.itemInHand.itemMeta.displayName == Chat.colored(
-                "&eExcalibur"
+                "<yellow>Excalibur"
             )
         ) {
             if (excaliburCooldowns[e.damager as Player] == null || excaliburCooldowns[e.damager as Player]!! < System.currentTimeMillis()) {

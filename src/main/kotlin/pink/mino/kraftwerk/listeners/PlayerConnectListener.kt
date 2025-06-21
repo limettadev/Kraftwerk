@@ -24,9 +24,9 @@ class PlayerConnectListener : Listener {
                 PlayerLoginEvent.Result.KICK_BANNED,
                 Chat.colored(
                     "${Chat.primaryColor}${Chat.scoreboardTitle}\n${Chat.line}\n\n" +
-                            "&7You've been banned from the server by ${Chat.secondaryColor}${punisher.name}&7.\n" +
-                            "&7Your ban expires in ${Chat.secondaryColor}$timeLeft&7.\n" +
-                            "&7Reason: ${Chat.secondaryColor}${ban.reason}\n\n${Chat.line}"
+                            "<gray>You've been banned from the server by ${Chat.secondaryColor}${punisher.name}<gray>.\n" +
+                            "<gray>Your ban expires in ${Chat.secondaryColor}$timeLeft<gray>.\n" +
+                            "<gray>Reason: ${Chat.secondaryColor}${ban.reason}\n\n${Chat.line}"
                 )
             )
         }
@@ -34,38 +34,38 @@ class PlayerConnectListener : Listener {
 
         val player = e.player
         if (ConfigFeature.instance.data!!.getBoolean("whitelist.enabled")) {
-            if (!ConfigFeature.instance.data!!.getList("whitelist.list").contains(player.name.lowercase())) {
+            if (!ConfigFeature.instance.data!!.getList("whitelist.list")!!.contains(player.name.lowercase())) {
                 if (!player.hasPermission("uhc.staff")) {
                     if (GameState.currentState == GameState.INGAME) {
                         if (JavaPlugin.getPlugin(Kraftwerk::class.java).game == null) {
                             e.disallow(
                                 PlayerLoginEvent.Result.KICK_WHITELIST,
-                                Chat.colored("&cYou are not allowed to join while the whitelist is on!\n&cThere is currently no game happening on this server.\n\n&7Get pre-whitelisted on the discord @ ${Chat.primaryColor}${if (ConfigFeature.instance.config!!.getString("chat.staffAppUrl") != null) ConfigFeature.instance.config!!.getString("chat.discordUrl") else "no discord url set in config tough tits"}&7!")
+                                Chat.colored("<red>You are not allowed to join while the whitelist is on!\n<red>There is currently no game happening on this server.\n\n<gray>Get pre-whitelisted on the discord @ ${Chat.primaryColor}${if (ConfigFeature.instance.config!!.getString("chat.staffAppUrl") != null) ConfigFeature.instance.config!!.getString("chat.discordUrl") else "no discord url set in config tough tits"}<gray>!")
                             )
                             return
                         }
                         if (JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.currentEvent == Events.PVP || JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.currentEvent == Events.MEETUP) {
                             e.disallow(
                                 PlayerLoginEvent.Result.KICK_WHITELIST,
-                                Chat.colored("&cYou are not allowed to join while the whitelist is on!\n&cPvP is currently enabled and no more players will be able to join late!\n\n&7Get pre-whitelisted on the discord @ ${Chat.primaryColor}${if (ConfigFeature.instance.config!!.getString("chat.staffAppUrl") != null) ConfigFeature.instance.config!!.getString("chat.discordUrl") else "no discord url set in config tough tits"}&7!")
+                                Chat.colored("<red>You are not allowed to join while the whitelist is on!\n<red>PvP is currently enabled and no more players will be able to join late!\n\n<gray>Get pre-whitelisted on the discord @ ${Chat.primaryColor}${if (ConfigFeature.instance.config!!.getString("chat.staffAppUrl") != null) ConfigFeature.instance.config!!.getString("chat.discordUrl") else "no discord url set in config tough tits"}<gray>!")
                             )
                         } else {
-                            if (ConfigFeature.instance.data!!.getString("matchpost.team") != null || ConfigFeature.instance.data!!.getString("matchpost.team") == "Auctions" || ConfigFeature.instance.data!!.getString("matchpost.team").contains("Random")) {
+                            if (ConfigFeature.instance.data!!.getString("matchpost.team") != null || ConfigFeature.instance.data!!.getString("matchpost.team") == "Auctions" || ConfigFeature.instance.data!!.getString("matchpost.team")!!.contains("Random")) {
                                 e.disallow(
                                     PlayerLoginEvent.Result.KICK_WHITELIST,
-                                    Chat.colored("&cYou are not allowed to join while the whitelist is on!\n&cYou cannot late scatter in an Auction or a Random teams game!\n\n&7Get pre-whitelisted on the discord @ ${Chat.primaryColor}${if (ConfigFeature.instance.config!!.getString("chat.staffAppUrl") != null) ConfigFeature.instance.config!!.getString("chat.discordUrl") else "no discord url set in config tough tits"}&7!")
+                                    Chat.colored("<red>You are not allowed to join while the whitelist is on!\n<red>You cannot late scatter in an Auction or a Random teams game!\n\n<gray>Get pre-whitelisted on the discord @ ${Chat.primaryColor}${if (ConfigFeature.instance.config!!.getString("chat.staffAppUrl") != null) ConfigFeature.instance.config!!.getString("chat.discordUrl") else "no discord url set in config tough tits"}<gray>!")
                                 )
                                 return
                             }
                             e.disallow(
                                 PlayerLoginEvent.Result.KICK_WHITELIST,
-                                Chat.colored("&cYou are not allowed to join while the whitelist is on!\n&cPlease wait until the host accepts late scatters!\n\n&7Get pre-whitelisted on the discord @ ${Chat.primaryColor}${if (ConfigFeature.instance.config!!.getString("chat.staffAppUrl") != null) ConfigFeature.instance.config!!.getString("chat.discordUrl") else "no discord url set in config tough tits"}&7!")
+                                Chat.colored("<red>You are not allowed to join while the whitelist is on!\n<red>Please wait until the host accepts late scatters!\n\n<gray>Get pre-whitelisted on the discord @ ${Chat.primaryColor}${if (ConfigFeature.instance.config!!.getString("chat.staffAppUrl") != null) ConfigFeature.instance.config!!.getString("chat.discordUrl") else "no discord url set in config tough tits"}<gray>!")
                             )
                         }
                     } else {
                         e.disallow(
                             PlayerLoginEvent.Result.KICK_WHITELIST,
-                            Chat.colored("&cYou are not allowed to join while the whitelist is on!\n&cThere is currently no game happening on this server.\n\n&7Get pre-whitelisted on the discord @ ${Chat.primaryColor}${if (ConfigFeature.instance.config!!.getString("chat.staffAppUrl") != null) ConfigFeature.instance.config!!.getString("chat.discordUrl") else "no discord url set in config tough tits"}&7!")
+                            Chat.colored("<red>You are not allowed to join while the whitelist is on!\n<red>There is currently no game happening on this server.\n\n<gray>Get pre-whitelisted on the discord @ ${Chat.primaryColor}${if (ConfigFeature.instance.config!!.getString("chat.staffAppUrl") != null) ConfigFeature.instance.config!!.getString("chat.discordUrl") else "no discord url set in config tough tits"}<gray>!")
                         )
                     }
                 } else {

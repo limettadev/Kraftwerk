@@ -15,7 +15,7 @@ class TierIIOption : ConfigOption(
     @EventHandler
     fun onBrewEvent(e: BrewEvent) {
         if (enabled) return
-        if (e.contents.ingredient.type == Material.GLOWSTONE_DUST) {
+        if (e.contents.ingredient!!.type == Material.GLOWSTONE_DUST) {
             e.isCancelled = true
         }
     }

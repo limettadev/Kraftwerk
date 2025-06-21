@@ -10,13 +10,13 @@ import pink.mino.kraftwerk.utils.Chat
 class SetThingCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<String>
     ): Boolean {
         if (sender is Player) {
             if (!sender.hasPermission("uhc.admin.setthing")) {
-                Chat.sendMessage(sender, "&cOnly admins can execute this command.")
+                Chat.sendMessage(sender, "<red>Only admins can execute this command.")
                 return false
             }
         }
@@ -25,8 +25,8 @@ class SetThingCommand : CommandExecutor {
             return false
         }
         if (args.isEmpty()) {
-            Chat.sendMessage(sender, "&cInvalid arguments.")
-            Chat.sendMessage(sender, "${Chat.dash} &7Valid arguments are: ${Chat.secondaryColor}kit_editor, games_played_holo, wins_holo, kills_holo, diamonds_mined_holo, gold_mined_holo, gapples_eaten_holo, highest_level_holo, latest_match_holo, recent_purchase_holo, highest_purchase_holo&7.")
+            Chat.sendMessage(sender, "<red>Invalid arguments.")
+            Chat.sendMessage(sender, "${Chat.dash} <gray>Valid arguments are: ${Chat.secondaryColor}kit_editor, games_played_holo, wins_holo, kills_holo, diamonds_mined_holo, gold_mined_holo, gapples_eaten_holo, highest_level_holo, latest_match_holo, recent_purchase_holo, highest_purchase_holo<gray>.")
             return true
         }
         if (args[0].lowercase() == "kit_editor"){

@@ -17,8 +17,8 @@ import kotlin.random.Random
 class EnemyReconCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<out String>
     ): Boolean {
         if (!ScenarioHandler.getActiveScenarios().contains(ScenarioHandler.getScenario("enemyrecon"))) {
@@ -35,8 +35,8 @@ class EnemyReconCommand : CommandExecutor {
         }
         val reports = EnemyReconScenario.instance.recons[sender.uniqueId]
         if (args.isEmpty()) {
-            Chat.sendMessage(sender, "${Chat.prefix} Use ${Chat.secondaryColor}/er <player>&7 to view a recon report on that player, there is a 30% chance you'll be caught by doing this however.")
-            Chat.sendMessage(sender, "${Chat.prefix} You have ${Chat.secondaryColor}${reports}&7 reports left.")
+            Chat.sendMessage(sender, "${Chat.prefix} Use ${Chat.secondaryColor}/er <player><gray> to view a recon report on that player, there is a 30% chance you'll be caught by doing this however.")
+            Chat.sendMessage(sender, "${Chat.prefix} You have ${Chat.secondaryColor}${reports}<gray> reports left.")
             return true
         }
         if (reports == 0) {
@@ -50,7 +50,7 @@ class EnemyReconCommand : CommandExecutor {
         }
         val chance = Random.nextInt(100)
         if (chance < 30) {
-            Bukkit.broadcastMessage(Chat.colored("${EnemyReconScenario.instance.prefix} ${Chat.secondaryColor}${sender.name}&7 has been caught spying on ${Chat.secondaryColor}${target.name}&7."))
+            Bukkit.broadcast(Chat.colored("${EnemyReconScenario.instance.prefix} ${Chat.secondaryColor}${sender.name}<gray> has been caught spying on ${Chat.secondaryColor}${target.name}<gray>."))
         }
         EnemyReconScenario.instance.recons[sender.uniqueId] = EnemyReconScenario.instance.recons[sender.uniqueId]!! - 1
         val gui = GuiBuilder().rows(5).name(ChatColor.translateAlternateColorCodes('&', "${target.name}'s Inventory"))
@@ -74,7 +74,7 @@ class EnemyReconCommand : CommandExecutor {
             .addLore("${Chat.primaryColor}Statistics: ")
             .addLore(" ${Chat.dot} Health ${Chat.dash} ${PlayerUtils.getHealth(target)}")
             .addLore(" ${Chat.dot} Hunger ${Chat.dash} ${Chat.primaryColor}${target.foodLevel / 2}")
-            .addLore(" ${Chat.dot} XP Level ${Chat.dash} ${Chat.primaryColor}${target.level} &8(${Chat.primaryColor}${round(target.exp * 100)}%&8)")
+            .addLore(" ${Chat.dot} XP Level ${Chat.dash} ${Chat.primaryColor}${target.level} <dark_gray>(${Chat.primaryColor}${round(target.exp * 100)}%<dark_gray>)")
             .addLore(" ${Chat.dot} Location ${Chat.dash} ${Chat.primaryColor}${target.location.blockX}, ${target.location.blockY}, ${target.location.blockZ}")
             .addLore(" ")
             .addLore("${Chat.primaryColor}Potion Effects: ")
@@ -82,7 +82,7 @@ class EnemyReconCommand : CommandExecutor {
             info.addLore(" ${Chat.dot} ${Chat.primaryColor}None.")
         } else {
             for (eff in target.activePotionEffects) {
-                info.addLore(" ${Chat.dot} ${Chat.primaryColor}${InvseeUtils().getPotionName(eff.type).uppercase()} ${InvseeUtils().integerToRoman(eff.amplifier + 1)} &8(${Chat.primaryColor}${InvseeUtils().potionDurationToString(eff.duration / 20)}&8)")
+                info.addLore(" ${Chat.dot} ${Chat.primaryColor}${InvseeUtils().getPotionName(eff.type).uppercase()} ${InvseeUtils().integerToRoman(eff.amplifier + 1)} <dark_gray>(${Chat.primaryColor}${InvseeUtils().potionDurationToString(eff.duration / 20)}<dark_gray>)")
             }
         }
         info.addLore(" ")

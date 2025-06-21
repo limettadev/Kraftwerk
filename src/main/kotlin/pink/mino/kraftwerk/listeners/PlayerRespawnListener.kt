@@ -21,24 +21,24 @@ class DeathKick(val player: Player) : BukkitRunnable() {
 
     fun cancelDeathKick() {
         timer = 999999999
-        Chat.sendMessage(player, "&cYour death kick has been cancelled.")
+        Chat.sendMessage(player, "<red>Your death kick has been cancelled.")
         cancel()
     }
 
     override fun run() {
         if (timer % 10 == 0) {
-            Chat.sendMessage(player, "&cYou will be kicked in ${timer}s...")
+            Chat.sendMessage(player, "<red>You will be kicked in ${timer}s...")
         }
         if (player.isOnline == false) {
             cancel()
         }
         if (PerkChecker.checkPerks(player).contains(Perk.BYPASS_DEATH_KICK)) {
             cancel()
-            Chat.sendMessage(player, "&cYour death kick has been cancelled to having bypass.")
+            Chat.sendMessage(player, "<red>Your death kick has been cancelled to having bypass.")
         }
         timer--
         if (timer <= 0) {
-            player.kickPlayer(Chat.colored(if (ConfigFeature.instance.config!!.getString("chat.deathKick") != null) ConfigFeature.instance.config!!.getString("chat.deathKick") else "no death kick message sent but... thanks for playing :3"))
+            player.kickPlayer(Chat.colored(if (ConfigFeature.instance.config!!.getString("chat.deathKick") != null) ConfigFeature.instance.config!!.getString("chat.deathKick")!! else "no death kick message sent but... thanks for playing :3"))
             cancel()
         }
     }

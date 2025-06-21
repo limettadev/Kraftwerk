@@ -92,7 +92,7 @@ class ProgressiveSkyHighScenario : Scenario(
                         playerStrikes[player.name] = strikes
                         val damage = 1.0 * strikes
                         player.damage(damage)
-                        Chat.sendMessage(player, "&cYou took ${damage / 2} hearts for not being above Y: 150 and near 0,0! (Strike $strikes)")
+                        Chat.sendMessage(player, "<red>You took ${damage / 2} hearts for not being above Y: 150 and near 0,0! (Strike $strikes)")
                     } else {
                         playerStrikes[player.name] = 0
                     }

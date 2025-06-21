@@ -8,5 +8,5 @@ class SkybasingOption : ConfigOption(
    "Allows people to skybase.",
    "rules",
    "skybasing",
-   Material.WOOD_STAIRS
+   Material.OAK_STAIRS
 )

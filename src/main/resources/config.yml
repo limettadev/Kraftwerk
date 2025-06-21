@@ -1,9 +1,9 @@
 chat:
-  prefix: '&8[&cUHC&8]&7'
+  prefix: '<dark_gray>[<red>UHC<dark_gray>]<gray>'
   secondaryColor: '&f'
-  primaryColor: '&c'
-  motd: '&capple&ajuice'
-  scoreboardTitle: '&capple&ajuice'
+  primaryColor: '<red>'
+  motd: '<red>apple<green>juice'
+  scoreboardTitle: '<red>apple<green>juice'
   serverName: 'applejuice'
 
   rulesUrl: Don't really care to put one.

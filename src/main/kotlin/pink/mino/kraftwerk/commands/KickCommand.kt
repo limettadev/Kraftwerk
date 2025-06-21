@@ -14,30 +14,30 @@ import java.util.*
 
 class KickCommand : CommandExecutor {
 
-    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
+    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (!sender.hasPermission("uhc.staff.kick")) {
-            sender.sendMessage(Chat.colored("&cYou do not have permission to use this command."))
+            sender.sendMessage(Chat.colored("<red>You do not have permission to use this command."))
             return true
         }
 
         if (args == null || args.size < 2) {
-            sender.sendMessage(Chat.colored("&cUsage: /kick <player> [-s] <reason...>"))
+            sender.sendMessage(Chat.colored("<red>Usage: /kick <player> [-s] <reason...>"))
             return true
         }
 
         val targetName = args[0]
         val target: OfflinePlayer = Bukkit.getOfflinePlayer(targetName)
         if (!target.hasPlayedBefore() && !target.isOnline) {
-            sender.sendMessage(Chat.colored("&cPlayer '${args[0]}' not found."))
+            sender.sendMessage(Chat.colored("<red>Player '${args[0]}' not found."))
             return true
         }
         if (target == sender) {
-            Chat.sendMessage(sender, "&cYou cannot punish yourself.")
+            Chat.sendMessage(sender, "<red>You cannot punish yourself.")
             return true
         }
 
         if ((target as Player).hasPermission("uhc.staff")) {
-            Chat.sendMessage(sender, "&cYou cannot punish another staff member.")
+            Chat.sendMessage(sender, "<red>You cannot punish another staff member.")
             return true
         }
 
@@ -50,7 +50,7 @@ class KickCommand : CommandExecutor {
         }
 
         if (args.size <= reasonStartIndex) {
-            sender.sendMessage(Chat.colored("&cMissing reason for the kick."))
+            sender.sendMessage(Chat.colored("<red>Missing reason for the kick."))
             return true
         }
 
@@ -71,11 +71,11 @@ class KickCommand : CommandExecutor {
 
         // Notify appropriately
         if (!hasSilentFlag) {
-            Bukkit.broadcastMessage(Chat.colored("&c${target.name} has been kicked. Reason: $reason"))
+            Bukkit.broadcast(Chat.colored("<red>${target.name} has been kicked. Reason: $reason"))
         } else {
             for (player in Bukkit.getOnlinePlayers()) {
                 if (player.hasPermission("uhc.staff")) {
-                    player.sendMessage(Chat.colored("&7[Silent] &c${target.name} has been kicked. Reason: $reason"))
+                    player.sendMessage(Chat.colored("<gray>[Silent] <red>${target.name} has been kicked. Reason: $reason"))
                 }
             }
         }

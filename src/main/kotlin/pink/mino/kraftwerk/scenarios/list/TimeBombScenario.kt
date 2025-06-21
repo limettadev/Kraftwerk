@@ -19,7 +19,7 @@ import pink.mino.kraftwerk.utils.GameState
 
 class TimeBombTask(val player: Player, val location: Location, private val hologram: Hologram) : BukkitRunnable() {
     var timer = 30
-    val prefix = "&8[${Chat.primaryColor}TimeBomb&8]&7"
+    val prefix = "<dark_gray>[${Chat.primaryColor}TimeBomb<dark_gray>]<gray>"
     override fun run() {
         if (timer == 0) {
             if (location.block.type == Material.CHEST) {
@@ -31,13 +31,13 @@ class TimeBombTask(val player: Player, val location: Location, private val holog
             location.world.createExplosion(location.blockX + 0.5, location.blockY + 0.5, location.blockZ + 0.5, 10F, false, true)
             location.world.strikeLightning(location)
             hologram.delete()
-            Bukkit.broadcastMessage(Chat.colored("$prefix ${Chat.secondaryColor}${player.name}&7's corpse has exploded."))
+            Bukkit.broadcastMessage(Chat.colored("$prefix ${Chat.secondaryColor}${player.name}<gray>'s corpse has exploded."))
             cancel()
             return
         }
         timer--
         if (hologram.size() == 1) hologram.removeLine(0)
-        hologram.appendTextLine(Chat.colored("&e${timer}s"))
+        hologram.appendTextLine(Chat.colored("<yellow>${timer}s"))
     }
 }
 

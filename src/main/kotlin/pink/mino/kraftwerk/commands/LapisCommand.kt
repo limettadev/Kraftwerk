@@ -15,7 +15,7 @@ class LapisCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
         command: Command,
-        label: String?,
+        label: String,
         args: Array<out String>
     ): Boolean {
         if (sender !is Player) {
@@ -23,15 +23,15 @@ class LapisCommand : CommandExecutor {
             return false
         }
         if (!PerkChecker.checkPerks(sender).contains(Perk.TOGGLE_PICKUPS)) {
-            Chat.sendMessage(sender, "&cYou must be a &2Donator&c to use this command. Buy it at &e${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store url setup in config tough tits"}")
+            Chat.sendMessage(sender, "<red>You must be a &2Donator<red> to use this command. Buy it at <yellow>${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store url setup in config tough tits"}")
             return false
         }
         if (JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(sender.uniqueId)!!.disableLapisPickup) {
             JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(sender.uniqueId)!!.disableLapisPickup = false
-            Chat.sendMessage(sender, "${Chat.prefix} &7You have enabled &1Lapis&7 pickups!")
+            Chat.sendMessage(sender, "${Chat.prefix} <gray>You have enabled &1Lapis<gray> pickups!")
         } else {
             JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(sender.uniqueId)!!.disableLapisPickup = true
-            Chat.sendMessage(sender, "${Chat.prefix} &7You have disabled &1Lapis&7 pickups!")
+            Chat.sendMessage(sender, "${Chat.prefix} <gray>You have disabled &1Lapis<gray> pickups!")
         }
         return true
     }

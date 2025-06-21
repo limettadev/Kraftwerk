@@ -25,7 +25,7 @@ class PluginsCommand : CommandExecutor {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        Chat.sendMessage(sender, "${Chat.prefix} &7Running ${Chat.primaryColor}${Kraftwerk.instance.description.name} ${Kraftwerk.instance.description.version}&7 on ${Chat.primaryColor}UHC Gameserver ${gitHash}")
+        Chat.sendMessage(sender, "${Chat.prefix} <gray>Running ${Chat.primaryColor}${Kraftwerk.instance.description.name} ${Kraftwerk.instance.description.version}<gray> on ${Chat.primaryColor}UHC Gameserver ${gitHash}")
         return true
     }
 }

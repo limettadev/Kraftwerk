@@ -24,7 +24,7 @@ class EnderPearlCooldownOption : ConfigOption(
                 if (cooldowns.containsKey(e.player.name)) {
                     val secondsLeft: Long = cooldowns[e.player.name]!! / 1000 + cooldownTime - System.currentTimeMillis() / 1000
                     if (secondsLeft > 0) {
-                        Chat.sendMessage(e.player, "&cYou are on pearl cooldown for $secondsLeft second(s)!")
+                        Chat.sendMessage(e.player, "<red>You are on pearl cooldown for $secondsLeft second(s)!")
                         e.isCancelled = true
                         return
                     }

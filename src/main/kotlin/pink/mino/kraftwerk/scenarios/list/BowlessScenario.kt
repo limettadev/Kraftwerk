@@ -27,7 +27,7 @@ class BowlessScenario : Scenario(
         if (item.type !== Material.BOW) {
             return
         }
-        Chat.sendMessage(event.whoClicked as Player, "&cBows are disabled in Bowless!")
+        Chat.sendMessage(event.whoClicked as Player, "<red>Bows are disabled in Bowless!")
         event.isCancelled = true
     }
 
@@ -64,7 +64,7 @@ class BowlessScenario : Scenario(
             val p: Player = e.entity as Player
             if (p.itemInHand.type === Material.BOW) {
                 e.isCancelled = true
-                Chat.sendMessage(p, "&cYou can't use a bow in Bowless!")
+                Chat.sendMessage(p, "<red>You can't use a bow in Bowless!")
             }
         }
     }

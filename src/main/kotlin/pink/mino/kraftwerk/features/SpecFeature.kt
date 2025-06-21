@@ -58,26 +58,26 @@ class InvSeeFeature(private val player: Player, private val target: Player) : Bu
         if (target.inventory.boots != null) player.openInventory.topInventory.setItem(42, target.inventory.boots)
 
         val info = ItemBuilder(Material.BOOK)
-            .name("&cPlayer Info")
+            .name("<red>Player Info")
             .addLore(" ")
-            .addLore("&cStatistics: ")
+            .addLore("<red>Statistics: ")
             .addLore(" ${Chat.dot} Health ${Chat.dash} ${PlayerUtils.getHealth(target)}")
             .addLore(" ${Chat.dot} Hunger ${Chat.dash} ${Chat.primaryColor}${target.foodLevel / 2}")
-            .addLore(" ${Chat.dot} XP Level ${Chat.dash} ${Chat.primaryColor}${target.level} &8(${Chat.primaryColor}${round(target.exp * 100)}%&8)")
+            .addLore(" ${Chat.dot} XP Level ${Chat.dash} ${Chat.primaryColor}${target.level} <dark_gray>(${Chat.primaryColor}${round(target.exp * 100)}%<dark_gray>)")
             .addLore(" ${Chat.dot} Kills ${Chat.dash} ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.kills." + target.name)}")
             .addLore(" ${Chat.dot} Location ${Chat.dash} ${Chat.primaryColor}${target.location.blockX}, ${target.location.blockY}, ${target.location.blockZ}")
             .addLore(" ${Chat.dot} World ${Chat.dash} ${Chat.primaryColor}${target.location.world.name}")
             .addLore(" ")
-            .addLore("&cMining: ")
+            .addLore("<red>Mining: ")
             .addLore(" ${Chat.dot} Diamond ${Chat.dash} &b${SpecFeature.instance.diamondsMined[target.uniqueId] ?: 0}")
             .addLore(" ${Chat.dot} Gold ${Chat.dash} &6${SpecFeature.instance.goldMined[target.uniqueId] ?: 0}")
             .addLore(" ")
-            .addLore("&cPotion Effects: ")
+            .addLore("<red>Potion Effects: ")
         if (target.activePotionEffects.isEmpty()) {
             info.addLore(" ${Chat.dot} ${Chat.primaryColor}None.")
         } else {
             for (eff in target.activePotionEffects) {
-                info.addLore(" ${Chat.dot} ${Chat.primaryColor}${InvseeUtils().getPotionName(eff.type).uppercase()} ${InvseeUtils().integerToRoman(eff.amplifier + 1)} &8(&c${InvseeUtils().potionDurationToString(eff.duration / 20)}&8)")
+                info.addLore(" ${Chat.dot} ${Chat.primaryColor}${InvseeUtils().getPotionName(eff.type).uppercase()} ${InvseeUtils().integerToRoman(eff.amplifier + 1)} <dark_gray>(<red>${InvseeUtils().potionDurationToString(eff.duration / 20)}<dark_gray>)")
             }
         }
         info.addLore(" ")
@@ -108,15 +108,15 @@ class SpecClickFeature : PacketAdapter(JavaPlugin.getPlugin(Kraftwerk::class.jav
 
                         val mode = profile.specSocialSpy
                         val modeText = when (mode) {
-                            1 -> "&aSocial Spy &7(Social)"
-                            2 -> "&aSocial Spy &7(All)"
-                            else -> "&cSocial Spy &7(Off)"
+                            1 -> "<green>Social Spy <gray>(Social)"
+                            2 -> "<green>Social Spy <gray>(All)"
+                            else -> "<red>Social Spy <gray>(Off)"
                         }
 
                         val statusText = when (mode) {
                             0 -> "Disabled"
-                            1 -> "Enabled for &dsocial&7 commands"
-                            2 -> "Enabled for &dall&7 commands"
+                            1 -> "Enabled for &dsocial<gray> commands"
+                            2 -> "Enabled for &dall<gray> commands"
                             else -> "Unknown"
                         }
 
@@ -126,7 +126,7 @@ class SpecClickFeature : PacketAdapter(JavaPlugin.getPlugin(Kraftwerk::class.jav
 
                         val socialSpyItem = ItemBuilder(Material.NAME_TAG)
                             .name(modeText)
-                            .addLore("&7Click to cycle social spy modes.")
+                            .addLore("<gray>Click to cycle social spy modes.")
                             .make()
 
                         p.inventory.setItem(22, socialSpyItem)
@@ -148,7 +148,7 @@ class SpecClickFeature : PacketAdapter(JavaPlugin.getPlugin(Kraftwerk::class.jav
                         for (player in list) {
                             Chat.sendMessage(
                                 p,
-                                "${Chat.dash} &7${player.name} &7is at &b${floor(player.location.x)}&7, &b${floor(player.location.y)}&7, &b${
+                                "${Chat.dash} <gray>${player.name} <gray>is at &b${floor(player.location.x)}<gray>, &b${floor(player.location.y)}<gray>, &b${
                                     floor(player.location.z)
                                 }"
                             )
@@ -173,7 +173,7 @@ class SpecFeature : Listener {
     companion object {
         val instance = SpecFeature()
     }
-    val prefix = "&8[${Chat.primaryColor}Spec&8]&7"
+    val prefix = "<dark_gray>[${Chat.primaryColor}Spec<dark_gray>]<gray>"
     val specStartTimes: HashMap<UUID, Long> = hashMapOf()
 
     fun joinSpec(p: Player) {
@@ -188,7 +188,11 @@ class SpecFeature : Listener {
             p.removePotionEffect(effect.type)
         }
         p.inventory.clear()
-        p.inventory.armorContents = null
+        p.inventory.helmet = ItemStack(Material.AIR)
+        p.inventory.chestplate = ItemStack(Material.AIR)
+        p.inventory.leggings = ItemStack(Material.AIR)
+        p.inventory.boots = ItemStack(Material.AIR)
+        p.inventory.setItemInOffHand(ItemStack(Material.AIR))
         p.gameMode = GameMode.SPECTATOR
 
         var list = ConfigFeature.instance.data!!.getStringList("game.list")
@@ -199,35 +203,35 @@ class SpecFeature : Listener {
         ConfigFeature.instance.data!!.set("game.specs", list)
         ConfigFeature.instance.saveData()
 
-        specChat("${Chat.secondaryColor}${p.name}&7 has entered spectator mode.", p)
-        Scoreboard.setScore(Chat.colored("${Chat.dash} &7Playing..."), PlayerUtils.getPlayingPlayers().size)
+        specChat("${Chat.secondaryColor}${p.name}<gray> has entered spectator mode.", p)
+        Scoreboard.setScore(Chat.colored("${Chat.dash} <gray>Playing..."), PlayerUtils.getPlayingPlayers().size)
 
-        val teleportTo00 = ItemBuilder(Material.EYE_OF_ENDER)
+        val teleportTo00 = ItemBuilder(Material.ENDER_EYE)
             .name("${Chat.primaryColor}Teleport to 0,0")
-            .addLore("&7Click the item to teleport yourself to &c0,0&7.")
+            .addLore("<gray>Click the item to teleport yourself to <red>0,0<gray>.")
             .make()
         val nearby = ItemBuilder(Material.COMPASS)
             .name("${Chat.primaryColor}Nearby Players")
-            .addLore("&7Click the item to see a list of nearby players.")
+            .addLore("<gray>Click the item to see a list of nearby players.")
             .make()
         val locations = ItemBuilder(Material.MAP)
             .name("${Chat.primaryColor}Player Locations")
-            .addLore("&7Click the item to see a list of player locations.")
+            .addLore("<gray>Click the item to see a list of player locations.")
             .make()
         val respawn = ItemBuilder(Material.BONE)
             .name("${Chat.primaryColor}Respawn Players")
-            .addLore("&7Click to view a list of dead players that can be respawned.")
+            .addLore("<gray>Click to view a list of dead players that can be respawned.")
             .make()
         val mode = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(p.uniqueId).get().specSocialSpy
         val modeText = when (mode) {
-            1 -> "&aSocial Spy &7(Social)"
-            2 -> "&aSocial Spy &7(All)"
-            else -> "&cSocial Spy &7(Off)"
+            1 -> "<green>Social Spy <gray>(Social)"
+            2 -> "<green>Social Spy <gray>(All)"
+            else -> "<red>Social Spy <gray>(Off)"
         }
 
         val socialSpyItem = ItemBuilder(Material.NAME_TAG)
             .name(modeText)
-            .addLore("&7Click to cycle social spy modes.")
+            .addLore("<gray>Click to cycle social spy modes.")
             .make()
 
         p.inventory.setItem(19, teleportTo00)
@@ -238,9 +242,9 @@ class SpecFeature : Listener {
 
         Chat.sendMessage(p, "$prefix You are now in spectator mode.")
 
-        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
             if (Apollo.getPlayerManager().hasSupport(p.uniqueId)) {
-                Chat.sendMessage(p, "${Chat.dash} &7Your &bLunar Client&7 staff modules have been enabled.")
+                Chat.sendMessage(p, "${Chat.dash} <gray>Your &bLunar Client<gray> staff modules have been enabled.")
                 val apolloPlayer = Apollo.getPlayerManager().getPlayer(p.uniqueId).get()
                 val staffModule = Apollo.getModuleManager().getModule(StaffModModule::class.java)
                 staffModule.enableAllStaffMods(apolloPlayer)
@@ -273,11 +277,11 @@ class SpecFeature : Listener {
             when (profile.specSocialSpy) {
                 1 -> { // Mode 1: Social only
                     if (baseCommand in commands) {
-                        Chat.sendMessage(player, "&e&o${e.player.name} ${Chat.dash} &7${messageParts.joinToString(" ")}")
+                        Chat.sendMessage(player, "<yellow>&o${e.player.name} ${Chat.dash} <gray>${messageParts.joinToString(" ")}")
                     }
                 }
                 2 -> { // Mode 2: All commands
-                    Chat.sendMessage(player, "&e&o${e.player.name} ${Chat.dash} &7${messageParts.joinToString(" ")}")
+                    Chat.sendMessage(player, "<yellow>&o${e.player.name} ${Chat.dash} <gray>${messageParts.joinToString(" ")}")
                 }
             }
         }
@@ -297,7 +301,11 @@ class SpecFeature : Listener {
             p.removePotionEffect(effect.type)
         }
         p.inventory.clear()
-        p.inventory.armorContents = null
+        p.inventory.helmet = ItemStack(Material.AIR)
+        p.inventory.chestplate = ItemStack(Material.AIR)
+        p.inventory.leggings = ItemStack(Material.AIR)
+        p.inventory.boots = ItemStack(Material.AIR)
+        p.inventory.setItemInOffHand(ItemStack(Material.AIR))
         p.gameMode = GameMode.SPECTATOR
 
         var list = ConfigFeature.instance.data!!.getStringList("game.list")
@@ -308,35 +316,35 @@ class SpecFeature : Listener {
         ConfigFeature.instance.data!!.set("game.specs", list)
         ConfigFeature.instance.saveData()
 
-        specChat("${Chat.secondaryColor}${p.name}&7 has entered spectator mode.", p)
-        Scoreboard.setScore(Chat.colored("${Chat.dash} &7Playing..."), PlayerUtils.getPlayingPlayers().size)
+        specChat("${Chat.secondaryColor}${p.name}<gray> has entered spectator mode.", p)
+        Scoreboard.setScore(Chat.colored("${Chat.dash} <gray>Playing..."), PlayerUtils.getPlayingPlayers().size)
 
-        val teleportTo00 = ItemBuilder(Material.EYE_OF_ENDER)
+        val teleportTo00 = ItemBuilder(Material.ENDER_EYE)
             .name("${Chat.primaryColor}Teleport to 0,0")
-            .addLore("&7Click the item to teleport yourself to &c0,0&7.")
+            .addLore("<gray>Click the item to teleport yourself to <red>0,0<gray>.")
             .make()
         val nearby = ItemBuilder(Material.COMPASS)
             .name("${Chat.primaryColor}Nearby Players")
-            .addLore("&7Click the item to see a list of nearby players.")
+            .addLore("<gray>Click the item to see a list of nearby players.")
             .make()
         val locations = ItemBuilder(Material.MAP)
             .name("${Chat.primaryColor}Player Locations")
-            .addLore("&7Click the item to see a list of player locations.")
+            .addLore("<gray>Click the item to see a list of player locations.")
             .make()
         val respawn = ItemBuilder(Material.BONE)
             .name("${Chat.primaryColor}Respawn Players")
-            .addLore("&7Click to view a list of dead players that can be respawned.")
+            .addLore("<gray>Click to view a list of dead players that can be respawned.")
             .make()
         val mode = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(p.uniqueId).get().specSocialSpy
         val modeText = when (mode) {
-            1 -> "&aSocial Spy &7(Social)"
-            2 -> "&aSocial Spy &7(All)"
-            else -> "&cSocial Spy &7(Off)"
+            1 -> "<green>Social Spy <gray>(Social)"
+            2 -> "<green>Social Spy <gray>(All)"
+            else -> "<red>Social Spy <gray>(Off)"
         }
 
         val socialSpyItem = ItemBuilder(Material.NAME_TAG)
             .name(modeText)
-            .addLore("&7Click to cycle social spy modes.")
+            .addLore("<gray>Click to cycle social spy modes.")
             .make()
 
         p.inventory.setItem(19, teleportTo00)
@@ -347,12 +355,12 @@ class SpecFeature : Listener {
 
         Chat.sendMessage(p, "${prefix} You are now in spectator mode.")
 
-        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
             if (Apollo.getPlayerManager().hasSupport(p.uniqueId)) {
                 val apolloPlayer = Apollo.getPlayerManager().getPlayer(p.uniqueId).get()
                 val staffModule = Apollo.getModuleManager().getModule(StaffModModule::class.java)
                 staffModule.enableAllStaffMods(apolloPlayer)
-                Chat.sendMessage(p, "${Chat.dash} &7Your &bLunar Client&7 staff modules have been enabled.")
+                Chat.sendMessage(p, "${Chat.dash} <gray>Your &bLunar Client<gray> staff modules have been enabled.")
             }
         }, 5L)
     }
@@ -374,7 +382,11 @@ class SpecFeature : Listener {
             p.removePotionEffect(effect.type)
         }
         p.inventory.clear()
-        p.inventory.armorContents = null
+        p.inventory.helmet = ItemStack(Material.AIR)
+        p.inventory.chestplate = ItemStack(Material.AIR)
+        p.inventory.leggings = ItemStack(Material.AIR)
+        p.inventory.boots = ItemStack(Material.AIR)
+        p.inventory.setItemInOffHand(ItemStack(Material.AIR))
 
         SpawnFeature.instance.send(p)
         var list = ConfigFeature.instance.data!!.getStringList("game.list")
@@ -385,16 +397,16 @@ class SpecFeature : Listener {
         ConfigFeature.instance.data!!.set("game.specs", list)
         ConfigFeature.instance.saveData()
 
-        specChat("${Chat.secondaryColor}${p.name}&7 has left spectator mode.", p)
+        specChat("${Chat.secondaryColor}${p.name}<gray> has left spectator mode.", p)
         Chat.sendMessage(p, "${prefix} You are no longer in spectator mode.")
-        Scoreboard.setScore(Chat.colored("${Chat.dash} &7Playing..."), PlayerUtils.getPlayingPlayers().size)
+        Scoreboard.setScore(Chat.colored("${Chat.dash} <gray>Playing..."), PlayerUtils.getPlayingPlayers().size)
 
-        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
             if (Apollo.getPlayerManager().hasSupport(p.uniqueId)) {
                 val apolloPlayer = Apollo.getPlayerManager().getPlayer(p.uniqueId).get()
                 val staffModule = Apollo.getModuleManager().getModule(StaffModModule::class.java)
                 staffModule.disableAllStaffMods(apolloPlayer)
-                Chat.sendMessage(p, "${Chat.dash} &7Your &bLunar Client&7 staff modules have been disabled.")
+                Chat.sendMessage(p, "${Chat.dash} <gray>Your &bLunar Client<gray> staff modules have been disabled.")
             }
         }, 5L)
 
@@ -424,8 +436,8 @@ class SpecFeature : Listener {
         val p = e.whoClicked as Player
         if (isSpec(p)) {
             e.isCancelled = true
-            if (e.currentItem != null && e.currentItem.type != Material.AIR) {
-                when (e.currentItem.itemMeta.displayName) {
+            if (e.currentItem != null && e.currentItem!!.type != Material.AIR) {
+                when (e.currentItem!!.itemMeta.displayName) {
                     "${Chat.primaryColor}Teleport to 0,0" -> {
                         p.teleport(Location(p.world, 0.0, 100.0, 0.0))
                         Chat.sendMessage(p, "${prefix} You have been teleported to 0,0.")
@@ -446,7 +458,7 @@ class SpecFeature : Listener {
                         Chat.sendMessage(p, Chat.line)
                         Chat.sendCenteredMessage(p, "${Chat.primaryColor}&lPlayer Locations")
                         for (player in list) {
-                            Chat.sendMessage(p, "${prefix} &7${player.name} &7is at &b${floor(player.location.x)}, &7${floor(player.location.y)}, &7${floor(player.location.z)}")
+                            Chat.sendMessage(p, "${prefix} <gray>${player.name} <gray>is at &b${floor(player.location.x)}, <gray>${floor(player.location.y)}, <gray>${floor(player.location.z)}")
                         }
                         Chat.sendMessage(p, Chat.line)
                     }
@@ -470,12 +482,12 @@ class SpecFeature : Listener {
                         list.add(player)
                     }
                     if (list.isEmpty()) {
-                        Chat.sendMessage(e.player, "&cNo players to teleport to!")
+                        Chat.sendMessage(e.player, "<red>No players to teleport to!")
                         return
                     }
                     val target = list.random()
                     e.player.teleport(target.location)
-                    Chat.sendMessage(e.player, "${prefix} Teleported to ${Chat.secondaryColor}${target.name}&7!")
+                    Chat.sendMessage(e.player, "${prefix} Teleported to ${Chat.secondaryColor}${target.name}<gray>!")
                 }
             }
         }
@@ -491,7 +503,7 @@ class SpecFeature : Listener {
                 e.player.openInventory(gui.make())
                 InvSeeFeature(e.player, player).runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0, 20L)
             } else {
-                Chat.sendMessage(e.player, "&cYou aren't right clicking anyone.")
+                Chat.sendMessage(e.player, "<red>You aren't right clicking anyone.")
                 return
             }
         }
@@ -568,8 +580,8 @@ class SpecFeature : Listener {
             }
             for (player in Bukkit.getOnlinePlayers()) {
                 if (getSpecs().contains(player.name)) {
-                    Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
-                        val comp = TextComponent(Chat.colored("$prefix ${PlayerUtils.getPrefix(p)}${p.name}&7 has mined &bDiamond Ore&7. &8(&7T: &b${diamondsMined[p.uniqueId]} &8| &7V: &b${diamonds}&8)"))
+                    Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
+                        val comp = TextComponent(Chat.colored("$prefix ${PlayerUtils.getPrefix(p)}${p.name}<gray> has mined &bDiamond Ore<gray>. <dark_gray>(<gray>T: &b${diamondsMined[p.uniqueId]} <dark_gray>| <gray>V: &b${diamonds}<dark_gray>)"))
                         comp.clickEvent = ClickEvent(
                             ClickEvent.Action.RUN_COMMAND,
                             "/tp ${p.name}"
@@ -603,8 +615,8 @@ class SpecFeature : Listener {
             }
             for (player in Bukkit.getOnlinePlayers()) {
                 if (getSpecs().contains(player.name)) {
-                    Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
-                        val comp = TextComponent(Chat.colored("$prefix ${PlayerUtils.getPrefix(p)}${p.name}&7 has mined &6Gold Ore&7. &8(&7T: &6${goldMined[p.uniqueId]} &8| &7V: &6${gold}&8)"))
+                    Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
+                        val comp = TextComponent(Chat.colored("$prefix ${PlayerUtils.getPrefix(p)}${p.name}<gray> has mined &6Gold Ore<gray>. <dark_gray>(<gray>T: &6${goldMined[p.uniqueId]} <dark_gray>| <gray>V: &6${gold}<dark_gray>)"))
                         comp.clickEvent = ClickEvent(
                             ClickEvent.Action.RUN_COMMAND,
                             "/tp ${p.name}"
@@ -628,8 +640,8 @@ class SpecFeature : Listener {
             EntityDamageEvent.DamageCause.FALL -> {
                 for (player in Bukkit.getOnlinePlayers()) {
                     if (getSpecs().contains(player.name)) {
-                        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
-                            val comp = TextComponent(Chat.colored("$prefix ${PlayerUtils.getPrefix(p)}${p.name} &8(${PlayerUtils.getHealth(p)}&8)&7 took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%&7 due to &fFall&7."))
+                        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
+                            val comp = TextComponent(Chat.colored("$prefix ${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to &fFall<gray>."))
                             comp.clickEvent = ClickEvent(
                                 ClickEvent.Action.RUN_COMMAND,
                                 "/tp ${p.name}"
@@ -642,7 +654,7 @@ class SpecFeature : Listener {
             EntityDamageEvent.DamageCause.FIRE, EntityDamageEvent.DamageCause.FIRE_TICK, EntityDamageEvent.DamageCause.LAVA, EntityDamageEvent.DamageCause.MELTING -> {
                 for (player in Bukkit.getOnlinePlayers()) {
                     if (getSpecs().contains(player.name)) {
-                        val comp = TextComponent(Chat.colored("$prefix ${PlayerUtils.getPrefix(p)}${p.name} &8(${PlayerUtils.getHealth(p)}&8)&7 took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%&7 due to &fBurning&7."))
+                        val comp = TextComponent(Chat.colored("$prefix ${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to &fBurning<gray>."))
                         comp.clickEvent = ClickEvent(
                             ClickEvent.Action.RUN_COMMAND,
                             "/tp ${p.name}"
@@ -657,8 +669,8 @@ class SpecFeature : Listener {
             else -> {
                 for (player in Bukkit.getOnlinePlayers()) {
                     if (getSpecs().contains(player.name)) {
-                        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
-                            val comp = TextComponent(Chat.colored("$prefix ${PlayerUtils.getPrefix(p)}${p.name} &8(${PlayerUtils.getHealth(p)}&8)&7 took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%&7 due to &fUnknown&7."))
+                        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
+                            val comp = TextComponent(Chat.colored("$prefix ${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to &fUnknown<gray>."))
                             comp.clickEvent = ClickEvent(
                                 ClickEvent.Action.RUN_COMMAND,
                                 "/tp ${p.name}"
@@ -682,8 +694,8 @@ class SpecFeature : Listener {
         if (e.entity is Monster) {
             for (player in Bukkit.getOnlinePlayers()) {
                 if (getSpecs().contains(player.name)) {
-                    Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
-                        val comp = TextComponent(Chat.colored("$prefix ${PlayerUtils.getPrefix(p)}${p.name} &8(${PlayerUtils.getHealth(p)}&8)&7 took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%&7 due to &fPvE&7."))
+                    Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
+                        val comp = TextComponent(Chat.colored("$prefix ${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to &fPvE<gray>."))
                         comp.clickEvent = ClickEvent(
                             ClickEvent.Action.RUN_COMMAND,
                             "/tp ${p.name}"
@@ -697,8 +709,8 @@ class SpecFeature : Listener {
             val damager = e.damager as Player
             for (player in Bukkit.getOnlinePlayers()) {
                 if (getSpecs().contains(player.name)) {
-                    Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
-                        val comp = TextComponent(Chat.colored("$prefix ${PlayerUtils.getPrefix(p)}${p.name} &8(${PlayerUtils.getHealth(p)}&8)&7 took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%&7 due to ${PlayerUtils.getPrefix(damager)}${damager.name} &8(${PlayerUtils.getHealth(damager)}&8)&7. &8(&fPvP&8)"))
+                    Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
+                        val comp = TextComponent(Chat.colored("$prefix ${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to ${PlayerUtils.getPrefix(damager)}${damager.name} <dark_gray>(${PlayerUtils.getHealth(damager)}<dark_gray>)<gray>. <dark_gray>(&fPvP<dark_gray>)"))
                         comp.clickEvent = ClickEvent(
                             ClickEvent.Action.RUN_COMMAND,
                             "/tp ${p.name}"
@@ -713,8 +725,8 @@ class SpecFeature : Listener {
                 val damager = a.shooter as Player
                 for (player in Bukkit.getOnlinePlayers()) {
                     if (getSpecs().contains(player.name)) {
-                        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
-                            val comp = TextComponent(Chat.colored("$prefix ${PlayerUtils.getPrefix(p)}${p.name} &8(${PlayerUtils.getHealth(p)}&8)&7 took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%&7 due to ${PlayerUtils.getPrefix(damager)}${damager.name} &8(${PlayerUtils.getHealth(damager)}&8)&7. &8(&fBow&8)"))
+                        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
+                            val comp = TextComponent(Chat.colored("$prefix ${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to ${PlayerUtils.getPrefix(damager)}${damager.name} <dark_gray>(${PlayerUtils.getHealth(damager)}<dark_gray>)<gray>. <dark_gray>(&fBow<dark_gray>)"))
                             comp.clickEvent = ClickEvent(
                                 ClickEvent.Action.RUN_COMMAND,
                                 "/tp ${p.name}"

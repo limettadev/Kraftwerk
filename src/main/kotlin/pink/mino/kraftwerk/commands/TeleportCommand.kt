@@ -10,13 +10,13 @@ import pink.mino.kraftwerk.utils.Chat
 class TeleportCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<String>
     ): Boolean {
         if (sender is Player) {
             if (!sender.hasPermission("uhc.staff.tp")) {
-                Chat.sendMessage(sender, "&cYou don't have permission to use this command.")
+                Chat.sendMessage(sender, "<red>You don't have permission to use this command.")
                 return false
             }
         }
@@ -37,7 +37,7 @@ class TeleportCommand : CommandExecutor {
                     return false
                 }
                 target.teleport(destination.location)
-                Chat.sendMessage(target, "${Chat.prefix} Teleported to ${Chat.secondaryColor}${destination.name}&7.")
+                Chat.sendMessage(target, "${Chat.prefix} Teleported to ${Chat.secondaryColor}${destination.name}<gray>.")
             }
             1 -> {
                 if (sender !is Player) {
@@ -45,10 +45,10 @@ class TeleportCommand : CommandExecutor {
                     return false
                 }
                 sender.teleport(target.location)
-                Chat.sendMessage(sender, "${Chat.prefix} Teleported to ${Chat.secondaryColor}${target.name}&7.")
+                Chat.sendMessage(sender, "${Chat.prefix} Teleported to ${Chat.secondaryColor}${target.name}<gray>.")
             }
             else -> {
-                Chat.sendMessage(sender, "&c???")
+                Chat.sendMessage(sender, "<red>???")
                 return false
             }
         }

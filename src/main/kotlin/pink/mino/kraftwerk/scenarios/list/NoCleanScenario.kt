@@ -22,7 +22,7 @@ class NoCleanTask(val player: Player) : BukkitRunnable() {
         if (timer == 0) {
             cancel()
             NoCleanScenario.instance.noClean.remove(player)
-            Chat.sendMessage(player, "&cYour NoClean has expired!")
+            Chat.sendMessage(player, "<red>Your NoClean has expired!")
         }
     }
 }
@@ -43,7 +43,7 @@ class NoCleanScenario : Scenario(
         if (!enabled) return
         if (GameState.currentState != GameState.INGAME) return
         if (e.entity.killer != null) {
-            Chat.sendMessage(e.entity.killer, "&cYou've been given 15 seconds of NoClean!")
+            Chat.sendMessage(e.entity.killer, "<red>You've been given 15 seconds of NoClean!")
             noClean[e.entity.killer] = true
             NoCleanTask(e.entity.killer).runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, 20L)
         }
@@ -65,20 +65,20 @@ class NoCleanScenario : Scenario(
         if (e.entity.type == EntityType.PLAYER && e.damager.type == EntityType.PLAYER) {
             if (noClean[e.entity as Player] != null) {
                 e.isCancelled = true
-                Chat.sendMessage(e.damager as Player, "&c${(e.entity as Player).name} is still on NoClean cooldown (${noClean[e.entity as Player]}s)")
+                Chat.sendMessage(e.damager as Player, "<red>${(e.entity as Player).name} is still on NoClean cooldown (${noClean[e.entity as Player]}s)")
             }
             if (noClean[e.damager as Player] != null) {
                 noClean.remove(e.damager as Player)
-                Chat.sendMessage(e.damager as Player, "&cYour NoClean has been removed as you damaged another player!")
+                Chat.sendMessage(e.damager as Player, "<red>Your NoClean has been removed as you damaged another player!")
             }
         } else if ((e.entity.type == EntityType.PLAYER) && (e.damager.type === EntityType.ARROW) && ((e.damager as Arrow).shooter as Entity).type == EntityType.PLAYER) {
             if (noClean[e.entity as Player] != null) {
                 e.isCancelled = true
-                Chat.sendMessage(((e.damager as Arrow).shooter as Player), "&c${(e.entity as Player).name} is still on NoClean cooldown (${noClean[e.entity as Player]}s)")
+                Chat.sendMessage(((e.damager as Arrow).shooter as Player), "<red>${(e.entity as Player).name} is still on NoClean cooldown (${noClean[e.entity as Player]}s)")
             }
             if (noClean[((e.damager as Arrow).shooter as Player)] != null) {
                 noClean.remove(((e.damager as Arrow).shooter as Player))
-                Chat.sendMessage(((e.damager as Arrow).shooter as Player), "&cYour NoClean has been removed as you damaged another player!")
+                Chat.sendMessage(((e.damager as Arrow).shooter as Player), "<red>Your NoClean has been removed as you damaged another player!")
             }
         } else if (e.entity.type == EntityType.PLAYER && noClean[e.entity as Player] != null) {
             e.isCancelled = true

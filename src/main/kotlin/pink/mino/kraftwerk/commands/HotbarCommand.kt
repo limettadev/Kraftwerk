@@ -20,7 +20,7 @@ class HotbarCommand : CommandExecutor {
         }
         if (GameState.currentState == GameState.LOBBY) {
             if (sender.world.name == "Arena") {
-                sender.sendMessage(Chat.colored("&8[${Chat.primaryColor}Arena&8]&7 &7You can't use this command in the Arena."))
+                sender.sendMessage(Chat.colored("<dark_gray>[${Chat.primaryColor}Arena<dark_gray>]<gray> <gray>You can't use this command in the Arena."))
                 return false
             }
             val gui = GuiBuilder().rows(1).name(ChatColor.translateAlternateColorCodes('&', "${Chat.primaryColor}Hotbar Editor"))
@@ -40,7 +40,7 @@ class HotbarCommand : CommandExecutor {
             Chat.sendMessage(sender, "${Chat.prefix} Opening hotbar editor...")
             sender.openInventory(gui.make())
         } else {
-            Chat.sendMessage(sender, "&cYou can't use this command at the moment.")
+            Chat.sendMessage(sender, "<red>You can't use this command at the moment.")
         }
         return true
     }

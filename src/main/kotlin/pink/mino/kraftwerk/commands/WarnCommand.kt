@@ -15,27 +15,27 @@ import java.util.*
 class WarnCommand : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (!sender.hasPermission("uhc.staff.warn")) {
-            sender.sendMessage(Chat.colored("&cYou don't have permission to do that."))
+            sender.sendMessage(Chat.colored("<red>You don't have permission to do that."))
             return true
         }
 
         if (args.size < 2) {
-            sender.sendMessage(Chat.colored("&cUsage: /warn <player> [-s] <reason>"))
+            sender.sendMessage(Chat.colored("<red>Usage: /warn <player> [-s] <reason>"))
             return true
         }
 
         val target: OfflinePlayer = Bukkit.getOfflinePlayer(args[0])
         if (!target.hasPlayedBefore() && !target.isOnline) {
-            sender.sendMessage(Chat.colored("&cPlayer '${args[0]}' not found."))
+            sender.sendMessage(Chat.colored("<red>Player '${args[0]}' not found."))
             return true
         }
         if (target == sender) {
-            Chat.sendMessage(sender, "&cYou cannot punish yourself.")
+            Chat.sendMessage(sender, "<red>You cannot punish yourself.")
             return true
         }
 
         if ((target as Player).hasPermission("uhc.staff")) {
-            Chat.sendMessage(sender, "&cYou cannot punish another staff member.")
+            Chat.sendMessage(sender, "<red>You cannot punish another staff member.")
             return true
         }
 
@@ -48,7 +48,7 @@ class WarnCommand : CommandExecutor {
         }
 
         if (args.size <= index) {
-            sender.sendMessage(Chat.colored("&cUsage: /warn <player> [-s] <reason>"))
+            sender.sendMessage(Chat.colored("<red>Usage: /warn <player> [-s] <reason>"))
             return true
         }
 
@@ -67,14 +67,14 @@ class WarnCommand : CommandExecutor {
 
         PunishmentFeature.punish(target, punishment)
 
-        val message = Chat.colored("&c${target.name} has been warned. Reason: $reason")
+        val message = Chat.colored("<red>${target.name} has been warned. Reason: $reason")
 
         if (!silent) {
             Bukkit.broadcast(message, "uhc.staff")
         } else {
             for (player in Bukkit.getOnlinePlayers()) {
                 if (player.hasPermission("uhc.staff")) {
-                    player.sendMessage(Chat.colored("&7[Silent] $message"))
+                    player.sendMessage(Chat.colored("<gray>[Silent] $message"))
                 }
             }
         }

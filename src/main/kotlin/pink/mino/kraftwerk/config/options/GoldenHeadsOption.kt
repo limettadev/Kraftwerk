@@ -65,7 +65,7 @@ class GoldenHeadsOption : ConfigOption(
     if (ScenarioHandler.getScenario("champions")!!.enabled) {
       val skull = ItemBuilder(Material.SKULL_ITEM)
         .name("${player.name}'s Head")
-        .addLore("&7Gives you beneficial effects...")
+        .addLore("<gray>Gives you beneficial effects...")
         .make()
       e.drops.add(skull)
     }

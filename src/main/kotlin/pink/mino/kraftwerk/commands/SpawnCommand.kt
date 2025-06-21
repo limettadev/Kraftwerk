@@ -11,8 +11,8 @@ import pink.mino.kraftwerk.utils.GameState
 class SpawnCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<String>
     ): Boolean {
         if (sender !is Player) {
@@ -23,7 +23,7 @@ class SpawnCommand : CommandExecutor {
             SpawnFeature.instance.send(sender)
             sender.sendMessage(Chat.colored("${Chat.prefix} You've been sent to spawn."))
         } else {
-            Chat.sendMessage(sender, "&cYou can't use this command at the moment.")
+            Chat.sendMessage(sender, "<red>You can't use this command at the moment.")
         }
         return true
     }

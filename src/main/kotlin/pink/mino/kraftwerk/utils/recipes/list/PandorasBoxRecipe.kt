@@ -20,11 +20,11 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ShapedRecipe
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
-import pink.mino.kraftwerk.utils.recipes.Recipe
 import pink.mino.kraftwerk.utils.BookBuilder
 import pink.mino.kraftwerk.utils.Chat
 import pink.mino.kraftwerk.utils.ItemBuilder
 import pink.mino.kraftwerk.utils.PotionBuilder
+import pink.mino.kraftwerk.utils.recipes.Recipe
 import kotlin.random.Random
 
 class PandorasBoxRecipe : Recipe(
@@ -36,7 +36,7 @@ class PandorasBoxRecipe : Recipe(
 ) {
     init {
         val pandorasBox = ItemBuilder(Material.CHEST)
-            .name("&ePandora's Box")
+            .name("<yellow>Pandora's Box")
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(pandorasBox, id)).shape("GGG", "GHG", "GGG")
                 .setIngredient('G', Material.CHEST)
@@ -112,7 +112,7 @@ class PandorasBoxRecipe : Recipe(
                 if (tag.getString("uhcId") == "pandoras_box") {
                     val block: Block? = player.getTargetBlock(null as Set<Material?>?, 10)
                     if (block == null || block.type !== Material.WORKBENCH) {
-                        Chat.sendMessage(player, "&cYou are not looking at a crafting table.")
+                        Chat.sendMessage(player, "<red>You are not looking at a crafting table.")
                         e.isCancelled = true
                         return
                     }

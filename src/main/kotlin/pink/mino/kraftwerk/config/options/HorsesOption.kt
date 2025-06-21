@@ -25,7 +25,7 @@ class HorsesOption : ConfigOption(
             val player = e.entity as Player
             if (e.mount.type === EntityType.HORSE) {
                 e.isCancelled = true
-                Chat.sendMessage(player, "&cHorse riding is disabled.")
+                Chat.sendMessage(player, "<red>Horse riding is disabled.")
             }
         }
     }
@@ -37,7 +37,7 @@ class HorsesOption : ConfigOption(
         for (player in Bukkit.getOnlinePlayers()) {
             if (player.vehicle !== null && player.vehicle.type === EntityType.HORSE) {
                 player.vehicle.eject()
-                Chat.sendMessage(player, "&cHorse riding has now been disabled by the host.")
+                Chat.sendMessage(player, "<red>Horse riding has now been disabled by the host.")
             }
         }
     }

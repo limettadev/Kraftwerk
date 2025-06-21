@@ -14,8 +14,8 @@ import pink.mino.kraftwerk.utils.PlayerUtils
 class MoleChatCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<String>
     ): Boolean {
         if (sender !is Player) {
@@ -23,15 +23,15 @@ class MoleChatCommand : CommandExecutor {
             return false
         }
         if (!ScenarioHandler.getActiveScenarios().contains(ScenarioHandler.getScenario("moles"))) {
-            Chat.sendMessage(sender, "${Chat.dash} ${Chat.primaryColor}Moles&7 isn't enabled!")
+            Chat.sendMessage(sender, "${Chat.dash} ${Chat.primaryColor}Moles<gray> isn't enabled!")
             return false
         }
         if (GameState.currentState != GameState.INGAME) {
-            Chat.sendMessage(sender, "${Chat.dash} ${Chat.primaryColor}Moles&7 isn't available right now!")
+            Chat.sendMessage(sender, "${Chat.dash} ${Chat.primaryColor}Moles<gray> isn't available right now!")
             return false
         }
         if (MolesScenario.instance.moles[sender.uniqueId] == null) {
-            Chat.sendMessage(sender, "${Chat.dash} &7You aren't a mole!")
+            Chat.sendMessage(sender, "${Chat.dash} <gray>You aren't a mole!")
             return false
         }
         val message = StringBuilder()
@@ -43,7 +43,7 @@ class MoleChatCommand : CommandExecutor {
             message.append(element).append(" ")
         }
         val msg = message.toString().trim()
-        MolesScenario.instance.sendMoles("&8[${Chat.primaryColor}Mole Chat&8]&f ${PlayerUtils.getPrefix(sender)}${sender.name} &8- &f${msg}")
+        MolesScenario.instance.sendMoles("<dark_gray>[${Chat.primaryColor}Mole Chat<dark_gray>]&f ${PlayerUtils.getPrefix(sender)}${sender.name} <dark_gray>- &f${msg}")
         return true
     }
 }

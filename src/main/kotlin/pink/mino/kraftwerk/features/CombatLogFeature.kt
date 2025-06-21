@@ -114,9 +114,9 @@ class CombatLogFeature : Listener {
                     removeCombatLog(e.player.name)
                     val npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, e.player.name)
                     npc.spawn(e.player.location)
-                    Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+                    Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                         if (npc.isSpawned) {
-                            npc.name = Chat.colored("&8(&aLogger&8)&f ${e.player.name}")
+                            npc.name = Chat.colored("<dark_gray>(<green>Logger<dark_gray>)&f ${e.player.name}")
                             npc.isProtected = false
                             npc.getOrAddTrait(Equipment::class.java)
                                 .set(Equipment.EquipmentSlot.HELMET, e.player.inventory.helmet)
@@ -128,11 +128,12 @@ class CombatLogFeature : Listener {
                                 .set(Equipment.EquipmentSlot.BOOTS, e.player.inventory.boots)
                             npc.getOrAddTrait(Inventory::class.java)
                                 .contents = e.player.inventory.contents
-                            val drops = arrayListOf<ItemStack>(*e.player.inventory.contents)
-                            drops.add(e.player.inventory.helmet)
-                            drops.add(e.player.inventory.chestplate)
-                            drops.add(e.player.inventory.leggings)
-                            drops.add(e.player.inventory.boots)
+                            val drops = arrayListOf<ItemStack>()
+                            e.player.inventory.contents.filterNotNull().forEach { drops.add(it) }
+                            e.player.inventory.helmet?.let { drops.add(it) }
+                            e.player.inventory.chestplate?.let { drops.add(it) }
+                            e.player.inventory.leggings?.let { drops.add(it) }
+                            e.player.inventory.boots?.let { drops.add(it) }
                             dropsHash[npc] = drops
 
                             val entity = npc as LivingEntity
@@ -140,7 +141,7 @@ class CombatLogFeature : Listener {
                             entity.maxHealth = e.player.maxHealth
                         }
                     }, 20L)
-                    Bukkit.broadcastMessage(Chat.colored("${Chat.dash} ${Chat.secondaryColor}${e.player.name}&7 has been removed from the game for combat logging."))
+                    Bukkit.broadcastMessage(Chat.colored("${Chat.dash} ${Chat.secondaryColor}${e.player.name}<gray> has been removed from the game for combat logging."))
                 }
             }
         }

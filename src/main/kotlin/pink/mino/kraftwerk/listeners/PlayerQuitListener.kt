@@ -28,10 +28,10 @@ class PlayerQuitListener : Listener {
     fun onPlayerQuit(e: PlayerQuitEvent) {
         val player = e.player
         val group: String = vaultChat!!.getPrimaryGroup(player)
-        val prefix: String = if (vaultChat!!.getGroupPrefix(player.world, group) != "&7") Chat.colored(vaultChat!!.getGroupPrefix(player.world, group)) else Chat.colored("&c")
-        e.quitMessage = ChatColor.translateAlternateColorCodes('&', "&8(&4-&8)&r ${prefix}${player.displayName} &8[&4${Bukkit.getOnlinePlayers().size - 1}&8/&4${Bukkit.getServer().maxPlayers}&8]")
-        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
-            Scoreboard.setScore(Chat.colored("${Chat.dash} &7Playing..."), Math.max(PlayerUtils.getPlayingPlayers().size, 0))
+        val prefix: String = if (vaultChat!!.getGroupPrefix(player.world, group) != "<gray>") Chat.colored(vaultChat!!.getGroupPrefix(player.world, group)) else Chat.colored("<red>")
+        e.quitMessage = ChatColor.translateAlternateColorCodes('&', "<dark_gray>(&4-<dark_gray>)&r ${prefix}${player.displayName} <dark_gray>[&4${Bukkit.getOnlinePlayers().size - 1}<dark_gray>/&4${Bukkit.getServer().maxPlayers}<dark_gray>]")
+        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
+            Scoreboard.setScore(Chat.colored("${Chat.dash} <gray>Playing..."), Math.max(PlayerUtils.getPlayingPlayers().size, 0))
         }, 3L)
 
         if (GameState.currentState == GameState.INGAME) {
@@ -58,7 +58,7 @@ class PlayerQuitListener : Listener {
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wl remove ${player.name}")
                         }
 
-                        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${player.name}&7 has been disqualified for being offline for more than 5 minutes."))
+                        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${player.name}<gray> has been disqualified for being offline for more than 5 minutes."))
                     }
                 }
 

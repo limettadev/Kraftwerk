@@ -1,6 +1,9 @@
 package pink.mino.kraftwerk.utils
 
-import org.bukkit.*
+import org.bukkit.Location
+import org.bukkit.Material
+import org.bukkit.World
+import org.bukkit.WorldBorder
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
 import kotlin.math.abs
@@ -38,7 +41,9 @@ object LocationUtils {
         return false
     }
 
-    fun findSafeLocationInsideBorder(loc: Location, buffer: Int, travel: TravelAgent?): Location {
+    // TODO: ADD 1.8 SUPPORT
+    // Also maybe figure out what TravelAgent was.
+    fun findSafeLocationInsideBorder(loc: Location, buffer: Int): Location {
         val border: WorldBorder = loc.world.worldBorder
         val centre: Location = border.center
         var pos: Location = loc.subtract(centre)
@@ -59,12 +64,6 @@ object LocationUtils {
             return loc
         }
         pos.y = loc.world.getHighestBlockYAt(loc).toDouble()
-        if (travel != null) {
-            val to: Location = travel.findOrCreate(pos)
-            if (!isOutsideOfBorder(to)) {
-                pos = to
-            }
-        }
         return pos
     }
 
@@ -77,7 +76,7 @@ object LocationUtils {
         }
 
         for (i in highest downTo 0) {
-            if (loc.world.getBlockAt(loc.blockX, i, loc.blockZ).type != Material.AIR && loc.world.getBlockAt(loc.blockX, i, loc.blockZ).type != Material.LONG_GRASS && loc.world.getBlockAt(loc.blockX, i, loc.blockZ).type != Material.DOUBLE_PLANT && loc.world.getBlockAt(loc.blockX, i, loc.blockZ).type != Material.YELLOW_FLOWER && loc.world.getBlockAt(loc.blockX, i, loc.blockZ).type != Material.RED_ROSE && loc.world.getBlockAt(loc.blockX, i, loc.blockZ).type != Material.VINE) {
+            if (loc.world.getBlockAt(loc.blockX, i, loc.blockZ).type != Material.AIR && loc.world.getBlockAt(loc.blockX, i, loc.blockZ).type != Material.TALL_GRASS && loc.world.getBlockAt(loc.blockX, i, loc.blockZ).type != Material.DANDELION && loc.world.getBlockAt(loc.blockX, i, loc.blockZ).type != Material.POPPY && loc.world.getBlockAt(loc.blockX, i, loc.blockZ).type != Material.VINE) {
                 return loc.world.getBlockAt(loc.blockX, i, loc.blockZ).location
             }
         }

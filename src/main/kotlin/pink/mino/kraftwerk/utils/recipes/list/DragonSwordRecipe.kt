@@ -28,7 +28,7 @@ class DragonSwordRecipe : Recipe(
 ) {
     init {
         var dragonSword = ItemBuilder(Material.DIAMOND_SWORD)
-            .name("&eDragon Sword")
+            .name("<yellow>Dragon Sword")
             .noAttributes()
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(dragonSword, id)).shape(" B ", " S ", "OBO")
@@ -44,7 +44,7 @@ class DragonSwordRecipe : Recipe(
             (e.damager as Player).itemInHand != null &&
             (e.damager as Player).itemInHand.hasItemMeta() &&
             (e.damager as Player).itemInHand.itemMeta.displayName != null &&
-            (e.damager as Player).itemInHand.itemMeta.displayName == Chat.colored("&eDragon Sword")
+            (e.damager as Player).itemInHand.itemMeta.displayName == Chat.colored("<yellow>Dragon Sword")
             ) {
             e.damage = e.damage + 2.0
         }

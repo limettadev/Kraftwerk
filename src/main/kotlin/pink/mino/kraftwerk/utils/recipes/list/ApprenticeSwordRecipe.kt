@@ -30,9 +30,9 @@ class ApprenticeSwordRecipe : Recipe(
     init {
         val apprenticeSword = ItemBuilder(Material.IRON_SWORD)
             .name("&5Apprentice Sword")
-            .addLore("&7Gains &fSharpness I&7 after 10 minutes&7.")
-            .addLore("&7Gains &fSharpness II&7 after 20 minutes&7.")
-            .addLore("&7Gains &fSharpness III&7 after 40 minutes&7.")
+            .addLore("<gray>Gains &fSharpness I<gray> after 10 minutes<gray>.")
+            .addLore("<gray>Gains &fSharpness II<gray> after 20 minutes<gray>.")
+            .addLore("<gray>Gains &fSharpness III<gray> after 40 minutes<gray>.")
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(apprenticeSword, id)).shape(" R ", " I ", " R ")
             .setIngredient('I', Material.IRON_SWORD)
@@ -49,9 +49,9 @@ class ApprenticeSwordRecipe : Recipe(
                             if (item.itemMeta.displayName == Chat.colored("&5Apprentice Bow")) {
                                 val bow = ItemBuilder(Material.BOW)
                                     .name("&5Apprentice Bow")
-                                    .addLore("&7Gains &fPower I&7 after 10 minutes&7.")
-                                    .addLore("&7Gains &fPower II&7 after 20 minutes&7.")
-                                    .addLore("&7Gains &fPower III&7 after 40 minutes&7.")
+                                    .addLore("<gray>Gains &fPower I<gray> after 10 minutes<gray>.")
+                                    .addLore("<gray>Gains &fPower II<gray> after 20 minutes<gray>.")
+                                    .addLore("<gray>Gains &fPower III<gray> after 40 minutes<gray>.")
                                     .addEnchantment(Enchantment.ARROW_DAMAGE, 1)
                                     .make()
                                 item.itemMeta = bow.itemMeta
@@ -60,9 +60,9 @@ class ApprenticeSwordRecipe : Recipe(
                                 val sword = ItemBuilder(Material.IRON_SWORD)
                                     .name("&5Apprentice Sword")
                                     .addEnchantment(Enchantment.DAMAGE_ALL, 1)
-                                    .addLore("&7Gains &fSharpness I&7 after 10 minutes&7.")
-                                    .addLore("&7Gains &fSharpness II&7 after 20 minutes&7.")
-                                    .addLore("&7Gains &fSharpness III&7 after 40 minutes&7.")
+                                    .addLore("<gray>Gains &fSharpness I<gray> after 10 minutes<gray>.")
+                                    .addLore("<gray>Gains &fSharpness II<gray> after 20 minutes<gray>.")
+                                    .addLore("<gray>Gains &fSharpness III<gray> after 40 minutes<gray>.")
                                     .make()
                                 item.itemMeta = sword.itemMeta
                             }
@@ -70,9 +70,9 @@ class ApprenticeSwordRecipe : Recipe(
                             if (item.itemMeta.displayName == Chat.colored("&5Apprentice Bow")) {
                                 val bow = ItemBuilder(Material.BOW)
                                     .name("&5Apprentice Bow")
-                                    .addLore("&7Gains &fPower I&7 after 10 minutes&7.")
-                                    .addLore("&7Gains &fPower II&7 after 20 minutes&7.")
-                                    .addLore("&7Gains &fPower III&7 after 40 minutes&7.")
+                                    .addLore("<gray>Gains &fPower I<gray> after 10 minutes<gray>.")
+                                    .addLore("<gray>Gains &fPower II<gray> after 20 minutes<gray>.")
+                                    .addLore("<gray>Gains &fPower III<gray> after 40 minutes<gray>.")
                                     .addEnchantment(Enchantment.ARROW_DAMAGE, 2)
                                     .make()
                                 item.itemMeta = bow.itemMeta
@@ -81,9 +81,9 @@ class ApprenticeSwordRecipe : Recipe(
                                 val sword = ItemBuilder(Material.IRON_SWORD)
                                     .name("&5Apprentice Sword")
                                     .addEnchantment(Enchantment.DAMAGE_ALL, 2)
-                                    .addLore("&7Gains &fSharpness I&7 after 10 minutes&7.")
-                                    .addLore("&7Gains &fSharpness II&7 after 20 minutes&7.")
-                                    .addLore("&7Gains &fSharpness III&7 after 40 minutes&7.")
+                                    .addLore("<gray>Gains &fSharpness I<gray> after 10 minutes<gray>.")
+                                    .addLore("<gray>Gains &fSharpness II<gray> after 20 minutes<gray>.")
+                                    .addLore("<gray>Gains &fSharpness III<gray> after 40 minutes<gray>.")
                                     .make()
                                 item.itemMeta = sword.itemMeta
                             }
@@ -91,9 +91,9 @@ class ApprenticeSwordRecipe : Recipe(
                             if (item.itemMeta.displayName == Chat.colored("&5Apprentice Bow")) {
                                 val bow = ItemBuilder(Material.BOW)
                                     .name("&5Apprentice Bow")
-                                    .addLore("&7Gains &fPower I&7 after 10 minutes&7.")
-                                    .addLore("&7Gains &fPower II&7 after 20 minutes&7.")
-                                    .addLore("&7Gains &fPower III&7 after 40 minutes&7.")
+                                    .addLore("<gray>Gains &fPower I<gray> after 10 minutes<gray>.")
+                                    .addLore("<gray>Gains &fPower II<gray> after 20 minutes<gray>.")
+                                    .addLore("<gray>Gains &fPower III<gray> after 40 minutes<gray>.")
                                     .addEnchantment(Enchantment.ARROW_DAMAGE, 3)
                                     .make()
                                 item.itemMeta = bow.itemMeta
@@ -102,9 +102,9 @@ class ApprenticeSwordRecipe : Recipe(
                                 val sword = ItemBuilder(Material.IRON_SWORD)
                                     .name("&5Apprentice Sword")
                                     .addEnchantment(Enchantment.DAMAGE_ALL, 3)
-                                    .addLore("&7Gains &fSharpness I&7 after 10 minutes&7.")
-                                    .addLore("&7Gains &fSharpness II&7 after 20 minutes&7.")
-                                    .addLore("&7Gains &fSharpness III&7 after 40 minutes&7.")
+                                    .addLore("<gray>Gains &fSharpness I<gray> after 10 minutes<gray>.")
+                                    .addLore("<gray>Gains &fSharpness II<gray> after 20 minutes<gray>.")
+                                    .addLore("<gray>Gains &fSharpness III<gray> after 40 minutes<gray>.")
                                     .make()
                                 item.itemMeta = sword.itemMeta
                             }

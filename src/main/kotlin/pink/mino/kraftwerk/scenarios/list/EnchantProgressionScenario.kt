@@ -42,7 +42,7 @@ class EnchantProgressionScenario : Scenario(
             for (i in e.expLevelCostsOffered.indices) {
                 e.expLevelCostsOffered[i] = 0
             }
-            Chat.sendMessage(player, "&cYou have no enchantments left to use.")
+            Chat.sendMessage(player, "<red>You have no enchantments left to use.")
         }
     }
 
@@ -58,7 +58,7 @@ class EnchantProgressionScenario : Scenario(
             } else {
                 enchants[killer.uniqueId] = enchants[killer.uniqueId]!! + 1
             }
-            Chat.sendMessage(killer, "${Chat.prefix} You have gained an enchant! (Enchants: ${Chat.secondaryColor}${enchants[killer.uniqueId]}&7)")
+            Chat.sendMessage(killer, "${Chat.prefix} You have gained an enchant! (Enchants: ${Chat.secondaryColor}${enchants[killer.uniqueId]}<gray>)")
         } else if (e.entity.killer.type == EntityType.ARROW && (e.entity as Arrow).shooter is Player) {
             val killer = (e.entity as Arrow).shooter as Player
             if (enchants[killer.uniqueId] == null) {

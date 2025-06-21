@@ -26,7 +26,7 @@ class GenieScenario : Scenario(
     "genie",
     Material.EXP_BOTTLE
 ), CommandExecutor {
-    val prefix = Chat.colored("&8[${Chat.primaryColor}Genie&8]&7")
+    val prefix = Chat.colored("<dark_gray>[${Chat.primaryColor}Genie<dark_gray>]<gray>")
     val wishes = hashMapOf<UUID, Int>()
 
     init {
@@ -37,14 +37,14 @@ class GenieScenario : Scenario(
         for (player in Bukkit.getOnlinePlayers()) {
             if (!SpecFeature.instance.isSpec(player)) {
                 wishes[player.uniqueId] = 3
-                Chat.sendMessage(player, "$prefix You have ${Chat.secondaryColor}3 wishes&7! Use ${Chat.secondaryColor}/genie&7 to redeem them now or wait until you have kills.")
+                Chat.sendMessage(player, "$prefix You have ${Chat.secondaryColor}3 wishes<gray>! Use ${Chat.secondaryColor}/genie<gray> to redeem them now or wait until you have kills.")
             }
         }
     }
 
     override fun givePlayer(player: Player) {
         wishes[player.uniqueId] = 3
-        Chat.sendMessage(player, "$prefix You have ${Chat.secondaryColor}3 wishes&7! Use ${Chat.secondaryColor}/genie&7 to redeem them now or wait until you have kills.")
+        Chat.sendMessage(player, "$prefix You have ${Chat.secondaryColor}3 wishes<gray>! Use ${Chat.secondaryColor}/genie<gray> to redeem them now or wait until you have kills.")
     }
 
     fun calculateRewards(player: Player): ArrayList<ItemStack> {
@@ -104,8 +104,8 @@ class GenieScenario : Scenario(
 
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<String>
     ): Boolean {
         if (sender !is Player) {
@@ -113,7 +113,7 @@ class GenieScenario : Scenario(
             return true
         }
         if (!enabled) {
-            Chat.sendMessage(sender, "$prefix &cThis scenario is not enabled!")
+            Chat.sendMessage(sender, "$prefix <red>This scenario is not enabled!")
             return true
         }
         if (wishes[sender.uniqueId] == null) {
@@ -130,7 +130,7 @@ class GenieScenario : Scenario(
             gui.item(index, reward).onClick {
                 wishes[sender.uniqueId] = wishes[sender.uniqueId]!! - 1
                 PlayerUtils.bulkItems(sender, arrayListOf(reward))
-                Chat.sendMessage(sender, "$prefix You have redeemed a wish! You now have ${Chat.secondaryColor}${wishes[sender.uniqueId]}&7 wishes left!")
+                Chat.sendMessage(sender, "$prefix You have redeemed a wish! You now have ${Chat.secondaryColor}${wishes[sender.uniqueId]}<gray> wishes left!")
                 sender.closeInventory()
             }
         }

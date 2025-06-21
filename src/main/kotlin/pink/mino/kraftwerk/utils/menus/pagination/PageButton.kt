@@ -18,9 +18,9 @@ class PageButton @ConstructorProperties(value = ["mod", "menu"]) constructor(
             playNeutral(player)
         } else if (hasNext(player)) {
             menu.modPage(player, mod)
-            Button.playNeutral(player)
+            playNeutral(player)
         } else {
-            Button.playFail(player)
+            playFail(player)
         }
     }
 
@@ -31,10 +31,10 @@ class PageButton @ConstructorProperties(value = ["mod", "menu"]) constructor(
 
     override fun getName(player: Player): String {
         if (!hasNext(player)) {
-            return Chat.colored(if (mod > 0) "&7Last page" else "&7First page")
+            return Chat.colored(if (mod > 0) "<gray>Last page" else "<gray>First page")
         }
-        val str = "&7(&e" + (menu.page + mod) + "&e" + menu.getPages(player) + "&7)"
-        return Chat.colored(if (mod > 0) "&a⟶" else "&a⟵")
+        "<gray>(<yellow>" + (menu.page + mod) + "<yellow>" + menu.getPages(player) + "<gray>)"
+        return Chat.colored(if (mod > 0) "<green>⟶" else "<green>⟵")
     }
 
     override fun getDescription(player: Player): List<String> {

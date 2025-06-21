@@ -12,41 +12,41 @@ import pink.mino.kraftwerk.utils.Chat
 class ForceCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<String>
     ): Boolean {
         if (sender is Player) {
             if (!sender.hasPermission("uhc.staff.force")) {
-                Chat.sendMessage(sender, "&cYou don't have permission to use this command.")
+                Chat.sendMessage(sender, "<red>You don't have permission to use this command.")
                 return false
             }
         }
         if (JavaPlugin.getPlugin(Kraftwerk::class.java).game == null) {
-            Chat.sendMessage(sender, "&cThere is no game running at the moment.")
+            Chat.sendMessage(sender, "<red>There is no game running at the moment.")
             return false
         }
         if (args.isEmpty()) {
-            Chat.sendMessage(sender, "${Chat.prefix} Invalid usage: ${Chat.secondaryColor}/force <start/fh/pvp/meetup>&7.")
+            Chat.sendMessage(sender, "${Chat.prefix} Invalid usage: ${Chat.secondaryColor}/force <start/fh/pvp/meetup><gray>.")
             return false
         }
         if (args[0] == "start") {
             JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.timer = 30
-            Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${sender.name}&7 has forced &eGame Start&7."))
+            Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has forced <yellow>Game Start<gray>."))
         } else if (args[0] == "fh") {
             JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.timer = JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.finalHeal
-            Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${sender.name}&7 has forced &eFinal Heal&7."))
+            Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has forced <yellow>Final Heal<gray>."))
         } else if (args[0] == "pvp") {
             JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.timer = JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.pvp
-            Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${sender.name}&7 has forced &ePvP&7."))
+            Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has forced <yellow>PvP<gray>."))
         } else if (args[0] == "meetup") {
             JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.timer = JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.meetup
-            Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${sender.name}&7 has forced &eMeetup&7."))
+            Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has forced <yellow>Meetup<gray>."))
         } else if (args[0] == "bs") {
             JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.timer = JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.borderShrink
-            Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${sender.name}&7 has forced &eBorder Shrinks&7."))
+            Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has forced <yellow>Border Shrinks<gray>."))
         } else {
-            Chat.sendMessage(sender, "${Chat.prefix} Invalid usage: ${Chat.secondaryColor}/force <start/fh/pvp/meetup/bs>&7.")
+            Chat.sendMessage(sender, "${Chat.prefix} Invalid usage: ${Chat.secondaryColor}/force <start/fh/pvp/meetup/bs><gray>.")
             return false
         }
         return true

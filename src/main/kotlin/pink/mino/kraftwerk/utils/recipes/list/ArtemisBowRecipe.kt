@@ -35,7 +35,7 @@ class ArtemisBowRecipe : Recipe(
     init {
         val artemisBow = ItemBuilder(Material.BOW)
             .name("&5Artemis' Bow")
-            .addLore("&7Has a chance for your arrow to home into your opponent!")
+            .addLore("<gray>Has a chance for your arrow to home into your opponent!")
             .addEnchantment(Enchantment.ARROW_DAMAGE, 3)
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(artemisBow, id)).shape("FDF", "FBF", "FEF")

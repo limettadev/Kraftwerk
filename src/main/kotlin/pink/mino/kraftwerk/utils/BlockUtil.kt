@@ -33,15 +33,15 @@ class BlockUtil {
     fun degradeDurability(player: Player) {
         val item = player.itemInHand
 
-        if ((item.type == Material.AIR) || (item.type == Material.BOW) || item.type.maxDurability.toInt() == 0 || item.itemMeta.spigot().isUnbreakable) {
+        if ((item.type == Material.AIR) || (item.type == Material.BOW) || item.type.maxDurability.toInt() == 0 || item.itemMeta.isUnbreakable) {
             return
         }
 
         var durability = item.durability
         val rand = Random()
 
-        if (item.containsEnchantment(Enchantment.DURABILITY)) {
-            val chance = (100 / (item.getEnchantmentLevel(Enchantment.DURABILITY) + 1))
+        if (item.containsEnchantment(Enchantment.UNBREAKING)) {
+            val chance = (100 / (item.getEnchantmentLevel(Enchantment.UNBREAKING) + 1))
 
             if (rand.nextDouble() <= (chance / 100)) {
                 durability--
@@ -51,13 +51,13 @@ class BlockUtil {
         }
 
         if (durability >= item.type.maxDurability) {
-            player.world.playSound(player.location, Sound.ITEM_BREAK, 1.0F, 1.0F)
+            player.world.playSound(player.location, Sound.ENTITY_ITEM_BREAK, 1.0F, 1.0F)
             player.itemInHand.type = Material.AIR
             return
         }
 
         item.durability = durability
-        player.itemInHand = item
+        player.setItemInHand(item)
     }
 
     companion object {
@@ -65,10 +65,7 @@ class BlockUtil {
     }
 
     fun getVein(start: Block): List<Block> {
-        var type = start.type
-        if (start.type == Material.GLOWING_REDSTONE_ORE) {
-            type = Material.REDSTONE_ORE
-        }
+        start.type
         return getVein(start, DEFAULT_VEIN_LIMIT)
     }
 
@@ -101,7 +98,6 @@ class BlockUtil {
             for (nearbyBlock in getNearby(check)) {
                 if (vein.contains(nearbyBlock)) continue
                 var type = nearbyBlock.type
-                if (type == Material.GLOWING_REDSTONE_ORE) type = Material.REDSTONE_ORE
                 if (type != start.type) continue
 
                 toCheck.add(nearbyBlock)

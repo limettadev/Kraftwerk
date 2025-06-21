@@ -35,8 +35,8 @@ class ForgeRecipe : Recipe(
 ) {
     init {
         val forge = ItemBuilder(Material.FURNACE)
-            .name("&eForge")
-            .addLore("&7Instantly smelts items. Breaks after 10 uses.")
+            .name("<yellow>Forge")
+            .addLore("<gray>Instantly smelts items. Breaks after 10 uses.")
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(forge, id)).shape("CCC", "COC", "CCC")
             .setIngredient('C', Material.COBBLESTONE)
@@ -63,7 +63,7 @@ class ForgeRecipe : Recipe(
                 e.isCancelled = true
                 val forge = ItemBuilder(Material.FURNACE)
                     .name("&5Forge")
-                    .addLore("&7Instantly smelts items. Breaks after 10 uses.")
+                    .addLore("<gray>Instantly smelts items. Breaks after 10 uses.")
                     .make()
                 for (item in (e.block.state as Furnace).inventory.contents) {
                     if (item == null) continue
@@ -113,7 +113,7 @@ class ForgeRecipe : Recipe(
                     furnace.inventory.fuel = ItemStack(Material.AIR)
                     furnace.block.type = Material.AIR
                     forgeMap.remove(e.whoClicked.uniqueId)
-                    Chat.sendMessage(e.whoClicked, "&c&oYour forge has broken from reaching its limit.")
+                    Chat.sendMessage(e.whoClicked, "<red>&oYour forge has broken from reaching its limit.")
                     return@runnable
                 }
             }

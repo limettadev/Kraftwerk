@@ -26,8 +26,8 @@ class FFAScatterTask(
         }
         if (!SpecFeature.instance.getSpecs().contains(players[i].name)) {
             if (players[i].isOnline) {
-                players[i].teleport(scatterList[players[i]])
-                Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Scattering ${Chat.primaryColor}${players[i].name}&8 (${Chat.primaryColor}${i + 1}&8/${Chat.primaryColor}${players.size}&8)"))
+                players[i].teleport(scatterList[players[i]]!!)
+                Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Scattering ${Chat.primaryColor}${players[i].name}<dark_gray> (${Chat.primaryColor}${i + 1}<dark_gray>/${Chat.primaryColor}${players.size}<dark_gray>)"))
             }
         }
         i++
@@ -49,11 +49,11 @@ class TeamScatterTask(
             if (players[i].isOnline) {
                 val team = TeamsFeature.manager.getTeam(players[i])
                 if (team == null) {
-                    players[i].teleport(solosList[players[i]])
-                    Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Scattering solo ${Chat.primaryColor}${players[i].name}&8 (${Chat.primaryColor}${i + 1}&8/${Chat.primaryColor}${players.size}&8)"))
+                    players[i].teleport(solosList[players[i]]!!)
+                    Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Scattering solo ${Chat.primaryColor}${players[i].name}<dark_gray> (${Chat.primaryColor}${i + 1}<dark_gray>/${Chat.primaryColor}${players.size}<dark_gray>)"))
                 } else {
-                    players[i].teleport(teamsList[team])
-                    Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Scattering ${team.prefix}${team.name}&7 teammate ${Chat.primaryColor}${players[i].name}&8 (${Chat.primaryColor}${i + 1}&8/${Chat.primaryColor}${players.size}&8)"))
+                    players[i].teleport(teamsList[team]!!)
+                    Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Scattering ${team.prefix}${team.name}<gray> teammate ${Chat.primaryColor}${players[i].name}<dark_gray> (${Chat.primaryColor}${i + 1}<dark_gray>/${Chat.primaryColor}${players.size}<dark_gray>)"))
                 }
             }
         }
@@ -93,8 +93,6 @@ class ScatterFeature : Listener {
                                 if (world.getHighestBlockAt(location).type != Material.CACTUS &&
                                     world.getHighestBlockAt(location).type != Material.LAVA &&
                                     world.getHighestBlockAt(location).type != Material.WATER &&
-                                    world.getHighestBlockAt(location).type != Material.STATIONARY_WATER &&
-                                    world.getHighestBlockAt(location).type != Material.WATER_LILY &&
                                     world.getHighestBlockAt(location).type != Material.AIR
                                 ) {
                                     finalLocation = Location(
@@ -119,8 +117,8 @@ class ScatterFeature : Listener {
                     }
                     FFAScatterTask(players, scatteringHashmap).runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, 5L)
                     scattering = false
-                    Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} &7Successfully scattered all players!"))
-                    Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+                    Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} <gray>Successfully scattered all players!"))
+                    Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                         if (freezing) UHCFeature().freeze()
                     }, 20L)
                     true
@@ -130,7 +128,7 @@ class ScatterFeature : Listener {
                     val teamLocations: HashMap<Team, Location> = HashMap()
                     val solosLocations: HashMap<Player, Location> = HashMap()
                     scattering = true
-                    Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Preparing to scatter players, please standby, this might take a bit. &8(&7Mode: ${Chat.primaryColor}Teams&8 | &7Radius: ${Chat.primaryColor}${radius}x${radius}&8)"))
+                    Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Preparing to scatter players, please standby, this might take a bit. <dark_gray>(<gray>Mode: ${Chat.primaryColor}Teams<dark_gray> | <gray>Radius: ${Chat.primaryColor}${radius}x${radius}<dark_gray>)"))
                     for (player in Bukkit.getOnlinePlayers()) {
                         if (!SpecFeature.instance.getSpecs().contains(player.name)) {
                             val team = TeamsFeature.manager.getTeam(player)
@@ -141,9 +139,7 @@ class ScatterFeature : Listener {
                                     val location = Location(world, Random.nextDouble(-radius.toDouble(), radius.toDouble()), 255.0, Random.nextDouble(-radius.toDouble(), radius.toDouble()))
                                     if (world.getHighestBlockAt(location).type != Material.CACTUS &&
                                         world.getHighestBlockAt(location).type != Material.LAVA &&
-                                        world.getHighestBlockAt(location).type != Material.WATER &&
-                                        world.getHighestBlockAt(location).type != Material.STATIONARY_WATER &&
-                                        world.getHighestBlockAt(location).type != Material.WATER_LILY
+                                        world.getHighestBlockAt(location).type != Material.WATER
                                     ) {
                                         finalLocation = Location(world, location.x, world.getHighestBlockAt(location).location.y + 3, location.z)
                                     }
@@ -158,9 +154,7 @@ class ScatterFeature : Listener {
                                         val location = Location(world, Random.nextDouble(-radius.toDouble(), radius.toDouble()), 255.0, Random.nextDouble(-radius.toDouble(), radius.toDouble()))
                                         if (world.getHighestBlockAt(location).type != Material.CACTUS &&
                                             world.getHighestBlockAt(location).type != Material.LAVA &&
-                                            world.getHighestBlockAt(location).type != Material.WATER &&
-                                            world.getHighestBlockAt(location).type != Material.STATIONARY_WATER &&
-                                            world.getHighestBlockAt(location).type != Material.WATER_LILY
+                                            world.getHighestBlockAt(location).type != Material.WATER
                                         ) {
                                             finalLocation = Location(world, location.x, world.getHighestBlockAt(location).location.y + 5, location.z)
                                         }
@@ -181,8 +175,8 @@ class ScatterFeature : Listener {
                     }
                     TeamScatterTask(players, solosLocations, teamLocations).runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, 5L)
                     scattering = false
-                    Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} &7Successfully scattered all players!"))
-                    Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+                    Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} <gray>Successfully scattered all players!"))
+                    Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                         if (freezing) UHCFeature().freeze()
                     }, 20L)
                     true
@@ -199,9 +193,7 @@ class ScatterFeature : Listener {
                 val location = Location(world, Random.nextDouble(-radius.toDouble(), radius.toDouble()), 255.0, Random.nextDouble(-radius.toDouble(), radius.toDouble()))
                 if (world.getHighestBlockAt(location).type != Material.CACTUS &&
                     world.getHighestBlockAt(location).type != Material.LAVA &&
-                    world.getHighestBlockAt(location).type != Material.WATER &&
-                    world.getHighestBlockAt(location).type != Material.STATIONARY_WATER &&
-                    world.getHighestBlockAt(location).type != Material.WATER_LILY
+                    world.getHighestBlockAt(location).type != Material.WATER
                 ) {
                     finalLocation = Location(world, location.x, world.getHighestBlockAt(location).location.y + 3, location.z)
                 }

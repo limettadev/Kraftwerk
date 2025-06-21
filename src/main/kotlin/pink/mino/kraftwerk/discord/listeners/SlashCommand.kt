@@ -21,21 +21,21 @@ class SlashCommand : ListenerAdapter() {
         when (event.name) {
             "online" -> {
                 val embed = EmbedBuilder()
-                embed.setColor(MiscUtils.hexToColor(ConfigFeature.instance.config!!.getString("discord.embed-color")))
+                embed.setColor(MiscUtils.hexToColor(ConfigFeature.instance.config!!.getString("discord.embed-color")!!))
                 embed.setAuthor("${Chat.serverName} — Online players", "https://github.com/applejuice-server/Kraftwerk/blob/master/src/main/kotlin/pink/mino/kraftwerk/discord/listeners/SlashCommand.kt", event.jda.selfUser.avatarUrl)
                 embed.setDescription("There are currently **${Bukkit.getServer().onlinePlayers.size} players** online.")
                 event.replyEmbeds(embed.build()).setEphemeral(false).queue()
             }
             "ip" -> {
                 val embed = EmbedBuilder()
-                embed.setColor(MiscUtils.hexToColor(ConfigFeature.instance.config!!.getString("discord.embed-color")))
+                embed.setColor(MiscUtils.hexToColor(ConfigFeature.instance.config!!.getString("discord.embed-color")!!))
                 embed.setAuthor("${Chat.serverName} — IP Address", "https://github.com/applejuice-server/Kraftwerk/blob/master/src/main/kotlin/pink/mino/kraftwerk/discord/listeners/SlashCommand.kt", event.jda.selfUser.avatarUrl)
                 embed.setDescription("The IP address to the server is `${if (ConfigFeature.instance.config!!.getString("chat.serverIp") != null) ConfigFeature.instance.config!!.getString("chat.serverIp") else "no server ip setup in config tough tits"}`.")
                 event.replyEmbeds(embed.build()).setEphemeral(false).queue()
             }
             "togglealerts" -> {
                 val embed = EmbedBuilder()
-                embed.setColor(MiscUtils.hexToColor(ConfigFeature.instance.config!!.getString("discord.embed-color")))
+                embed.setColor(MiscUtils.hexToColor(ConfigFeature.instance.config!!.getString("discord.embed-color")!!))
                 embed.setAuthor("${Chat.serverName} — Toggle alerts", "https://github.com/applejuice-server/Kraftwerk/blob/master/src/main/kotlin/pink/mino/kraftwerk/discord/listeners/SlashCommand.kt", event.jda.selfUser.avatarUrl)
                 if (member!!.roles.contains(event.jda.getRoleById(1129405126889713692))) {
                     if (guild != null) {
@@ -69,7 +69,7 @@ class SlashCommand : ListenerAdapter() {
                     list.add(scenario.name)
                 }
                 val embed = EmbedBuilder()
-                embed.setColor(MiscUtils.hexToColor(ConfigFeature.instance.config!!.getString("discord.embed-color")))
+                embed.setColor(MiscUtils.hexToColor(ConfigFeature.instance.config!!.getString("discord.embed-color")!!))
                 embed.setAuthor("${Chat.serverName} — Scenario List", "https://github.com/applejuice-server/Kraftwerk/blob/master/src/main/kotlin/pink/mino/kraftwerk/discord/listeners/SlashCommand.kt", event.jda.selfUser.avatarUrl)
                 embed.setDescription("Scenarios: `${list.joinToString(", ")}`")
                 event.replyEmbeds(embed.build()).setEphemeral(false).queue()

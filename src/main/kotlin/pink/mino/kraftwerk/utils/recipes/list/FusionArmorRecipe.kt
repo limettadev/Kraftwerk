@@ -16,8 +16,8 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.inventory.CraftItemEvent
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ShapelessRecipe
-import pink.mino.kraftwerk.utils.recipes.Recipe
 import pink.mino.kraftwerk.utils.ItemBuilder
+import pink.mino.kraftwerk.utils.recipes.Recipe
 
 class FusionArmorRecipe : Recipe(
     "Fusion Armor",
@@ -29,7 +29,7 @@ class FusionArmorRecipe : Recipe(
     init {
         val fusionArmor = ItemBuilder(Material.DIAMOND_HELMET)
             .name("&5Fusion Armor")
-            .addLore("&7Crafting this item will allow you to receive a random piece of armor with &fProtection IV&7!")
+            .addLore("<gray>Crafting this item will allow you to receive a random piece of armor with &fProtection IV<gray>!")
             .make()
         recipe = ShapelessRecipe(fusionArmor)
             .addIngredient(Material.DIAMOND_HELMET)
@@ -40,7 +40,7 @@ class FusionArmorRecipe : Recipe(
 
     @EventHandler
     fun onCraft(e: CraftItemEvent) {
-        val player = e.whoClicked as Player
+        e.whoClicked as Player
         val item = e.inventory.result
         val craftItem = CraftItemStack.asNMSCopy(item)
         if (craftItem.hasTag()) {

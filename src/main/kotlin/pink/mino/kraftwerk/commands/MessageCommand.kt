@@ -21,11 +21,11 @@ class MessageCommand : CommandExecutor {
             return false
         }
         if (args.isEmpty()) {
-            Chat.sendMessage(sender, "&cYou need a user to send a message to.")
+            Chat.sendMessage(sender, "<red>You need a user to send a message to.")
             return false
         }
         if (args.size < 2) {
-            Chat.sendMessage(sender, "&cYou need a message to send to the user.")
+            Chat.sendMessage(sender, "<red>You need a message to send to the user.")
             return false
         }
 
@@ -33,13 +33,13 @@ class MessageCommand : CommandExecutor {
         for (i in 1 until args.size) message += args[i] + " "
         val target = Bukkit.getPlayer(args[0])
         if (target == null) {
-            Chat.sendMessage(sender,"&cYou need a valid user to send this to.")
+            Chat.sendMessage(sender,"<red>You need a valid user to send this to.")
             return false
         }
         val player = sender
         val list = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(target.uniqueId)!!.ignored
         if (list.contains(player.uniqueId)) {
-            Chat.sendMessage(sender, "&cThis person has you on their ignore list.")
+            Chat.sendMessage(sender, "<red>This person has you on their ignore list.")
             return false
         }
         val mutePunishment = PunishmentFeature.getActivePunishment(player, PunishmentType.MUTE)
@@ -47,13 +47,13 @@ class MessageCommand : CommandExecutor {
             val remaining = mutePunishment.expiresAt - System.currentTimeMillis()
             if (remaining > 0) {
                 val timeLeft = PunishmentFeature.timeToString(remaining)
-                player.sendMessage(Chat.colored("&cYou are muted for another $timeLeft. Reason: ${mutePunishment.reason}"))
+                player.sendMessage(Chat.colored("<red>You are muted for another $timeLeft. Reason: ${mutePunishment.reason}"))
                 return false
             }
         }
 
-        Chat.sendMessage(sender, "&7To: &f${target.displayName} &8- &7$message")
-        Chat.sendMessage(target, "&7From: &f${player.displayName} &8- &7$message")
+        Chat.sendMessage(sender, "<gray>To: &f${target.displayName} <dark_gray>- <gray>$message")
+        Chat.sendMessage(target, "<gray>From: &f${player.displayName} <dark_gray>- <gray>$message")
 
         ReplyTo.setRepliedTo(player.uniqueId, target.uniqueId)
         ReplyTo.setRepliedTo(target.uniqueId, player.uniqueId)

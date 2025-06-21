@@ -11,7 +11,7 @@ class ResetHealthCommand : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (sender is Player) {
             if (!sender.hasPermission("uhc.staff.resethealth")) {
-                Chat.sendMessage(sender, "&cYou don't have permission to use this command.")
+                Chat.sendMessage(sender, "<red>You don't have permission to use this command.")
                 return false
             }
         }
@@ -29,22 +29,22 @@ class ResetHealthCommand : CommandExecutor {
                 for (online in ArrayList(Bukkit.getServer().onlinePlayers)) {
                     online.maxHealth = 20.0
                     online.health = 20.0
-                    Chat.sendMessage(online, "${Chat.prefix} &7Your health has been reset by ${Chat.primaryColor}${sender.name}&7.")
+                    Chat.sendMessage(online, "${Chat.prefix} <gray>Your health has been reset by ${Chat.primaryColor}${sender.name}<gray>.")
                 }
-                Chat.sendMessage(sender as Player, "${Chat.prefix} &7Reset the health of all players.")
+                Chat.sendMessage(sender as Player, "${Chat.prefix} <gray>Reset the health of all players.")
                 return true
             } else {
                 val target = Bukkit.getServer().getPlayer(args[0])
                 if (target == null) {
-                    Chat.sendMessage(sender as Player, "${Chat.prefix} &cThat player is not online or has never logged onto the server.")
+                    Chat.sendMessage(sender as Player, "${Chat.prefix} <red>That player is not online or has never logged onto the server.")
                     return false
                 }
                 val effects = target.activePotionEffects
                 for (effect in effects) {
                     target.removePotionEffect(effect.type)
                 }
-                Chat.sendMessage(sender as Player, "${Chat.prefix} &7Cleared the effects of ${Chat.primaryColor}${target.name}&7.")
-                Chat.sendMessage(target, "${Chat.prefix} &7Your effects have been cleared by ${Chat.primaryColor}${sender.name}&7.")
+                Chat.sendMessage(sender as Player, "${Chat.prefix} <gray>Cleared the effects of ${Chat.primaryColor}${target.name}<gray>.")
+                Chat.sendMessage(target, "${Chat.prefix} <gray>Your effects have been cleared by ${Chat.primaryColor}${sender.name}<gray>.")
                 return true
             }
         }

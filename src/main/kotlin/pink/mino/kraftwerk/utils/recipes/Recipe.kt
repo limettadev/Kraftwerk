@@ -18,12 +18,12 @@ abstract class Recipe(
 ) : Listener {
     fun createRecipeBookItem(): ItemStack {
         val item = ItemBuilder(icon.type)
-            .name("&a$name")
-            .addLore("&7Max Crafts: &b$crafts")
+            .name("<green>$name")
+            .addLore("<gray>Max Crafts: &b$crafts")
             .addLore(" ")
-            .addLore("&7$description")
+            .addLore("<gray>$description")
             .addLore(" ")
-            .addLore("&aClick to view recipe!")
+            .addLore("<green>Click to view recipe!")
         return item.make()
     }
 

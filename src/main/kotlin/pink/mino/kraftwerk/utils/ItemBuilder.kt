@@ -1,6 +1,7 @@
 package pink.mino.kraftwerk.utils
 
 import com.google.common.collect.Lists
+import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.Color
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
@@ -12,6 +13,7 @@ import org.bukkit.potion.PotionEffectType
 import java.util.*
 import kotlin.math.floor
 
+// TODO: ADD 1.8 SUPPORT
 
 class BookBuilder {
     companion object {
@@ -23,7 +25,7 @@ class BookBuilder {
          *
          * @return The enchanted book itemstack.
          */
-        fun createEnchantedBook(ench: Enchantment?, level: Int): ItemStack? {
+        fun createEnchantedBook(ench: Enchantment, level: Int): ItemStack? {
             val item = ItemStack(Material.ENCHANTED_BOOK, 1)
             val meta = item.itemMeta as EnchantmentStorageMeta
             meta.addStoredEnchant(ench, level, true)
@@ -113,12 +115,11 @@ class PotionBuilder {
         fun createPotion(vararg effects: PotionEffect): ItemStack {
             val item = ItemStack(Material.POTION)
             val pot = item.itemMeta as PotionMeta
-            val lore: MutableList<String>
-            lore = if (pot.hasLore()) {
+            val lore: MutableList<String> = (if (pot.hasLore()) {
                 pot.lore
             } else {
                 Lists.newArrayList()
-            }
+            })!!
             for (effect in effects) {
                 pot.addCustomEffect(effect, true)
                 if (effect.duration > 0) {
@@ -142,7 +143,7 @@ class ItemBuilder(material: Material) {
     var meta: ItemMeta = item.itemMeta
 
     fun name(name: String): ItemBuilder {
-        meta.displayName = Chat.colored(name)
+        meta.displayName(MiniMessage.miniMessage().deserialize(name))
         item.itemMeta = meta
         return this
     }
@@ -155,12 +156,12 @@ class ItemBuilder(material: Material) {
         return this
     }
     fun removeLore(index: Int): ItemBuilder {
-        meta.lore.removeAt(index)
+        meta.lore!!.removeAt(index)
         item.itemMeta = meta
         return this
     }
     fun clearLore(): ItemBuilder {
-        meta.lore.clear()
+        meta.lore!!.clear()
         item.itemMeta = meta
         return this
     }
@@ -170,7 +171,7 @@ class ItemBuilder(material: Material) {
         return this
     }
     fun isUnbreakable(boolean: Boolean): ItemBuilder {
-        meta.spigot().isUnbreakable = boolean
+        meta.isUnbreakable = boolean
         item.itemMeta = meta
         return this
     }
@@ -192,14 +193,14 @@ class ItemBuilder(material: Material) {
 
     fun setColor(color: Color): ItemBuilder {
         val leather = item.itemMeta as LeatherArmorMeta
-        leather.color = color
+        leather.setColor(color)
         item.itemMeta = leather
         return this
     }
     fun toSkull(): ItemBuilder {
-        if (item.type != Material.SKULL_ITEM) throw Error("You can't do this, this isn't a head.")
+        if (item.type != Material.PLAYER_HEAD) throw Error("You can't do this, this isn't a head.")
         meta = meta as SkullMeta
-        item = ItemStack(Material.SKULL_ITEM, 1, 3)
+        item = ItemStack(Material.PLAYER_HEAD, 1)
         item.itemMeta = meta
         return this
     }

@@ -20,36 +20,36 @@ class ConfigCommand : CommandExecutor {
     private fun getOption(option: String): String {
         val op = ConfigFeature.instance.data!!.getString("game.options.${option}").toBoolean()
         return if (op) {
-            "&aEnabled"
+            "<green>Enabled"
         } else {
-            "&cDisabled"
+            "<red>Disabled"
         }
     }
 
     private fun getFireWeapons(): String {
         val op = ConfigFeature.instance.data!!.getString("game.options.fireweapons").toBoolean()
         return if (op) {
-            "&aEnabled"
+            "<green>Enabled"
         } else {
-            "&eFrom Books Only"
+            "<yellow>From Books Only"
         }
     }
 
     private fun getNether(option: String): String {
         val op = ConfigFeature.instance.data!!.getString("game.nether.${option}").toBoolean()
         return if (op) {
-            "&aEnabled"
+            "<green>Enabled"
         } else {
-            "&cDisabled"
+            "<red>Disabled"
         }
     }
 
     private fun getSpecials(option: String): String {
         val op = ConfigFeature.instance.data!!.getString("game.specials.${option}").toBoolean()
         return if (op) {
-            "&aEnabled"
+            "<green>Enabled"
         } else {
-            "&cDisabled"
+            "<red>Disabled"
         }
     }
 
@@ -60,9 +60,9 @@ class ConfigCommand : CommandExecutor {
     private fun getRule(rule: String): String {
         val op = ConfigFeature.instance.data!!.getString("game.rules.${rule}").toBoolean()
         return if (op) {
-            "&aAllowed"
+            "<green>Allowed"
         } else {
-            "&cNot Allowed"
+            "<red>Not Allowed"
         }
     }
 
@@ -86,16 +86,16 @@ class ConfigCommand : CommandExecutor {
         val options = ItemBuilder(Material.LAVA_BUCKET)
             .name(" ${Chat.primaryColor}&lGeneral Settings ")
             .addLore(" ")
-            .addLore(" &7Horses ${Chat.dash} ${Chat.secondaryColor}${getOption("horses")} ")
-            .addLore(" &7Starter Food ${Chat.dash} ${Chat.secondaryColor}${ConfigFeature.instance.data!!.getInt("game.starterfood")} ")
-            .addLore(" &7Permaday ${Chat.dash} ${Chat.secondaryColor}${getOption("permaday")} ")
+            .addLore(" <gray>Horses ${Chat.dash} ${Chat.secondaryColor}${getOption("horses")} ")
+            .addLore(" <gray>Starter Food ${Chat.dash} ${Chat.secondaryColor}${ConfigFeature.instance.data!!.getInt("game.starterfood")} ")
+            .addLore(" <gray>Permaday ${Chat.dash} ${Chat.secondaryColor}${getOption("permaday")} ")
             .addLore(" ")
-            .addLore(" &7Statless ${Chat.dash} ${Chat.secondaryColor}${getOption("statless")} ")
-            .addLore(" &7Double Arrows ${Chat.dash} ${Chat.secondaryColor}${getOption("doublearrows")}")
-            .addLore(" &7Death Lightning ${Chat.dash} ${Chat.secondaryColor}${getOption("deathlightning")}")
+            .addLore(" <gray>Statless ${Chat.dash} ${Chat.secondaryColor}${getOption("statless")} ")
+            .addLore(" <gray>Double Arrows ${Chat.dash} ${Chat.secondaryColor}${getOption("doublearrows")}")
+            .addLore(" <gray>Death Lightning ${Chat.dash} ${Chat.secondaryColor}${getOption("deathlightning")}")
             .addLore(" ")
-            .addLore(" &7Pearl Damage ${Chat.dash} ${Chat.secondaryColor}${getOption("pearldamage")} ")
-            .addLore(" &7Pearl Cooldown ${Chat.dash} ${Chat.secondaryColor}${getOption("pearlcooldown")} ")
+            .addLore(" <gray>Pearl Damage ${Chat.dash} ${Chat.secondaryColor}${getOption("pearldamage")} ")
+            .addLore(" <gray>Pearl Cooldown ${Chat.dash} ${Chat.secondaryColor}${getOption("pearlcooldown")} ")
             .addLore(" ")
             .make()
         gui.item(3, options).onClick runnable@ {
@@ -109,15 +109,15 @@ class ConfigCommand : CommandExecutor {
         } else {
             ConfigFeature.instance.data!!.getString("game.host")
         }
-        val host = ItemBuilder(Material.SKULL_ITEM)
+        val host = ItemBuilder(Material.PLAYER_HEAD)
             .toSkull()
             .setOwner(ign)
             .name(" ${Chat.primaryColor}&lHost ")
             .addLore(" ")
-            .addLore(" &7Host ${Chat.dash} ${Chat.secondaryColor}${ConfigFeature.instance.data!!.getString("game.host")} ")
+            .addLore(" <gray>Host ${Chat.dash} ${Chat.secondaryColor}${ConfigFeature.instance.data!!.getString("game.host")} ")
             .addLore(" ")
-            .addLore(" &7Matchpost ${Chat.dash} ${Chat.secondaryColor}https://hosts.uhc.gg/m/${ConfigFeature.instance.data!!.getInt("matchpost.id")} ")
-            .addLore(" &7Game ${Chat.dash} ${Chat.secondaryColor}${ConfigFeature.instance.data!!.getString("matchpost.host")} ")
+            .addLore(" <gray>Matchpost ${Chat.dash} ${Chat.secondaryColor}https://hosts.uhc.gg/m/${ConfigFeature.instance.data!!.getInt("matchpost.id")} ")
+            .addLore(" <gray>Game ${Chat.dash} ${Chat.secondaryColor}${ConfigFeature.instance.data!!.getString("matchpost.host")} ")
             .addLore(" ")
             .make()
         gui.item(4, host).onClick runnable@ {
@@ -127,13 +127,13 @@ class ConfigCommand : CommandExecutor {
             }
             Chat.sendMessage(sender, "${Chat.prefix} Matchpost: ${Chat.secondaryColor}https://hosts.uhc.gg/m/${ConfigFeature.instance.data!!.getInt("matchpost.id")} ")
         }
-        val events = ItemBuilder(Material.WATCH)
+        val events = ItemBuilder(Material.CLOCK)
             .name(" &4&lEvents")
             .addLore(" ")
-            .addLore(" &7Final Heal is given in ${Chat.secondaryColor}${getEventTime("final-heal")} minutes ")
-            .addLore(" &7PvP is enabled in ${Chat.secondaryColor}${getEventTime("pvp") + getEventTime("final-heal")} minutes ")
-            .addLore(" &7The border begins shrinking in ${Chat.secondaryColor}${getEventTime("borderShrink") + getEventTime("pvp") + getEventTime("final-heal")} minutes ")
-            .addLore(" &7Meetup is in ${Chat.secondaryColor}${getEventTime("meetup") + getEventTime("pvp") + getEventTime("final-heal")} minutes ")
+            .addLore(" <gray>Final Heal is given in ${Chat.secondaryColor}${getEventTime("final-heal")} minutes ")
+            .addLore(" <gray>PvP is enabled in ${Chat.secondaryColor}${getEventTime("pvp") + getEventTime("final-heal")} minutes ")
+            .addLore(" <gray>The border begins shrinking in ${Chat.secondaryColor}${getEventTime("borderShrink") + getEventTime("pvp") + getEventTime("final-heal")} minutes ")
+            .addLore(" <gray>Meetup is in ${Chat.secondaryColor}${getEventTime("meetup") + getEventTime("pvp") + getEventTime("final-heal")} minutes ")
 
             .addLore(" ")
             .make()
@@ -146,10 +146,10 @@ class ConfigCommand : CommandExecutor {
         val healConfig = ItemBuilder(Material.GOLDEN_APPLE)
             .name(" &4&lHealing Config")
             .addLore(" ")
-            .addLore(" &7Absorption ${Chat.dash} &7${getOption("absorption")} ")
+            .addLore(" <gray>Absorption ${Chat.dash} <gray>${getOption("absorption")} ")
             .addLore(" ")
-            .addLore(" &7Notch Apples ${Chat.dash} &7${getOption("notchapples")} ")
-            .addLore(" &7Golden Heads ${Chat.dash} &7${getOption("goldenheads")} &8(&a4 ❤&8) ")
+            .addLore(" <gray>Notch Apples ${Chat.dash} <gray>${getOption("notchapples")} ")
+            .addLore(" <gray>Golden Heads ${Chat.dash} <gray>${getOption("goldenheads")} <dark_gray>(<green>4 ❤<dark_gray>) ")
             .addLore(" ")
             .make()
         gui.item(10, healConfig).onClick runnable@ {
@@ -166,10 +166,10 @@ class ConfigCommand : CommandExecutor {
         val ratesConfig = ItemBuilder(Material.FLINT)
             .name(" &4&lRates Config")
             .addLore(" ")
-            .addLore(" &7Apple Rates ${Chat.dash} &a${ConfigFeature.instance.data!!.getInt("game.rates.apple")}% ")
-            .addLore(" &7Flint Rates ${Chat.dash} &a${ConfigFeature.instance.data!!.getInt("game.rates.flint")}% ")
+            .addLore(" <gray>Apple Rates ${Chat.dash} <green>${ConfigFeature.instance.data!!.getInt("game.rates.apple")}% ")
+            .addLore(" <gray>Flint Rates ${Chat.dash} <green>${ConfigFeature.instance.data!!.getInt("game.rates.flint")}% ")
             .addLore(" ")
-            .addLore(" &7Sugar Cane Rates ${Chat.dash} &a${caneRates} ")
+            .addLore(" <gray>Sugar Cane Rates ${Chat.dash} <green>${caneRates} ")
             .addLore(" ")
             .make()
         gui.item(11, ratesConfig).onClick runnable@ {
@@ -179,9 +179,9 @@ class ConfigCommand : CommandExecutor {
             }
         }
         val ffa = if (ConfigFeature.instance.data!!.getBoolean("game.ffa")) {
-            "&cDisabled"
+            "<red>Disabled"
         } else {
-            "&aEnabled"
+            "<green>Enabled"
         }
         val teamConfig = ItemBuilder(Material.IRON_SWORD)
             .setAmount(ConfigFeature.instance.data!!.getInt("game.teamSize"))
@@ -189,16 +189,16 @@ class ConfigCommand : CommandExecutor {
             .noAttributes()
             .addLore("")
         if (ConfigFeature.instance.data!!.getString("matchpost.team") == "Auctions") {
-            teamConfig.addLore(" &7Team Size ${Chat.dash} ${Chat.secondaryColor}Auctions ")
+            teamConfig.addLore(" <gray>Team Size ${Chat.dash} ${Chat.secondaryColor}Auctions ")
         } else {
             if (ConfigFeature.instance.data!!.getInt("game.teamSize") == 1) {
-                teamConfig.addLore(" &7Team Size ${Chat.dash} ${Chat.secondaryColor}FFA ")
+                teamConfig.addLore(" <gray>Team Size ${Chat.dash} ${Chat.secondaryColor}FFA ")
             } else {
-                teamConfig.addLore(" &7Team Size ${Chat.dash} ${Chat.secondaryColor}To${ConfigFeature.instance.data!!.getInt("game.teamSize")} ")
+                teamConfig.addLore(" <gray>Team Size ${Chat.dash} ${Chat.secondaryColor}To${ConfigFeature.instance.data!!.getInt("game.teamSize")} ")
             }
         }
-        teamConfig.addLore(" &7Team Management ${Chat.dash} ${Chat.secondaryColor}${ffa} ").addLore(" ")
-        teamConfig.addLore(" &7Friendly Fire ${Chat.dash} ${Chat.secondaryColor}${if (ConfigFeature.instance.data!!.getBoolean("game.friendlyFire")) "&aEnabled" else "&cDisabled"}")
+        teamConfig.addLore(" <gray>Team Management ${Chat.dash} ${Chat.secondaryColor}${ffa} ").addLore(" ")
+        teamConfig.addLore(" <gray>Friendly Fire ${Chat.dash} ${Chat.secondaryColor}${if (ConfigFeature.instance.data!!.getBoolean("game.friendlyFire")) "<green>Enabled" else "<red>Disabled"}")
         teamConfig.addLore(" ")
         val teamConf = teamConfig.make()
         gui.item(12, teamConf).onClick runnable@ {
@@ -210,9 +210,9 @@ class ConfigCommand : CommandExecutor {
         val scenarios = ItemBuilder(Material.EMERALD)
             .name(" ${Chat.primaryColor}&lScenarios ")
             .addLore(" ")
-            .addLore(" &7Scenarios &8(&e${ScenarioHandler.getActiveScenarios().size}&8) ${Chat.dash} ")
+            .addLore(" <gray>Scenarios <dark_gray>(<yellow>${ScenarioHandler.getActiveScenarios().size}<dark_gray>) ${Chat.dash} ")
         for (scenario in ScenarioHandler.getActiveScenarios()) {
-            scenarios.addLore("  &8• ${Chat.secondaryColor}${scenario.name}")
+            scenarios.addLore("  <dark_gray>• ${Chat.secondaryColor}${scenario.name}")
         }
         scenarios.addLore(" ")
         gui.item(13, scenarios.make()).onClick runnable@ {
@@ -221,14 +221,14 @@ class ConfigCommand : CommandExecutor {
                 Bukkit.dispatchCommand(sender, "sm")
             }
         }
-        val enchanting = ItemBuilder(Material.ENCHANTMENT_TABLE)
+        val enchanting = ItemBuilder(Material.ENCHANTING_TABLE)
             .name(" ${Chat.primaryColor}&lEnchanting Config ")
             .addLore(" ")
-            .addLore(" &7Enchanting ${Chat.dash} &e1.8 ")
+            .addLore(" <gray>Enchanting ${Chat.dash} <yellow>1.8 ")
             .addLore("")
-            .addLore(" &7Split Enchants ${Chat.dash} ${getOption("splitenchants")} ")
-            .addLore(" &7Bookshelves ${Chat.dash} ${getOption("bookshelves")} ")
-            .addLore(" &7Fire Weapons ${Chat.dash} ${getFireWeapons()} ")
+            .addLore(" <gray>Split Enchants ${Chat.dash} ${getOption("splitenchants")} ")
+            .addLore(" <gray>Bookshelves ${Chat.dash} ${getOption("bookshelves")} ")
+            .addLore(" <gray>Fire Weapons ${Chat.dash} ${getFireWeapons()} ")
             .addLore(" ")
             .make()
         gui.item(14, enchanting).onClick runnable@ {
@@ -240,23 +240,23 @@ class ConfigCommand : CommandExecutor {
         val border = ItemBuilder(Material.BEDROCK)
             .name(" ${Chat.primaryColor}&lBorder Config ")
             .addLore(" ")
-            .addLore(" &7Size ${Chat.dash} ${Chat.secondaryColor}${ConfigFeature.instance.data!!.getInt("pregen.border") * 2}x${ConfigFeature.instance.data!!.getInt("pregen.border") * 2} &8(${Chat.secondaryColor}±${ConfigFeature.instance.data!!.getInt("pregen.border")}&8) ")
+            .addLore(" <gray>Size ${Chat.dash} ${Chat.secondaryColor}${ConfigFeature.instance.data!!.getInt("pregen.border") * 2}x${ConfigFeature.instance.data!!.getInt("pregen.border") * 2} <dark_gray>(${Chat.secondaryColor}±${ConfigFeature.instance.data!!.getInt("pregen.border")}<dark_gray>) ")
             .addLore(" ")
-            .addLore(" &7The border shrinks every &e5 minutes&7. ")
-            .addLore(" &7The first shrink will be ${Chat.secondaryColor}1000x1000 (${Chat.secondaryColor}±500)&7. ")
-            .addLore(" &7The last shrink will be ${Chat.secondaryColor}${getFinalBorder()*2}x${getFinalBorder()*2} (${Chat.secondaryColor}±${getFinalBorder()})&7. ")
+            .addLore(" <gray>The border shrinks every <yellow>5 minutes<gray>. ")
+            .addLore(" <gray>The first shrink will be ${Chat.secondaryColor}1000x1000 (${Chat.secondaryColor}±500)<gray>. ")
+            .addLore(" <gray>The last shrink will be ${Chat.secondaryColor}${getFinalBorder()*2}x${getFinalBorder()*2} (${Chat.secondaryColor}±${getFinalBorder()})<gray>. ")
             .addLore(" ")
             .make()
         gui.item(15, border).onClick runnable@ {
             it.isCancelled = true
         }
         val goldRates = if (ConfigFeature.instance.worlds!!.getInt("${ConfigFeature.instance.data!!.get("pregen.world")}.orerates.gold") <= 0) {
-            "&aVanilla"
+            "<green>Vanilla"
         } else {
             "&6${ConfigFeature.instance.worlds!!.get("${ConfigFeature.instance.data!!.get("pregen.world")}.orerates.gold")}% Removed"
         }
         val diaRates = if (ConfigFeature.instance.worlds!!.getInt("${ConfigFeature.instance.data!!.get("pregen.world")}.orerates.diamond") <= 0) {
-            "&aVanilla"
+            "<green>Vanilla"
         } else {
             "&b${ConfigFeature.instance.worlds!!.get("${ConfigFeature.instance.data!!.get("pregen.world")}.orerates.diamond")}% Removed"
         }
@@ -273,18 +273,18 @@ class ConfigCommand : CommandExecutor {
             .name(" &4&lMining Config ")
             .noAttributes()
             .addLore(" ")
-            .addLore(" &7F5 Abuse ${Chat.dash} ${getRule("f5abuse")} ")
-            .addLore(" &7Anti-Stone ${Chat.dash} ${Chat.secondaryColor}${getOption("antistone")} ")
-            .addLore(" &7Anti-Burn ${Chat.dash} ${Chat.secondaryColor}${getOption("antiburn")} ")
+            .addLore(" <gray>F5 Abuse ${Chat.dash} ${getRule("f5abuse")} ")
+            .addLore(" <gray>Anti-Stone ${Chat.dash} ${Chat.secondaryColor}${getOption("antistone")} ")
+            .addLore(" <gray>Anti-Burn ${Chat.dash} ${Chat.secondaryColor}${getOption("antiburn")} ")
             .addLore(" ")
-            .addLore(" &7Cave Rates ${Chat.dash} ${Chat.secondaryColor}${message} ")
-            .addLore(" &7Diamond Ore Rates ${Chat.dash} ${Chat.secondaryColor}${diaRates} ")
-            .addLore(" &7Gold Ore Rates ${Chat.dash} ${Chat.secondaryColor}${goldRates} ")
-            .addLore(" &7Ores Outside Caves ${Chat.dash} ${Chat.secondaryColor}${if (ConfigFeature.instance.worlds!!.getBoolean("${ConfigFeature.instance.data!!.get("pregen.world")}.oresOutsideCaves")) "&aEnabled" else "&cDisabled"} ")
+            .addLore(" <gray>Cave Rates ${Chat.dash} ${Chat.secondaryColor}${message} ")
+            .addLore(" <gray>Diamond Ore Rates ${Chat.dash} ${Chat.secondaryColor}${diaRates} ")
+            .addLore(" <gray>Gold Ore Rates ${Chat.dash} ${Chat.secondaryColor}${goldRates} ")
+            .addLore(" <gray>Ores Outside Caves ${Chat.dash} ${Chat.secondaryColor}${if (ConfigFeature.instance.worlds!!.getBoolean("${ConfigFeature.instance.data!!.get("pregen.world")}.oresOutsideCaves")) "<green>Enabled" else "<red>Disabled"} ")
             .addLore(" ")
-            .addLore(" &7Stripmining ${Chat.dash} ${Chat.secondaryColor}${getRule("stripmining")} ")
-            .addLore(" &7Rollercoastering ${Chat.dash} ${Chat.secondaryColor}${getRule("rollarcoastering")} ")
-            .addLore(" &7Pokeholing ${Chat.dash} ${Chat.secondaryColor}${getRule("pokeholing")}")
+            .addLore(" <gray>Stripmining ${Chat.dash} ${Chat.secondaryColor}${getRule("stripmining")} ")
+            .addLore(" <gray>Rollercoastering ${Chat.dash} ${Chat.secondaryColor}${getRule("rollarcoastering")} ")
+            .addLore(" <gray>Pokeholing ${Chat.dash} ${Chat.secondaryColor}${getRule("pokeholing")}")
             .addLore(" ")
             .make()
         gui.item(16, miningConfig).onClick runnable@ {
@@ -296,58 +296,58 @@ class ConfigCommand : CommandExecutor {
         val netherConfig = ItemBuilder(Material.NETHERRACK)
             .name(" &4&lNether Config ")
             .addLore(" ")
-            .addLore(" &7Nether ${Chat.dash} ${Chat.secondaryColor}${getNether("nether")} ")
-            .addLore(" &7Nerfed Quartz ${Chat.dash} ${Chat.secondaryColor}${getNether("nerfedquartz")} ")
+            .addLore(" <gray>Nether ${Chat.dash} ${Chat.secondaryColor}${getNether("nether")} ")
+            .addLore(" <gray>Nerfed Quartz ${Chat.dash} ${Chat.secondaryColor}${getNether("nerfedquartz")} ")
             .addLore(" ")
-            .addLore(" &7Tier II Potions ${Chat.dash} ${Chat.secondaryColor}${getNether("tierii")} ")
-            .addLore(" &7Strength Potions ${Chat.dash} ${Chat.secondaryColor}${getNether("strengthpotions")} ")
-            .addLore(" &7Splash Potions ${Chat.dash} ${Chat.secondaryColor}${getNether("splashpotions")} ")
+            .addLore(" <gray>Tier II Potions ${Chat.dash} ${Chat.secondaryColor}${getNether("tierii")} ")
+            .addLore(" <gray>Strength Potions ${Chat.dash} ${Chat.secondaryColor}${getNether("strengthpotions")} ")
+            .addLore(" <gray>Splash Potions ${Chat.dash} ${Chat.secondaryColor}${getNether("splashpotions")} ")
             .addLore(" ")
-            .addLore(" &7Portal Trapping ${Chat.dash} ${Chat.secondaryColor}${getRule("portaltrapping")} ")
-            .addLore(" &7Portal Camping ${Chat.dash} ${Chat.secondaryColor}${getRule("portalcamping")} ")
+            .addLore(" <gray>Portal Trapping ${Chat.dash} ${Chat.secondaryColor}${getRule("portaltrapping")} ")
+            .addLore(" <gray>Portal Camping ${Chat.dash} ${Chat.secondaryColor}${getRule("portalcamping")} ")
             .addLore(" ")
             .make()
-        val editConfig = ItemBuilder(Material.COMMAND)
+        val editConfig = ItemBuilder(Material.COMMAND_BLOCK)
             .name(" &4&lEdit Config ")
             .addLore(" ")
-            .addLore(" &7Click here to edit the UHC configuration. ")
+            .addLore(" <gray>Click here to edit the UHC configuration. ")
             .addLore(" ")
             .make()
 
-        val pvpConfig = ItemBuilder(Material.BOOK_AND_QUILL)
+        val pvpConfig = ItemBuilder(Material.WRITABLE_BOOK)
             .name(" &4&lPvP/Meetup Config ")
             .addLore(" ")
-            .addLore(" &7Stalking ${Chat.dash} ${Chat.secondaryColor}${getRule("stalking")}")
-            .addLore(" &7Stealing ${Chat.dash} ${Chat.secondaryColor}${getRule("stealing")}")
+            .addLore(" <gray>Stalking ${Chat.dash} ${Chat.secondaryColor}${getRule("stalking")}")
+            .addLore(" <gray>Stealing ${Chat.dash} ${Chat.secondaryColor}${getRule("stealing")}")
             .addLore(" ")
-            .addLore(" &7Crossteaming ${Chat.dash} ${Chat.secondaryColor}${getRule("crossteaming")}")
-            .addLore(" &7Scumballing/Crossteam Killing ${Chat.dash} ${Chat.secondaryColor}${getRule("scumballing")}")
-            .addLore(" &7Team Killing ${Chat.dash} ${Chat.secondaryColor}${getRule("teamkilling")}")
-            .addLore(" &7iPvP ${Chat.dash} &cNot Allowed")
+            .addLore(" <gray>Crossteaming ${Chat.dash} ${Chat.secondaryColor}${getRule("crossteaming")}")
+            .addLore(" <gray>Scumballing/Crossteam Killing ${Chat.dash} ${Chat.secondaryColor}${getRule("scumballing")}")
+            .addLore(" <gray>Team Killing ${Chat.dash} ${Chat.secondaryColor}${getRule("teamkilling")}")
+            .addLore(" <gray>iPvP ${Chat.dash} <red>Not Allowed")
             .addLore(" ")
-            .addLore(" &7Skybasing ${Chat.dash} ${Chat.secondaryColor}${getRule("skybasing")}")
-            .addLore(" &7Running At Meetup ${Chat.dash} ${Chat.secondaryColor}${getRule("runningatmu")}")
+            .addLore(" <gray>Skybasing ${Chat.dash} ${Chat.secondaryColor}${getRule("skybasing")}")
+            .addLore(" <gray>Running At Meetup ${Chat.dash} ${Chat.secondaryColor}${getRule("runningatmu")}")
             .addLore(" ")
             .make()
         val specialsConfig = ItemBuilder(Material.BLAZE_POWDER)
             .name(" &4&lSpecial Options ")
             .addLore(" ")
-            .addLore(" &7Fire Resistance before PvP ${Chat.dash} ${Chat.secondaryColor}${getSpecials("frbp")} ")
-            .addLore(" &7Absorption before PvP ${Chat.dash} ${Chat.secondaryColor}${getSpecials("abp")} ")
-            .addLore(" &7Block Decay at Meetup ${Chat.dash} ${Chat.secondaryColor}${getSpecials("meetupblockdecay")} ")
-            .addLore(" &7Permaday at Meetup ${Chat.dash} ${Chat.secondaryColor}${getSpecials("permadayatmeetup")}")
+            .addLore(" <gray>Fire Resistance before PvP ${Chat.dash} ${Chat.secondaryColor}${getSpecials("frbp")} ")
+            .addLore(" <gray>Absorption before PvP ${Chat.dash} ${Chat.secondaryColor}${getSpecials("abp")} ")
+            .addLore(" <gray>Block Decay at Meetup ${Chat.dash} ${Chat.secondaryColor}${getSpecials("meetupblockdecay")} ")
+            .addLore(" <gray>Permaday at Meetup ${Chat.dash} ${Chat.secondaryColor}${getSpecials("permadayatmeetup")}")
             .addLore(" ")
             .make()
         val privateRoundConfig = ItemBuilder(Material.NAME_TAG)
             .name(" &4&lPrivate Options")
             .addLore(" ")
-            .addLore(" &7Private Mode ${Chat.dash} ${Chat.secondaryColor}${getOption("private")}" )
-            .addLore(" &7No Branding ${Chat.dash} ${Chat.secondaryColor}${getOption("noBranding")} ")
-            .addLore(" &7Custom Branding ${Chat.dash} ${Chat.secondaryColor}${ConfigFeature.instance.data!!.getString("game.options.customBranding")} ")
+            .addLore(" <gray>Private Mode ${Chat.dash} ${Chat.secondaryColor}${getOption("private")}" )
+            .addLore(" <gray>No Branding ${Chat.dash} ${Chat.secondaryColor}${getOption("noBranding")} ")
+            .addLore(" <gray>Custom Branding ${Chat.dash} ${Chat.secondaryColor}${ConfigFeature.instance.data!!.getString("game.options.customBranding")} ")
             .addLore(" ")
-            .addLore(" &7RR Mode ${Chat.dash} ${Chat.secondaryColor}${getOption("recordedRound")}")
-            .addLore(" &7Time between Episodes ${Chat.dash} ${Chat.secondaryColor}${ConfigFeature.instance.data!!.getInt("episodeTimer")} ")
-            .addLore(" &7Episodes ${Chat.dash} ${Chat.secondaryColor}${ConfigFeature.instance.data!!.getInt("episodeCount")} ")
+            .addLore(" <gray>RR Mode ${Chat.dash} ${Chat.secondaryColor}${getOption("recordedRound")}")
+            .addLore(" <gray>Time between Episodes ${Chat.dash} ${Chat.secondaryColor}${ConfigFeature.instance.data!!.getInt("episodeTimer")} ")
+            .addLore(" <gray>Episodes ${Chat.dash} ${Chat.secondaryColor}${ConfigFeature.instance.data!!.getInt("episodeCount")} ")
             .addLore(" ")
             .make()
 
@@ -433,7 +433,7 @@ class ConfigCommand : CommandExecutor {
 
 
 
-        sender.playSound(sender.location, Sound.LEVEL_UP, 10.toFloat(), 10.toFloat())
+        sender.playSound(sender.location, Sound.ENTITY_PLAYER_LEVELUP, 10.toFloat(), 10.toFloat())
         sender.openInventory(gui.make())
         return true
     }

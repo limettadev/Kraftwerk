@@ -12,26 +12,26 @@ enum class Tags(
     val display: String,
     val item: Material
 ) {
-    FLOWER("&8[&d✿&8]&r", Material.YELLOW_FLOWER),
-    SMILEY("&b(◕‿◕)&r", Material.POTATO_ITEM),
-    HEART("&8[&c❤&8]&r", Material.GOLDEN_APPLE),
+    FLOWER("<dark_gray>[&d✿<dark_gray>]&r", Material.POPPY),
+    SMILEY("&b(◕‿◕)&r", Material.POTATO),
+    HEART("<dark_gray>[<red>❤<dark_gray>]&r", Material.GOLDEN_APPLE),
 
-    MUSICAL("&8[&b♫&8]&r", Material.NOTE_BLOCK),
-    STAR("&8[&e✯&8]&r", Material.GOLD_BLOCK),
-    YIN_YANG("&8[&f☯&8]&r", Material.ENDER_PEARL),
-    PEACE("&8[&d☮&8]&r", Material.BREWING_STAND_ITEM)
+    MUSICAL("<dark_gray>[&b♫<dark_gray>]&r", Material.NOTE_BLOCK),
+    STAR("<dark_gray>[<yellow>✯<dark_gray>]&r", Material.GOLD_BLOCK),
+    YIN_YANG("<dark_gray>[&f☯<dark_gray>]&r", Material.ENDER_PEARL),
+    PEACE("<dark_gray>[&d☮<dark_gray>]&r", Material.BREWING_STAND)
 }
 
 class GrantTagCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<out String>
     ): Boolean {
         if (sender.name != "minota") {
             if (sender is Player) {
-                Chat.sendMessage(sender, "&cThis command can only be executed by console.")
+                Chat.sendMessage(sender, "<red>This command can only be executed by console.")
                 return false
             }
         }
@@ -40,7 +40,7 @@ class GrantTagCommand : CommandExecutor {
         profile.unlockedTags.add(args[1].uppercase())
         Kraftwerk.instance.profileHandler.saveProfile(profile)
         if (player.isOnline) {
-            Chat.sendMessage(player as Player, "${Chat.prefix} You've been granted the &e${args[1].uppercase()} ${Tags.valueOf(args[1].uppercase()).display}&7 tag.")
+            Chat.sendMessage(player as Player, "${Chat.prefix} You've been granted the <yellow>${args[1].uppercase()} ${Tags.valueOf(args[1].uppercase()).display}<gray> tag.")
         }
         return true
     }

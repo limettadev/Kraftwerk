@@ -21,8 +21,8 @@ class ScenarioManagerCommand : CommandExecutor {
 
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<String>
     ): Boolean {
         if (sender !is Player) {
@@ -30,14 +30,14 @@ class ScenarioManagerCommand : CommandExecutor {
             return false
         }
         if (!sender.hasPermission("uhc.staff.scenarios")) {
-            Chat.sendMessage(sender, "&cYou don't have permission to use this command.")
+            Chat.sendMessage(sender, "<red>You don't have permission to use this command.")
             return false
         }
         val page = if (args.isEmpty()) {
             0
         } else {
             if (args[0].toIntOrNull() == null) {
-                Chat.sendMessage(sender, "&cInvalid page number!")
+                Chat.sendMessage(sender, "<red>Invalid page number!")
                 return false
             }
             args[0].toInt()
@@ -49,15 +49,15 @@ class ScenarioManagerCommand : CommandExecutor {
                 if (index < 27) {
                     val item = ItemStack(scenario.material)
                     var meta = item.itemMeta
-                    var color: String = if (scenario.enabled) "&a"
-                    else "&c"
+                    var color: String = if (scenario.enabled) "<green>"
+                    else "<red>"
                     meta.displayName = Chat.colored("${color}${scenario.name}")
-                    meta.lore = Chat.scenarioTextWrap(Chat.colored("&7${scenario.description}"), 40)
+                    meta.lore = Chat.scenarioTextWrap(Chat.colored("<gray>${scenario.description}"), 40)
                     item.itemMeta = meta
                     gui.item(i, item).onClick runnable@ {
                         ScenarioHandler.getScenario(scenario.id)?.toggle()
-                        color = if (scenario.enabled) "&a"
-                        else "&c"
+                        color = if (scenario.enabled) "<green>"
+                        else "<red>"
                         meta = it.currentItem.itemMeta
                         meta.displayName = Chat.colored("${color}${scenario.name}")
                         it.currentItem.itemMeta = meta
@@ -69,15 +69,15 @@ class ScenarioManagerCommand : CommandExecutor {
                 if (between(index, ((page - 1) * 27), ((page - 1) * 27) + 26)) {
                     val item = ItemStack(scenario.material)
                     var meta = item.itemMeta
-                    var color: String = if (scenario.enabled) "&a"
-                    else "&c"
+                    var color: String = if (scenario.enabled) "<green>"
+                    else "<red>"
                     meta.displayName = Chat.colored("${color}${scenario.name}")
-                    meta.lore = Chat.scenarioTextWrap(Chat.colored("&7${scenario.description}"), 40)
+                    meta.lore = Chat.scenarioTextWrap(Chat.colored("<gray>${scenario.description}"), 40)
                     item.itemMeta = meta
                     gui.item(i, item).onClick runnable@ {
                         ScenarioHandler.getScenario(scenario.id)?.toggle()
-                        color = if (scenario.enabled) "&a"
-                        else "&c"
+                        color = if (scenario.enabled) "<green>"
+                        else "<red>"
                         meta = it.currentItem.itemMeta
                         meta.displayName = Chat.colored("${color}${scenario.name}")
                         it.currentItem.itemMeta = meta
@@ -88,16 +88,16 @@ class ScenarioManagerCommand : CommandExecutor {
             }
         }
         val next = ItemBuilder(Material.ARROW)
-            .name("&eNext")
-            .addLore("&7Go to the next page.")
+            .name("<yellow>Next")
+            .addLore("<gray>Go to the next page.")
             .make()
         val back = ItemBuilder(Material.ARROW)
-            .name("&eBack")
-            .addLore("&7Go to the previous page.")
+            .name("<yellow>Back")
+            .addLore("<gray>Go to the previous page.")
             .make()
         val resetScenarios = ItemBuilder(Material.REDSTONE_BLOCK)
             .name("&4Reset Scenarios")
-            .addLore("&7Disables all scenarios.")
+            .addLore("<gray>Disables all scenarios.")
             .make()
         if (page > 0) {
             gui.item(32, next).onClick runnable@ {

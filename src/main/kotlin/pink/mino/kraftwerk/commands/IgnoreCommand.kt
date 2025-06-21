@@ -21,12 +21,12 @@ class IgnoreCommand : CommandExecutor {
      */
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<out String>
     ): Boolean {
         if (args.isEmpty()) {
-            Chat.sendMessage(sender, "&cYou must provide a player to ignore.")
+            Chat.sendMessage(sender, "<red>You must provide a player to ignore.")
             return false
         }
         if (sender !is Player) {
@@ -35,22 +35,22 @@ class IgnoreCommand : CommandExecutor {
         }
         val player = Bukkit.getPlayer(args[0])
         if (player == null) {
-            Chat.sendMessage(sender, "&cYou must provide a valid (and online) player to ignore.")
+            Chat.sendMessage(sender, "<red>You must provide a valid (and online) player to ignore.")
             return false
         }
         if (player.hasPermission("uhc.staff")) {
-            Chat.sendMessage(sender, "&cYou can't ignore this player, they are a staff member, contact us on Discord regarding feedback.")
+            Chat.sendMessage(sender, "<red>You can't ignore this player, they are a staff member, contact us on Discord regarding feedback.")
             return false
         }
         val list = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(sender.uniqueId)!!.ignored
         if (list.contains(player.uniqueId)) {
             list.remove(player.uniqueId)
             JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(sender.uniqueId)!!.ignored = list
-            Chat.sendMessage(sender, "${Chat.prefix} Successfully removed &8'${Chat.secondaryColor}${player.name}&8'&7 from your ignored list.")
+            Chat.sendMessage(sender, "${Chat.prefix} Successfully removed <dark_gray>'${Chat.secondaryColor}${player.name}<dark_gray>'<gray> from your ignored list.")
         } else {
             list.add(player.uniqueId)
             JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(sender.uniqueId)!!.ignored = list
-            Chat.sendMessage(sender, "${Chat.prefix} Successfully added &8'${Chat.secondaryColor}${player.name}&8'&7 to your ignored list.")
+            Chat.sendMessage(sender, "${Chat.prefix} Successfully added <dark_gray>'${Chat.secondaryColor}${player.name}<dark_gray>'<gray> to your ignored list.")
         }
 
         return true

@@ -28,7 +28,7 @@ class GuiBuilder : Listener {
         return this
     }
 
-    fun name(newName: String?): GuiBuilder {
+    fun name(newName: String): GuiBuilder {
         name = ChatColor.translateAlternateColorCodes('&', newName)
         return this
     }
@@ -59,15 +59,15 @@ class GuiBuilder : Listener {
     fun onInventoryClick(e: InventoryClickEvent) {
         if (e.whoClicked is Player && owner != null) {
             val clicker = e.whoClicked as Player
-            if (clicker.uniqueId.toString() == owner!!.uniqueId.toString()) {
-                if (e.currentItem != null) {
-                    if (e.currentItem.type != Material.AIR) {
-                        if (ChatColor.stripColor(e.inventory.name).equals(ChatColor.stripColor(name), ignoreCase = true)) {
-                            val slot = e.slot
-                            if (runnableHashMap[slot] != null) {
-                                runnableHashMap[slot]!!.accept(e)
-                            }
-                        }
+            if (clicker.uniqueId == owner!!.uniqueId) {
+                val view = e.view
+                val inventoryTitle = view.title() // returns net.kyori.adventure.text.Component
+                val expectedTitle = net.kyori.adventure.text.minimessage.MiniMessage.miniMessage().deserialize(name)
+                if (inventoryTitle == expectedTitle) {
+                    val currentItem = e.currentItem
+                    if (currentItem != null && currentItem.type != Material.AIR) {
+                        val slot = e.slot
+                        runnableHashMap[slot]?.accept(e)
                     }
                 }
             }
@@ -77,8 +77,10 @@ class GuiBuilder : Listener {
     @EventHandler
     fun onPlayerClose(event: InventoryCloseEvent) {
         if (event.player is Player && owner != null) {
-            if (event.player.uniqueId.toString() == owner!!.uniqueId.toString()) {
-                if (ChatColor.stripColor(event.inventory.name).equals(ChatColor.stripColor(name), ignoreCase = true)) {
+            if (event.player.uniqueId == owner!!.uniqueId) {
+                val inventoryTitle = event.view.title() // Component
+                val expectedTitle = net.kyori.adventure.text.minimessage.MiniMessage.miniMessage().deserialize(name)
+                if (inventoryTitle == expectedTitle) {
                     HandlerList.unregisterAll(this)
                 }
             }

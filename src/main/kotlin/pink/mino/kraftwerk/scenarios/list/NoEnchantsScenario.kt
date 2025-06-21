@@ -19,6 +19,6 @@ class NoEnchantsScenario : Scenario(
         for (i in e.expLevelCostsOffered.indices) {
             e.expLevelCostsOffered[i] = 0
         }
-        Chat.sendMessage(player, "&cYou can't enchant in this gamemode.")
+        Chat.sendMessage(player, "<red>You can't enchant in this gamemode.")
     }
 }

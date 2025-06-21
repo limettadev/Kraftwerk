@@ -18,30 +18,30 @@ class UnbanCommand : CommandExecutor {
         args: Array<out String>
     ): Boolean {
         if (sender !is Player || !sender.hasPermission("uhc.staff.unban")) {
-            sender.sendMessage(Chat.colored("&cYou don't have permission to use this command."))
+            sender.sendMessage(Chat.colored("<red>You don't have permission to use this command."))
             return true
         }
 
         if (args.isEmpty()) {
-            sender.sendMessage(Chat.colored("&cUsage: /unban <player>"))
+            sender.sendMessage(Chat.colored("<red>Usage: /unban <player>"))
             return true
         }
 
         val target = Bukkit.getOfflinePlayer(args[0])
         if (target.uniqueId == sender.uniqueId) {
-            sender.sendMessage(Chat.colored("&cYou can't unban yourself."))
+            sender.sendMessage(Chat.colored("<red>You can't unban yourself."))
             return true
         }
 
         val activePunishment = PunishmentFeature.getActivePunishment(target, PunishmentType.BAN)
         if (activePunishment == null) {
-            sender.sendMessage(Chat.colored("&cThat player is not currently banned."))
+            sender.sendMessage(Chat.colored("<red>That player is not currently banned."))
             return true
         }
 
         PunishmentFeature.revokePunishment(target.uniqueId, PunishmentType.BAN)
 
-        val message = Chat.colored("&c${sender.name} unbanned ${target.name}.")
+        val message = Chat.colored("<red>${sender.name} unbanned ${target.name}.")
         Bukkit.getOnlinePlayers()
             .filter { it.hasPermission("uhc.staff") }
             .forEach { it.sendMessage(message) }

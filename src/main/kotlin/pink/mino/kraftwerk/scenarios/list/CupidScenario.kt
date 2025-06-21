@@ -22,7 +22,7 @@ class CupidScenario : Scenario(
             val shooter = ((e.damager as Arrow).shooter) as Player
             e.entity as Player
             shooter.health += 0.02
-            Chat.sendMessage(shooter, "&a+1 health!")
+            Chat.sendMessage(shooter, "<green>+1 health!")
         }
     }
 }

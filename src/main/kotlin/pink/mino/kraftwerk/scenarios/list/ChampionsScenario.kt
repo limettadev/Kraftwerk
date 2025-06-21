@@ -42,7 +42,7 @@ class ChampionsScenario : Scenario(
     "champions",
     Material.GOLDEN_APPLE
 ), CommandExecutor {
-    val prefix = Chat.colored("&8[${Chat.primaryColor}Champions&8] &7")
+    val prefix = Chat.colored("<dark_gray>[${Chat.primaryColor}Champions<dark_gray>] <gray>")
     val kits = hashMapOf<UUID, String>()
 
     init {
@@ -65,15 +65,15 @@ class ChampionsScenario : Scenario(
         if (!enabled) return
         if (GameState.currentState != GameState.INGAME) return
         if (e.damager is Player && e.entity is Player) {
-            if ((e.damager as Player).inventory.itemInHand != null && (e.damager as Player).inventory.itemInHand.hasItemMeta() && (e.damager as Player).inventory.itemInHand.itemMeta.displayName == Chat.colored("&eDeath's Scythe")) {
+            if ((e.damager as Player).inventory.itemInHand != null && (e.damager as Player).inventory.itemInHand.hasItemMeta() && (e.damager as Player).inventory.itemInHand.itemMeta.displayName == Chat.colored("<yellow>Death's Scythe")) {
                 (e.entity as Player).damage((e.entity as Player).health * .2)
             }
-            if ((e.damager as Player).inventory.helmet != null && (e.damager as Player).inventory.helmet.hasItemMeta() && (e.damager as Player).inventory.helmet.itemMeta.displayName == Chat.colored("&eExodus")) {
+            if ((e.damager as Player).inventory.helmet != null && (e.damager as Player).inventory.helmet.hasItemMeta() && (e.damager as Player).inventory.helmet.itemMeta.displayName == Chat.colored("<yellow>Exodus")) {
                 if (!(e.damager as Player).hasPotionEffect(PotionEffectType.REGENERATION)) {
                     (e.damager as Player).addPotionEffect(PotionEffect(PotionEffectType.REGENERATION, 50, 0))
                 }
             }
-            if ((e.damager as Player).inventory.itemInHand != null && (e.damager as Player).inventory.itemInHand.hasItemMeta() && (e.damager as Player).inventory.itemInHand.itemMeta.displayName == Chat.colored("&eAxe of Perun")) {
+            if ((e.damager as Player).inventory.itemInHand != null && (e.damager as Player).inventory.itemInHand.hasItemMeta() && (e.damager as Player).inventory.itemInHand.itemMeta.displayName == Chat.colored("<yellow>Axe of Perun")) {
                 if (perunCooldownsMap[e.damager as Player] == null || perunCooldownsMap[e.damager as Player]!! < System.currentTimeMillis()) {
                     (e.damager as Player).world.strikeLightning((e.entity as Player).location)
                     perunCooldownsMap[e.damager as Player] = System.currentTimeMillis() + 8000
@@ -91,7 +91,7 @@ class ChampionsScenario : Scenario(
         if (e.entity.killer !is Player) return
         e.drops.add(ItemStack(Material.GOLD_NUGGET, 10))
         e.droppedExp = (e.droppedExp + floor((e.droppedExp * 0.50))).toInt()
-        if (e.entity.killer.itemInHand != null && e.entity.killer.itemInHand.hasItemMeta() && e.entity.killer.itemInHand.itemMeta.displayName == Chat.colored("&eBloodlust")) {
+        if (e.entity.killer.itemInHand != null && e.entity.killer.itemInHand.hasItemMeta() && e.entity.killer.itemInHand.itemMeta.displayName == Chat.colored("<yellow>Bloodlust")) {
             if (ConfigFeature.instance.data!!.getInt("game.kills.${e.entity.killer.name}") == 1) {
                 e.entity.killer.itemInHand.addEnchantment(Enchantment.DAMAGE_ALL, 2)
             } else if (ConfigFeature.instance.data!!.getInt("game.kills.${e.entity.killer.name}") == 3) {
@@ -118,7 +118,7 @@ class ChampionsScenario : Scenario(
             if (TeamsFeature.manager.getTeam(e.player) == null) {
                 Chat.sendMessage(
                     e.player,
-                    "$prefix You ate a &6Golden Head&7 and gained 15 seconds of Regeneration II & 2 minutes of Absorption."
+                    "$prefix You ate a &6Golden Head<gray> and gained 15 seconds of Regeneration II & 2 minutes of Absorption."
                 )
                 e.player.addPotionEffect(PotionEffect(PotionEffectType.REGENERATION, 20 * 10, 1, false, true))
                 e.player.addPotionEffect(PotionEffect(PotionEffectType.ABSORPTION, 20 * 120, 1, false, true))
@@ -127,7 +127,7 @@ class ChampionsScenario : Scenario(
                     if (teammate.isOnline && teammate != null) {
                         Chat.sendMessage(
                             teammate as Player,
-                            "$prefix &6${e.player.name}&7 ate a &6Golden Head&7 and you gained gained 5 seconds of Regeneration II & 1 minute of Absorption."
+                            "$prefix &6${e.player.name}<gray> ate a &6Golden Head<gray> and you gained gained 5 seconds of Regeneration II & 1 minute of Absorption."
                         )
                         teammate.addPotionEffect(PotionEffect(PotionEffectType.REGENERATION, 20 * 5, 1, false, true))
                         teammate.addPotionEffect(PotionEffect(PotionEffectType.ABSORPTION, 20 * 60, 1, false, true))
@@ -147,7 +147,7 @@ class ChampionsScenario : Scenario(
             e.player.addPotionEffect(PotionEffect(PotionEffectType.REGENERATION, 20 * 20, 0, false, true))
             e.player.addPotionEffect(PotionEffect(PotionEffectType.SPEED, 20 * 9, 0, false, true))
         }
-        if (e.item.itemMeta.displayName == Chat.colored("&cCrafting Recipes")) {
+        if (e.item.itemMeta.displayName == Chat.colored("<red>Crafting Recipes")) {
             e.isCancelled = true
             Bukkit.dispatchCommand(e.player, "recipes")
         }
@@ -333,8 +333,8 @@ class ChampionsScenario : Scenario(
             )
         }
         val book = ItemBuilder(Material.ENCHANTED_BOOK)
-            .name("&cCrafting Recipes")
-            .addLore("&7Click to open & view a list of crafting recipes.")
+            .name("<red>Crafting Recipes")
+            .addLore("<gray>Click to open & view a list of crafting recipes.")
             .make()
         PlayerUtils.bulkItems(
             player, arrayListOf(
@@ -359,7 +359,7 @@ class ChampionsScenario : Scenario(
                 else -> false
             }
             if (isIngredient && canCraft(player, recipe) && recipe.id !in notified) {
-                Chat.sendMessage(player, "&aYou now have the items to craft &e${recipe.name}&a!")
+                Chat.sendMessage(player, "<green>You now have the items to craft <yellow>${recipe.name}<green>!")
                 notified.add(recipe.id)
             }
         }
@@ -541,8 +541,8 @@ class ChampionsScenario : Scenario(
                 )
             }
             val book = ItemBuilder(Material.ENCHANTED_BOOK)
-                .name("&cCrafting Recipes")
-                .addLore("&7Click to open & view a list of crafting recipes.")
+                .name("<red>Crafting Recipes")
+                .addLore("<gray>Click to open & view a list of crafting recipes.")
                 .make()
             PlayerUtils.bulkItems(
                 player, arrayListOf(
@@ -553,15 +553,15 @@ class ChampionsScenario : Scenario(
         object : BukkitRunnable() {
             override fun run() {
                 for (player in Bukkit.getOnlinePlayers()) {
-                    if (player.inventory.itemInHand != null && player.inventory.itemInHand.hasItemMeta() && player.inventory.itemInHand.itemMeta.displayName == Chat.colored("&eAndūril")) {
+                    if (player.inventory.itemInHand != null && player.inventory.itemInHand.hasItemMeta() && player.inventory.itemInHand.itemMeta.displayName == Chat.colored("<yellow>Andūril")) {
                         player.addPotionEffect(PotionEffect(PotionEffectType.SPEED, 20, 0, false, true))
                         player.addPotionEffect(PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20, 0, false, true))
                     }
-                    if (player.inventory.chestplate != null && player.inventory.chestplate.hasItemMeta() && player.inventory.chestplate.itemMeta.displayName == Chat.colored("&eBarbarian Chestplate")) {
+                    if (player.inventory.chestplate != null && player.inventory.chestplate.hasItemMeta() && player.inventory.chestplate.itemMeta.displayName == Chat.colored("<yellow>Barbarian Chestplate")) {
                         player.addPotionEffect(PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20, 0, false, true))
                         player.addPotionEffect(PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20, 0, false, true))
                     }
-                    if (player.inventory.boots != null && player.inventory.boots.hasItemMeta() && player.inventory.boots.itemMeta.displayName == Chat.colored("&eHermes' Boots")) {
+                    if (player.inventory.boots != null && player.inventory.boots.hasItemMeta() && player.inventory.boots.itemMeta.displayName == Chat.colored("<yellow>Hermes' Boots")) {
                         player.walkSpeed = 0.2F + 0.02F
                     } else {
                         player.walkSpeed = 0.2F
@@ -587,157 +587,157 @@ class ChampionsScenario : Scenario(
             sender.sendMessage("$prefix Champions is not enabled.")
             return true
         }
-        val gui = GuiBuilder().rows(2).name("&cChampions Kit Selector").owner(sender)
+        val gui = GuiBuilder().rows(2).name("<red>Champions Kit Selector").owner(sender)
         val leatherKit = ItemBuilder(Material.LEATHER_CHESTPLATE)
-            .name("&aLeather Armor")
+            .name("<green>Leather Armor")
             .addLore("&6Kit:")
-            .addLore("&7Spawn with a full set of ")
-            .addLore("&7protection III leather armor.")
+            .addLore("<gray>Spawn with a full set of ")
+            .addLore("<gray>protection III leather armor.")
             .make()
         val enchanterKit = ItemBuilder(Material.BOOK)
-            .name("&aEnchanting Set")
+            .name("<green>Enchanting Set")
             .addLore("&6Kit:")
-            .addLore("&7Spawn with 4 books, 15")
-            .addLore("&7bottles, 18 lapis and an")
-            .addLore("&7efficiency 3, unbreaking 1 stone")
-            .addLore("&7pickaxe.")
+            .addLore("<gray>Spawn with 4 books, 15")
+            .addLore("<gray>bottles, 18 lapis and an")
+            .addLore("<gray>efficiency 3, unbreaking 1 stone")
+            .addLore("<gray>pickaxe.")
         val archerKit = ItemBuilder(Material.BOW)
-            .name("&aArcher Set")
+            .name("<green>Archer Set")
             .addLore("&6Kit:")
-            .addLore("&7Spawn with 6 strings, 9")
-            .addLore("&7feathers and an efficiency 3,")
-            .addLore("&7unbreaking 1 stone shovel.")
+            .addLore("<gray>Spawn with 6 strings, 9")
+            .addLore("<gray>feathers and an efficiency 3,")
+            .addLore("<gray>unbreaking 1 stone shovel.")
             .make()
         val stoneGear = ItemBuilder(Material.STONE_PICKAXE)
-            .name("&aStone Gear")
+            .name("<green>Stone Gear")
             .addLore("&6Kit:")
-            .addLore("&7Spawn with a full set of stone")
-            .addLore("&7tools with efficiency III and")
-            .addLore("&7unbreaking I.")
+            .addLore("<gray>Spawn with a full set of stone")
+            .addLore("<gray>tools with efficiency III and")
+            .addLore("<gray>unbreaking I.")
             .make()
         val lunchBox = ItemBuilder(Material.APPLE)
-            .name("&aLunch Box")
+            .name("<green>Lunch Box")
             .addLore("&6Kit:")
-            .addLore("&7Spawn with 9 steaks, 12")
-            .addLore("&7carrots, 2 melon slices, 2 gold")
-            .addLore("&7ingots and 3 apples.")
+            .addLore("<gray>Spawn with 9 steaks, 12")
+            .addLore("<gray>carrots, 2 melon slices, 2 gold")
+            .addLore("<gray>ingots and 3 apples.")
             .make()
         val looter = ItemBuilder(Material.BONE)
-            .name("&aLooter")
+            .name("<green>Looter")
             .addLore("&6Kit:")
-            .addLore("&7Spawn with 3 bones, 3 slime")
-            .addLore("&7balls, 2 gunpowder, 2 spider")
-            .addLore("&7eyes and a looting 1 stone")
-            .addLore("&7sword.")
+            .addLore("<gray>Spawn with 3 bones, 3 slime")
+            .addLore("<gray>balls, 2 gunpowder, 2 spider")
+            .addLore("<gray>eyes and a looting 1 stone")
+            .addLore("<gray>sword.")
             .make()
         val ecologist = ItemBuilder(Material.IRON_AXE)
-            .name("&aEcologist")
+            .name("<green>Ecologist")
             .addLore("&6Kit:")
-            .addLore("&7Spawn with 21 vines, 64 lily")
-            .addLore("&7pads, 12 sugar cane and an")
-            .addLore("&7efficiency 3, unbreaking 1 stone")
-            .addLore("&7pickaxe.")
+            .addLore("<gray>Spawn with 21 vines, 64 lily")
+            .addLore("<gray>pads, 12 sugar cane and an")
+            .addLore("<gray>efficiency 3, unbreaking 1 stone")
+            .addLore("<gray>pickaxe.")
             .make()
         val farmer = ItemBuilder(Material.SEEDS)
-            .name("&aFarmer")
+            .name("<green>Farmer")
             .addLore("&6Kit:")
-            .addLore("&7Spawn with an iron hoe, 3")
-            .addLore("&7melon slices, 3 carrots and 4")
-            .addLore("&7bonemeal.")
+            .addLore("<gray>Spawn with an iron hoe, 3")
+            .addLore("<gray>melon slices, 3 carrots and 4")
+            .addLore("<gray>bonemeal.")
             .make()
         val horseman = ItemBuilder(Material.SADDLE)
-            .name("&aHorseman")
+            .name("<green>Horseman")
             .addLore("&6Kit:")
-            .addLore("&7Spawn with 12 leather, 1 hay")
-            .addLore("&7bale, 4 string, gold horse armor")
-            .addLore("&7and a horse spawn egg.")
+            .addLore("<gray>Spawn with 12 leather, 1 hay")
+            .addLore("<gray>bale, 4 string, gold horse armor")
+            .addLore("<gray>and a horse spawn egg.")
             .make()
         val trapper = ItemBuilder(Material.PISTON_BASE)
-            .name("&aTrapper")
+            .name("<green>Trapper")
             .addLore("&6Kit:")
-            .addLore("&7Spawn with 8 pistons, 8 sticky")
-            .addLore("&7pistons, 25 redstone and 16 oak")
-            .addLore("&7logs.")
+            .addLore("<gray>Spawn with 8 pistons, 8 sticky")
+            .addLore("<gray>pistons, 25 redstone and 16 oak")
+            .addLore("<gray>logs.")
             .make()
         gui.item(0, leatherKit).onClick runnable@{
             if (this.kits[sender.uniqueId] == "leather") {
-                Chat.sendMessage(sender, "&cYou already have this kit.")
+                Chat.sendMessage(sender, "<red>You already have this kit.")
                 return@runnable
             }
             this.kits[sender.uniqueId] = "leather"
-            Chat.sendMessage(sender, "&aYou have selected the &6Leather Armor&a kit.")
+            Chat.sendMessage(sender, "<green>You have selected the &6Leather Armor<green> kit.")
         }
         gui.item(1, enchanterKit.make()).onClick runnable@{
             if (this.kits[sender.uniqueId] == "enchanter") {
-                Chat.sendMessage(sender, "&cYou already have this kit.")
+                Chat.sendMessage(sender, "<red>You already have this kit.")
                 return@runnable
             }
             this.kits[sender.uniqueId] = "enchanter"
-            Chat.sendMessage(sender, "&aYou have selected the &6Enchanting Set&a kit.")
+            Chat.sendMessage(sender, "<green>You have selected the &6Enchanting Set<green> kit.")
         }
         gui.item(2, archerKit).onClick runnable@{
             if (this.kits[sender.uniqueId] == "archer") {
-                Chat.sendMessage(sender, "&cYou already have this kit.")
+                Chat.sendMessage(sender, "<red>You already have this kit.")
                 return@runnable
             }
             this.kits[sender.uniqueId] = "archer"
-            Chat.sendMessage(sender, "&aYou have selected the &6Archer Set&a kit.")
+            Chat.sendMessage(sender, "<green>You have selected the &6Archer Set<green> kit.")
         }
         gui.item(3, stoneGear).onClick runnable@{
             if (this.kits[sender.uniqueId] == "stoneGear") {
-                Chat.sendMessage(sender, "&cYou already have this kit.")
+                Chat.sendMessage(sender, "<red>You already have this kit.")
                 return@runnable
             }
             this.kits[sender.uniqueId] = "stoneGear"
-            Chat.sendMessage(sender, "&aYou have selected the &6Stone Gear&a kit.")
+            Chat.sendMessage(sender, "<green>You have selected the &6Stone Gear<green> kit.")
         }
         gui.item(4, lunchBox).onClick runnable@{
             if (this.kits[sender.uniqueId] == "lunchBox") {
-                Chat.sendMessage(sender, "&cYou already have this kit.")
+                Chat.sendMessage(sender, "<red>You already have this kit.")
                 return@runnable
             }
             this.kits[sender.uniqueId] = "lunchBox"
-            Chat.sendMessage(sender, "&aYou have selected the &6Lunch Box&a kit.")
+            Chat.sendMessage(sender, "<green>You have selected the &6Lunch Box<green> kit.")
         }
         gui.item(5, looter).onClick runnable@{
             if (this.kits[sender.uniqueId] == "looter") {
-                Chat.sendMessage(sender, "&cYou already have this kit.")
+                Chat.sendMessage(sender, "<red>You already have this kit.")
                 return@runnable
             }
             this.kits[sender.uniqueId] = "looter"
-            Chat.sendMessage(sender, "&aYou have selected the &6Looter&a kit.")
+            Chat.sendMessage(sender, "<green>You have selected the &6Looter<green> kit.")
         }
         gui.item(6, ecologist).onClick runnable@{
             if (this.kits[sender.uniqueId] == "ecologist") {
-                Chat.sendMessage(sender, "&cYou already have this kit.")
+                Chat.sendMessage(sender, "<red>You already have this kit.")
                 return@runnable
             }
             this.kits[sender.uniqueId] = "ecologist"
-            Chat.sendMessage(sender, "&aYou have selected the &6Ecologist&a kit.")
+            Chat.sendMessage(sender, "<green>You have selected the &6Ecologist<green> kit.")
         }
         gui.item(7, farmer).onClick runnable@{
             if (this.kits[sender.uniqueId] == "farmer") {
-                Chat.sendMessage(sender, "&cYou already have this kit.")
+                Chat.sendMessage(sender, "<red>You already have this kit.")
                 return@runnable
             }
             this.kits[sender.uniqueId] = "farmer"
-            Chat.sendMessage(sender, "&aYou have selected the &6Farmer&a kit.")
+            Chat.sendMessage(sender, "<green>You have selected the &6Farmer<green> kit.")
         }
         gui.item(8, horseman).onClick runnable@{
             if (this.kits[sender.uniqueId] == "horseman") {
-                Chat.sendMessage(sender, "&cYou already have this kit.")
+                Chat.sendMessage(sender, "<red>You already have this kit.")
                 return@runnable
             }
             this.kits[sender.uniqueId] = "horseman"
-            Chat.sendMessage(sender, "&aYou have selected the &6Horseman&a kit.")
+            Chat.sendMessage(sender, "<green>You have selected the &6Horseman<green> kit.")
         }
         gui.item(9, trapper).onClick runnable@{
             if (this.kits[sender.uniqueId] == "trapper") {
-                Chat.sendMessage(sender, "&cYou already have this kit.")
+                Chat.sendMessage(sender, "<red>You already have this kit.")
                 return@runnable
             }
             this.kits[sender.uniqueId] = "trapper"
-            Chat.sendMessage(sender, "&aYou have selected the &6Trapper&a kit.")
+            Chat.sendMessage(sender, "<green>You have selected the &6Trapper<green> kit.")
         }
         sender.openInventory(gui.make())
         return true

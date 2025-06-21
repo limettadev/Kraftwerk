@@ -23,8 +23,8 @@ import pink.mino.kraftwerk.utils.Scoreboard
 class LatescatterCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
+        command: Command,
+        label: String,
         args: Array<String>
     ): Boolean {
         if (sender is Player) {
@@ -34,7 +34,7 @@ class LatescatterCommand : CommandExecutor {
             }
         }
         if (GameState.currentState != GameState.INGAME) {
-            Chat.sendMessage(sender, "&cYou can't use this command right now.")
+            Chat.sendMessage(sender, "<red>You can't use this command right now.")
             return false
         }
         if (args.isEmpty()) {
@@ -46,11 +46,11 @@ class LatescatterCommand : CommandExecutor {
         var list = ConfigFeature.instance.data!!.getStringList("game.list")
         if (list == null) list = ArrayList<String>()
         if (args.size == 1) {
-            player = Bukkit.getPlayer(args[0])
+            player = Bukkit.getPlayer(args[0])!!
             if (ConfigFeature.instance.data!!.getInt("game.teamSize") != 1) {
                 TeamsFeature.manager.createTeam(player)
             }
-            player.playSound(player.location, Sound.WOOD_CLICK, 10F, 1F)
+            player.playSound(player.location, Sound.BLOCK_LEVER_CLICK, 10F, 1F)
             player.maxHealth = 20.0
             player.health = player.maxHealth
             player.isFlying = false
@@ -59,9 +59,14 @@ class LatescatterCommand : CommandExecutor {
             player.saturation = 20F
             player.gameMode = GameMode.SURVIVAL
             player.inventory.clear()
-            player.inventory.armorContents = null
+            player.inventory.helmet = ItemStack(Material.AIR)
+            player.inventory.chestplate = ItemStack(Material.AIR)
+            player.inventory.leggings = ItemStack(Material.AIR)
+            player.inventory.boots = ItemStack(Material.AIR)
+            player.inventory.setItemInOffHand(ItemStack(Material.AIR))
+
             player.enderChest.clear()
-            player.itemOnCursor = ItemStack(Material.AIR)
+            player.setItemInHand(ItemStack(Material.AIR))
             val openInventory = player.openInventory
             if (openInventory.type == InventoryType.CRAFTING) {
                 openInventory.topInventory.clear()
@@ -70,8 +75,8 @@ class LatescatterCommand : CommandExecutor {
             for (effect in effects) {
                 player.removePotionEffect(effect.type)
             }
-            player.addPotionEffect(PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 300, 1000, true, false))
-            ScatterFeature.scatterSolo(player, Bukkit.getWorld(ConfigFeature.instance.data!!.getString("pregen.world")), ConfigFeature.instance.data!!.getInt("pregen.border"))
+            player.addPotionEffect(PotionEffect(PotionEffectType.RESISTANCE, 300, 1000, true, false))
+            ScatterFeature.scatterSolo(player, Bukkit.getWorld(ConfigFeature.instance.data!!.getString("pregen.world")!!)!!, ConfigFeature.instance.data!!.getInt("pregen.border"))
             player.inventory.setItem(0, ItemStack(Material.COOKED_BEEF, ConfigFeature.instance.data!!.getInt("game.starterfood")))
             JavaPlugin.getPlugin(Kraftwerk::class.java).statsHandler.getStatsPlayer(player)!!.gamesPlayed++
             for (scenario in ScenarioHandler.getActiveScenarios()) {
@@ -81,11 +86,11 @@ class LatescatterCommand : CommandExecutor {
             if (!list.contains(player.name)) {
                 list.add(player.name)
             }
-            Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${player.name}&7 has been late-scattered&7."))
+            Bukkit.broadcast(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${player.name}<gray> has been late-scattered<gray>."))
             Chat.sendMessage(player, "${Chat.prefix} You've successfully been added to the game.")
         } else if (args.size == 2) {
-            player = Bukkit.getPlayer(args[0])
-            teammate = Bukkit.getPlayer(args[1])
+            player = Bukkit.getPlayer(args[0])!!
+            teammate = Bukkit.getPlayer(args[1])!!
             if (TeamsFeature.manager.getTeam(teammate) == null) {
                 val team = TeamsFeature.manager.createTeam(player)
                 TeamsFeature.manager.joinTeam(team.name, player)
@@ -94,7 +99,7 @@ class LatescatterCommand : CommandExecutor {
                 val team = TeamsFeature.manager.getTeam(teammate)
                 TeamsFeature.manager.joinTeam(team!!.name, player)
             }
-            player.playSound(player.location, Sound.WOOD_CLICK, 10F, 1F)
+            player.playSound(player.location, Sound.BLOCK_LEVER_CLICK, 10F, 1F)
             player.maxHealth = 20.0
             player.health = player.maxHealth
             player.isFlying = false
@@ -104,8 +109,13 @@ class LatescatterCommand : CommandExecutor {
             player.gameMode = GameMode.SURVIVAL
             player.inventory.clear()
             player.enderChest.clear()
-            player.inventory.armorContents = null
-            player.itemOnCursor = ItemStack(Material.AIR)
+            player.inventory.helmet = ItemStack(Material.AIR)
+            player.inventory.chestplate = ItemStack(Material.AIR)
+            player.inventory.leggings = ItemStack(Material.AIR)
+            player.inventory.boots = ItemStack(Material.AIR)
+            player.inventory.setItemInOffHand(ItemStack(Material.AIR))
+            player.inventory.setItemInMainHand(ItemStack(Material.AIR))
+
             val openInventory = player.openInventory
             if (openInventory.type == InventoryType.CRAFTING) {
                 openInventory.topInventory.clear()
@@ -114,7 +124,7 @@ class LatescatterCommand : CommandExecutor {
             for (effect in effects) {
                 player.removePotionEffect(effect.type)
             }
-            player.addPotionEffect(PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 300, 1000, true, false))
+            player.addPotionEffect(PotionEffect(PotionEffectType.RESISTANCE, 300, 1000, true, false))
             player.teleport(teammate.location)
             player.inventory.setItem(0, ItemStack(Material.COOKED_BEEF, ConfigFeature.instance.data!!.getInt("game.starterfood")))
             JavaPlugin.getPlugin(Kraftwerk::class.java).statsHandler.getStatsPlayer(player)!!.gamesPlayed++
@@ -125,12 +135,12 @@ class LatescatterCommand : CommandExecutor {
             if (!list.contains(player.name)) {
                 list.add(player.name)
             }
-            Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${player.name}&7 has been late-scattered to their teammate ${Chat.secondaryColor}${teammate.name}&7."))
-            Chat.sendMessage(player, "${Chat.prefix} You've successfully been added to the game, you've also been teamed with ${Chat.secondaryColor}${teammate.name}&7")
+            Bukkit.broadcast(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${player.name}<gray> has been late-scattered to their teammate ${Chat.secondaryColor}${teammate.name}<gray>."))
+            Chat.sendMessage(player, "${Chat.prefix} You've successfully been added to the game, you've also been teamed with ${Chat.secondaryColor}${teammate.name}<gray>")
         }
         ConfigFeature.instance.data!!.set("game.list", list)
         ConfigFeature.instance.saveData()
-        Scoreboard.setScore(Chat.colored("${Chat.dash} &7Playing..."), PlayerUtils.getPlayingPlayers().size)
+        Scoreboard.setScore(Chat.colored("${Chat.dash} <gray>Playing..."), PlayerUtils.getPlayingPlayers().size)
         return true
     }
 

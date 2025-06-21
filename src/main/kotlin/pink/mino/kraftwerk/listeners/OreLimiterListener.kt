@@ -54,9 +54,7 @@ class OreLimiterListener : Listener {
                             BlockUtil().getBlocks(it, 2)
                                 .forEach { block -> if (block.type == Material.AIR ||
                                     block.type == Material.WATER ||
-                                    block.type == Material.STATIONARY_WATER ||
-                                    block.type == Material.LAVA ||
-                                    block.type == Material.STATIONARY_LAVA
+                                    block.type == Material.LAVA
                                 ) good = true }
                         }
                         if (!good) {
