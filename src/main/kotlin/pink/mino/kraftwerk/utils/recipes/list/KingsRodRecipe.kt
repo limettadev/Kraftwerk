@@ -25,13 +25,13 @@ class KingsRodRecipe : Recipe(
     init {
         val kingsRod = ItemBuilder(Material.FISHING_ROD)
             .name("<yellow>King's Rod")
-            .addEnchantment(Enchantment.LUCK, 10)
+            .addEnchantment(Enchantment.LUCK_OF_THE_SEA, 10)
             .addEnchantment(Enchantment.LURE, 5)
-            .addEnchantment(Enchantment.DURABILITY, 10)
+            .addEnchantment(Enchantment.UNBREAKING, 10)
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(kingsRod, id)).shape(" F ", "LCL", " W ")
             .setIngredient('F', Material.FISHING_ROD)
-            .setIngredient('L', Material.WATER_LILY)
+            .setIngredient('L', Material.LILY_PAD)
             .setIngredient('C', Material.COMPASS)
             .setIngredient('W', Material.WATER_BUCKET)
     }

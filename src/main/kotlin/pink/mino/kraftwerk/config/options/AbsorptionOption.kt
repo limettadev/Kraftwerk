@@ -1,5 +1,6 @@
 package pink.mino.kraftwerk.config.options
 
+import me.lucko.helper.Schedulers
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.event.EventHandler
@@ -22,7 +23,7 @@ class AbsorptionOption : ConfigOption(
         if (enabled) {
             return
         }
-        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+        Schedulers.sync().runLater({
             e.player.removePotionEffect(PotionEffectType.ABSORPTION)
         }, 1L)
     }

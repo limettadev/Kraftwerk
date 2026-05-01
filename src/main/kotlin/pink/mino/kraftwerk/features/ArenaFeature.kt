@@ -3,8 +3,10 @@ package pink.mino.kraftwerk.features
 import com.mongodb.client.model.Filters
 import me.lucko.helper.Schedulers
 import me.lucko.helper.utils.Log
+import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.minecraft.server.level.ServerPlayer
+import org.bson.BsonBinary
 //import net.minecraft.server.v1_8_R3.EntityLiving
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
@@ -108,17 +110,17 @@ class ArenaFeature : Listener {
             p.removePotionEffect(effect.type)
         }
         p.inventory.clear()
-        p.inventory.helmet = ItemStack(Material.AIR)
-        p.inventory.chestplate = ItemStack(Material.AIR)
-        p.inventory.leggings = ItemStack(Material.AIR)
-        p.inventory.boots = ItemStack(Material.AIR)
+        p.inventory.setHelmet(ItemStack(Material.AIR))
+        p.inventory.setChestplate(ItemStack(Material.AIR))
+        p.inventory.setLeggings(ItemStack(Material.AIR))
+        p.inventory.setBoots(ItemStack(Material.AIR))
         p.inventory.setItemInOffHand(ItemStack(Material.AIR))
         p.gameMode = GameMode.SURVIVAL
 
         Schedulers.async().run {
             with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("kits")) {
                 try {
-                    val document = find(Filters.eq("uuid", p.uniqueId)).first()!!
+                    val document = find(Filters.eq("uuid", BsonBinary(p.uniqueId))).first()!!
                     Schedulers.sync().run {
                         p.inventory.setItem(0, alias(document.getEmbedded(listOf("kit", "slot1"), String::class.java), p))
                         p.inventory.setItem(1, alias(document.getEmbedded(listOf("kit", "slot2"), String::class.java), p))
@@ -131,10 +133,10 @@ class ArenaFeature : Listener {
                         p.inventory.setItem(8, alias(document.getEmbedded(listOf("kit", "slot9"), String::class.java), p))
                         p.inventory.setItem(9, ItemStack(Material.ARROW, 64))
 
-                        p.inventory.helmet = unbreakableItem(Material.IRON_HELMET)
-                        p.inventory.chestplate = unbreakableItem(Material.IRON_CHESTPLATE)
-                        p.inventory.leggings = unbreakableItem(Material.IRON_LEGGINGS)
-                        p.inventory.boots = unbreakableItem(Material.DIAMOND_BOOTS)
+                        p.inventory.setHelmet(unbreakableItem(Material.IRON_HELMET))
+                        p.inventory.setChestplate(unbreakableItem(Material.IRON_CHESTPLATE))
+                        p.inventory.setLeggings(unbreakableItem(Material.IRON_LEGGINGS))
+                        p.inventory.setBoots(unbreakableItem(Material.DIAMOND_BOOTS))
                     }
                 } catch (e: NullPointerException) {
                     Schedulers.sync().run {
@@ -153,10 +155,10 @@ class ArenaFeature : Listener {
                         p.inventory.setItem(8, goldenHeads)
                         p.inventory.setItem(9, ItemStack(Material.ARROW, 64))
 
-                        p.inventory.helmet = unbreakableItem(Material.IRON_HELMET)
-                        p.inventory.chestplate = unbreakableItem(Material.IRON_CHESTPLATE)
-                        p.inventory.leggings = unbreakableItem(Material.IRON_LEGGINGS)
-                        p.inventory.boots = unbreakableItem(Material.DIAMOND_BOOTS)
+                        p.inventory.setHelmet(unbreakableItem(Material.IRON_HELMET))
+                        p.inventory.setChestplate(unbreakableItem(Material.IRON_CHESTPLATE))
+                        p.inventory.setLeggings(unbreakableItem(Material.IRON_LEGGINGS))
+                        p.inventory.setBoots(unbreakableItem(Material.DIAMOND_BOOTS))
                     }
                 }
             }
@@ -177,7 +179,7 @@ class ArenaFeature : Listener {
                     if (item == null || item.type == Material.AIR) continue
                     if (item.type == Material.DIAMOND_SWORD) {
                         val sword = ItemBuilder(Material.DIAMOND_SWORD)
-                            .name("&5&lSeedly Sword")
+                            .name("<dark_purple><bold>Seedly Sword")
                             .addEnchantment(Enchantment.SHARPNESS, 1)
                             .addEnchantment(Enchantment.FIRE_ASPECT, 1)
                             .make()
@@ -185,14 +187,14 @@ class ArenaFeature : Listener {
                     }
                     if (item.type == Material.BOW) {
                         val bow = ItemBuilder(Material.BOW)
-                            .name("&5&lSeedly Bow")
+                            .name("<dark_purple><bold>Seedly Bow")
                             .addEnchantment(Enchantment.POWER, 1)
                             .addEnchantment(Enchantment.FLAME, 1)
                             .make()
                         e.player.inventory.setItem(index, bow)
                     }
                 }
-                Chat.sendMessage(e.player, "<dark_gray>[&d&lSecret<dark_gray>]<gray>&o You get the &5&oSeedly<gray> buff!")
+                Chat.sendMessage(e.player, "<dark_gray>[<light_purple><bold>Secret<dark_gray>]<gray><italic> You get the <dark_purple><italic>Seedly<gray> buff!")
                 seeds[e.player.uniqueId] = 0
             }
         }
@@ -239,11 +241,11 @@ class ArenaFeature : Listener {
                         JavaPlugin.getPlugin(Kraftwerk::class.java).statsHandler.getStatsPlayer(victim)!!.arenaDeaths++
                         Log.info("${killer.name} now has a killstreak of ${Killstreak.getKillstreak(killer)}.")
                         if (Killstreak.getKillstreak(victim) >= 5) {
-                            sendToPlayers("${prefix}${Chat.secondaryColor} ${victim.name}<gray> lost their killstreak of ${Chat.secondaryColor}${
+                            sendToPlayers(Chat.colored("${prefix}${Chat.secondaryColor} ${victim.name}<gray> lost their killstreak of ${Chat.secondaryColor}${
                                 Killstreak.getKillstreak(
                                     victim
                                 )
-                            } kills<gray> to ${Chat.secondaryColor}${killer.name}<gray>!")
+                            } kills<gray> to ${Chat.secondaryColor}${killer.name}<gray>!"))
                         }
                         if (Killstreak.getKillstreak(killer) > 3) {
                             sendToPlayers(Chat.colored("$prefix ${Chat.secondaryColor}${killer.name}<gray> now has a killstreak of ${Chat.secondaryColor}${
@@ -274,11 +276,11 @@ class ArenaFeature : Listener {
                         Killstreak.addKillstreak(killer)
                         print("${killer.name} now has a killstreak of ${Killstreak.getKillstreak(killer)}.")
                         if (Killstreak.getKillstreak(victim) >= 5) {
-                            sendToPlayers("${prefix}${Chat.secondaryColor} ${victim.name}<gray> lost their killstreak of ${Chat.secondaryColor}${
+                            sendToPlayers(Chat.colored("${prefix}${Chat.secondaryColor} ${victim.name}<gray> lost their killstreak of ${Chat.secondaryColor}${
                                 Killstreak.getKillstreak(
                                     victim
                                 )
-                            } kills<gray> to ${Chat.secondaryColor}${killer.name}<gray>!")
+                            } kills<gray> to ${Chat.secondaryColor}${killer.name}<gray>!"))
                         }
                         if (Killstreak.getKillstreak(killer) > 3) {
                             sendToPlayers(Chat.colored("$prefix ${Chat.secondaryColor}${killer.name}<gray> now has a killstreak of ${Chat.secondaryColor}${
@@ -294,11 +296,11 @@ class ArenaFeature : Listener {
                     JavaPlugin.getPlugin(Kraftwerk::class.java).statsHandler.getStatsPlayer(e.entity as Player)!!.arenaDeaths++
                     Chat.sendMessage((e.entity as Player), "$prefix You died!")
                     if (Killstreak.getKillstreak((e.entity as Player)) >= 5) {
-                        sendToPlayers("${prefix}${Chat.secondaryColor} ${(e.entity as Player).name}<gray> lost their killstreak of ${Chat.secondaryColor}${
+                        sendToPlayers(Chat.colored("${prefix}${Chat.secondaryColor} ${(e.entity as Player).name}<gray> lost their killstreak of ${Chat.secondaryColor}${
                             Killstreak.getKillstreak(
                                 (e.entity as Player)
                             )
-                        } kills<gray>!")
+                        } kills<gray>!"))
                     }
                     Killstreak.resetKillstreak((e.entity as Player))
                 }
@@ -315,7 +317,7 @@ class ArenaFeature : Listener {
         }
         return players
     }
-    fun sendToPlayers(message: String) {
+    fun sendToPlayers(message: Component) {
         for (player in Bukkit.getOnlinePlayers()) {
             if (player.world.name == "Arena") {
                 Chat.sendMessage(player, message)

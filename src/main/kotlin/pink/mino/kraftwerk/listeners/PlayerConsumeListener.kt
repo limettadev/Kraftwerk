@@ -13,7 +13,7 @@ import pink.mino.kraftwerk.utils.Chat
 class PlayerConsumeListener : Listener {
     @EventHandler
     fun onPlayerConsume(e: PlayerItemConsumeEvent) {
-        if (e.item.itemMeta.displayName == Chat.colored("&6Golden Head")) {
+        if (e.item.itemMeta.displayName() == Chat.colored("<gold>Golden Head")) {
             e.player.removePotionEffect(PotionEffectType.REGENERATION)
             Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                 e.player.addPotionEffect(PotionEffect(PotionEffectType.REGENERATION, 10, 1, true, true))

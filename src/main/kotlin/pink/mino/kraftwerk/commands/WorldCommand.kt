@@ -33,7 +33,7 @@ class WorldCommand : CommandExecutor {
         val player = sender as Player
         if (args.isEmpty()) {
             Chat.sendMessage(player, Chat.line)
-            Chat.sendCenteredMessage(player, "${Chat.primaryColor}&lWorld Help")
+            Chat.sendCenteredMessage(player, "${Chat.primaryColor}<bold>World Help")
             Chat.sendMessage(player, "${Chat.dash} ${Chat.secondaryColor}/world tp <world> <dark_gray>- <gray>Teleport to the provided world.")
             Chat.sendMessage(player, "${Chat.dash} ${Chat.secondaryColor}/world list <dark_gray>- <gray>List all worlds.")
             Chat.sendMessage(player, "${Chat.dash} ${Chat.secondaryColor}/world worlds <dark_gray>- <gray>List all UHC worlds.")
@@ -42,7 +42,7 @@ class WorldCommand : CommandExecutor {
             return false
         } else if (args[0].lowercase() == "list") {
             Chat.sendMessage(player, Chat.line)
-            Chat.sendCenteredMessage(player, "<red>&lWorld List")
+            Chat.sendCenteredMessage(player, "<red><bold>World List")
             for (world in Bukkit.getServer().worlds) {
                 when (world.environment) {
                     World.Environment.NORMAL -> {
@@ -53,6 +53,9 @@ class WorldCommand : CommandExecutor {
                     }
                     World.Environment.THE_END -> {
                         Chat.sendMessage(player, "<dark_gray>• <yellow>${world.name} <dark_gray>- ${Chat.secondaryColor}${world.players.size} players")
+                    }
+                    else -> {
+                        Chat.sendMessage(player, "<dark_gray>• <green>${world.name} <dark_gray>- ${Chat.secondaryColor}${world.players.size} players")
                     }
                 }
             }
@@ -67,15 +70,15 @@ class WorldCommand : CommandExecutor {
                 return false
             }
             val world = Bukkit.getWorld(args[1])
-            player.teleport(world.spawnLocation)
+            player.teleport(world!!.spawnLocation)
             Chat.sendMessage(player, "${Chat.dash} Teleported to ${Chat.primaryColor}${world.name}<gray>'s spawn.")
         } else if (args[0].lowercase() == "worlds") {
-            val gui = GuiBuilder().name("${Chat.primaryColor}&lWorlds").rows(4)
+            val gui = GuiBuilder().name("${Chat.primaryColor}<bold>Worlds").rows(4)
             for ((index, world) in Bukkit.getServer().worlds.withIndex()) {
                 var item: ItemBuilder
                 when (world.environment) {
                     World.Environment.NORMAL -> {
-                        item = ItemBuilder(Material.GRASS)
+                        item = ItemBuilder(Material.GRASS_BLOCK)
                             .name("<green>${world.name}")
                             .addLore("<gray>Contains ${Chat.secondaryColor}${world.players.size} players<gray>.")
                             .addLore(" ")
@@ -91,8 +94,16 @@ class WorldCommand : CommandExecutor {
                             .addLore("<dark_gray>Right Click<gray> to set this world as the current UHC world.")
                     }
                     World.Environment.THE_END -> {
-                        item = ItemBuilder(Material.ENDER_STONE)
-                            .name("&f${world.name}")
+                        item = ItemBuilder(Material.END_STONE)
+                            .name("<white>${world.name}")
+                            .addLore("<gray>Contains ${Chat.secondaryColor}${world.players.size} players<gray>.")
+                            .addLore(" ")
+                            .addLore("<dark_gray>Left Click<gray> to teleport to this world.")
+                            .addLore("<dark_gray>Right Click<gray> to set this world as the current UHC world.")
+                    }
+                    else -> {
+                        item = ItemBuilder(Material.GRASS_BLOCK)
+                            .name("<green>${world.name}")
                             .addLore("<gray>Contains ${Chat.secondaryColor}${world.players.size} players<gray>.")
                             .addLore(" ")
                             .addLore("<dark_gray>Left Click<gray> to teleport to this world.")
@@ -100,7 +111,7 @@ class WorldCommand : CommandExecutor {
                     }
                 }
                 if (ConfigFeature.instance.data!!.getString("pregen.world") == world.name) {
-                    item.addEnchantment(Enchantment.DURABILITY, 1)
+                    item.addEnchantment(Enchantment.UNBREAKING, 1)
                     item.name("<green>${world.name} <dark_gray>(<gray>Current UHC World<dark_gray>)")
                 }
                 item.noAttributes()

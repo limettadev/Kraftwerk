@@ -32,7 +32,7 @@ class ReplyCommand : CommandExecutor {
 
         var message = ""
         for (i in 0 until args.size) message += args[i] + " "
-        val target = Bukkit.getPlayer(uuid)
+        val target = Bukkit.getPlayer(uuid!!)
         if (target == null) {
             Chat.sendMessage(sender, "<red>You need a valid user to send this to.")
             return false
@@ -56,10 +56,10 @@ class ReplyCommand : CommandExecutor {
         ReplyTo.setRepliedTo(sender.uniqueId, target.uniqueId)
         ReplyTo.setRepliedTo(target.uniqueId, sender.uniqueId)
 
-        Chat.sendMessage(sender, "<gray>To: &f${target.displayName} <dark_gray>- <gray>$message")
-        Chat.sendMessage(target, "<gray>From: &f${sender.displayName} <dark_gray>- <gray>$message")
+        Chat.sendMessage(sender, "<gray>To: <white>${target.displayName} <dark_gray>- <gray>$message")
+        Chat.sendMessage(target, "<gray>From: <white>${sender.displayName} <dark_gray>- <gray>$message")
 
-        target.playSound(target.location, Sound.NOTE_PLING, 10.toFloat(), 0.toFloat())
+        target.playSound(target.location, Sound.BLOCK_NOTE_BLOCK_PLING, 10.toFloat(), 0.toFloat())
         return true
     }
 }

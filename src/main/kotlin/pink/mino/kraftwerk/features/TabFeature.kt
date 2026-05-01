@@ -2,6 +2,7 @@ package pink.mino.kraftwerk.features
 
 import me.lucko.spark.api.statistic.StatisticWindow.TicksPerSecond
 import me.lucko.spark.api.statistic.types.DoubleStatistic
+import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -16,48 +17,47 @@ import pink.mino.kraftwerk.utils.Chat
 class TabFeature : BukkitRunnable() {
     fun checkTps(tps: Double): String {
         return when {
-            tps >= 19.0 -> "§a$tps"
-            tps >= 16.0 -> "§e$tps"
-            tps >= 10.0 -> "§c$tps"
-            else -> "§4$tps"
+            tps >= 19.0 -> "<green>$tps"
+            tps >= 16.0 -> "<yellow>$tps"
+            tps >= 10.0 -> "<red>$tps"
+            else -> "<dark_red>$tps"
         }
     }
 
 
     fun checkPing(ping: Int): String {
         return if (ping < 50) {
-            "§a" + ping.toString()
+            "<green>" + ping.toString()
         } else if (ping < 100) {
-            "§e" + ping.toString()
+            "<yellow>" + ping.toString()
         } else if (ping < 200) {
-            "§c" + ping.toString()
+            "<red>" + ping.toString()
         } else if (ping < 500) {
-            "§4" + ping.toString()
+            "<dark_red>" + ping.toString()
         } else {
             "§8" + ping.toString()
         }
     }
 
-    fun scenarioTextWrap(text: String, width: Int): ArrayList<String> {
+    fun scenarioTextWrap(text: String, width: Int): ArrayList<Component> {
         val words = text.split(" ")
-        val lines = ArrayList<String>()
+        val lines = ArrayList<Component>()
         var currentLine = ""
         for (word in words) {
             if (currentLine.length + word.length + 1 > width) {
-                lines.add(Chat.colored("&f${currentLine}"))
-                currentLine = "&f$word "
+                lines.add(Chat.colored("<white>${currentLine}"))
+                currentLine = "<white>$word "
             } else {
-                currentLine += "&f$word "
+                currentLine += "<white>$word "
             }
         }
-        lines.add(Chat.colored("&f${currentLine}"))
+        lines.add(Chat.colored("<white>${currentLine}"))
         return lines
     }
 
     fun sendTablist(p: Player) {
         val player = p
-        val tps: DoubleStatistic<TicksPerSecond>? = JavaPlugin.getPlugin(Kraftwerk::class.java).spark.tps()
-        val tpsLast10Secs = tps!!.poll(TicksPerSecond.SECONDS_10)
+        val tps = Bukkit.getServer().tps[0]
         val scenarios = ArrayList<String>()
         for (scenario in ScenarioHandler.getActiveScenarios()) {
             scenarios.add(scenario.name)
@@ -66,7 +66,7 @@ class TabFeature : BukkitRunnable() {
             scenarios.add("Vanilla+")
         }
         val header = "<color:${Chat.primaryColor}>${Chat.scoreboardTitle}</color>\n" +
-            "<gray>TPS: ${checkTps(Math.round(tpsLast10Secs * 100.0) / 100.0)} <dark_gray>|</dark_gray> Ping: <white>${checkPing(player.ping)}ms</white></gray>" +
+            "<gray>TPS: ${checkTps(Math.round(tps * 100.0) / 100.0)} <dark_gray>|</dark_gray> Ping: <white>${checkPing(player.ping)}ms</white></gray>" +
             (if (!ConfigOptionHandler.getOption("nobranding")!!.enabled) "\n<blue>/discord</blue>" else "")
         var game = "${ConfigFeature.instance.data!!.getString("game.host")}'s ${ConfigFeature.instance.data!!.getString("matchpost.team")}"
         if (ConfigFeature.instance.data!!.getString("matchpost.team") == null) {

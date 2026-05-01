@@ -1,6 +1,7 @@
 package pink.mino.kraftwerk.listeners
 
 import me.lucko.helper.Schedulers
+import net.kyori.adventure.text.minimessage.MiniMessage
 import net.milkbowl.vault.chat.Chat
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
@@ -54,36 +55,30 @@ class ChatListener : Listener {
         val group: String? = vaultChat?.getPrimaryGroup(player)
         val prefix: String = ChatColor.translateAlternateColorCodes('&', vaultChat?.getGroupPrefix(player.world, group)!!)
         if (PerkChecker.checkPerks(player).contains(Perk.EMOTES)) {
-            if (e.message.contains(":shrug:", true)) {
-                e.message = e.message.replace(":shrug:", pink.mino.kraftwerk.utils.Chat.colored("<yellow>¯\\_(ツ)_/¯&r"))
-            }
-            if (e.message.contains(":yes:", true)) {
-                e.message = e.message.replace(":yes:", pink.mino.kraftwerk.utils.Chat.colored("&l<green>✔&r"))
-            }
-            if (e.message.contains(":no:", true)) {
-                e.message = e.message.replace(":no:", pink.mino.kraftwerk.utils.Chat.colored("&l<red>✖&r"))
-            }
-            if (e.message.contains("123", true)) {
-                e.message = e.message.replace("123", pink.mino.kraftwerk.utils.Chat.colored("<green>1<yellow>2<red>3&r"))
-            }
-            if (e.message.contains("<3", true)) {
-                e.message = e.message.replace("<3", pink.mino.kraftwerk.utils.Chat.colored("<red>❤&r"))
-            }
-            if (e.message.contains("o/", true)) {
-                e.message = e.message.replace("o/", pink.mino.kraftwerk.utils.Chat.colored("&d(・∀・)ノ&r"))
-            }
-            if (e.message.contains(":star:", true)) {
-                e.message = e.message.replace(":star:", pink.mino.kraftwerk.utils.Chat.colored("<yellow>✰&r"))
-            }
-            if (e.message.contains(":100:", true)) {
-                e.message = e.message.replace(":100:", pink.mino.kraftwerk.utils.Chat.colored("<red>&o&l&n100&r"))
-            }
-            if (e.message.contains("o7", true)) {
-                e.message = e.message.replace("o7", pink.mino.kraftwerk.utils.Chat.colored("<yellow>(｀-´)>&r"))
-            }
-            if (e.message.contains(":blush:", true)) {
-                e.message = e.message.replace(":blush:", pink.mino.kraftwerk.utils.Chat.colored("&d(◡‿◡✿)&r"))
-            }
+            var msg = e.message
+
+            if (msg.contains(":shrug:", true))
+                msg = msg.replace(":shrug:", "<yellow>¯\\_(ツ)_/¯</yellow>")
+            if (msg.contains(":yes:", true))
+                msg = msg.replace(":yes:", "<bold><green>✔</green></bold>")
+            if (msg.contains(":no:", true))
+                msg = msg.replace(":no:", "<bold><red>✖</red></bold>")
+            if (msg.contains("123", true))
+                msg = msg.replace("123", "<green>1</green><yellow>2</yellow><red>3</red>")
+            if (msg.contains("<3", true))
+                msg = msg.replace("<3", "<red>❤</red>")
+            if (msg.contains("o/", true))
+                msg = msg.replace("o/", "<light_purple>(・∀・)ノ</light_purple>")
+            if (msg.contains(":star:", true))
+                msg = msg.replace(":star:", "<yellow>✰</yellow>")
+            if (msg.contains(":100:", true))
+                msg = msg.replace(":100:", "<red><bold><italic><underlined>100</underlined></italic></bold></red>")
+            if (msg.contains("o7", true))
+                msg = msg.replace("o7", "<yellow>(｀-´)></yellow>")
+            if (msg.contains(":blush:", true))
+                msg = msg.replace(":blush:", "<light_purple>(◡‿◡✿)</light_purple>")
+
+            e.message = msg
         }
         var preference = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.chatMode
         if (preference == "MOLES") {
@@ -157,7 +152,7 @@ class ChatListener : Listener {
                     }
                 }
             }
-            val color = if (PerkChecker.checkPerks(player).contains(Perk.WHITE_CHAT)) "&f" else "<gray>"
+            val color = if (PerkChecker.checkPerks(player).contains(Perk.WHITE_CHAT)) "<white>" else "<gray>"
             val tag = Kraftwerk.instance.profileHandler.getProfile(player.uniqueId)!!.selectedTag
             var display = ""
             if (tag != null) {

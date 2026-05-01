@@ -20,7 +20,7 @@ class HolyWaterRecipe : Recipe(
         recipe = ShapedRecipe(convertToRecipeItem(holyWater, id)).shape("GRG", " D ", " P ")
             .setIngredient('G', Material.GOLD_INGOT)
             .setIngredient('R', Material.REDSTONE_BLOCK)
-            .setIngredient('D', Material.GOLD_RECORD)
+            .setIngredient('D', Material.MUSIC_DISC_13)
             .setIngredient('P', Material.GLASS_BOTTLE)
     }
 }

@@ -7,6 +7,8 @@ import com.mongodb.client.model.Sorts
 import me.lucko.helper.Schedulers
 import me.lucko.helper.promise.Promise
 import net.dv8tion.jda.api.EmbedBuilder
+import net.kyori.adventure.title.Title
+import org.bson.BsonBinary
 import org.bson.Document
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
@@ -124,11 +126,11 @@ class PunishmentFeature {
                 )
                 val sort = Sorts.descending("punishedAt")
 
-                val document = this.find(filter).sort(sort).first() ?: return null
+                val document = this.find(filter).sort(sort).first() ?: return@with null
                 val expiresAt = document["expiresAt"] as Long
-                if (expiresAt <= System.currentTimeMillis()) return null
+                if (expiresAt <= System.currentTimeMillis()) return@with null
 
-                return Punishment(
+                return@with Punishment(
                     document["playerUniqueId"] as UUID,
                     document["punisherUniqueId"] as UUID,
                     PunishmentType.valueOf(document["type"] as String),
@@ -139,6 +141,7 @@ class PunishmentFeature {
                     document["revoked"] as Boolean
                 )
             }
+            return null
         }
 
         fun hasActivePunishment(player: OfflinePlayer, punishmentType: PunishmentType): Boolean {
@@ -159,12 +162,12 @@ class PunishmentFeature {
             if (player.isOnline) {
                 if (punishment.type == PunishmentType.KICK) {
                     val punisher = Bukkit.getOfflinePlayer(punishment.punisherUuid)
-                    (player as Player).kickPlayer(Chat.colored("${Chat.primaryColor}${Chat.scoreboardTitle}\n${Chat.line}\n\n<gray>You've been kicked from the server by ${Chat.secondaryColor}${punisher.name}<gray>.\n<gray>Reason: ${Chat.secondaryColor}${punishment.reason}\n\n${Chat.line}"))
+                    (player as Player).kick(Chat.colored("${Chat.primaryColor}${Chat.scoreboardTitle}\n${Chat.line}\n\n<gray>You've been kicked from the server by ${Chat.secondaryColor}${punisher.name}<gray>.\n<gray>Reason: ${Chat.secondaryColor}${punishment.reason}\n\n${Chat.line}"))
                 }
                 if (punishment.type == PunishmentType.WARN) {
-                    (player as Player).sendTitle(Chat.colored("&4WARNING!"), Chat.colored("<gray>${punishment.reason}"))
+                    (player as Player).showTitle(Title.title(Chat.colored("<dark_red>WARNING!"), Chat.colored("<gray>${punishment.reason}")))
                     Chat.sendMessage(player, Chat.line)
-                    Chat.sendCenteredMessage(player, "&4&lWARNING!")
+                    Chat.sendCenteredMessage(player, "<dark_red><bold>WARNING!")
                     Chat.sendMessage(player, " ")
                     Chat.sendCenteredMessage(player, "<gray>You've been warned by ${Chat.secondaryColor}${Bukkit.getOfflinePlayer(punishment.punisherUuid).name}<gray>!")
                     Chat.sendCenteredMessage(player, "<gray>Further warnings may result in further action.")
@@ -173,9 +176,9 @@ class PunishmentFeature {
                     player.playSound(player.location, Sound.BLOCK_ANVIL_LAND, 1f, 1f)
                 }
                 if (punishment.type == PunishmentType.DISQUALIFICATION) {
-                    (player as Player).sendTitle(Chat.colored("&4DISQUALIFIED!"), Chat.colored("<gray>${punishment.reason})"))
+                    (player as Player).showTitle(Title.title(Chat.colored("<dark_red>DISQUALIFIED!"), Chat.colored("<gray>${punishment.reason})")))
                     Chat.sendMessage(player, Chat.line)
-                    Chat.sendCenteredMessage(player, "&4&lDISQUALIFIED!")
+                    Chat.sendCenteredMessage(player, "<dark_red><bold>DISQUALIFIED!")
                     Chat.sendMessage(player, " ")
                     Chat.sendCenteredMessage(player, "<gray>You've been disqualified by ${Chat.secondaryColor}${Bukkit.getOfflinePlayer(punishment.punisherUuid).name}<gray>!")
                     Chat.sendCenteredMessage(player, "<gray>Reason: ${Chat.secondaryColor}${punishment.reason}")
@@ -185,7 +188,7 @@ class PunishmentFeature {
                 }
                 if (punishment.type == PunishmentType.HELPOP_MUTE) {
                     Chat.sendMessage((player as Player), Chat.line)
-                    Chat.sendCenteredMessage(player, "&4&lHELPOP MUTED!")
+                    Chat.sendCenteredMessage(player, "<dark_red><bold>HELPOP MUTED!")
                     Chat.sendMessage(player, " ")
                     Chat.sendCenteredMessage(player, "<gray>You've been helpop muted by ${Chat.secondaryColor}${Bukkit.getOfflinePlayer(punishment.punisherUuid).name}<gray>!")
                     Chat.sendCenteredMessage(player, "<gray>You may no longer use ${Chat.secondaryColor}/helpop<gray> to ask for help from Staff.")
@@ -196,7 +199,7 @@ class PunishmentFeature {
                 }
                 if (punishment.type == PunishmentType.MUTE) {
                     Chat.sendMessage((player as Player), Chat.line)
-                    Chat.sendCenteredMessage(player, "&4&lMUTED!")
+                    Chat.sendCenteredMessage(player, "<dark_red><bold>MUTED!")
                     Chat.sendMessage(player, " ")
                     Chat.sendCenteredMessage(player, "<gray>You've been muted by ${Chat.secondaryColor}${Bukkit.getOfflinePlayer(punishment.punisherUuid).name}<gray>!")
                     Chat.sendCenteredMessage(player, "<gray>You may no longer talk in chat.")
@@ -207,14 +210,14 @@ class PunishmentFeature {
                 }
                 if (punishment.type == PunishmentType.BAN) {
                     val punisher = Bukkit.getOfflinePlayer(punishment.punisherUuid)
-                    (player as Player).kickPlayer(Chat.colored("${Chat.primaryColor}${Chat.scoreboardTitle}\n${Chat.line}\n\n<gray>You've been banned from the server by ${Chat.secondaryColor}${punisher.name}<gray>.\n<gray>Your ban expires in ${Chat.secondaryColor}${timeToString(punishment.expiresAt - System.currentTimeMillis())}<gray>.\n<gray>Reason: ${Chat.secondaryColor}${punishment.reason}\n\n${Chat.line}"))
+                    (player as Player).kick(Chat.colored("${Chat.primaryColor}${Chat.scoreboardTitle}\n${Chat.line}\n\n<gray>You've been banned from the server by ${Chat.secondaryColor}${punisher.name}<gray>.\n<gray>Your ban expires in ${Chat.secondaryColor}${timeToString(punishment.expiresAt - System.currentTimeMillis())}<gray>.\n<gray>Reason: ${Chat.secondaryColor}${punishment.reason}\n\n${Chat.line}"))
                 }
             }
             Schedulers.async().supply {
                 try {
                     with(JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("punishments")) {
                         val uuid = UUID.randomUUID()
-                        val document = Document("uuid", uuid)
+                        val document = Document("uuid", BsonBinary(uuid))
                             .append("playerUniqueId", punishment.uuid)
                             .append("punisherUniqueId", punishment.punisherUuid)
                             .append("type", punishment.type.toString())
@@ -223,7 +226,7 @@ class PunishmentFeature {
                             .append("silent", punishment.silent)
                             .append("punishedAt", punishment.punishedAt)
                             .append("revoked", false)
-                        this.findOneAndReplace(Filters.eq("uuid", uuid), document, FindOneAndReplaceOptions().upsert(true))
+                        this.findOneAndReplace(Filters.eq("uuid", BsonBinary(uuid)), document, FindOneAndReplaceOptions().upsert(true))
                         val embed = EmbedBuilder()
                         val punishedName = Bukkit.getOfflinePlayer(punishment.uuid).name ?: "Unknown"
                         val punisherName = Bukkit.getOfflinePlayer(punishment.punisherUuid).name ?: "Unknown"

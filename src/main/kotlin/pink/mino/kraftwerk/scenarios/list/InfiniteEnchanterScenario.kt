@@ -13,14 +13,14 @@ class InfiniteEnchanterScenario : Scenario(
     "Infinite Enchanter",
     "Players are given items for enchanting at the beginning of the game.",
     "infiniteenchanter",
-    Material.EXP_BOTTLE
+    Material.EXPERIENCE_BOTTLE
 ) {
     val prefix = "<dark_gray>[${Chat.primaryColor}Infinite Enchanter<dark_gray>]<gray>"
     override fun onStart() {
         for (player in Bukkit.getOnlinePlayers()) {
             if (!SpecFeature.instance.getSpecs().contains(player.name)) {
                 val list = arrayListOf(
-                    ItemStack(Material.ENCHANTMENT_TABLE, 2),
+                    ItemStack(Material.ENCHANTING_TABLE, 2),
                     ItemStack(Material.BOOKSHELF, 64),
                     ItemStack(Material.LAPIS_BLOCK, 64)
                 )
@@ -33,10 +33,10 @@ class InfiniteEnchanterScenario : Scenario(
 
     override fun givePlayer(player: Player) {
         val list = arrayListOf(
-            ItemStack(Material.ENCHANTMENT_TABLE, 2),
+            ItemStack(Material.ENCHANTING_TABLE, 2),
             ItemStack(Material.BOOKSHELF, 64),
             ItemStack(Material.LAPIS_BLOCK, 64),
-            ItemStack(Material.EXP_BOTTLE, 128),
+            ItemStack(Material.EXPERIENCE_BOTTLE, 128),
         )
         player.level = 20000
         PlayerUtils.bulkItems(player, list)

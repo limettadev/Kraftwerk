@@ -1,5 +1,6 @@
 package pink.mino.kraftwerk.features
 
+import net.kyori.adventure.title.Title
 import org.bukkit.*
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -135,91 +136,79 @@ class UHCTask : BukkitRunnable() {
         }
         when (currentEvent) {
             Events.PRE_START -> {
-                ActionBar.sendActionBarMessage(player, "${Chat.primaryColor}Starting in ${Chat.dash} ${Chat.secondaryColor}${timeToString((30 - timer).toLong())}")
+                player.sendActionBar(Chat.colored("${Chat.primaryColor}Starting in ${Chat.dash} ${Chat.secondaryColor}${timeToString((30 - timer).toLong())}"))
             }
             Events.START -> {
-                ActionBar.sendActionBarMessage(player, "${Chat.primaryColor}Final Heal is in ${Chat.dash} ${Chat.secondaryColor}${timeToString((finalHeal - timer).toLong())}")
+                player.sendActionBar(Chat.colored("${Chat.primaryColor}Final Heal is in ${Chat.dash} ${Chat.secondaryColor}${timeToString((finalHeal - timer).toLong())}"))
             }
             Events.FINAL_HEAL -> {
-                ActionBar.sendActionBarMessage(player, "${Chat.primaryColor}PvP is enabled in ${Chat.dash} ${Chat.secondaryColor}${timeToString((pvp - timer).toLong())} <dark_gray>| ${Chat.primaryColor}Border shrinks in ${Chat.dash} ${Chat.secondaryColor}${timeToString((borderShrink - timer).toLong())}")
+                player.sendActionBar(Chat.colored("${Chat.primaryColor}PvP is enabled in ${Chat.dash} ${Chat.secondaryColor}${timeToString((pvp - timer).toLong())} <dark_gray>| ${Chat.primaryColor}Border shrinks in ${Chat.dash} ${Chat.secondaryColor}${timeToString((borderShrink - timer).toLong())}"))
             }
             Events.PVP -> {
-                ActionBar.sendActionBarMessage(player, "${Chat.primaryColor}Meetup is in ${Chat.dash} ${Chat.secondaryColor}${timeToString((meetup - timer).toLong())} <dark_gray>| ${Chat.primaryColor}Border shrinks in ${Chat.dash} ${Chat.secondaryColor}${timeToString((borderShrink - timer).toLong())}")
+                player.sendActionBar(Chat.colored("${Chat.primaryColor}Meetup is in ${Chat.dash} ${Chat.secondaryColor}${timeToString((meetup - timer).toLong())} <dark_gray>| ${Chat.primaryColor}Border shrinks in ${Chat.dash} ${Chat.secondaryColor}${timeToString((borderShrink - timer).toLong())}"))
             }
             Events.BORDER_SHRINK_ONE -> {
                 if (!meetupHappened) {
-                    ActionBar.sendActionBarMessage(
-                        player,
+                    player.sendActionBar(Chat.colored(
                         "${Chat.primaryColor}Meetup is in ${Chat.dash} ${Chat.secondaryColor}${timeToString((meetup - timer).toLong())} <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 300) - timer.toLong())}"
-                    )
+                    ))
                 } else {
-                    ActionBar.sendActionBarMessage(
-                        player,
+                    player.sendActionBar(Chat.colored(
                         "${Chat.primaryColor}It is now Meetup! Head to 0,0! <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 300) - timer.toLong())}"
-                    )
+                    ))
                 }
             }
             Events.BORDER_SHRINK_TWO -> {
                 if (!meetupHappened) {
-                    ActionBar.sendActionBarMessage(
-                        player,
-                        "${Chat.primaryColor}Meetup is in ${Chat.dash} &f${timeToString((meetup - timer).toLong())} <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 600) - timer.toLong())}"
+                    player.sendActionBar(
+                        "${Chat.primaryColor}Meetup is in ${Chat.dash} <white>${timeToString((meetup - timer).toLong())} <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 600) - timer.toLong())}"
                     )
                 } else {
-                    ActionBar.sendActionBarMessage(
-                        player,
+                    player.sendActionBar(
                         "${Chat.primaryColor}It is now Meetup! Head to 0,0! <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 600) - timer.toLong())}"
                     )
                 }
             }
             Events.BORDER_SHRINK_THREE -> {
                 if (!meetupHappened) {
-                    ActionBar.sendActionBarMessage(
-                        player,
+                    player.sendActionBar(
                         "${Chat.primaryColor}Meetup is in ${Chat.dash} ${Chat.secondaryColor}${timeToString((meetup - timer).toLong())} <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 900) - timer.toLong())}"
                     )
                 } else {
-                    ActionBar.sendActionBarMessage(
-                        player,
+                    player.sendActionBar(
                         "${Chat.primaryColor}It is now Meetup! Head to 0,0! <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 900) - timer.toLong())}"
                     )
                 }
             }
             Events.BORDER_SHRINK_FOUR -> {
                 if (!meetupHappened) {
-                    ActionBar.sendActionBarMessage(
-                        player,
-                        "${Chat.primaryColor}Meetup is in ${Chat.dash} &f${timeToString((meetup - timer).toLong())} <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 1200) - timer.toLong())}"
+                    player.sendActionBar(
+                        "${Chat.primaryColor}Meetup is in ${Chat.dash} <white>${timeToString((meetup - timer).toLong())} <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 1200) - timer.toLong())}"
                     )
                 } else {
-                    ActionBar.sendActionBarMessage(
-                        player,
+                    player.sendActionBar(
                         "${Chat.primaryColor}It is now Meetup! Head to 0,0! <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 1200) - timer.toLong())}"
                     )
                 }
             }
             Events.BORDER_SHRINK_FIVE -> {
                 if (!meetupHappened) {
-                    ActionBar.sendActionBarMessage(
-                        player,
+                    player.sendActionBar(
                         "${Chat.primaryColor}Meetup is in ${Chat.dash} ${Chat.secondaryColor}${timeToString((meetup - timer).toLong())} <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 1500) - timer.toLong())}"
                     )
                 } else {
-                    ActionBar.sendActionBarMessage(
-                        player,
+                    player.sendActionBar(
                         "${Chat.primaryColor}It is now Meetup! Head to 0,0! <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 1500) - timer.toLong())}"
                     )
                 }
             }
             Events.BORDER_SHRINK_SIX -> {
                 if (!meetupHappened) {
-                    ActionBar.sendActionBarMessage(
-                        player,
+                    player.sendActionBar(
                         "${Chat.primaryColor}Meetup is in ${Chat.dash} ${Chat.secondaryColor}${timeToString((meetup - timer).toLong())} <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText}"
                     )
                 } else {
-                    ActionBar.sendActionBarMessage(
-                        player,
+                    player.sendActionBar(
                         "${Chat.primaryColor}It is now Meetup! Head to 0,0! <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText}"
                     )
                 }
@@ -238,7 +227,7 @@ class UHCTask : BukkitRunnable() {
         }
         when (timer) {
             0 -> {
-                Bukkit.broadcastMessage(Chat.colored("${Chat.dash} Starting in &f30 seconds<gray>..."))
+                Bukkit.broadcast(Chat.colored("${Chat.dash} Starting in <white>30 seconds<gray>..."))
             }
             30 -> {
                 currentEvent = Events.START
@@ -249,11 +238,11 @@ class UHCTask : BukkitRunnable() {
                 for (scenario in ScenarioHandler.getActiveScenarios()) {
                     scenarios.add(scenario.name)
                 }
-                Bukkit.broadcastMessage(Chat.colored(Chat.line))
+                Bukkit.broadcast(Chat.colored(Chat.line))
                 for (player in Bukkit.getOnlinePlayers()) {
-                    Chat.sendCenteredMessage(player, "${Chat.primaryColor}&lUHC")
+                    Chat.sendCenteredMessage(player, "${Chat.primaryColor}<bold>UHC")
                 }
-                Bukkit.broadcastMessage(" ")
+                Bukkit.broadcast(Chat.colored(" "))
                 for (player in Bukkit.getOnlinePlayers()) {
 
                     if (ConfigFeature.instance.data!!.getBoolean("game.specials.frbp")) {
@@ -264,11 +253,11 @@ class UHCTask : BukkitRunnable() {
                     }
                     Chat.sendMessage(player, "<gray>You may <green>begin<gray>! The host for this game is ${Chat.primaryColor}${ConfigFeature.instance.data!!.getString("game.host")}<gray>!")
 
-                    Chat.sendMessage(player, "<gray>Scenarios: &f${scenarios.joinToString(", ")}<gray>")
+                    Chat.sendMessage(player, "<gray>Scenarios: <white>${scenarios.joinToString(", ")}<gray>")
                     Chat.sendCenteredMessage(player, " ")
                     Chat.sendMessage(player, Chat.line)
                     player.playSound(player.location, Sound.ENTITY_ENDER_DRAGON_GROWL, 10F, 1F)
-                    player.sendTitle(Chat.colored("<green>&lGO!"), Chat.colored("<gray>You may now play the game, do ${Chat.primaryColor}/helpop<gray> for help!"))
+                    player.showTitle(Title.title(Chat.colored("<green><bold>GO!"), Chat.colored("<gray>You may now play the game, do ${Chat.primaryColor}/helpop<gray> for help!")))
                     if (!SpecFeature.instance.getSpecs().contains(player.name)) {
                         if (ConfigFeature.instance.data!!.getInt("game.starterfood") > 0) {
                             player.inventory.addItem(ItemStack(Material.COOKED_BEEF, ConfigFeature.instance.data!!.getInt("game.starterfood")))
@@ -284,9 +273,9 @@ class UHCTask : BukkitRunnable() {
                 }
                 if (ConfigOptionHandler.getOption("permaday")!!.enabled) {
                     Bukkit.getWorld(ConfigFeature.instance.data!!.getString("pregen.world")!!)!!.time = 6000
-                    Bukkit.getWorld(ConfigFeature.instance.data!!.getString("pregen.world")!!)!!.setGameRuleValue("doDaylightCycle", false.toString())
+                    Bukkit.getWorld(ConfigFeature.instance.data!!.getString("pregen.world")!!)!!.setGameRule(GameRules.ADVANCE_TIME, false)
                 } else {
-                    Bukkit.getWorld(ConfigFeature.instance.data!!.getString("pregen.world")!!)!!.setGameRuleValue("doDaylightCycle", true.toString())
+                    Bukkit.getWorld(ConfigFeature.instance.data!!.getString("pregen.world")!!)!!.setGameRule(GameRules.ADVANCE_TIME, true)
                 }
             }
             31 -> {
@@ -305,7 +294,7 @@ class UHCTask : BukkitRunnable() {
                     player.saturation = 20F
                     player.fireTicks = 0
                     Chat.sendMessage(player, Chat.line)
-                    Chat.sendCenteredMessage(player, "${Chat.primaryColor}&lUHC")
+                    Chat.sendCenteredMessage(player, "${Chat.primaryColor}<bold>UHC")
                     Chat.sendMessage(player, " ")
                     Chat.sendCenteredMessage(player, "<gray>All players have been healed & fed.")
                     Chat.sendCenteredMessage(player, "<red>PvP<gray> is enabled in ${Chat.primaryColor}${rawPvP / 60} minutes<gray>.")
@@ -324,7 +313,7 @@ class UHCTask : BukkitRunnable() {
                 }
                 for (player in Bukkit.getOnlinePlayers()) {
                     Chat.sendMessage(player, Chat.line)
-                    Chat.sendCenteredMessage(player, "${Chat.primaryColor}&lUHC")
+                    Chat.sendCenteredMessage(player, "${Chat.primaryColor}<bold>UHC")
                     Chat.sendMessage(player, " ")
                     Chat.sendCenteredMessage(player, "<gray>PvP has been <green>enabled<gray>.")
                     Chat.sendCenteredMessage(player, "${Chat.primaryColor}Meetup<gray> will start in ${Chat.primaryColor}${rawMeetup / 60} minutes<gray>.")
@@ -348,9 +337,9 @@ class UHCTask : BukkitRunnable() {
             }
             borderShrink -> {
                 currentEvent = Events.BORDER_SHRINK_ONE
-                Bukkit.broadcastMessage(Chat.colored(Chat.line))
+                Bukkit.broadcast(Chat.colored(Chat.line))
                 for (player in Bukkit.getOnlinePlayers()) {
-                    Chat.sendCenteredMessage(player, "${Chat.primaryColor}&lUHC")
+                    Chat.sendCenteredMessage(player, "${Chat.primaryColor}<bold>UHC")
                     Chat.sendMessage(player, " ")
                     if (ScenarioHandler.getScenario("bigcrack")!!.enabled) {
                         Chat.sendCenteredMessage(player, "<gray>The border will start shrinking until it's at ${Chat.secondaryColor}150x150 (±75)<gray>!")
@@ -358,7 +347,7 @@ class UHCTask : BukkitRunnable() {
                         Chat.sendCenteredMessage(player, "<gray>The border will start shrinking until it's at ${Chat.secondaryColor}50x50 (±25)<gray>!")
                     }
                 }
-                Bukkit.broadcastMessage(Chat.colored(Chat.line))
+                Bukkit.broadcast(Chat.colored(Chat.line))
                 if (ConfigFeature.instance.data!!.getInt("pregen.border") == 750) {
                     UHCFeature().scheduleShrink(500)
                 } else if (ConfigFeature.instance.data!!.getInt("pregen.border") == 500) {
@@ -373,11 +362,11 @@ class UHCTask : BukkitRunnable() {
                 if (ConfigOptionHandler.getOption("permadayatmeetup")!!.enabled) {
                     val world = Bukkit.getWorld(ConfigFeature.instance.data!!.getString("pregen.world")!!)!!
                     world.time = 6000
-                    world.setGameRuleValue("doDaylightCycle", "false")
+                    world.setGameRule(GameRules.ADVANCE_TIME, false)
                 }
-                Bukkit.broadcastMessage(Chat.colored(Chat.line))
+                Bukkit.broadcast(Chat.colored(Chat.line))
                 for (player in Bukkit.getOnlinePlayers()) {
-                    Chat.sendCenteredMessage(player, "${Chat.primaryColor}&lUHC")
+                    Chat.sendCenteredMessage(player, "${Chat.primaryColor}<bold>UHC")
                     Chat.sendMessage(player, " ")
                     Chat.sendCenteredMessage(player, "<gray>It's now ${Chat.primaryColor}Meetup<gray>! Head to <green>0,0<gray>!")
                     if (!ConfigOptionHandler.getOption("statless")!!.enabled) XpFeature().add(player, 25.0)
@@ -387,7 +376,7 @@ class UHCTask : BukkitRunnable() {
                 }
                 ConfigFeature.instance.data!!.set("game.nether.nether", false)
                 ConfigFeature.instance.saveData()
-                Bukkit.broadcastMessage(Chat.colored(Chat.line))
+                Bukkit.broadcast(Chat.colored(Chat.line))
                 meetupHappened = true
             }
             meetup + 5 -> {
@@ -465,7 +454,7 @@ class UHCTask : BukkitRunnable() {
                 currentEvent = Events.BORDER_SHRINK_SIX
             }
         }
-        Scoreboard.setScore(Chat.colored("${Chat.dash} <gray>Playing..."), PlayerUtils.getPlayingPlayers().size)
+        Scoreboard.setScore("${Chat.dash} <gray>Playing...", PlayerUtils.getPlayingPlayers().size)
         for (player in Bukkit.getOnlinePlayers()) {
             displayTimer(player)
         }
@@ -484,14 +473,14 @@ class UHCFeature : Listener {
     fun start(mode: String) {
         GameState.setState(GameState.WAITING)
         Bukkit.getWorld(ConfigFeature.instance.data!!.getString("pregen.world")!!)!!.time = 1000
-        Bukkit.getWorld(ConfigFeature.instance.data!!.getString("pregen.world")!!)!!.setGameRuleValue("doDaylightCycle", false.toString())
+        Bukkit.getWorld(ConfigFeature.instance.data!!.getString("pregen.world")!!)!!.setGameRule(GameRules.ADVANCE_TIME, false)
         for (world in Bukkit.getWorlds()) {
             world.pvp = false
         }
         if (mode == "ffa") {
-            Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Starting a ${Chat.primaryColor}FFA<gray> UHC game... now freezing players."))
+            Bukkit.broadcast(Chat.colored("${Chat.prefix} Starting a ${Chat.primaryColor}FFA<gray> UHC game... now freezing players."))
         } else if (mode == "teams") {
-            Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Starting a ${Chat.primaryColor}Teams<gray> UHC game... now freezing players."))
+            Bukkit.broadcast(Chat.colored("${Chat.prefix} Starting a ${Chat.primaryColor}Teams<gray> UHC game... now freezing players."))
             for (player in Bukkit.getOnlinePlayers()) {
                 if (!SpecFeature.instance.getSpecs().contains(player.name)) {
                     if (TeamsFeature.manager.getTeam(player) == null) {
@@ -519,10 +508,10 @@ class UHCFeature : Listener {
                 player.level = 0
                 player.gameMode = GameMode.SURVIVAL
                 player.inventory.clear()
-                player.inventory.helmet = ItemStack(Material.AIR)
-                player.inventory.chestplate = ItemStack(Material.AIR)
-                player.inventory.leggings = ItemStack(Material.AIR)
-                player.inventory.boots = ItemStack(Material.AIR)
+                player.inventory.setHelmet(ItemStack(Material.AIR))
+                player.inventory.setChestplate(ItemStack(Material.AIR))
+                player.inventory.setLeggings(ItemStack(Material.AIR))
+                player.inventory.setBoots(ItemStack(Material.AIR))
                 player.inventory.setItemInOffHand(ItemStack(Material.AIR))
                 val openInventory = player.openInventory
                 if (openInventory.type == InventoryType.CRAFTING) {
@@ -545,11 +534,11 @@ class UHCFeature : Listener {
         val radius = ConfigFeature.instance.data!!.getInt("pregen.border")
 
         if (teams) {
-            Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Attempting to start ${Chat.primaryColor}team <gray>scatter..."))
+            Bukkit.broadcast(Chat.colored("${Chat.prefix} Attempting to start ${Chat.primaryColor}team <gray>scatter..."))
         } else {
-            Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Attempting to start ${Chat.primaryColor}solo <gray>scatter..."))
+            Bukkit.broadcast(Chat.colored("${Chat.prefix} Attempting to start ${Chat.primaryColor}solo <gray>scatter..."))
         }
-        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Standby, this might take a while."))
+        Bukkit.broadcast(Chat.colored("${Chat.prefix} Standby, this might take a while."))
         JavaPlugin.getPlugin(Kraftwerk::class.java).scattering = true
         object: BukkitRunnable() {
             override fun run() {
@@ -586,7 +575,7 @@ class UHCFeature : Listener {
 
         object: BukkitRunnable() {
             override fun run() {
-                Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} All locations ${Chat.primaryColor}found<gray>, starting to load chunks..."))
+                Bukkit.broadcast(Chat.colored("${Chat.prefix} All locations ${Chat.primaryColor}found<gray>, starting to load chunks..."))
 
                 val locs = JavaPlugin.getPlugin(Kraftwerk::class.java).scatterLocs.values.toMutableList()
                 val names = JavaPlugin.getPlugin(Kraftwerk::class.java).scatterLocs.keys.toMutableList()
@@ -600,7 +589,7 @@ class UHCFeature : Listener {
                         } else {
                             cancel()
                             locs.clear()
-                            Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} All chunks ${Chat.primaryColor}loaded<gray>, starting to scatter players..."))
+                            Bukkit.broadcast(Chat.colored("${Chat.prefix} All chunks ${Chat.primaryColor}loaded<gray>, starting to scatter players..."))
 
                             object: BukkitRunnable() {
                                 var i = 0
@@ -623,9 +612,9 @@ class UHCFeature : Listener {
                                         if (!scatter.isOnline) {
                                             val team = TeamsFeature.manager.getTeam(scatter)
                                             if (team == null) {
-                                                Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Scheduled Scatter for ${Chat.secondaryColor}${names[i]} <dark_gray>(${Chat.primaryColor}${i + 1}<dark_gray>/${Chat.primaryColor}${names.size}<dark_gray>)"))
+                                                Bukkit.broadcast(Chat.colored("${Chat.prefix} Scheduled Scatter for ${Chat.secondaryColor}${names[i]} <dark_gray>(${Chat.primaryColor}${i + 1}<dark_gray>/${Chat.primaryColor}${names.size}<dark_gray>)"))
                                             } else {
-                                                Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Scheduled Scatter for ${team.prefix}${names[i]} <dark_gray>(${Chat.primaryColor}${i + 1}<dark_gray>/${Chat.primaryColor}${names.size}<dark_gray>)"))
+                                                Bukkit.broadcast(Chat.colored("${Chat.prefix} Scheduled Scatter for ${team.prefix}${names[i]} <dark_gray>(${Chat.primaryColor}${i + 1}<dark_gray>/${Chat.primaryColor}${names.size}<dark_gray>)"))
                                             }
                                         } else {
                                             val scatterP = scatter as Player
@@ -635,9 +624,9 @@ class UHCFeature : Listener {
                                             scatterP.allowFlight = false
                                             val team = TeamsFeature.manager.getTeam(Bukkit.getOfflinePlayer(names[i]))
                                             if (team == null) {
-                                                Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Scattered ${Chat.secondaryColor}${scatterP.name} <dark_gray>(${Chat.primaryColor}${i + 1}<dark_gray>/${Chat.primaryColor}${names.size}<dark_gray>)"))
+                                                Bukkit.broadcast(Chat.colored("${Chat.prefix} Scattered ${Chat.secondaryColor}${scatterP.name} <dark_gray>(${Chat.primaryColor}${i + 1}<dark_gray>/${Chat.primaryColor}${names.size}<dark_gray>)"))
                                             } else {
-                                                Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Scattered ${team.prefix}${scatterP.name} <dark_gray>(${Chat.primaryColor}${i + 1}<dark_gray>/${Chat.primaryColor}${names.size}<dark_gray>)"))
+                                                Bukkit.broadcast(Chat.colored("${Chat.prefix} Scattered ${team.prefix}${scatterP.name} <dark_gray>(${Chat.primaryColor}${i + 1}<dark_gray>/${Chat.primaryColor}${names.size}<dark_gray>)"))
                                             }
                                             JavaPlugin.getPlugin(Kraftwerk::class.java).scatterLocs.remove(names[i])
                                             freeze()
@@ -645,7 +634,7 @@ class UHCFeature : Listener {
                                         i++
                                     } else {
                                         JavaPlugin.getPlugin(Kraftwerk::class.java).scattering = false
-                                        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} <gray>Successfully scattered all players!"))
+                                        Bukkit.broadcast(Chat.colored("${Chat.prefix} <gray>Successfully scattered all players!"))
                                         ConfigFeature.instance.saveData()
                                         Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                                             freeze()
@@ -711,82 +700,82 @@ class UHCFeature : Listener {
                 "±${newBorder}"
             }
             Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
-                Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in &f10s<gray>.")
+                Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in <white>10s<gray>.")
                 if (!SpecFeature.instance.getSpecs().contains(player.name)) {
                     if (!insideBorder(player, newBorder)) {
-                        player.sendTitle(Chat.colored("&4 ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!"))
+                        player.showTitle(Title.title(Chat.colored("<dark_red> ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
                         player.playSound(player.location, Sound.BLOCK_LEVER_CLICK, 1f, 1f)
                     }
                 }
                 Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
-                    Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in &f9s<gray>.")
+                    Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in <white>9s<gray>.")
                     if (!SpecFeature.instance.getSpecs().contains(player.name)) {
                         if (!insideBorder(player, newBorder)) {
-                            player.sendTitle(Chat.colored("&4 ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!"))
+                            player.showTitle(Title.title(Chat.colored("<dark_red> ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
                             player.playSound(player.location, Sound.BLOCK_LEVER_CLICK, 1f, 1f)
                         }
                     }
                     Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
-                        Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in &f8s<gray>.")
+                        Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in <white>8s<gray>.")
                         if (!SpecFeature.instance.getSpecs().contains(player.name)) {
                             if (!insideBorder(player, newBorder)) {
-                                player.sendTitle(Chat.colored("&4 ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!"))
+                                player.showTitle(Title.title(Chat.colored("<dark_red> ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
                                 player.playSound(player.location, Sound.BLOCK_LEVER_CLICK, 1f, 1f)
                             }
                         }
                         Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
-                            Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in &f7s<gray>.")
+                            Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in <white>7s<gray>.")
                             if (!SpecFeature.instance.getSpecs().contains(player.name)) {
                                 if (!insideBorder(player, newBorder)) {
-                                    player.sendTitle(Chat.colored("&4 ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!"))
+                                    player.showTitle(Title.title(Chat.colored("<dark_red> ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
                                     player.playSound(player.location, Sound.BLOCK_LEVER_CLICK, 1f, 1f)
                                 }
                             }
                             Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
-                                Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in &f6s<gray>.")
+                                Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in <white>6s<gray>.")
                                 if (!SpecFeature.instance.getSpecs().contains(player.name)) {
                                     if (!insideBorder(player, newBorder)) {
-                                        player.sendTitle(Chat.colored("&4 ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!"))
+                                        player.showTitle(Title.title(Chat.colored("<dark_red> ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
                                         player.playSound(player.location, Sound.BLOCK_LEVER_CLICK, 1f, 1f)
                                     }
                                 }
                                 Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
-                                    Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in &f5s<gray>.")
+                                    Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in <white>5s<gray>.")
                                     if (!SpecFeature.instance.getSpecs().contains(player.name)) {
                                         if (!insideBorder(player, newBorder)) {
-                                            player.sendTitle(Chat.colored("&4 ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!"))
+                                            player.showTitle(Title.title(Chat.colored("<dark_red> ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
                                             player.playSound(player.location, Sound.BLOCK_LEVER_CLICK, 1f, 1f)
                                         }
                                     }
                                     Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
-                                        Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in &f4s<gray>.")
+                                        Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in <white>4s<gray>.")
                                         if (!SpecFeature.instance.getSpecs().contains(player.name)) {
                                             if (!insideBorder(player, newBorder)) {
-                                                player.sendTitle(Chat.colored("&4 ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!"))
+                                                player.showTitle(Title.title(Chat.colored("<dark_red> ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
                                                 player.playSound(player.location, Sound.BLOCK_LEVER_CLICK, 1f, 1f)
                                             }
                                         }
                                         Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
-                                            Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in &f3s<gray>.")
+                                            Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in <white>3s<gray>.")
                                             if (!SpecFeature.instance.getSpecs().contains(player.name)) {
                                                 if (!insideBorder(player, newBorder)) {
-                                                    player.sendTitle(Chat.colored("&4 ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!"))
+                                                    player.showTitle(Title.title(Chat.colored("<dark_red> ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
                                                     player.playSound(player.location, Sound.BLOCK_LEVER_CLICK, 1f, 1f)
                                                 }
                                             }
                                             Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
-                                                Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in &f2s<gray>.")
+                                                Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in <white>2s<gray>.")
                                                 if (!SpecFeature.instance.getSpecs().contains(player.name)) {
                                                     if (!insideBorder(player, newBorder)) {
-                                                        player.sendTitle(Chat.colored("&4 ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!"))
+                                                        player.showTitle(Title.title(Chat.colored("<dark_red> ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
                                                         player.playSound(player.location, Sound.BLOCK_LEVER_CLICK, 1f, 1f)
                                                     }
                                                 }
                                                 Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
-                                                    Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in &f1s<gray>.")
+                                                    Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in <white>1s<gray>.")
                                                     if (!SpecFeature.instance.getSpecs().contains(player.name)) {
                                                         if (!insideBorder(player, newBorder)) {
-                                                            player.sendTitle(Chat.colored("&4 ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!"))
+                                                            player.showTitle(Title.title(Chat.colored("<dark_red> ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
                                                             player.playSound(player.location, Sound.BLOCK_LEVER_CLICK, 1f, 1f)
                                                         }
                                                     }

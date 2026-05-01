@@ -58,30 +58,30 @@ class ExtremeSkyHighScenario : Scenario(
     override fun onPvP() {
         task = ExtremeSkyHighIterator()
         task!!.runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, 20L)
-        Bukkit.broadcastMessage(Chat.colored("${prefix} The damage tick for ${Chat.secondaryColor}Extreme SkyHigh<gray> has started, the damage tick happen every 45 seconds."))
+        Bukkit.broadcast(Chat.colored("${prefix} The damage tick for ${Chat.secondaryColor}Extreme SkyHigh<gray> has started, the damage tick happen every 45 seconds."))
     }
 
     override fun onStart() {
-        val shovel = ItemStack(Material.DIAMOND_SPADE)
+        val shovel = ItemStack(Material.DIAMOND_SHOVEL)
         val meta = shovel.itemMeta
-        meta.spigot().isUnbreakable = true
-        meta.addEnchant(Enchantment.DIG_SPEED, 10, true)
+        meta.isUnbreakable = true
+        meta.addEnchant(Enchantment.EFFICIENCY, 10, true)
         shovel.itemMeta = meta
         for (player in Bukkit.getOnlinePlayers()) {
             if (!SpecFeature.instance.getSpecs().contains(player.name)) {
-                PlayerUtils.bulkItems(player, arrayListOf(ItemStack(Material.STAINED_CLAY, 128, 14), ItemStack(Material.PUMPKIN, 2), ItemStack(Material.SNOW_BLOCK, 4), ItemStack(Material.STRING, 2), shovel, ItemStack(Material.FEATHER, 16)))
+                PlayerUtils.bulkItems(player, arrayListOf(ItemStack(Material.ORANGE_TERRACOTTA, 128, 14), ItemStack(Material.PUMPKIN, 2), ItemStack(Material.SNOW_BLOCK, 4), ItemStack(Material.STRING, 2), shovel, ItemStack(Material.FEATHER, 16)))
                 Chat.sendMessage(player, "${prefix} You've been given your SkyHigh items.")
             }
         }
     }
 
     override fun givePlayer(player: Player) {
-        val shovel = ItemStack(Material.DIAMOND_SPADE)
+        val shovel = ItemStack(Material.DIAMOND_SHOVEL)
         val meta = shovel.itemMeta
-        meta.spigot().isUnbreakable = true
-        meta.addEnchant(Enchantment.DIG_SPEED, 10, true)
+        meta.isUnbreakable = true
+        meta.addEnchant(Enchantment.EFFICIENCY, 10, true)
         shovel.itemMeta = meta
-        PlayerUtils.bulkItems(player, arrayListOf(ItemStack(Material.STAINED_CLAY, 128, 14), ItemStack(Material.PUMPKIN, 2), ItemStack(Material.SNOW_BLOCK, 4), ItemStack(Material.STRING, 2), shovel, ItemStack(Material.FEATHER, 16)))
+        PlayerUtils.bulkItems(player, arrayListOf(ItemStack(Material.ORANGE_TERRACOTTA, 128, 14), ItemStack(Material.PUMPKIN, 2), ItemStack(Material.SNOW_BLOCK, 4), ItemStack(Material.STRING, 2), shovel, ItemStack(Material.FEATHER, 16)))
         Chat.sendMessage(player, "${prefix} You've been given your SkyHigh items.")
     }
 }

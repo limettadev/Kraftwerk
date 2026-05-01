@@ -18,7 +18,7 @@ class FuckYouItsAFireballWandScenario : Scenario(
     "Fuck you, It's a Fireball Wand!",
     "At the start of the game, you receive a stick that spawns launchable fireballs.",
     "fuckyouitsafireballwand",
-    Material.FIREWORK_CHARGE
+    Material.FIRE_CHARGE
 ) {
     override fun onStart() {
         for (player in Bukkit.getOnlinePlayers()) {
@@ -37,7 +37,7 @@ class FuckYouItsAFireballWandScenario : Scenario(
     @EventHandler
     fun onPlayerInteract(e: PlayerInteractEvent) {
         if (!enabled) return
-        if (e.item != null && e.item.itemMeta.displayName == Chat.colored("${Chat.primaryColor}Fireball Wand")) {
+        if (e.item != null && e.item!!.itemMeta.displayName() == Chat.colored("${Chat.primaryColor}Fireball Wand")) {
             val fb = e.player.launchProjectile(Fireball::class.java)
             fb.setIsIncendiary(true)
             fb.velocity = e.player.location.direction.multiply(2)

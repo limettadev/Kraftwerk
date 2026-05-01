@@ -1,5 +1,6 @@
 package pink.mino.kraftwerk.commands
 
+import me.lucko.helper.Schedulers
 import me.lucko.helper.utils.Log
 import org.bukkit.*
 import org.bukkit.command.Command
@@ -39,30 +40,21 @@ class RegenArenaCommand : CommandExecutor {
         val wc = WorldCreator("Arena")
         wc.environment(World.Environment.NORMAL)
         wc.type(WorldType.NORMAL)
-        world = wc.createWorld()
+        world = wc.createWorld()!!
         world.difficulty = Difficulty.HARD
 
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
-            "wb shape rectangular"
-        )
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
-            "wb Arena setcorners 100 100 -100 -100"
-        )
-
-        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
-            val border = world.worldBorder
-            border.size = 100.toDouble() * 2
+        Schedulers.sync().runLater({
+            val border = world!!.worldBorder
+            border.size = 100.0 * 2
             border.setCenter(0.0, 0.0)
 
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
-                "wb Arena fill 200"
-            )
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
-                "wb fill confirm"
-            )
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "chunky world Arena")
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "chunky shape square")
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "chunky radius 100")
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "chunky start")
+            PregenConfigHandler.currentPregenWorld = "Arena"
         }, 5L)
 
         return true
     }
-
 }

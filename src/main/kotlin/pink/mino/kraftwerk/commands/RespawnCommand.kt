@@ -46,16 +46,16 @@ class RespawnFeature : Listener {
     fun onPlayerDeath(e: PlayerDeathEvent) {
         if (GameState.currentState != GameState.INGAME) return
         val player = e.entity
-        causes[player.uniqueId] = player.lastDamageCause.cause
+        causes[player.uniqueId] = player.lastDamageCause!!.cause
         locations[player.uniqueId] = player.location
-        inventory[player.uniqueId] = player.inventory.contents
+        inventory[player.uniqueId] = player.inventory.contents as Array<ItemStack>
         xp[player.uniqueId] = player.exp
         level[player.uniqueId] = player.level
         effects[player.uniqueId] = player.activePotionEffects.toTypedArray()
-        if (player.inventory.helmet != null) helmet[player.uniqueId] = player.inventory.helmet
-        if (player.inventory.chestplate != null) chestplate[player.uniqueId] = player.inventory.chestplate
-        if (player.inventory.leggings != null) leggings[player.uniqueId] = player.inventory.leggings
-        if (player.inventory.boots != null) boots[player.uniqueId] = player.inventory.boots
+        if (player.inventory.helmet != null) helmet[player.uniqueId] = player.inventory.helmet!!
+        if (player.inventory.chestplate != null) chestplate[player.uniqueId] = player.inventory.chestplate!!
+        if (player.inventory.leggings != null) leggings[player.uniqueId] = player.inventory.leggings!!
+        if (player.inventory.boots != null) boots[player.uniqueId] = player.inventory.boots!!
         respawnablePlayers.add(player.uniqueId)
         Log.info("Saved ${player.name}'s death.")
     }
@@ -64,7 +64,7 @@ class RespawnFeature : Listener {
 class RespawnCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
+        command: Command,
         label: String,
         args: Array<out String>
     ): Boolean {
@@ -96,10 +96,10 @@ class RespawnCommand : CommandExecutor {
             } else if (RespawnFeature.instance.respawnablePlayers.size >= 45) {
                 size = 6
             }
-            val gui = GuiBuilder().rows(size).name(Chat.colored("${Chat.primaryColor}Respawnable Players")).owner(sender as Player)
+            val gui = GuiBuilder().rows(size).name("${Chat.primaryColor}Respawnable Players").owner(sender as Player)
             for ((index, player) in RespawnFeature.instance.respawnablePlayers.withIndex()) {
-                val skull = ItemBuilder(Material.SKULL_ITEM)
-                    .name("&d${Bukkit.getOfflinePlayer(player).name}")
+                val skull = ItemBuilder(Material.PLAYER_HEAD)
+                    .name("<light_purple>${Bukkit.getOfflinePlayer(player).name}")
                     .addLore("<gray>Location: ${Chat.primaryColor}${floor(RespawnFeature.instance.locations[player]!!.x)}<gray>, ${Chat.primaryColor}${floor(RespawnFeature.instance.locations[player]!!.y)}<gray>, ${Chat.primaryColor}${floor(RespawnFeature.instance.locations[player]!!.z)}")
                     .addLore("<gray>Cause: ${Chat.primaryColor}${RespawnFeature.instance.causes[player].toString()
                         .uppercase(Locale.getDefault())}")
@@ -107,7 +107,7 @@ class RespawnCommand : CommandExecutor {
                     .addLore("${Chat.primaryColor}Left Click<gray> to teleport to the player's death location.")
                     .addLore("<green>Right Click<gray> to respawn the player.")
                     .toSkull()
-                    .setOwner(Bukkit.getOfflinePlayer(player).name)
+                    .setOwner(Bukkit.getOfflinePlayer(player).name!!)
                     .make()
                 gui.item(index, skull) {
                     it.isCancelled = true
@@ -132,7 +132,7 @@ class RespawnCommand : CommandExecutor {
             if (SpecFeature.instance.isSpec(player)) {
                 SpecFeature.instance.unspec(player)
             }
-            player.playSound(player.location, Sound.WOOD_CLICK, 10F, 1F)
+            player.playSound(player.location, Sound.BLOCK_WOODEN_BUTTON_CLICK_ON, 10F, 1F)
             player.health = 20.0
             player.maxHealth = 20.0
             player.isFlying = false
@@ -141,8 +141,8 @@ class RespawnCommand : CommandExecutor {
             player.saturation = 20F
             player.gameMode = GameMode.SURVIVAL
             player.inventory.clear()
-            player.inventory.armorContents = null
-            player.itemOnCursor = ItemStack(Material.AIR)
+            player.inventory.armorContents = arrayOfNulls(4)
+            player.setItemInHand(ItemStack(Material.AIR))
             val openInventory = player.openInventory
             if (openInventory.type == InventoryType.CRAFTING) {
                 openInventory.topInventory.clear()
@@ -161,10 +161,10 @@ class RespawnCommand : CommandExecutor {
             if (team != null) {
                 team.addPlayer(player)
             }
-            if (RespawnFeature.instance.helmet[player.uniqueId] != null) player.inventory.helmet = RespawnFeature.instance.helmet[player.uniqueId]!!
-            if (RespawnFeature.instance.chestplate[player.uniqueId] != null) player.inventory.chestplate = RespawnFeature.instance.chestplate[player.uniqueId]!!
-            if (RespawnFeature.instance.leggings[player.uniqueId] != null) player.inventory.leggings = RespawnFeature.instance.leggings[player.uniqueId]!!
-            if (RespawnFeature.instance.boots[player.uniqueId] != null) player.inventory.boots = RespawnFeature.instance.boots[player.uniqueId]!!
+            if (RespawnFeature.instance.helmet[player.uniqueId] != null) player.inventory.setHelmet(RespawnFeature.instance.helmet[player.uniqueId]!!)
+            if (RespawnFeature.instance.chestplate[player.uniqueId] != null) player.inventory.setChestplate(RespawnFeature.instance.chestplate[player.uniqueId]!!)
+            if (RespawnFeature.instance.leggings[player.uniqueId] != null) player.inventory.setLeggings(RespawnFeature.instance.leggings[player.uniqueId]!!)
+            if (RespawnFeature.instance.boots[player.uniqueId] != null) player.inventory.setBoots(RespawnFeature.instance.boots[player.uniqueId]!!)
             RespawnFeature.instance.respawnablePlayers.remove(player.uniqueId)
 
             player.exp = RespawnFeature.instance.xp[player.uniqueId]!!
@@ -176,7 +176,7 @@ class RespawnCommand : CommandExecutor {
             ConfigFeature.instance.data!!.set("game.list", list)
             ConfigFeature.instance.saveData()
             WhitelistCommand().addWhitelist(player.name.lowercase())
-            player.addPotionEffect(PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 300, 1000, true, false))
+            player.addPotionEffect(PotionEffect(PotionEffectType.RESISTANCE, 300, 1000, true, false))
             Chat.sendMessage(player, "${Chat.prefix} You have been respawned by ${Chat.secondaryColor}${sender.name}<gray>.")
             Chat.sendMessage(sender, "${Chat.prefix} ${Chat.secondaryColor}${player.name}<gray> has been respawned.")
             PlayerRespawnListener.deathKicks[player.uniqueId]!!.cancelDeathKick()

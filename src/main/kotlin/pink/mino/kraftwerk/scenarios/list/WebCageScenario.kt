@@ -14,7 +14,7 @@ class WebCageScenario: Scenario(
     "Web Cages",
     "Players are surrounded in a cage of webs when they die.",
     "webcages",
-    Material.WEB
+    Material.COBWEB
 ) {
     @EventHandler
     fun onPlayerDeath(e: PlayerDeathEvent) {
@@ -27,7 +27,7 @@ class WebCageScenario: Scenario(
                 block.location.distance(location)
             ) == 4.0
         }.filter { block: Block -> block.type === Material.AIR }.forEach { block: Block ->
-            block.type = Material.WEB
+            block.type = Material.COBWEB
         }
     }
 }

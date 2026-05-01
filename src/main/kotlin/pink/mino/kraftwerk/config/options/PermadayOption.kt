@@ -1,6 +1,9 @@
 package pink.mino.kraftwerk.config.options
 
+import net.minecraft.world.level.gamerules.GameRules
+import org.bukkit.World
 import org.bukkit.Bukkit
+import org.bukkit.GameRule
 import org.bukkit.Material
 import pink.mino.kraftwerk.config.ConfigOption
 import pink.mino.kraftwerk.features.ConfigFeature
@@ -14,16 +17,13 @@ class PermadayOption : ConfigOption(
     Material.DANDELION
 ) {
     override fun onToggle(to: Boolean) {
-        val world = Bukkit.getWorld(ConfigFeature.instance.data!!.getString("pregen.world")!!)
+        val world: World = Bukkit.getWorld(ConfigFeature.instance.data!!.getString("pregen.world")!!)!!
         if (world == null) {
-            Bukkit.broadcastMessage("${Chat.prefix} Permaday cannot be toggled while there is no overworld world!")
+            Bukkit.broadcast(Chat.colored("${Chat.prefix} Permaday cannot be toggled while there is no overworld world!"))
             return
         }
         if (enabled) {
             world.time = 6000
-            world.setGameRuleValue("doDaylightCycle", "false")
-        } else {
-            world.setGameRuleValue("doDaylightCycle", "true")
         }
     }
 }

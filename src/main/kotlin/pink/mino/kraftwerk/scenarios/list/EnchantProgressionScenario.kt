@@ -17,7 +17,7 @@ class EnchantProgressionScenario : Scenario(
     "Enchant Progression",
     "All players receive 1 enchanting table use for each kill they get.",
     "enchantprogression",
-    Material.ENCHANTMENT_TABLE
+    Material.ENCHANTING_TABLE
 ) {
     var enchants: HashMap<UUID, Int> = hashMapOf()
 
@@ -51,7 +51,7 @@ class EnchantProgressionScenario : Scenario(
         if (!enabled) return
         if (GameState.currentState != GameState.INGAME) return
         if (e.entity.killer == null) return
-        if (e.entity.killer.type == EntityType.PLAYER) {
+        if (e.entity.killer!!.type == EntityType.PLAYER) {
             val killer = e.entity.killer as Player
             if (enchants[killer.uniqueId] == null) {
                 enchants[killer.uniqueId] = 1
@@ -59,7 +59,7 @@ class EnchantProgressionScenario : Scenario(
                 enchants[killer.uniqueId] = enchants[killer.uniqueId]!! + 1
             }
             Chat.sendMessage(killer, "${Chat.prefix} You have gained an enchant! (Enchants: ${Chat.secondaryColor}${enchants[killer.uniqueId]}<gray>)")
-        } else if (e.entity.killer.type == EntityType.ARROW && (e.entity as Arrow).shooter is Player) {
+        } else if (e.entity.killer!!.type == EntityType.ARROW && (e.entity as Arrow).shooter is Player) {
             val killer = (e.entity as Arrow).shooter as Player
             if (enchants[killer.uniqueId] == null) {
                 enchants[killer.uniqueId] = 1

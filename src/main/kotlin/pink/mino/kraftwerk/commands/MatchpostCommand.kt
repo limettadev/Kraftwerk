@@ -19,7 +19,6 @@ import pink.mino.kraftwerk.Kraftwerk
 import pink.mino.kraftwerk.discord.Discord
 import pink.mino.kraftwerk.features.ConfigFeature
 import pink.mino.kraftwerk.scenarios.ScenarioHandler
-import pink.mino.kraftwerk.utils.ActionBar
 import pink.mino.kraftwerk.utils.Chat
 import pink.mino.kraftwerk.utils.MiscUtils
 import java.io.BufferedReader
@@ -89,7 +88,7 @@ class ScheduleBroadcast(private val opening: String) : BukkitRunnable() {
             embed.addField("Opening", "<t:${fr}:t> (<t:${fr}:R>)", false)
             embed.addField("Matchpost", "[uhc.gg](https://hosts.uhc.gg/m/${ConfigFeature.instance.data!!.getInt("matchpost.id")})", false)
             if (Kraftwerk.instance.gameAlertsChannelId != null) {
-                Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Matchpost posted on discord!"))
+                Bukkit.broadcast(Chat.colored("${Chat.prefix} Matchpost posted on discord!"))
                 if (!ConfigFeature.instance.data!!.getBoolean("matchpost.fake")) {
                     if (Kraftwerk.instance.alertsRoleId != null) {
                         Discord.instance!!
@@ -136,7 +135,7 @@ class ScheduleBroadcast(private val opening: String) : BukkitRunnable() {
                     .queue()
 
             } else {
-                Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} A matchpost is coming in ${Chat.secondaryColor}15 minutes<gray> but there's no configured game alerts channel!"))
+                Bukkit.broadcast(Chat.colored("${Chat.prefix} A matchpost is coming in ${Chat.secondaryColor}15 minutes<gray> but there's no configured game alerts channel!"))
             }
             if (ConfigFeature.instance.config!!.getBoolean("options.whitelist-after-restart")) {
                 embed = EmbedBuilder()
@@ -180,7 +179,7 @@ class Opening(var closing: Long) : BukkitRunnable() {
     }
 
     private fun displayTimer(player: Player) {
-        ActionBar.sendActionBarMessage(player, "${Chat.primaryColor}Whitelist is enabled in ${Chat.dash} ${Chat.secondaryColor}${timeToString(closing - timer.toLong())}")
+        player.sendActionBar( "${Chat.primaryColor}Whitelist is enabled in ${Chat.dash} ${Chat.secondaryColor}${timeToString(closing - timer.toLong())}")
     }
 
     override fun run() {
@@ -248,7 +247,7 @@ class ScheduleOpening(private val opening: String) : BukkitRunnable() {
             } else {
                 Chat.broadcast("${Chat.dash} Couldn't post game opening in discord because there's no game alerts channel ID configured.")
             }
-            Bukkit.broadcastMessage(Chat.colored("${Chat.dash} The whitelist has been turned off automatically @ ${Chat.primaryColor}${opening}<gray>."))
+            Bukkit.broadcast(Chat.colored("${Chat.dash} The whitelist has been turned off automatically @ ${Chat.primaryColor}${opening}<gray>."))
             cancel()
             Kraftwerk.instance.opening = Opening(time)
             Kraftwerk.instance.opening!!.runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, 20L)
@@ -358,7 +357,7 @@ class MatchpostCommand : CommandExecutor {
         }
 
         if (args[0].toIntOrNull() == null) {
-            Chat.sendMessage(sender, "<red>You must provide a &ovalid<red> matchpost ID.")
+            Chat.sendMessage(sender, "<red>You must provide a <italic>valid<red> matchpost ID.")
             return false
         }
         val host: String

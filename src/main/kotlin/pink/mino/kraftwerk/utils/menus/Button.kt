@@ -2,15 +2,17 @@ package pink.mino.kraftwerk.utils.menus
 
 import com.google.common.base.Joiner
 import com.google.common.collect.ImmutableList
+import net.kyori.adventure.text.Component
 import org.bukkit.Material
 import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
+import pink.mino.kraftwerk.utils.Chat
 
 abstract class Button {
-    abstract fun getName(player: Player): String
-    abstract fun getDescription(player: Player): List<String>
+    abstract fun getName(player: Player): Component
+    abstract fun getDescription(player: Player): List<Component>
     open fun getMaterial(player: Player): Material {
         return Material.DIRT
     }
@@ -35,10 +37,10 @@ abstract class Button {
     open fun getButtonItem(player: Player): ItemStack {
         val buttonItem = ItemStack(getMaterial(player)!!, getAmount(player))
         val meta = buttonItem.itemMeta
-        meta.displayName = getName(player)
+        meta.displayName(getName(player))
         val description = getDescription(player)
         if (description != null) {
-            meta.lore = (
+            meta.lore(
                 description
             )
         }
@@ -67,13 +69,13 @@ abstract class Button {
             return placeholder(material, 0.toByte(), title)
         }
 
-        fun placeholder(material: Material, data: Byte, title: String): Button {
+        fun placeholder(material: Material, data: Byte, title: Component): Button {
             return object : Button() {
-                override fun getName(player: Player): String {
+                override fun getName(player: Player): Component {
                     return title
                 }
 
-                override fun getDescription(player: Player): List<String> {
+                override fun getDescription(player: Player): List<Component> {
                     return ImmutableList.of()
                 }
 
@@ -96,11 +98,11 @@ abstract class Button {
                     return item
                 }
 
-                override fun getName(player: Player): String {
-                    return "<gray>"
+                override fun getName(player: Player): Component {
+                    return Chat.colored("<gray>")
                 }
 
-                override fun getDescription(player: Player): List<String> {
+                override fun getDescription(player: Player): List<Component> {
                     return listOf()
                 }
 
@@ -111,15 +113,15 @@ abstract class Button {
         }
 
         fun playFail(player: Player) {
-            player.playSound(player.location, Sound.ANVIL_LAND, 20.0f, 0.1f)
+            player.playSound(player.location, Sound.BLOCK_ANVIL_LAND, 20.0f, 0.1f)
         }
 
         fun playSuccess(player: Player) {
-            player.playSound(player.location, Sound.NOTE_PLING, 20.0f, 15.0f)
+            player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_PLING, 20.0f, 15.0f)
         }
 
         fun playNeutral(player: Player) {
-            player.playSound(player.location, Sound.CLICK, 20.0f, 1.0f)
+            player.playSound(player.location, Sound.UI_BUTTON_CLICK, 20.0f, 1.0f)
         }
     }
 }

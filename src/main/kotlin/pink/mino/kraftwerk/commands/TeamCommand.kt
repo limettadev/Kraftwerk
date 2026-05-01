@@ -6,6 +6,7 @@ import com.lunarclient.apollo.module.team.TeamMember
 import com.lunarclient.apollo.module.team.TeamModule
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
+import net.kyori.adventure.text.minimessage.MiniMessage
 import net.md_5.bungee.api.chat.ClickEvent
 import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.Bukkit
@@ -150,7 +151,7 @@ class TeamCommand : CommandExecutor {
                         "${ChatColor.RED}You can't use this command at the moment. (It's an FFA game or Random teams)"
                     )
                     return false
-                } else if (GameState.valueOf(ConfigFeature.instance.data!!.getString("game.state")) != GameState.LOBBY) {
+                } else if (GameState.valueOf(ConfigFeature.instance.data!!.getString("game.state")!!) != GameState.LOBBY) {
                     Chat.sendMessage(sender, "${ChatColor.RED}You can't use this command at the moment.")
                     return false
                 }
@@ -185,7 +186,7 @@ class TeamCommand : CommandExecutor {
             )
             Chat.sendMessage(
                 sender,
-                "${Chat.dash} ${Chat.secondaryColor}/team color <color> [bold] [italic] [underline] <dark_gray>(&2DONATOR<dark_gray>) ${ChatColor.DARK_GRAY}-${ChatColor.GRAY} Changes your team color."
+                "${Chat.dash} ${Chat.secondaryColor}/team color <color> [bold] [italic] [underline] <dark_gray>(<dark_green>DONATOR<dark_gray>) ${ChatColor.DARK_GRAY}-${ChatColor.GRAY} Changes your team color."
             )
             Chat.sendMessage(
                 sender,
@@ -253,7 +254,7 @@ class TeamCommand : CommandExecutor {
                 Chat.sendMessage(player, "<red>Team management is disabled at the moment.")
                 return true
             }
-            if (GameState.valueOf(ConfigFeature.instance.data!!.getString("game.state")) != GameState.LOBBY) {
+            if (GameState.valueOf(ConfigFeature.instance.data!!.getString("game.state")!!) != GameState.LOBBY) {
                 Chat.sendMessage(player, "<red>You can't manage teams while the game is running!")
                 return true
             }
@@ -277,7 +278,7 @@ class TeamCommand : CommandExecutor {
                 team = TeamsFeature.manager.createTeam(player)
                 SendTeamView(team).runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, 20L)
             }
-            if (team.size >= ConfigFeature.instance.data!!.getString("game.teamSize").toInt()) {
+            if (team.size >= ConfigFeature.instance.data!!.getString("game.teamSize")!!.toInt()) {
                 Chat.sendMessage(player, "<red>Your team is too full to invite anyone!")
                 return true
             }
@@ -308,18 +309,15 @@ class TeamCommand : CommandExecutor {
 
             if (!invites.containsKey(player)) invites[player] = ArrayList()
             invites[player]!!.add(target)
-            val text =
-                TextComponent(Chat.colored("${Chat.prefix} §7To accept, type ${ChatColor.WHITE}/team accept ${player.name}${ChatColor.GRAY} or ${Chat.secondaryColor}&nclick here<gray>."))
-            text.clickEvent = ClickEvent(
-                ClickEvent.Action.RUN_COMMAND,
-                "/team accept ${player.name}"
+            val text = MiniMessage.miniMessage().deserialize(
+                "${Chat.prefix} <gray>To accept, type <white>/team accept ${player.name}</white> <gray>or <${Chat.secondaryColor}><click:run_command:/team accept ${player.name}><u>click here</u></click><gray>."
             )
             Chat.sendMessage(target, Chat.line)
             Chat.sendMessage(
                 target,
                 "${Chat.prefix} You have been invited to ${ChatColor.WHITE}${player.name}${ChatColor.GRAY}'s team."
             )
-            target.spigot().sendMessage(text)
+            target.sendMessage(text)
             Chat.sendMessage(target, Chat.line)
         } else if (args[0] == "size") {
             if (sender is Player) {
@@ -349,7 +347,7 @@ class TeamCommand : CommandExecutor {
                 return false
             }
             val target = Bukkit.getServer().getPlayer(args[1])
-            val team = target.scoreboard.getPlayerTeam(target)
+            val team = target!!.scoreboard.getPlayerTeam(target)!!
             if (ConfigFeature.instance.data!!.getString("game.ffa").toBoolean()) {
                 player.sendMessage("${ChatColor.RED}This is an FFA game.")
                 return true
@@ -363,7 +361,7 @@ class TeamCommand : CommandExecutor {
                 return false
             }
             if (invites.containsKey(target) && invites[target]!!.contains(player)) {
-                if (team.size >= ConfigFeature.instance.data!!.getString("game.teamSize").toInt()) {
+                if (team.size >= ConfigFeature.instance.data!!.getString("game.teamSize")!!.toInt()) {
                     player.sendMessage("${ChatColor.RED}That team is too full to join!")
                     return false
                 }
@@ -406,10 +404,10 @@ class TeamCommand : CommandExecutor {
             Chat.sendMessage(sender, Chat.line)
             if (args[1] == "on") {
                 settings.data!!.set("game.ffa", false)
-                Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${ChatColor.GRAY}Team management has been <green>enabled<gray>."))
+                Bukkit.broadcast(Chat.colored("${Chat.prefix} ${ChatColor.GRAY}Team management has been <green>enabled<gray>."))
             } else if (args[1] == "off") {
                 settings.data!!.set("game.ffa", true)
-                Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${ChatColor.GRAY}Team management has been <red>disabled<gray>."))
+                Bukkit.broadcast(Chat.colored("${Chat.prefix} ${ChatColor.GRAY}Team management has been <red>disabled<gray>."))
             }
             settings.saveData()
             Chat.sendMessage(sender, Chat.line)
@@ -459,7 +457,7 @@ class TeamCommand : CommandExecutor {
             }
         } else if (args[0] == "list") {
             Chat.sendMessage(sender, Chat.line)
-            Chat.sendCenteredMessage(sender, "${Chat.primaryColor}&lTeams List")
+            Chat.sendCenteredMessage(sender, "${Chat.primaryColor}<bold>Teams List")
             Chat.sendMessage(sender, " ")
             val teamList = ArrayList<Team>()
             if (ScenarioHandler.getActiveScenarios().contains(ScenarioHandler.getScenario("moles"))) {
@@ -468,7 +466,7 @@ class TeamCommand : CommandExecutor {
                         teamList.add(team)
                         val list = ArrayList<String>()
                         for (player in team.players) {
-                            list.add(player.name)
+                            list.add(player.name!!)
                         }
                         Chat.sendMessage(
                             sender,
@@ -477,7 +475,7 @@ class TeamCommand : CommandExecutor {
                     }
                 }
                 if (teamList.isEmpty()) {
-                    Chat.sendCenteredMessage(sender, "<gray>&lThere are no teams right now!")
+                    Chat.sendCenteredMessage(sender, "<gray><bold>There are no teams right now!")
                 }
                 Chat.sendMessage(sender, Chat.line)
             } else {
@@ -497,7 +495,7 @@ class TeamCommand : CommandExecutor {
                     }
                 }
                 if (keys.isEmpty()) {
-                    Chat.sendCenteredMessage(sender, "<gray>&lThere are no teams right now!")
+                    Chat.sendCenteredMessage(sender, "<gray><bold>There are no teams right now!")
                 }
                 Chat.sendMessage(sender, Chat.line)
             }
@@ -661,7 +659,7 @@ class TeamCommand : CommandExecutor {
                     ConfigFeature.instance.data!!.set("game.friendlyFire", true)
                     ConfigFeature.instance.saveData()
                 }
-                Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Friendly fire has been enabled by ${Chat.secondaryColor}${sender.name}<gray>."))
+                Bukkit.broadcast(Chat.colored("${Chat.prefix} Friendly fire has been enabled by ${Chat.secondaryColor}${sender.name}<gray>."))
             }
             if (args[1] == "off") {
                 for (team in TeamsFeature.manager.getTeams()) {
@@ -669,7 +667,7 @@ class TeamCommand : CommandExecutor {
                     ConfigFeature.instance.data!!.set("game.friendlyFire", false)
                     ConfigFeature.instance.saveData()
                 }
-                Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Friendly fire has been disabled by ${Chat.secondaryColor}${sender.name}<gray>."))
+                Bukkit.broadcast(Chat.colored("${Chat.prefix} Friendly fire has been disabled by ${Chat.secondaryColor}${sender.name}<gray>."))
             }
         } else if (args[0] == "kickunder") {
             if (sender is Player) {
@@ -690,10 +688,10 @@ class TeamCommand : CommandExecutor {
                 if (SpecFeature.instance.isSpec(player)) continue
                 val team = TeamsFeature.manager.getTeam(player)
                 if (team == null) {
-                    player.kickPlayer(Chat.colored("<red>You've been kicked as you are not on a team."))
+                    player.kick(Chat.colored("<red>You've been kicked as you are not on a team."))
                 } else {
                     if (team.players.size < args[1].toInt()) {
-                        player.kickPlayer(Chat.colored("<red>You've been kicked as your team is undersized."))
+                        player.kick(Chat.colored("<red>You've been kicked as your team is undersized."))
                     }
                     //TeamsFeature.manager.deleteTeam(team)
                 }
@@ -706,7 +704,7 @@ class TeamCommand : CommandExecutor {
                 }
             }
             TeamsFeature.manager.resetTeams()
-            Bukkit.broadcastMessage(
+            Bukkit.broadcast(
                 Chat.colored(
                     "${Chat.dash} Randomizing all players into teams of ${Chat.primaryColor}${
                         ConfigFeature.instance.data!!.getInt(
@@ -746,7 +744,7 @@ class TeamCommand : CommandExecutor {
                 }
             }
             TeamsFeature.manager.resetTeams()
-            Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Randomizing all players into <red>Red<gray> vs &9Blue<gray>."))
+            Bukkit.broadcast(Chat.colored("${Chat.prefix} Randomizing all players into <red>Red<gray> vs <blue>Blue<gray>."))
             val valid: ArrayList<Player> = ArrayList()
             for (player in Bukkit.getOnlinePlayers()) {
                 if (!SpecFeature.instance.getSpecs().contains(player.name)) {
@@ -765,10 +763,10 @@ class TeamCommand : CommandExecutor {
                     TeamsFeature.manager.joinTeam(blue.name, player)
                 }
             }
-            Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} <red>Red<gray> vs &9Blue<gray> teams have been randomized."))
+            Bukkit.broadcast(Chat.colored("${Chat.prefix} <red>Red<gray> vs <blue>Blue<gray> teams have been randomized."))
         } else if (args[0] == "color") {
             if (!PerkChecker.checkPerk(sender as Player, "uhc.donator.teamColors")) {
-                Chat.sendMessage(sender, "<red>Buy a &2Donator<red> rank to use this perk. <yellow>${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store url setup in config tough tits"}}")
+                Chat.sendMessage(sender, "<red>Buy a <dark_green>Donator<red> rank to use this perk. <yellow>${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store url setup in config tough tits"}}")
                 return false
             }
             if (TeamsFeature.manager.getTeam(sender) == null) {
@@ -798,7 +796,7 @@ class TeamCommand : CommandExecutor {
                     Chat.sendMessage(sender, "${Chat.prefix} Invalid color: ${Chat.secondaryColor}$arg<gray>.")
                     Chat.sendMessage(
                         sender,
-                        "${Chat.prefix} Valid colors: &0black<gray>, &1dark_blue<gray>, &2dark_green<gray>, &3dark_aqua<gray>, &4dark_red<gray>, &5dark_purple<gray>, &6gold<gray>, <gray>gray<gray>, <dark_gray>dark_gray<gray>, &9blue<gray>, <green>green<gray>, &baqua<gray>, <red>red<gray>, &dlight_purple<gray>, <yellow>yellow<gray>, &fwhite<gray>."
+                        "${Chat.prefix} Valid colors: <black>black<gray>, <dark_blue>dark_blue<gray>, <dark_green>dark_green<gray>, <dark_aqua>dark_aqua<gray>, <dark_red>dark_red<gray>, <dark_purple>dark_purple<gray>, <gold>gold<gray>, <gray>gray<gray>, <dark_gray>dark_gray<gray>, <blue>blue<gray>, <green>green<gray>, <aqua>aqua<gray>, <red>red<gray>, <light_purple>light_purple<gray>, <yellow>yellow<gray>, <white>white<gray>."
                     )
                     return false
                 }
@@ -839,7 +837,7 @@ class TeamCommand : CommandExecutor {
                 TeamsFeature.manager.colors.add(TeamsFeature.manager.getTeam(sender)!!.prefix)
                 TeamsFeature.manager.colors.remove(selectedColor)
                 TeamsFeature.manager.getTeam(sender)!!.prefix = selectedColor
-                Bukkit.broadcastMessage(Chat.colored("<dark_gray>[&2$$$<dark_gray>] ${Chat.secondaryColor}${PlayerUtils.getPrefix(sender)}${sender.name} <gray>has selected ${Chat.secondaryColor}$selectedColor${args[1]}<gray> as their team color."))
+                Bukkit.broadcast(Chat.colored("<dark_gray>[<dark_green>$$$<dark_gray>] ${Chat.secondaryColor}${PlayerUtils.getPrefix(sender)}${sender.name} <gray>has selected ${Chat.secondaryColor}$selectedColor${args[1]}<gray> as their team color."))
             }
         } else if (args[0] == "recolor") {
             if (!sender.hasPermission("uhc.staff.team")) {
@@ -869,7 +867,7 @@ class TeamCommand : CommandExecutor {
                     Chat.sendMessage(sender, "${Chat.prefix} Invalid color: ${Chat.secondaryColor}$arg<gray>.")
                     Chat.sendMessage(
                         sender,
-                        "${Chat.prefix} Valid colors: &0black<gray>, &1dark_blue<gray>, &2dark_green<gray>, &3dark_aqua<gray>, &4dark_red<gray>, &5dark_purple<gray>, &6gold<gray>, <gray>gray<gray>, <dark_gray>dark_gray<gray>, &9blue<gray>, <green>green<gray>, &baqua<gray>, <red>red<gray>, &dlight_purple<gray>, <yellow>yellow<gray>, &fwhite<gray>."
+                        "${Chat.prefix} Valid colors: <black>black<gray>, <dark_blue>dark_blue<gray>, <dark_green>dark_green<gray>, <dark_aqua>dark_aqua<gray>, <dark_red>dark_red<gray>, <dark_purple>dark_purple<gray>, <gold>gold<gray>, <gray>gray<gray>, <dark_gray>dark_gray<gray>, <blue>blue<gray>, <green>green<gray>, <aqua>aqua<gray>, <red>red<gray>, <light_purple>light_purple<gray>, <yellow>yellow<gray>, <white>white<gray>."
                     )
                     return false
                 }

@@ -1,5 +1,6 @@
 package pink.mino.kraftwerk.listeners.donator
 
+import me.lucko.helper.Schedulers
 import org.bukkit.Bukkit
 import org.bukkit.entity.EntityType
 import org.bukkit.event.EventHandler
@@ -23,9 +24,9 @@ class CowboyFeature : Listener {
         if (GameState.currentState != GameState.LOBBY || e.player.world.name != "Spawn") return
         if (SpecFeature.instance.isSpec(e.player)) return
         if (e.rightClicked.type == EntityType.PLAYER && PerkChecker.checkPerks(e.player).contains(Perk.RIDE_PLAYERS) && !e.player.isInsideVehicle) {
-            e.rightClicked.passenger = e.player
-            Chat.sendMessage(e.player, "<dark_gray>[&2$$$<dark_gray>] <gray>You are now riding ${Chat.secondaryColor}${e.rightClicked.name}<gray>.")
-            Chat.sendMessage(e.rightClicked, "<dark_gray>[&2$$$<dark_gray>] ${Chat.secondaryColor}${e.player.name}<gray> is now riding you.")
+            e.rightClicked.setPassenger(e.player)
+            Chat.sendMessage(e.player, "<dark_gray>[<dark_green>$$$<dark_gray>] <gray>You are now riding ${Chat.secondaryColor}${e.rightClicked.name}<gray>.")
+            Chat.sendMessage(e.rightClicked, "<dark_gray>[<dark_green>$$$<dark_gray>] ${Chat.secondaryColor}${e.player.name}<gray> is now riding you.")
         }
     }
 
@@ -34,14 +35,14 @@ class CowboyFeature : Listener {
         if (GameState.currentState != GameState.LOBBY || e.player.world.name != "Spawn") return
         if (e.action == Action.LEFT_CLICK_AIR || e.action == Action.LEFT_CLICK_BLOCK) {
             if (e.player.passenger != null && PerkChecker.checkPerks(e.player).contains(Perk.RIDE_PLAYERS)) {
-                Chat.sendMessage(e.player.passenger, "<dark_gray>[&2$$$<dark_gray>] ${Chat.secondaryColor}${e.player.name}<gray> has launched you!")
+                Chat.sendMessage(e.player.passenger!!, "<dark_gray>[<dark_green>$$$<dark_gray>] ${Chat.secondaryColor}${e.player.name}<gray> has launched you!")
                 val passenger = e.player.passenger
-                (e.player).passenger.eject()
+                (e.player).passenger!!.eject()
                 (e.player).eject()
                 val dir: Vector = e.player.location.direction
                 val vec = Vector(dir.x * 3.5, dir.y * 3.5, dir.z * 3.5)
-                Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
-                    passenger.velocity = vec
+                Schedulers.sync().runLater({
+                    passenger!!.velocity = vec
                 }, 2L)
             }
         }
@@ -50,7 +51,7 @@ class CowboyFeature : Listener {
     @EventHandler
     fun onPlayerTeleport(e: PlayerTeleportEvent) {
         if (e.player.passenger != null) {
-            (e.player).passenger.eject()
+            (e.player).passenger!!.eject()
             (e.player).eject()
         }
     }

@@ -16,13 +16,13 @@ class SpikedArmorRecipe : Recipe(
 ) {
     init {
         val spikedArmor = ItemBuilder(Material.LEATHER_CHESTPLATE)
-            .name("&5Spiked Armor")
+            .name("<dark_purple>Spiked Armor")
             .addEnchantment(Enchantment.THORNS, 0)
-            .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5)
+            .addEnchantment(Enchantment.PROTECTION, 5)
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(spikedArmor, id)).shape(" L ", " C ", " P ")
             .setIngredient('C', Material.CACTUS)
-            .setIngredient('L', Material.WATER_LILY)
+            .setIngredient('L', Material.LILY_PAD)
             .setIngredient('P', Material.LEATHER_CHESTPLATE)
     }
 }

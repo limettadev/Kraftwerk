@@ -8,7 +8,7 @@ class BigCrackScenario : Scenario(
     "Big Crack",
     "A Chunk Error running on the X or Z axis splits the world in half.",
     "bigcrack",
-    Material.GRASS,
+    Material.GRASS_BLOCK,
     true
 ) {
     override fun handleBlock(block: Block) {

@@ -1,11 +1,11 @@
 package pink.mino.kraftwerk.utils.recipes
 
-import net.minecraft.server.v1_8_R3.NBTTagCompound
-import net.minecraft.server.v1_8_R3.NBTTagString
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack
+import org.bukkit.NamespacedKey
 import org.bukkit.event.Listener
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.Recipe
+import org.bukkit.persistence.PersistentDataType
+import pink.mino.kraftwerk.Kraftwerk
 import pink.mino.kraftwerk.utils.ItemBuilder
 
 abstract class Recipe(
@@ -19,7 +19,7 @@ abstract class Recipe(
     fun createRecipeBookItem(): ItemStack {
         val item = ItemBuilder(icon.type)
             .name("<green>$name")
-            .addLore("<gray>Max Crafts: &b$crafts")
+            .addLore("<gray>Max Crafts: <aqua>$crafts")
             .addLore(" ")
             .addLore("<gray>$description")
             .addLore(" ")
@@ -29,11 +29,11 @@ abstract class Recipe(
 
     companion object {
         fun convertToRecipeItem(item: ItemStack, id: String): ItemStack {
-            val stack = CraftItemStack.asNMSCopy(item)
-            val compound: NBTTagCompound = if (stack.hasTag()) stack.tag else NBTTagCompound()
-            compound.set("uhcId", NBTTagString(id))
-            stack.tag = compound
-            return CraftItemStack.asBukkitCopy(stack)
+            val meta = item.itemMeta!!
+            val key = NamespacedKey(Kraftwerk.instance, "uhcId")
+            meta.persistentDataContainer.set(key, PersistentDataType.STRING, id)
+            item.itemMeta = meta
+            return item
         }
     }
 }

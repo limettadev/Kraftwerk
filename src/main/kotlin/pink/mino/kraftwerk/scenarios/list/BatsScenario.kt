@@ -23,7 +23,7 @@ class BatsScenario : Scenario(
         if (e.entity.killer != null) {
             e.entity.world.dropItemNaturally(e.entity.location, ItemStack(Material.GOLDEN_APPLE))
             val odds = Random.nextInt(100)
-            if (odds >= 95) e.entity.killer.damage(9999.9)
+            if (odds >= 95) e.entity.killer!!.damage(9999.9)
         }
     }
 }

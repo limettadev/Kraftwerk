@@ -1,7 +1,6 @@
 package pink.mino.kraftwerk.commands
 
-import com.wimbli.WorldBorder.Config
-import dev.limetta.aerosmith.event.api.world.CustomizedGenerationSettings
+import me.lucko.helper.Schedulers
 import me.lucko.helper.utils.Log
 import org.bukkit.*
 import org.bukkit.command.Command
@@ -9,6 +8,7 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
+import org.popcraft.chunky.api.ChunkyAPI
 import pink.mino.kraftwerk.Kraftwerk
 import pink.mino.kraftwerk.features.ConfigFeature
 import pink.mino.kraftwerk.utils.BlockUtil
@@ -40,6 +40,7 @@ open class PregenConfig(val player: OfflinePlayer, val name: String) {
 
 class PregenConfigHandler {
     companion object {
+        var currentPregenWorld: String? = null
         private val configs = hashMapOf<OfflinePlayer, PregenConfig>()
 
         fun addConfig(player: OfflinePlayer, config: PregenConfig) : PregenConfig {
@@ -76,6 +77,8 @@ class PregenCommand : CommandExecutor {
 
         val wc = WorldCreator(pregenConfig.name)
 
+        PregenConfigHandler.currentPregenWorld = pregenConfig.name
+
         wc.environment(pregenConfig.type)
         if (pregenConfig.type === World.Environment.NETHER) {
             ConfigFeature.instance.data!!.set("game.nether.nether", true)
@@ -88,17 +91,14 @@ class PregenCommand : CommandExecutor {
         }
 
         try {
-            val customGenSettings = CustomizedGenerationSettings()
-            customGenSettings.caveFrequency = pregenConfig.caveRate
-            customGenSettings.caveLengthMin = pregenConfig.caveMinLength
-            wc.customGenSettings = customGenSettings
+            throw Exception("Need 2 convert Aerosmith to 1.21.11")
         } catch (e: Exception) {
             e.printStackTrace()
             Log.info("Can't implement custom cave settings, something must be wrong with the Aerosmith JAR.")
             Chat.sendMessage(pregenConfig.player as Player, "${Chat.prefix} Can't implement custom cave settings, something's wrong with the server JAR.")
         }
 
-        val world = wc.createWorld()
+        val world = wc.createWorld()!!
         world.difficulty = Difficulty.HARD
         Log.info("Created world ${pregenConfig.name}.")
         if (pregenConfig.type != World.Environment.NETHER && pregenConfig.type != World.Environment.THE_END) ConfigFeature.instance.data!!.set("pregen.world", world.name)
@@ -115,39 +115,38 @@ class PregenCommand : CommandExecutor {
         ConfigFeature.instance.saveWorlds()
 
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
-            "wb shape rectangular"
+            "chunky world ${pregenConfig.name}"
         )
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
-            "wb ${pregenConfig.name} setcorners ${pregenConfig.border} ${pregenConfig.border} -${pregenConfig.border} -${pregenConfig.border}"
-        )
+            "chunky shape square")
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+            "chunky radius ${pregenConfig.border}")
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+            "chunky border add")
 
-        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
-            val border = Bukkit.getWorld(pregenConfig.name).worldBorder
+        Schedulers.sync().runLater({
+            val border = Bukkit.getWorld(pregenConfig.name)!!.worldBorder
             border.size = pregenConfig.border.toDouble() * 2
             border.setCenter(0.0, 0.0)
 
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
-                "wb ${pregenConfig.name} fill 250 208 true"
-            )
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
-                "wb fill confirm"
+                "chunky start ${pregenConfig.name} square ${pregenConfig.border}"
             )
         }, 5L)
 
-        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "${Chat.prefix} <gray>Pregeneration started in <dark_gray>'${Chat.secondaryColor}${pregenConfig.name}<dark_gray>'<gray>."))
+        Bukkit.broadcast(Chat.colored("${Chat.prefix} <gray>Pregeneration started in <dark_gray>'${Chat.secondaryColor}${pregenConfig.name}<dark_gray>'<gray>."))
         //PregenActionBarFeature().runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, 20L)
-        val blocks = BlockUtil().getBlocks(Bukkit.getWorld(pregenConfig.name).spawnLocation.block, 100)
+        val blocks = BlockUtil().getBlocks(Bukkit.getWorld(pregenConfig.name)!!.spawnLocation.block, 100)
         if (blocks != null) {
             for (block in blocks) {
                 if (pregenConfig.clearTrees) {
-                    if (block.type == Material.LEAVES || block.type == Material.LEAVES_2 || block.type == Material.LOG || block.type == Material.LOG_2) {
+                    if (block.type == Material.OAK_LEAVES || block.type == Material.BIRCH_LEAVES || block.type == Material.OAK_LOG || block.type == Material.BIRCH_LOG) {
                         block.type = Material.AIR
                     }
                 }
                 if (pregenConfig.clearWater) {
-                    if (block.type == Material.WATER || block.type == Material.STATIONARY_WATER) {
-                        block.type = Material.STAINED_GLASS
-                        block.data = 3.toByte()
+                    if (block.type == Material.WATER || block.type == Material.WATER) {
+                        block.type = Material.BLUE_STAINED_GLASS
                     }
                 }
             }
@@ -163,7 +162,7 @@ class PregenCommand : CommandExecutor {
 
     }
 
-    override fun onCommand(sender: CommandSender, command: Command, label: String?, args: Array<String>): Boolean {
+    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
         if (sender is Player) {
             if (!sender.hasPermission("uhc.staff.pregen")) {
                 Chat.sendMessage(sender, "${ChatColor.RED}You don't have permission to use this command.")
@@ -179,33 +178,34 @@ class PregenCommand : CommandExecutor {
                 return false
             }
             if (args[0] == "cancel") {
-                if (Config.fillTask.valid()) {
+                val worldName = PregenConfigHandler.currentPregenWorld
+                if (worldName != null && Kraftwerk.instance.chunky.isRunning(worldName)) {
                     Chat.sendMessage(sender, "${Chat.prefix} Cancelling the pregeneration task.")
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
-                        "wb fill cancel"
-                    )
+                    Kraftwerk.instance.chunky.cancelTask(worldName)
+                    PregenConfigHandler.currentPregenWorld = null
                 } else {
                     Chat.sendMessage(sender, "${Chat.prefix} There is no valid pregeneration task running.")
                 }
                 return true
             } else if (args[0] == "pause") {
-                if (Config.fillTask.valid()) {
-                    if (Config.fillTask.isPaused) {
-                        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} <green>&oResuming<gray> the pregeneration task."))
-                        Config.fillTask.pause(false)
+                val worldName = PregenConfigHandler.currentPregenWorld
+                if (worldName != null && (Kraftwerk.instance.chunky.isRunning(worldName) || Kraftwerk.instance.chunky.isRunning(worldName))) {
+                    if (Kraftwerk.instance.chunky.isRunning(worldName)) {
+                        Bukkit.broadcast(Chat.colored("${Chat.prefix} <green><italic>Resuming<gray> the pregeneration task."))
+                        Kraftwerk.instance.chunky.continueTask(worldName)
                     } else {
-                        Chat.sendMessage(sender, "${Chat.prefix} <red>&lPausing<gray> the pregeneration task.")
-                        Config.fillTask.pause(true)
+                        Chat.sendMessage(sender, "${Chat.prefix} <red><bold>Pausing<gray> the pregeneration task.")
+                        Kraftwerk.instance.chunky.pauseTask(worldName)
                     }
                 } else {
                     Chat.sendMessage(sender, "${Chat.prefix} There is no valid pregeneration task running.")
                 }
             } else {
-                val gui = GuiBuilder().name("&4Pregeneration Config").rows(1).owner(sender as Player)
+                val gui = GuiBuilder().name("<dark_red>Pregeneration Config").rows(1).owner(sender as Player)
                 Chat.sendMessage(sender, "${Chat.prefix} <gray>Opening pregeneration config for <gray>'${Chat.secondaryColor}${args[0]}<gray>'...")
                 val player = sender
                 val pregenConfig = PregenConfigHandler.addConfig(player, PregenConfig(player, args[0]))
-                val config = ItemBuilder(Material.GRASS)
+                val config = ItemBuilder(Material.GRASS_BLOCK)
                     .name("${Chat.primaryColor}Configuration")
                     .addLore(Chat.guiLine)
                     .addLore("<gray>Name: '${Chat.primaryColor}${pregenConfig.name}<gray>'")
@@ -218,8 +218,8 @@ class PregenCommand : CommandExecutor {
                     .addLore("<gray>Clear Trees: ${Chat.primaryColor}${if (pregenConfig.clearTrees) "<green>Enabled" else "<red>Disabled"}")
                     .addLore("<gray>Ores Outside Caves: ${Chat.primaryColor}${if (pregenConfig.oresOutsideCaves) "<green>Enabled" else "<red>Disabled"}")
                     .addLore("<gray>Rates: ")
-                    .addLore(" ${Chat.dot} &6Gold Ore: ${Chat.primaryColor}${pregenConfig.goldore}% Removed")
-                    .addLore(" ${Chat.dot} &bDiamond Ore: ${Chat.primaryColor}${pregenConfig.diamondore}% Removed")
+                    .addLore(" ${Chat.dot} <gold>Gold Ore: ${Chat.primaryColor}${pregenConfig.goldore}% Removed")
+                    .addLore(" ${Chat.dot} <aqua>Diamond Ore: ${Chat.primaryColor}${pregenConfig.diamondore}% Removed")
                     .addLore(" ${Chat.dot} <green>Sugar Cane: ${Chat.primaryColor}${pregenConfig.canerate}% Increased")
                     .addLore(" ${Chat.dot} <green>Cave Rates: ${Chat.primaryColor}${pregenConfig.caveRate}x Increased")
                     .addLore(Chat.guiLine)

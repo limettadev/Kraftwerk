@@ -1,15 +1,18 @@
 package pink.mino.kraftwerk.utils
 
-import com.gmail.filoghost.holographicdisplays.api.HologramsAPI
 import com.mongodb.MongoException
+import com.mongodb.client.MongoCollection
 import com.mongodb.client.model.Filters
 import com.mongodb.client.model.FindOneAndReplaceOptions
 import com.mongodb.client.model.Sorts.descending
+import eu.decentsoftware.holograms.api.DHAPI
+import eu.decentsoftware.holograms.api.holograms.Hologram
 import me.lucko.helper.Events
 import me.lucko.helper.Schedulers
 import me.lucko.helper.profiles.plugin.external.caffeine.cache.Cache
 import me.lucko.helper.profiles.plugin.external.caffeine.cache.Caffeine
 import me.lucko.helper.utils.Log
+import org.bson.BsonBinary
 import org.bson.Document
 import org.bukkit.Bukkit
 import org.bukkit.Location
@@ -61,158 +64,217 @@ class Leaderboards : BukkitRunnable() {
     var timer = 1
 
     companion object {
+        val storedHolograms = hashMapOf<String, Hologram>()
         val plugin = JavaPlugin.getPlugin(Kraftwerk::class.java)
-        val gamesPlayed =
-            HologramsAPI.createHologram(plugin, generateThingLocationFromConfig("games_played_holo"))
+        val gamesPlayed = DHAPI.createHologram("gamesPlayed", generateThingLocationFromConfig("games_played_holo"))
         val wins =
-            HologramsAPI.createHologram(plugin, generateThingLocationFromConfig("wins_holo"))
+            DHAPI.createHologram("wins", generateThingLocationFromConfig("wins_holo"))
         val kills =
-            HologramsAPI.createHologram(plugin, generateThingLocationFromConfig("kills_holo"))
+            DHAPI.createHologram("kills", generateThingLocationFromConfig("kills_holo"))
         val diamondsMined =
-            HologramsAPI.createHologram(plugin, generateThingLocationFromConfig("diamonds_mined_holo"))
-        val goldMined = HologramsAPI.createHologram(
-            plugin,
-            generateThingLocationFromConfig("gold_mined_holo")
+            DHAPI.createHologram("diamondsMined",  generateThingLocationFromConfig("diamonds_mined_holo"))
+        val goldMined = DHAPI.createHologram("goldMined", generateThingLocationFromConfig("gold_mined_holo")
         )
-        val gapplesEaten = HologramsAPI.createHologram(
-            plugin,
-            generateThingLocationFromConfig("gapples_eaten_holo")
+        val gapplesEaten = DHAPI.createHologram("gapplesEaten", generateThingLocationFromConfig("gapples_eaten_holo")
         )
-        val highestLevel = HologramsAPI.createHologram(
-            plugin,
+        val highestLevel = DHAPI.createHologram("highestLevel",
             generateThingLocationFromConfig("highest_level_holo")
         )
-        val latestMatch = HologramsAPI.createHologram(
-            plugin,
+        val latestMatch = DHAPI.createHologram("latestMatch",
             generateThingLocationFromConfig("latest_match_holo")
         )
 
         fun generateThingLocationFromConfig(value: String): Location {
-            if (ConfigFeature.instance.config!!.getDouble("thing.${value}.x") == null || ConfigFeature.instance.config!!.getDouble("thing.${value}.y") == null || ConfigFeature.instance.config!!.getDouble("thing.${value}.z") == null || ConfigFeature.instance.config!!.getString("thing.${value}.world") == null) {
+            if (ConfigFeature.instance.config!!.getDouble("thing.${value}.x") == null || ConfigFeature.instance.config!!.getDouble(
+                    "thing.${value}.y"
+                ) == null || ConfigFeature.instance.config!!.getDouble("thing.${value}.z") == null || ConfigFeature.instance.config!!.getString(
+                    "thing.${value}.world"
+                ) == null
+            ) {
                 return Location(Bukkit.getWorld("Spawn"), 0.0, 0.0, 0.0)
             } else {
-                return Location(Bukkit.getWorld(ConfigFeature.instance.config!!.getString("thing.${value}.world")), ConfigFeature.instance.config!!.getDouble("thing.${value}.x"), ConfigFeature.instance.config!!.getDouble("thing.${value}.y"), ConfigFeature.instance.config!!.getDouble("thing.${value}.z"))
+                return Location(
+                    Bukkit.getWorld(ConfigFeature.instance.config!!.getString("thing.${value}.world")!!),
+                    ConfigFeature.instance.config!!.getDouble("thing.${value}.x"),
+                    ConfigFeature.instance.config!!.getDouble("thing.${value}.y"),
+                    ConfigFeature.instance.config!!.getDouble("thing.${value}.z")
+                )
             }
         }
 
         fun updateLeaderboards() {
             try {
-                for (hologram in HologramsAPI.getHolograms(plugin)) {
-                    if (hologram == gamesPlayed ||
-                        hologram == wins ||
-                        hologram == diamondsMined ||
-                        hologram == kills ||
-                        hologram == goldMined ||
-                        hologram == gapplesEaten ||
-                        hologram == highestLevel ||
-                        hologram == latestMatch
-                    ) {
-                        hologram.clearLines()
-                    }
-                }
-                gamesPlayed.appendTextLine(Chat.colored("${Chat.primaryColor}&lGames Played"))
-                gamesPlayed.appendTextLine(Chat.guiLine)
-                wins.appendTextLine(Chat.colored("${Chat.primaryColor}&lWins"))
-                wins.appendTextLine(Chat.guiLine)
-                kills.appendTextLine(Chat.colored("${Chat.primaryColor}&lKills"))
-                kills.appendTextLine(Chat.guiLine)
-                diamondsMined.appendTextLine(Chat.colored("${Chat.primaryColor}&lDiamonds Mined"))
-                diamondsMined.appendTextLine(Chat.guiLine)
-                goldMined.appendTextLine(Chat.colored("${Chat.primaryColor}&lGold Mined"))
-                goldMined.appendTextLine(Chat.guiLine)
-                gapplesEaten.appendTextLine(Chat.colored("${Chat.primaryColor}&lGapples Eaten"))
-                gapplesEaten.appendTextLine(Chat.guiLine)
-                highestLevel.appendTextLine(Chat.colored("${Chat.primaryColor}&lHighest Level"))
-                highestLevel.appendTextLine(Chat.guiLine)
-                latestMatch.appendTextLine(Chat.colored("${Chat.primaryColor}&lLatest Match"))
-                latestMatch.appendTextLine(Chat.guiLine)
-                with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("stats")) {
+                // Clear all holograms
+                DHAPI.setHologramLines(gamesPlayed, 0, listOf())
+                DHAPI.setHologramLines(wins, 0, listOf())
+                DHAPI.setHologramLines(kills, 0, listOf())
+                DHAPI.setHologramLines(diamondsMined, 0, listOf())
+                DHAPI.setHologramLines(goldMined, 0, listOf())
+                DHAPI.setHologramLines(gapplesEaten, 0, listOf())
+                DHAPI.setHologramLines(highestLevel, 0, listOf())
+                DHAPI.setHologramLines(latestMatch, 0, listOf())
+
+                // Headers
+                DHAPI.addHologramLine(gamesPlayed, "${Chat.primaryColor}<bold>Games Played")
+                DHAPI.addHologramLine(gamesPlayed, Chat.guiLine)
+                DHAPI.addHologramLine(wins, "${Chat.primaryColor}<bold>Wins")
+                DHAPI.addHologramLine(wins, Chat.guiLine)
+                DHAPI.addHologramLine(kills, "${Chat.primaryColor}<bold>Kills")
+                DHAPI.addHologramLine(kills, Chat.guiLine)
+                DHAPI.addHologramLine(diamondsMined, "${Chat.primaryColor}<bold>Diamonds Mined")
+                DHAPI.addHologramLine(diamondsMined, Chat.guiLine)
+                DHAPI.addHologramLine(goldMined, "${Chat.primaryColor}<bold>Gold Mined")
+                DHAPI.addHologramLine(goldMined, Chat.guiLine)
+                DHAPI.addHologramLine(gapplesEaten, "${Chat.primaryColor}<bold>Gapples Eaten")
+                DHAPI.addHologramLine(gapplesEaten, Chat.guiLine)
+                DHAPI.addHologramLine(highestLevel, "${Chat.primaryColor}<bold>Highest Level")
+                DHAPI.addHologramLine(highestLevel, Chat.guiLine)
+                DHAPI.addHologramLine(latestMatch, "${Chat.primaryColor}<bold>Latest Match")
+                DHAPI.addHologramLine(latestMatch, Chat.guiLine)
+
+                with(JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("stats")) {
                     val gp = this.find().sort(descending("gamesPlayed")).limit(10)
                     for ((index, document) in gp.withIndex()) {
-                        val profile = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(document["uuid"] as UUID).get()
-                        if (document["gamesPlayed"] as Int != 0) gamesPlayed.appendTextLine(Chat.colored("<yellow>${index + 1}. ${Chat.secondaryColor}${profile.name} <dark_gray>- &b${document["gamesPlayed"] as Int}"))
+                        val profile =
+                            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(document["uuid"] as UUID)
+                                .get()
+                        if (document["gamesPlayed"] as Int != 0) DHAPI.addHologramLine(
+                            gamesPlayed,
+                            "<yellow>${index + 1}. ${Chat.secondaryColor}${profile.name} <dark_gray>- <aqua>${document["gamesPlayed"] as Int}"
+                        )
                     }
-                    if (gamesPlayed.size() == 2) {
-                        gamesPlayed.appendTextLine(Chat.colored("<gray>No data yet x_x"))
-                    }
+                    if (DHAPI.getHologram("gamesPlayed")!!.size() == 2) DHAPI.addHologramLine(
+                        gamesPlayed,
+                        "<gray>No data yet x_x"
+                    )
+
                     val w = this.find().sort(descending("wins")).limit(10)
                     for ((index, document) in w.withIndex()) {
-                        val profile = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(document["uuid"] as UUID).get()
-                        if (document["wins"] as Int != 0) wins.appendTextLine(Chat.colored("<yellow>${index + 1}. ${Chat.secondaryColor}${profile.name} <dark_gray>- &b${document["wins"] as Int}"))
+                        val profile =
+                            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(document["uuid"] as UUID)
+                                .get()
+                        if (document["wins"] as Int != 0) DHAPI.addHologramLine(
+                            wins,
+                            "<yellow>${index + 1}. ${Chat.secondaryColor}${profile.name} <dark_gray>- <aqua>${document["wins"] as Int}"
+                        )
                     }
-                    if (wins.size() == 2) {
-                        wins.appendTextLine(Chat.colored("<gray>No data yet x_x"))
-                    }
+                    if (DHAPI.getHologram("wins")!!.size() == 2) DHAPI.addHologramLine(wins, "<gray>No data yet x_x")
+
                     val k = this.find().sort(descending("kills")).limit(10)
                     for ((index, document) in k.withIndex()) {
-                        val profile = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(document["uuid"] as UUID).get()
-                        if (document["kills"] as Int != 0) kills.appendTextLine(Chat.colored("<yellow>${index + 1}. ${Chat.secondaryColor}${profile.name} <dark_gray>- &b${document["kills"] as Int}"))
+                        val profile =
+                            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(document["uuid"] as UUID)
+                                .get()
+                        if (document["kills"] as Int != 0) DHAPI.addHologramLine(
+                            kills,
+                            "<yellow>${index + 1}. ${Chat.secondaryColor}${profile.name} <dark_gray>- <aqua>${document["kills"] as Int}"
+                        )
                     }
-                    if (kills.size() == 2) {
-                        kills.appendTextLine(Chat.colored("<gray>No data yet x_x"))
-                    }
+                    if (DHAPI.getHologram("kills")!!.size() == 2) DHAPI.addHologramLine(kills, "<gray>No data yet x_x")
+
                     val d = this.find().sort(descending("diamondsMined")).limit(10)
                     for ((index, document) in d.withIndex()) {
-                        val profile = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(document["uuid"] as UUID).get()
-                        if (document["diamondsMined"] as Int != 0) diamondsMined.appendTextLine(Chat.colored("<yellow>${index + 1}. ${Chat.secondaryColor}${profile.name} <dark_gray>- &b${document["diamondsMined"] as Int}"))
+                        val profile =
+                            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(document["uuid"] as UUID)
+                                .get()
+                        if (document["diamondsMined"] as Int != 0) DHAPI.addHologramLine(
+                            diamondsMined,
+                            "<yellow>${index + 1}. ${Chat.secondaryColor}${profile.name} <dark_gray>- <aqua>${document["diamondsMined"] as Int}"
+                        )
                     }
-                    if (diamondsMined.size() == 2) {
-                        diamondsMined.appendTextLine(Chat.colored("<gray>No data yet x_x"))
-                    }
+                    if (DHAPI.getHologram("diamondsMined")!!.size() == 2) DHAPI.addHologramLine(
+                        diamondsMined,
+                        "<gray>No data yet x_x"
+                    )
+
                     val g = this.find().sort(descending("gapplesEaten")).limit(10)
                     for ((index, document) in g.withIndex()) {
-                        val profile = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(document["uuid"] as UUID).get()
-                        if (document["gapplesEaten"] as Int != 0) gapplesEaten.appendTextLine(Chat.colored("<yellow>${index + 1}. ${Chat.secondaryColor}${profile.name} <dark_gray>- &b${document["gapplesEaten"] as Int}"))
+                        val profile =
+                            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(document["uuid"] as UUID)
+                                .get()
+                        if (document["gapplesEaten"] as Int != 0) DHAPI.addHologramLine(
+                            gapplesEaten,
+                            "<yellow>${index + 1}. ${Chat.secondaryColor}${profile.name} <dark_gray>- <aqua>${document["gapplesEaten"] as Int}"
+                        )
                     }
-                    if (gapplesEaten.size() == 2) {
-                        gapplesEaten.appendTextLine(Chat.colored("<gray>No data yet x_x"))
-                    }
+                    if (DHAPI.getHologram("gapplesEaten")!!.size() == 2) DHAPI.addHologramLine(
+                        gapplesEaten,
+                        "<gray>No data yet x_x"
+                    )
+
                     val gm = this.find().sort(descending("goldMined")).limit(10)
                     for ((index, document) in gm.withIndex()) {
-                        val profile = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(document["uuid"] as UUID).get()
-                        if (document["goldMined"] as Int != 0) goldMined.appendTextLine(Chat.colored("<yellow>${index + 1}. ${Chat.secondaryColor}${profile.name} <dark_gray>- &b${document["goldMined"] as Int}"))
+                        val profile =
+                            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(document["uuid"] as UUID)
+                                .get()
+                        if (document["goldMined"] as Int != 0) DHAPI.addHologramLine(
+                            goldMined,
+                            "<yellow>${index + 1}. ${Chat.secondaryColor}${profile.name} <dark_gray>- <aqua>${document["goldMined"] as Int}"
+                        )
                     }
-                    if (goldMined.size() == 2) {
-                        goldMined.appendTextLine(Chat.colored("<gray>No data yet x_x"))
-                    }
+                    if (DHAPI.getHologram("goldMined")!!.size() == 2) DHAPI.addHologramLine(
+                        goldMined,
+                        "<gray>No data yet x_x"
+                    )
                 }
-                with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("players")) {
+
+                with(JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("players")) {
                     val t = this.find().sort(descending("level")).limit(10)
                     for ((index, document) in t.withIndex()) {
-                        val profile = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(document["uuid"] as UUID).get()
-                        if (document["level"] as Int != 0) highestLevel.appendTextLine(Chat.colored("<yellow>${index + 1}. ${Chat.secondaryColor}${profile.name} <dark_gray>- <green>Level ${profile.level}"))
+                        val profile =
+                            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(document["uuid"] as UUID)
+                                .get()
+                        if (document["level"] as Int != 0) DHAPI.addHologramLine(
+                            highestLevel,
+                            "<yellow>${index + 1}. ${Chat.secondaryColor}${profile.name} <dark_gray>- <green>Level ${profile.level}"
+                        )
                     }
-                    if (highestLevel.size() == 2) {
-                        highestLevel.appendTextLine(Chat.colored("<gray>No data yet x_x"))
-                    }
+                    if (DHAPI.getHologram("highestLevel")!!.size() == 2) DHAPI.addHologramLine(
+                        highestLevel,
+                        "<gray>No data yet x_x"
+                    )
                 }
-                gamesPlayed.appendTextLine(Chat.guiLine)
-                wins.appendTextLine(Chat.guiLine)
-                kills.appendTextLine(Chat.guiLine)
-                diamondsMined.appendTextLine(Chat.guiLine)
-                goldMined.appendTextLine(Chat.guiLine)
-                gapplesEaten.appendTextLine(Chat.guiLine)
-                highestLevel.appendTextLine(Chat.guiLine)
+
+                // Footers
+                DHAPI.addHologramLine(gamesPlayed, Chat.guiLine)
+                DHAPI.addHologramLine(wins, Chat.guiLine)
+                DHAPI.addHologramLine(kills, Chat.guiLine)
+                DHAPI.addHologramLine(diamondsMined, Chat.guiLine)
+                DHAPI.addHologramLine(goldMined, Chat.guiLine)
+                DHAPI.addHologramLine(gapplesEaten, Chat.guiLine)
+                DHAPI.addHologramLine(highestLevel, Chat.guiLine)
+
             } catch (e: MongoException) {
                 e.printStackTrace()
             }
-            with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("matches")) {
+
+            val matchesCollection: MongoCollection<Document> = JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("matches")
+            with(matchesCollection) {
                 val matches = this.find().sort(descending("startTime")).limit(1)
                 for (match in matches) {
-                    latestMatch.appendTextLine(Chat.colored("<yellow>${match.getString("title")}"))
-                    latestMatch.appendTextLine(Chat.colored(" "))
-                    latestMatch.appendTextLine(Chat.colored("<gray>Teamsize ${Chat.dash} ${Chat.secondaryColor}${match.getString("teams")}"))
-                    latestMatch.appendTextLine(Chat.colored("<gray>Scenarios (${(match["scenarios"] as List<*>).size}) ${Chat.dash} "))
+                    DHAPI.addHologramLine(latestMatch, "<yellow>${match.getString("title")}")
+                    DHAPI.addHologramLine(latestMatch, " ")
+                    DHAPI.addHologramLine(
+                        latestMatch,
+                        "<gray>Teamsize ${Chat.dash} ${Chat.secondaryColor}${match.getString("teams")}"
+                    )
+                    DHAPI.addHologramLine(
+                        latestMatch,
+                        "<gray>Scenarios (${(match["scenarios"] as List<*>).size}) ${Chat.dash}"
+                    )
                     for (scenario in match["scenarios"] as List<*>) {
-                        latestMatch.appendTextLine(Chat.colored(" §8●§7 &f${scenario}<dark_gray>"))
+                        DHAPI.addHologramLine(latestMatch, " §8●§7 <white>${scenario}<dark_gray>")
                     }
-                    latestMatch.appendTextLine(Chat.colored(" "))
+                    DHAPI.addHologramLine(latestMatch, " ")
                     var kills = 0
                     val killsMap = match["winnerKills"] as Map<String, Int>
                     for (kill in (match["winnerKills"] as Map<*, *>).values) {
                         kills += kill as Int
                     }
-                    latestMatch.appendTextLine(Chat.colored("<gray>Winner(s) ${Chat.dash} <dark_gray>(<gray>Kills: <yellow>${kills}<dark_gray>)"))
+                    DHAPI.addHologramLine(
+                        latestMatch,
+                        "<gray>Winner(s) ${Chat.dash} <dark_gray>(<gray>Kills: <yellow>${kills}<dark_gray>)"
+                    )
                     val winnerMap = mutableMapOf<String, Int>()
                     for (winner in match["winners"] as List<*>) {
                         try {
@@ -220,20 +282,24 @@ class Leaderboards : BukkitRunnable() {
                                 .thenApplySync { profile ->
                                     winnerMap[profile.name!!] = killsMap[winner] as Int
                                 }
-                        } catch(_: Error) {}
+                        } catch (_: Error) {
+                        }
                     }
                     var winnerLimited = 10
                     for (entry in winnerMap) {
                         if (winnerLimited == 0) {
-                            latestMatch.appendTextLine(Chat.colored("<gray>&o(${winnerMap.size - 10} more winners&f&o)"))
+                            DHAPI.addHologramLine(latestMatch, "<gray><italic>(${winnerMap.size - 10} more winners<white><italic>)")
                             break
                         }
-                        latestMatch.appendTextLine(Chat.colored(" ${Chat.dot} ${Chat.secondaryColor}${entry.key} <dark_gray>(<yellow>${entry.value}<dark_gray>)"))
+                        DHAPI.addHologramLine(
+                            latestMatch,
+                            " ${Chat.dot} ${Chat.secondaryColor}${entry.key} <dark_gray>(<yellow>${entry.value}<dark_gray>)"
+                        )
                         winnerLimited--
                     }
-
                 }
-                latestMatch.appendTextLine(Chat.guiLine)
+                DHAPI.addHologramLine(latestMatch, Chat.guiLine)
+                return@with null
             }
         }
     }
@@ -271,8 +337,8 @@ class StatsHandler : Listener {
     fun savePlayerData(statsPlayer: StatsPlayer) {
         try {
             with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("stats")) {
-                val filter = Filters.eq("uuid", statsPlayer.player.uniqueId)
-                val document = Document("uuid", statsPlayer.player.uniqueId)
+                val filter = Filters.eq("uuid", BsonBinary(statsPlayer.player.uniqueId))
+                val document = Document("uuid", BsonBinary(statsPlayer.player.uniqueId))
                     .append("diamondsMined", statsPlayer.diamondsMined)
                     .append("ironMined", statsPlayer.ironMined)
                     .append("goldMined", statsPlayer.goldMined)
@@ -329,7 +395,7 @@ class StatsHandler : Listener {
     fun loadPlayerData(uuid: UUID, statsPlayer: StatsPlayer) {
         try {
             with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("stats")) {
-                val playerData = find(Filters.eq("uuid", uuid)).first()
+                val playerData = find(Filters.eq("uuid", BsonBinary(uuid))).first()
                 if (playerData != null) {
                     statsPlayer.diamondsMined = playerData.getInteger("diamondsMined") ?: 0
                     statsPlayer.ironMined = playerData.getInteger("ironMined") ?: 0

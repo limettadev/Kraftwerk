@@ -21,11 +21,11 @@ class WeakestLinkLogic : BukkitRunnable() {
         if (timer == 0) {
             timer = 600
             if (WeakestLinkScenario().isAllSameHealth()) {
-                Bukkit.broadcastMessage(Chat.colored("$prefix ${Chat.secondaryColor}Everyone<gray> was spared for now."))
+                Bukkit.broadcast(Chat.colored("$prefix ${Chat.secondaryColor}Everyone<gray> was spared for now."))
             } else {
                 val player = WeakestLinkScenario().getLowestHealth()
                 player.damage(999999.9)
-                Bukkit.broadcastMessage(Chat.colored("$prefix ${Chat.secondaryColor}${player.name}<gray> was the <yellow>Weakest Link<gray>!"))
+                Bukkit.broadcast(Chat.colored("$prefix ${Chat.secondaryColor}${player.name}<gray> was the <yellow>Weakest Link<gray>!"))
             }
         }
         if (!ScenarioHandler.getActiveScenarios().contains(ScenarioHandler.getScenario("weakestlink"))) {
@@ -42,7 +42,7 @@ class WeakestLinkScenario : Scenario(
     "Weakest Link",
     "Every 10 minutes, the person with the least health will be killed.",
     "weakestlink",
-    Material.IRON_BARDING
+    Material.IRON_BARS
 ) {
     val byHealth: Ordering<Player?> = object : Ordering<Player?>() {
         override fun compare(p0: Player?, p1: Player?): Int {

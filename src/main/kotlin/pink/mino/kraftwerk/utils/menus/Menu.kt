@@ -1,10 +1,10 @@
 package pink.mino.kraftwerk.utils.menus
 
 import com.google.common.base.Preconditions
-import net.minecraft.server.v1_8_R3.EntityPlayer
+import net.minecraft.server.level.ServerPlayer
 import org.bukkit.Bukkit
 import org.bukkit.Material
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftHumanEntity
+import org.bukkit.entity.HumanEntity
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 import org.bukkit.scheduler.BukkitRunnable
@@ -94,17 +94,17 @@ abstract class Menu {
     open fun onOpen(player: Player) {}
     open fun onClose(player: Player) {}
     val placeholderItem: Button
-        get() = Button.placeholder(Material.STAINED_GLASS_PANE)
+        get() = Button.placeholder(Material.GRAY_STAINED_GLASS_PANE)
 
     companion object {
         var openInventoryMethod: Method? = null
             get() {
                 if (field == null) {
                     try {
-                        field = (CraftHumanEntity::class.java).getDeclaredMethod(
+                        field = (HumanEntity::class.java).getDeclaredMethod(
                             "openCustomInventory",
                             Inventory::class.java,
-                            EntityPlayer::class.java,
+                            ServerPlayer::class.java,
                             String::class.java
                         )
 

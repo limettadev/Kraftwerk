@@ -1,5 +1,7 @@
 package pink.mino.kraftwerk.commands
 
+import net.kyori.adventure.text.minimessage.MiniMessage
+import net.kyori.adventure.title.Title
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.command.Command
@@ -16,10 +18,10 @@ class VoteTimer(private val vote: Vote) : BukkitRunnable() {
     override fun run() {
         timer -= 1
         if (timer == 0) {
-            Bukkit.broadcastMessage(Chat.colored(Chat.line))
-            Bukkit.broadcastMessage(Chat.colored(" <gray>Vote results: <green>${vote.yes} yes(s) <gray>/ <red>${vote.no} no(s)"))
-            Bukkit.broadcastMessage(Chat.colored(" <gray>Question: ${Chat.primaryColor}${vote.question}"))
-            Bukkit.broadcastMessage(Chat.colored(Chat.line))
+            Bukkit.broadcast(Chat.colored(Chat.line))
+            Bukkit.broadcast(Chat.colored(" <gray>Vote results: <green>${vote.yes} yes(s) <gray>/ <red>${vote.no} no(s)"))
+            Bukkit.broadcast(Chat.colored(" <gray>Question: ${Chat.primaryColor}${vote.question}"))
+            Bukkit.broadcast(Chat.colored(Chat.line))
             JavaPlugin.getPlugin(Kraftwerk::class.java).vote = null
             cancel()
         }
@@ -33,10 +35,13 @@ class Vote(val question: String) {
 
     fun startTimer() {
         for (online: Player in Bukkit.getOnlinePlayers()) {
-            online.sendTitle(Chat.colored("${Chat.primaryColor}&lNew Vote!"), Chat.colored("<gray>Vote using <green>/yes <gray>or <red>/no<gray>!"))
+            online.showTitle(Title.title(
+                MiniMessage.miniMessage().deserialize("<${Chat.primaryColor}><bold>New Vote!"),
+                MiniMessage.miniMessage().deserialize("<gray>Vote using <green>/yes <gray>or <red>/no<gray>!")
+            ))
         }
         VoteTimer(this).runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, 20L)
-        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Poll: ${Chat.primaryColor}${question} <dark_gray>|<gray> Use <green>/yes <gray>or <red>/no<gray> to respond."))
+        Bukkit.broadcast(Chat.colored("${Chat.prefix} Poll: ${Chat.primaryColor}${question} <dark_gray>|<gray> Use <green>/yes <gray>or <red>/no<gray> to respond."))
     }
 }
 

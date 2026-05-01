@@ -9,6 +9,7 @@ import me.lucko.helper.promise.Promise
 import net.citizensnpcs.api.CitizensAPI
 import net.citizensnpcs.api.npc.MemoryNPCDataStore
 import net.citizensnpcs.api.npc.NPC
+import org.bson.BsonBinary
 import org.bson.Document
 import org.bukkit.*
 import org.bukkit.block.Sign
@@ -109,8 +110,8 @@ class SpawnFeature : Listener {
 //                            var purchases: List<Purchase> = Gson().fromJson(response.toString(), type)
 //                            recent.clearLines()
 //                            highestHolo.clearLines()
-//                            recent.appendTextLine(Chat.colored("${Chat.primaryColor}&lRecent Purchase"))
-//                            highestHolo.appendTextLine(Chat.colored("${Chat.primaryColor}&lHighest Purchase"))
+//                            recent.appendTextLine(Chat.colored("${Chat.primaryColor}<bold>Recent Purchase"))
+//                            highestHolo.appendTextLine(Chat.colored("${Chat.primaryColor}<bold>Highest Purchase"))
 //                            val loc1 = Location(
 //                                Bukkit.getWorld(ConfigFeature.instance.config!!.getString("thing.recent_purchase_holo.world")),
 //                                ConfigFeature.instance.config!!.getDouble("thing.recent_purchase_holo.x"),
@@ -162,22 +163,22 @@ class SpawnFeature : Listener {
         editorList.add(p.uniqueId)
         p.teleport(Location(Bukkit.getWorld("Spawn"), -733.5,134.5, 254.0))
         p.inventory.clear()
-        p.inventory.helmet = ItemStack(Material.AIR)
-        p.inventory.chestplate = ItemStack(Material.AIR)
-        p.inventory.leggings = ItemStack(Material.AIR)
-        p.inventory.boots = ItemStack(Material.AIR)
+        p.inventory.setHelmet(ItemStack(Material.AIR))
+        p.inventory.setChestplate(ItemStack(Material.AIR))
+        p.inventory.setLeggings(ItemStack(Material.AIR))
+        p.inventory.setBoots(ItemStack(Material.AIR))
         p.inventory.setItemInOffHand(ItemStack(Material.AIR))
 
 
-        val sword = ItemBuilder(Material.DIAMOND_SWORD).name(Chat.colored("<green>Sword")).make()
-        val fishingRod = ItemBuilder(Material.FISHING_ROD).name(Chat.colored("<green>Rod")).make()
-        val bow = ItemBuilder(Material.BOW).name(Chat.colored("<green>Bow")).make()
-        val cobblestone = ItemBuilder(Material.COBBLESTONE).name(Chat.colored("<green>Blocks")).make()
-        val waterBucket = ItemBuilder(Material.WATER_BUCKET).name(Chat.colored("<green>Water")).make()
-        val lavaBucket = ItemBuilder(Material.LAVA_BUCKET).name(Chat.colored("<green>Lava")).make()
-        val goldenCarrot = ItemBuilder(Material.GOLDEN_CARROT).name(Chat.colored("<green>Food")).make()
-        val goldenApples = ItemBuilder(Material.GOLDEN_APPLE).name(Chat.colored("<green>Gapples")).make()
-        val gHeads = ItemBuilder(Material.GOLDEN_APPLE).name(Chat.colored("<green>Heads")).make()
+        val sword = ItemBuilder(Material.DIAMOND_SWORD).name("<green>Sword").make()
+        val fishingRod = ItemBuilder(Material.FISHING_ROD).name("<green>Rod").make()
+        val bow = ItemBuilder(Material.BOW).name("<green>Bow").make()
+        val cobblestone = ItemBuilder(Material.COBBLESTONE).name("<green>Blocks").make()
+        val waterBucket = ItemBuilder(Material.WATER_BUCKET).name("<green>Water").make()
+        val lavaBucket = ItemBuilder(Material.LAVA_BUCKET).name("<green>Lava").make()
+        val goldenCarrot = ItemBuilder(Material.GOLDEN_CARROT).name("<green>Food").make()
+        val goldenApples = ItemBuilder(Material.GOLDEN_APPLE).name("<green>Gapples").make()
+        val gHeads = ItemBuilder(Material.GOLDEN_APPLE).name("<green>Heads").make()
 
         p.inventory.setItem(0, sword)
         p.inventory.setItem(1, fishingRod)
@@ -212,7 +213,7 @@ class SpawnFeature : Listener {
         Schedulers.async().run {
             try {
                 with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("kits")) {
-                    val filter = Filters.eq("uuid", p.uniqueId)
+                    val filter = Filters.eq("uuid", BsonBinary(p.uniqueId))
                     val profile = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(p.uniqueId).get()
 
                     val slot1 = if (p.inventory.getItem(0) != null) ChatColor.stripColor(p.inventory.getItem(0)!!.itemMeta.displayName)!!.uppercase() else "NONE"
@@ -225,7 +226,7 @@ class SpawnFeature : Listener {
                     val slot8 = if (p.inventory.getItem(7) != null) ChatColor.stripColor(p.inventory.getItem(7)!!.itemMeta.displayName)!!.uppercase() else "NONE"
                     val slot9 = if (p.inventory.getItem(8) != null) ChatColor.stripColor(p.inventory.getItem(8)!!.itemMeta.displayName)!!.uppercase() else "NONE"
 
-                    val document = Document("uuid", profile.uniqueId)
+                    val document = Document("uuid", BsonBinary(profile.uniqueId))
                         .append("name", profile.name)
                         .append("lastLogin", Timestamp(profile.timestamp))
                         .append("kit", Document("slot1", (slot1))
@@ -291,10 +292,10 @@ class SpawnFeature : Listener {
             p.removePotionEffect(effect.type)
         }
         p.inventory.clear()
-        p.inventory.helmet = ItemStack(Material.AIR)
-        p.inventory.chestplate = ItemStack(Material.AIR)
-        p.inventory.leggings = ItemStack(Material.AIR)
-        p.inventory.boots = ItemStack(Material.AIR)
+        p.inventory.setHelmet(ItemStack(Material.AIR))
+        p.inventory.setChestplate(ItemStack(Material.AIR))
+        p.inventory.setLeggings(ItemStack(Material.AIR))
+        p.inventory.setBoots(ItemStack(Material.AIR))
         p.inventory.setItemInOffHand(ItemStack(Material.AIR))
         p.gameMode = GameMode.ADVENTURE
         p.exp = 0F
@@ -336,7 +337,7 @@ class SpawnFeature : Listener {
             .setOwner(p.name)
             .make()
         val donator = ItemBuilder(Material.EMERALD)
-            .name("&2&lDonator <gray>(Right Click)")
+            .name("<dark_green><bold>Donator <gray>(Right Click)")
             .addLore("<gray>Right-click to view your donator perks.")
             .make()
         p.inventory.setItem(3, profile)
@@ -406,39 +407,39 @@ class SpawnFeature : Listener {
         if (e.player.world.name == "Spawn" && (Kraftwerk.instance.buildMode[e.player.uniqueId] == false || Kraftwerk.instance.buildMode[e.player.uniqueId] == null)) {
             if (e.item !== null) {
                 when (e.item!!.itemMeta.displayName) {
-                    Chat.colored("${Chat.primaryColor}View Stats <gray>(Right Click)") -> {
+                    "${Chat.primaryColor}View Stats <gray>(Right Click)" -> {
                         e.isCancelled = true
                         Bukkit.dispatchCommand(e.player, "stats")
                     }
-                    Chat.colored("&2&lDonator <gray>(Right Click)") -> {
+                    "<dark_green><bold>Donator <gray>(Right Click)" -> {
                         e.isCancelled = true
                         Bukkit.dispatchCommand(e.player, "donator")
                     }
-                    Chat.colored("${Chat.primaryColor}UHC Configuration <gray>(Right Click)") -> {
+                    "${Chat.primaryColor}UHC Configuration <gray>(Right Click)" -> {
                         e.isCancelled = true
                         Bukkit.dispatchCommand(e.player, "uhc")
                     }
-                    Chat.colored("${Chat.primaryColor}Active Scenarios <gray>(Right Click)") -> {
+                    "${Chat.primaryColor}Active Scenarios <gray>(Right Click)" -> {
                         e.isCancelled = true
                         Bukkit.dispatchCommand(e.player, "scen")
                     }
-                    Chat.colored("${Chat.primaryColor}FFA Arena <gray>(Right Click)") -> {
+                    "${Chat.primaryColor}FFA Arena <gray>(Right Click)" -> {
                         e.isCancelled = true
                         Bukkit.dispatchCommand(e.player, "a")
                     }
-                    Chat.colored("${Chat.primaryColor}Donator Menu <gray>(Right Click)") -> {
+                    "${Chat.primaryColor}Donator Menu <gray>(Right Click)" -> {
                         e.isCancelled = true
                         Bukkit.dispatchCommand(e.player, "donator")
                     }
-                    Chat.colored("${Chat.primaryColor}Champions Kit <gray>(Right Click)") -> {
+                    "${Chat.primaryColor}Champions Kit <gray>(Right Click)" -> {
                         e.isCancelled = true
                         Bukkit.dispatchCommand(e.player, "ckit")
                     }
-                    Chat.colored("${Chat.primaryColor}Your Profile <gray>(Right Click)") -> {
+                    "${Chat.primaryColor}Your Profile <gray>(Right Click)" -> {
                         e.isCancelled = true
                         Bukkit.dispatchCommand(e.player, "profile")
                     }
-                    Chat.colored("${Chat.primaryColor}Edit Arena Kit <gray>(Right Click)") -> {
+                    "${Chat.primaryColor}Edit Arena Kit <gray>(Right Click)" -> {
                         e.isCancelled = true
                         sendEditor(e.player)
                     }

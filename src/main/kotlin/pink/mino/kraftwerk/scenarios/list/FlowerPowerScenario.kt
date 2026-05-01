@@ -2,7 +2,7 @@ package pink.mino.kraftwerk.scenarios.list
 
 import org.bukkit.Material
 import org.bukkit.block.Block
-import org.bukkit.craftbukkit.v1_8_R3.util.CraftMagicNumbers
+import org.bukkit.craftbukkit.util.CraftMagicNumbers
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Item
@@ -20,78 +20,72 @@ class FlowerPowerScenario : Scenario(
     "Flower Power",
     "Flowers drop random items.",
     "flowerpower",
-    Material.YELLOW_FLOWER
+    Material.DANDELION
 ) {
     val flowerTypes = listOf(
-        Material.YELLOW_FLOWER,
-        Material.DOUBLE_PLANT,
-        Material.RED_ROSE,
+        Material.DANDELION,
+        Material.ROSE_BUSH,
+        Material.POPPY,
         Material.BROWN_MUSHROOM,
         Material.RED_MUSHROOM
     )
     val enchantments = listOf<Enchantment>(
-        Enchantment.ARROW_FIRE,
-        Enchantment.ARROW_DAMAGE,
+        Enchantment.FLAME,
+        Enchantment.POWER,
         Enchantment.FIRE_ASPECT,
-        Enchantment.PROTECTION_ENVIRONMENTAL,
-        Enchantment.LOOT_BONUS_BLOCKS,
-        Enchantment.DAMAGE_ALL,
+        Enchantment.PROTECTION,
+        Enchantment.FORTUNE,
+        Enchantment.SHARPNESS,
         Enchantment.THORNS
     )
 
     val blacklistedMaterials = listOf(
         Material.AIR,
-        Material.MONSTER_EGG,
-        Material.MONSTER_EGGS,
-        Material.GRASS,
-        Material.COMMAND,
+        Material.TALL_GRASS,
+        Material.SHORT_GRASS,
         Material.BARRIER,
         Material.BEDROCK,
-        Material.BED,
-        Material.ENDER_PORTAL_FRAME,
+        Material.COMMAND_BLOCK,
+        Material.END_PORTAL_FRAME,
         Material.ACACIA_DOOR,
         Material.DARK_OAK_DOOR,
         Material.IRON_DOOR,
-        Material.WOODEN_DOOR,
+        Material.OAK_DOOR,
         Material.BIRCH_DOOR,
         Material.SPRUCE_DOOR,
         Material.JUNGLE_DOOR,
-        Material.PISTON_EXTENSION,
-        Material.PISTON_MOVING_PIECE,
+        Material.PISTON_HEAD,
         Material.FIRE,
-        Material.PORTAL,
-        Material.ENDER_PORTAL,
-        Material.SKULL,
-        Material.SIGN_POST,
-        Material.WALL_SIGN,
+        Material.NETHER_PORTAL,
+        Material.END_PORTAL,
+        Material.PLAYER_WALL_HEAD,
+        Material.OAK_WALL_SIGN,
         Material.REDSTONE_WIRE,
         Material.TRIPWIRE,
-        Material.CROPS,
+        Material.WHEAT_SEEDS,
         Material.CARROT,
         Material.POTATO,
         Material.MELON_STEM,
         Material.PUMPKIN_STEM,
         Material.COCOA,
-        Material.NETHER_WARTS,
-        Material.SUGAR_CANE_BLOCK,
-        Material.BURNING_FURNACE,
-        Material.REDSTONE_COMPARATOR_OFF,
-        Material.REDSTONE_COMPARATOR_ON,
-        Material.REDSTONE_TORCH_OFF,
-        Material.REDSTONE_TORCH_ON,
+        Material.NETHER_WART,
+        Material.SUGAR_CANE,
+        Material.FURNACE,
+        Material.WALL_TORCH,
+        Material.REDSTONE_WALL_TORCH,
         Material.POWERED_RAIL,
         Material.DETECTOR_RAIL,
         Material.ACTIVATOR_RAIL,
         Material.DAYLIGHT_DETECTOR,
-        Material.COMMAND_MINECART,
-        Material.EXPLOSIVE_MINECART,
+        Material.COMMAND_BLOCK_MINECART,
+        Material.TNT_MINECART,
         Material.HOPPER_MINECART,
         Material.MINECART,
-        Material.STORAGE_MINECART,
+        Material.CHEST_MINECART,
         Material.ITEM_FRAME,
         Material.ARMOR_STAND,
         Material.WATER,
-        Material.STANDING_BANNER
+        Material.RED_WALL_BANNER
     )
 
 
@@ -102,7 +96,7 @@ class FlowerPowerScenario : Scenario(
         val block: Block = e.block
         if (flowerTypes.contains(block.type)) {
             e.isCancelled = true
-            if (block.type === Material.DOUBLE_PLANT) {
+            if (block.type === Material.ROSE_BUSH) {
                 val other: Block = block.location.world.getBlockAt(block.location.add(0.0, 1.0, 0.0))
                 other.type = Material.AIR
             }
@@ -116,7 +110,7 @@ class FlowerPowerScenario : Scenario(
     fun onSpawn(e: ItemSpawnEvent) {
         if (!enabled) return
         if (GameState.currentState != GameState.INGAME) return
-        if (e.entityType != EntityType.DROPPED_ITEM) return
+        if (e.entityType != EntityType.ITEM) return
         val item: Item = e.entity
         val type: Material = item.itemStack.type
         if (blacklistedMaterials.contains(type) || flowerTypes.contains(type)) {

@@ -1,5 +1,6 @@
 package pink.mino.kraftwerk.utils.recipes
 
+import me.lucko.helper.Schedulers
 import me.lucko.helper.utils.Log
 import org.bukkit.Bukkit
 import org.bukkit.Material
@@ -111,7 +112,7 @@ class RecipeCommand : CommandExecutor {
             .make()
         gui.item(44, back).onClick runnable@{
             sender.closeInventory()
-            Bukkit.getScheduler().runTaskLater(Kraftwerk.instance, runnable@{
+            Schedulers.sync().runLater({
                 Bukkit.dispatchCommand(sender, "recipes")
             }, 1L)
             return@runnable

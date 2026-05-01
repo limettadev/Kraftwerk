@@ -432,3 +432,4 @@ depend:
   - ProtocolLib
   - Vault
   - Citizens
+  - DecentHolograms

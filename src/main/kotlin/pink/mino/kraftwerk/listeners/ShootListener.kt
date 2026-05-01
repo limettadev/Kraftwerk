@@ -1,5 +1,6 @@
 package pink.mino.kraftwerk.listeners
 
+import net.kyori.adventure.title.Title
 import net.minecraft.server.level.ServerPlayer
 import org.bukkit.Bukkit
 import org.bukkit.craftbukkit.entity.CraftPlayer
@@ -33,7 +34,7 @@ class ShootListener : Listener {
                     if (preference == "CHAT") {
                         Chat.sendMessage(shooter, "${Chat.dash} ${Chat.secondaryColor}${victim.name}<gray> is at ${color}${health}%<gray>!")
                     } else if (preference == "SUBTITLE") {
-                        shooter.sendTitle(Chat.colored("<gray>"), Chat.colored("${Chat.secondaryColor}${victim.name}<gray> is at ${color}${health}%<gray>!"))
+                        shooter.showTitle(Title.title(Chat.colored("<gray>"), Chat.colored("${Chat.secondaryColor}${victim.name}<gray> is at ${color}${health}%<gray>!")))
                     }
                 }
             }, 1L)

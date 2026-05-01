@@ -16,15 +16,15 @@ class BookOfThothRecipe : Recipe(
 ) {
     init {
         val bookOfThoth = ItemBuilder(Material.ENCHANTED_BOOK)
-            .name("&5Book of Thoth")
-            .addStoredEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 3)
-            .addStoredEnchant(Enchantment.DAMAGE_ALL, 2)
+            .name("<dark_purple>Book of Thoth")
+            .addStoredEnchant(Enchantment.PROTECTION, 3)
+            .addStoredEnchant(Enchantment.SHARPNESS, 2)
             .addStoredEnchant(Enchantment.FIRE_ASPECT, 1)
-            .addStoredEnchant(Enchantment.ARROW_DAMAGE, 2)
+            .addStoredEnchant(Enchantment.POWER, 2)
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(bookOfThoth, id)).shape("E  ", " PP", " PB")
-            .setIngredient('E', Material.EYE_OF_ENDER)
-            .setIngredient('B', Material.FIREBALL)
+            .setIngredient('E', Material.ENDER_EYE)
+            .setIngredient('B', Material.FIRE_CHARGE)
             .setIngredient('P', Material.PAPER)
     }
 }

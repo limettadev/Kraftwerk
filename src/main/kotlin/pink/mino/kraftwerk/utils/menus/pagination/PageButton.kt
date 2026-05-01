@@ -1,5 +1,6 @@
 package pink.mino.kraftwerk.utils.menus.pagination
 
+import net.kyori.adventure.text.Component
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
@@ -29,7 +30,7 @@ class PageButton @ConstructorProperties(value = ["mod", "menu"]) constructor(
         return pg > 0 && menu.getPages(player) >= pg
     }
 
-    override fun getName(player: Player): String {
+    override fun getName(player: Player): Component {
         if (!hasNext(player)) {
             return Chat.colored(if (mod > 0) "<gray>Last page" else "<gray>First page")
         }
@@ -37,7 +38,7 @@ class PageButton @ConstructorProperties(value = ["mod", "menu"]) constructor(
         return Chat.colored(if (mod > 0) "<green>⟶" else "<green>⟵")
     }
 
-    override fun getDescription(player: Player): List<String> {
+    override fun getDescription(player: Player): List<Component> {
         return ArrayList()
     }
 

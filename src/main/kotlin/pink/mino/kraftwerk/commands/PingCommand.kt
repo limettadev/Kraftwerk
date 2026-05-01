@@ -4,7 +4,7 @@ import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
+import org.bukkit.craftbukkit.entity.CraftPlayer
 import org.bukkit.entity.Player
 import pink.mino.kraftwerk.utils.Chat
 
@@ -27,7 +27,7 @@ class PingCommand : CommandExecutor {
         if (player == null) {
             Chat.sendMessage(sender, "<red>Invalid player!")
         }
-        val ping = (player as CraftPlayer).handle.ping
+        val ping = (player as CraftPlayer).ping
         Chat.sendMessage(sender, "${Chat.prefix} ${Chat.secondaryColor}${player.name}'s<gray> ping is ${Chat.secondaryColor}${ping}ms<gray>.")
         return true
     }

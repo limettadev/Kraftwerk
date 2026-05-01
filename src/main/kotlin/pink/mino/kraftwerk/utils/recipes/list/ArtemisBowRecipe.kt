@@ -21,6 +21,7 @@ import org.bukkit.inventory.ShapedRecipe
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitRunnable
 import pink.mino.kraftwerk.Kraftwerk
+import pink.mino.kraftwerk.utils.Chat
 import pink.mino.kraftwerk.utils.ItemBuilder
 import pink.mino.kraftwerk.utils.recipes.Recipe
 import kotlin.random.Random
@@ -34,26 +35,25 @@ class ArtemisBowRecipe : Recipe(
 ) {
     init {
         val artemisBow = ItemBuilder(Material.BOW)
-            .name("&5Artemis' Bow")
+            .name("<dark_purple>Artemis' Bow")
             .addLore("<gray>Has a chance for your arrow to home into your opponent!")
-            .addEnchantment(Enchantment.ARROW_DAMAGE, 3)
+            .addEnchantment(Enchantment.POWER, 3)
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(artemisBow, id)).shape("FDF", "FBF", "FEF")
             .setIngredient('F', Material.FEATHER)
             .setIngredient('D', Material.DIAMOND)
             .setIngredient('B', Material.BOW)
-            .setIngredient('E', Material.EYE_OF_ENDER)
+            .setIngredient('E', Material.ENDER_EYE)
     }
 
     @EventHandler
     fun onShootEvent(e: EntityShootBowEvent) {
-        if (e.entity is Player && e.bow != null && e.bow.hasItemMeta() && e.bow.itemMeta.displayName == ChatColor.translateAlternateColorCodes(
-                '&',
-                "&5Artemis' Bow"
+        if (e.entity is Player && e.bow != null && e.bow!!.hasItemMeta() && e.bow!!.itemMeta.displayName() == Chat.colored(
+                "<dark_purple>Artemis' Bow"
             ) && Random.nextInt(100) <= 25
         ) {
             val arrow = e.projectile as Arrow
-            (e.entity as Player).playSound(e.entity.location, Sound.WOOD_CLICK, 1f, 1f)
+            (e.entity as Player).playSound(e.entity.location, Sound.BLOCK_WOODEN_BUTTON_CLICK_ON, 1f, 1f)
             object : BukkitRunnable() {
                 override fun run() {
                     val target = e.entity.getNearbyEntities(200.0, 200.0, 200.0)

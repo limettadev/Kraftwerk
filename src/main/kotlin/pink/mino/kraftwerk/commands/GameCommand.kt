@@ -49,7 +49,7 @@ class GameCommand : CommandExecutor {
             .addLore("<gray>Time Elapsed: ${Chat.secondaryColor}${MiscUtils.timeToString(JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.timer.toLong())}")
             .addLore("<gray>Current Event: ${Chat.secondaryColor}${JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.currentEvent.name}")
         if (JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.paused) {
-            timer.addLore("<red>&lTHE GAME IS PAUSED")
+            timer.addLore("<red><bold>THE GAME IS PAUSED")
         }
         gui.item(10, pause).onClick runnable@ {
             it.isCancelled = true
@@ -98,7 +98,7 @@ class GameCommand : CommandExecutor {
                     .addLore("<gray>Time Elapsed: ${Chat.secondaryColor}${MiscUtils.timeToString(JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.timer.toLong())}")
                     .addLore("<gray>Current Event: ${Chat.secondaryColor}${JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.currentEvent.name}")
                 if (JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.paused) {
-                    timer.addLore("${Chat.primaryColor}&lTHE GAME IS PAUSED")
+                    timer.addLore("${Chat.primaryColor}<bold>THE GAME IS PAUSED")
                 }
                 sender.openInventory.topInventory.setItem(10, pause)
                 sender.openInventory.topInventory.setItem(16, cancel)

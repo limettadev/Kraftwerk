@@ -12,14 +12,14 @@ enum class Tags(
     val display: String,
     val item: Material
 ) {
-    FLOWER("<dark_gray>[&d✿<dark_gray>]&r", Material.POPPY),
-    SMILEY("&b(◕‿◕)&r", Material.POTATO),
-    HEART("<dark_gray>[<red>❤<dark_gray>]&r", Material.GOLDEN_APPLE),
+    FLOWER("<dark_gray>[<light_purple>✿<dark_gray>]<reset>", Material.POPPY),
+    SMILEY("<aqua>(◕‿◕)<reset>", Material.POTATO),
+    HEART("<dark_gray>[<red>❤<dark_gray>]<reset>", Material.GOLDEN_APPLE),
 
-    MUSICAL("<dark_gray>[&b♫<dark_gray>]&r", Material.NOTE_BLOCK),
-    STAR("<dark_gray>[<yellow>✯<dark_gray>]&r", Material.GOLD_BLOCK),
-    YIN_YANG("<dark_gray>[&f☯<dark_gray>]&r", Material.ENDER_PEARL),
-    PEACE("<dark_gray>[&d☮<dark_gray>]&r", Material.BREWING_STAND)
+    MUSICAL("<dark_gray>[<aqua>♫<dark_gray>]<reset>", Material.NOTE_BLOCK),
+    STAR("<dark_gray>[<yellow>✯<dark_gray>]<reset>", Material.GOLD_BLOCK),
+    YIN_YANG("<dark_gray>[<white>☯<dark_gray>]<reset>", Material.ENDER_PEARL),
+    PEACE("<dark_gray>[<light_purple>☮<dark_gray>]<reset>", Material.BREWING_STAND)
 }
 
 class GrantTagCommand : CommandExecutor {

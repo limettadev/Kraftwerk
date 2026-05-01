@@ -14,8 +14,8 @@ class HealingFruitRecipe : Recipe(
 ) {
     init {
         recipe = ShapedRecipe(convertToRecipeItem(ItemStack(Material.MELON), id)).shape("BSB", "SAS", "BSB")
-            .setIngredient('B', Material.INK_SACK, 15)
-            .setIngredient('S', Material.SEEDS)
+            .setIngredient('B', Material.BONE_MEAL, 15)
+            .setIngredient('S', Material.WHEAT_SEEDS)
             .setIngredient('A', Material.APPLE)
     }
 }

@@ -30,10 +30,10 @@ class ThanksCommand : CommandExecutor {
             Chat.sendMessage(sender, "<red>You already thanked the host this game.")
             return false
         }
-        val player = Bukkit.getOfflinePlayer(Kraftwerk.instance.game!!.host)
+        val player = Bukkit.getOfflinePlayer(Kraftwerk.instance.game!!.host!!)
         Kraftwerk.instance.statsHandler.lookupStatsPlayer(player).thankYous++
         thanked.add(sender.uniqueId)
-        Chat.broadcast("${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has &dthanked<gray> the host! <dark_gray>(${Chat.secondaryColor}${thanked.size}<dark_gray>)")
+        Chat.broadcast("${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has <light_purple>thanked<gray> the host! <dark_gray>(${Chat.secondaryColor}${thanked.size}<dark_gray>)")
         return true
     }
 }

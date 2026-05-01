@@ -25,18 +25,18 @@ import kotlin.random.Random
 class DiceOfGodRecipe : Recipe(
     "Dice of God",
     "Grants a random Extra Ultimate",
-    ItemStack(Material.ENDER_PORTAL_FRAME),
+    ItemStack(Material.END_PORTAL_FRAME),
     1,
     "dice_of_god"
 ) {
     init {
-        val diceOfGod = ItemBuilder(Material.ENDER_PORTAL_FRAME)
+        val diceOfGod = ItemBuilder(Material.END_PORTAL_FRAME)
             .name("<yellow>Dice of God")
             .addLore("<gray>Grants a random Extra Ultimate.")
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(diceOfGod, id)).shape("CHC", "CJC", "CCC")
             .setIngredient('C', Material.MOSSY_COBBLESTONE)
-            .setIngredient('H', Material.SKULL_ITEM, 3)
+            .setIngredient('H', Material.PLAYER_HEAD, 3)
             .setIngredient('J', Material.JUKEBOX)
     }
 
@@ -44,14 +44,14 @@ class DiceOfGodRecipe : Recipe(
     fun onCraft(event: CraftItemEvent) {
         val player = event.whoClicked as Player
         val inv = event.inventory
-        val item = inv.result
+        val item = inv.result!!
         if (!item.hasItemMeta() || !item.itemMeta.hasDisplayName()) {
             return
         }
-        val name = item.itemMeta.displayName
+        val name = item.itemMeta.displayName()
         if (name == Chat.colored("<yellow>Dice of God")) {
             val block: Block? = player.getTargetBlock(null as Set<Material?>?, 10)
-            if (block == null || block.type !== Material.WORKBENCH) {
+            if (block == null || block.type !== Material.CRAFTING_TABLE) {
                 Chat.sendMessage(player, "${Chat.prefix} You are not looking at a crafting table.")
                 event.isCancelled = true
                 return

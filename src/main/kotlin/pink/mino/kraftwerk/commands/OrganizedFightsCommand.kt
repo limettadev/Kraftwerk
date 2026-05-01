@@ -24,7 +24,7 @@ class OrganizedFights : Listener {
 
     fun clearList() {
         assigned.clear()
-        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} The assigned organized fights list has been cleared!"))
+        Bukkit.broadcast(Chat.colored("${Chat.prefix} The assigned organized fights list has been cleared!"))
     }
 
     fun addPlayer(player: Player) {
@@ -44,8 +44,8 @@ class OrganizedFights : Listener {
                 }${Bukkit.getOfflinePlayer(it).name}"
             )
         }
-        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${PlayerUtils.getPrefix(player)}${player.name}<gray> has been assigned to fight!"))
-        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} <gray>&oAssigned players: ${list.joinToString("<gray>, &r")}"))
+        Bukkit.broadcast(Chat.colored("${Chat.prefix} ${PlayerUtils.getPrefix(player)}${player.name}<gray> has been assigned to fight!"))
+        Bukkit.broadcast(Chat.colored("${Chat.prefix} <gray><italic>Assigned players: ${list.joinToString("<gray>, <reset>")}"))
     }
 
     fun removePlayer(player: Player) {
@@ -65,8 +65,8 @@ class OrganizedFights : Listener {
                 }${Bukkit.getOfflinePlayer(it).name}"
             )
         }
-        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${PlayerUtils.getPrefix(player)}${player.name}<gray> has been removed from the fight!"))
-        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} <gray>&oAssigned players: ${list.joinToString("<gray>, &r")}"))
+        Bukkit.broadcast(Chat.colored("${Chat.prefix} ${PlayerUtils.getPrefix(player)}${player.name}<gray> has been removed from the fight!"))
+        Bukkit.broadcast(Chat.colored("${Chat.prefix} <gray><italic>Assigned players: ${list.joinToString("<gray>, <reset>")}"))
     }
 
     @EventHandler
@@ -123,22 +123,22 @@ class OrganizedFightsCommand : CommandExecutor {
             for (player in Bukkit.getOnlinePlayers()) {
                 Chat.sendMessage(player, Chat.colored(Chat.line))
                 Chat.sendMessage(player, " ")
-                Chat.sendCenteredMessage(player, "${Chat.primaryColor}&lORGANIZED FIGHTS HAS BEEN ENABLED!")
+                Chat.sendCenteredMessage(player, "${Chat.primaryColor}<bold>ORGANIZED FIGHTS HAS BEEN ENABLED!")
                 Chat.sendMessage(player, "<gray>Organized Fights has been enabled, PvP is now disabled. Please standby for more instructions.")
                 Chat.sendMessage(player, " ")
                 Chat.sendMessage(player, Chat.colored(Chat.line))
-                player.playSound(player.location, Sound.ENDERDRAGON_GROWL, 1F, 1F)
+                player.playSound(player.location, Sound.ENTITY_ENDER_DRAGON_GROWL, 1F, 1F)
             }
         } else if (args[0] == "stop") {
             OrganizedFights.instance.enabled = false
             for (player in Bukkit.getOnlinePlayers()) {
                 Chat.sendMessage(player, Chat.colored(Chat.line))
                 Chat.sendMessage(player, " ")
-                Chat.sendCenteredMessage(player, "${Chat.primaryColor}&lORGANIZED FIGHTS HAS BEEN DISABLED!")
+                Chat.sendCenteredMessage(player, "${Chat.primaryColor}<bold>ORGANIZED FIGHTS HAS BEEN DISABLED!")
                 Chat.sendMessage(player, "<gray>Organized Fights has been disabled, PvP is now enabled.")
                 Chat.sendMessage(player, " ")
                 Chat.sendMessage(player, Chat.colored(Chat.line))
-                player.playSound(player.location, Sound.ENDERDRAGON_GROWL, 1F, 1F)
+                player.playSound(player.location, Sound.ENTITY_ENDER_DRAGON_GROWL, 1F, 1F)
             }
         } else if (args[0] == "assign") {
             if (args.size < 2) {

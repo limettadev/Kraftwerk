@@ -31,12 +31,12 @@ class VeinMinerScenario : Scenario(
                     for (y in loc.blockY - 1..loc.blockY + 1) {
                         for (z in loc.blockZ - 1..loc.blockZ + 1) {
                             val block = loc.world.getBlockAt(x, y, z)
-                            if (material == Material.REDSTONE_ORE || material == Material.GLOWING_REDSTONE_ORE) {
-                                if (block.type == Material.REDSTONE_ORE || block.type == Material.GLOWING_REDSTONE_ORE) {
+                            if (material == Material.REDSTONE_ORE || material == Material.REDSTONE_ORE) {
+                                if (block.type == Material.REDSTONE_ORE || block.type == Material.REDSTONE_ORE) {
                                     block.breakNaturally()
                                     val exp = block.location.world.spawn(player.location, ExperienceOrb::class.java)
                                     exp.experience = 4
-                                    block.location.world.playSound(block.location, Sound.DIG_STONE, 1f, 1f)
+                                    block.location.world.playSound(block.location, Sound.BLOCK_STONE_BREAK, 1f, 1f)
                                     BlockUtil().degradeDurability(player)
                                     veinMine(block.location, material, player)
                                 }
@@ -57,7 +57,7 @@ class VeinMinerScenario : Scenario(
                                             exp.experience = 2
                                         }
                                     }
-                                    block.location.world.playSound(block.location, Sound.DIG_STONE, 1f, 1f)
+                                    block.location.world.playSound(block.location, Sound.BLOCK_STONE_BREAK, 1f, 1f)
                                     BlockUtil().degradeDurability(player)
                                     veinMine(block.location, material, player)
                                 }
@@ -96,7 +96,7 @@ class VeinMinerScenario : Scenario(
         if (e.player.world.name == "Spawn") return
         if (!e.player.isSneaking) return
         when (e.block.type) {
-            Material.COAL_ORE, Material.IRON_ORE, Material.GOLD_ORE, Material.DIAMOND_ORE, Material.EMERALD_ORE, Material.REDSTONE_ORE, Material.GLOWING_REDSTONE_ORE, Material.LAPIS_ORE, Material.QUARTZ_ORE -> {
+            Material.COAL_ORE, Material.IRON_ORE, Material.GOLD_ORE, Material.DIAMOND_ORE, Material.EMERALD_ORE, Material.REDSTONE_ORE, Material.LAPIS_ORE, Material.NETHER_QUARTZ_ORE -> {
                 veinMine(e.block.location, e.block.type, e.player)
             }
             else -> {}

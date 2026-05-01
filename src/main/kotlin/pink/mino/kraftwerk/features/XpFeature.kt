@@ -35,7 +35,7 @@ class XpFeature : Listener {
                     Log.info("${p.name} leveled up to Level ${it.get().level}")
                     val reward = Random.nextInt(25, 75)
                     it.get().coins += reward
-                    Chat.sendMessage(p as CommandSender, "<dark_gray>[&bLeveling<dark_gray>]<gray> You leveled up to &bLevel ${it.get().level}<gray>! You gained &6⚜ ${(reward)}<gray> as a reward.")
+                    Chat.sendMessage(p as CommandSender, "<dark_gray>[<aqua>Leveling<dark_gray>]<gray> You leveled up to <aqua>Level ${it.get().level}<gray>! You gained <gold>⚜ ${(reward)}<gray> as a reward.")
                 }
             }
     }

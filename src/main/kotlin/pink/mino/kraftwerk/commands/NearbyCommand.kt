@@ -1,5 +1,7 @@
 package pink.mino.kraftwerk.commands
 
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.minimessage.MiniMessage
 import net.md_5.bungee.api.chat.ClickEvent
 import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.command.Command
@@ -31,15 +33,13 @@ class NearbyCommand : CommandExecutor {
             }
         }
         Chat.sendMessage(sender, Chat.line)
-        Chat.sendCenteredMessage(sender, "${Chat.primaryColor}&lNearby Players")
+        Chat.sendCenteredMessage(sender, "${Chat.primaryColor}<bold>Nearby Players")
         if (players.isEmpty()) {
             Chat.sendCenteredMessage(sender, "<gray>No players nearby!")
         } else {
             for (player in players) {
-                val text = TextComponent(Chat.colored("${Chat.primaryColor}${floor(player.location.x)}, ${floor(player.location.y)}, ${floor(player.location.z)} <dark_gray>- ${Chat.secondaryColor}${PlayerUtils.getPrefix(player)}${player.name} <dark_gray>(${Chat.primaryColor}${floor(sender.location.distance(player.location))}m<dark_gray>)"))
-                text.clickEvent = ClickEvent(
-                    ClickEvent.Action.SUGGEST_COMMAND,
-                    "/tp ${player.name}"
+                val text = MiniMessage.miniMessage().deserialize(
+                    "<insert:/tp ${player.name}><${Chat.primaryColor}>${floor(player.location.x)}, ${floor(player.location.y)}, ${floor(player.location.z)} <dark_gray>- <${Chat.secondaryColor}>${PlayerUtils.getPrefix(player)}${player.name} <dark_gray>(<${Chat.primaryColor}>${floor(sender.location.distance(player.location))}m<dark_gray>)</insert>"
                 )
                 Chat.sendMessage(sender, "${Chat.primaryColor}${floor(player.location.x)}, ${floor(player.location.y)}, ${floor(player.location.z)} <dark_gray>- ${Chat.secondaryColor}${PlayerUtils.getPrefix(player)}${player.name} <dark_gray>(${Chat.primaryColor}${floor(sender.location.distance(player.location))}m<dark_gray>)")
             }

@@ -18,10 +18,10 @@ class VorpalSwordRecipe : Recipe(
 ) {
     init {
         val vorpalSword = ItemBuilder(Material.IRON_SWORD)
-            .name("&5Vorpal Sword")
-            .addEnchantment(Enchantment.DAMAGE_ARTHROPODS, 2)
-            .addEnchantment(Enchantment.DAMAGE_UNDEAD, 2)
-            .addEnchantment(Enchantment.LOOT_BONUS_MOBS, 2)
+            .name("<dark_purple>Vorpal Sword")
+            .addEnchantment(Enchantment.BANE_OF_ARTHROPODS, 2)
+            .addEnchantment(Enchantment.SMITE, 2)
+            .addEnchantment(Enchantment.LOOTING, 2)
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(vorpalSword, id)).shape(" $ ", " * ", " + ")
                 .setIngredient('$', Material.BONE)

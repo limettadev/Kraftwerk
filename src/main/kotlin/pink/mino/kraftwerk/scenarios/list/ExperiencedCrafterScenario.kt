@@ -13,7 +13,7 @@ class ExperiencedCrafterScenario : Scenario(
     "Experienced Crafter",
     "If you want to craft a certain item, it will cost you XP levels to craft it. An iron sword, bow, golden apple, or golden head, and a diamond pick costs 1 level. Crafting iron armor will cost 2 levels. Crafting an anvil or a diamond sword will cost 3 levels. Crafting diamond armor will cost 5 levels. Crafting an enchantment table will cost 6 levels. Lastly, crafting a brewing stand will cost 10 levels.",
     "experiencedcrafter",
-    Material.WORKBENCH
+    Material.CRAFTING_TABLE
 ) {
     @EventHandler
     fun onCraftItem(e: CraftItemEvent) {
@@ -26,7 +26,7 @@ class ExperiencedCrafterScenario : Scenario(
             Material.IRON_HELMET, Material.IRON_CHESTPLATE, Material.IRON_LEGGINGS, Material.IRON_BOOTS -> 2
             Material.ANVIL, Material.DIAMOND_SWORD -> 3
             Material.DIAMOND_HELMET, Material.DIAMOND_CHESTPLATE, Material.DIAMOND_LEGGINGS, Material.DIAMOND_BOOTS -> 5
-            Material.ENCHANTMENT_TABLE -> 6
+            Material.ENCHANTING_TABLE -> 6
             Material.BREWING_STAND -> 10
             else -> return // No cost for other items
         }

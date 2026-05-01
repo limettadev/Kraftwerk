@@ -24,11 +24,11 @@ class SiphonScenario : Scenario(
 
 ) {
     val enchants: ImmutableList<Enchantment> = ImmutableList.of(
-        Enchantment.DIG_SPEED,
-        Enchantment.DURABILITY,
-        Enchantment.PROTECTION_PROJECTILE,
-        Enchantment.PROTECTION_ENVIRONMENTAL,
-        Enchantment.DAMAGE_ALL
+        Enchantment.EFFICIENCY,
+        Enchantment.UNBREAKING,
+        Enchantment.PROJECTILE_PROTECTION,
+        Enchantment.PROTECTION,
+        Enchantment.SHARPNESS
     )
 
     fun getRandom(from: Int, to: Int): Int {

@@ -39,7 +39,7 @@ class FightCommand : CommandExecutor {
             }
         }
         cooldowns[sender.uniqueId] = System.currentTimeMillis()
-        Chat.broadcast("<dark_gray>[${Chat.primaryColor}&lPvP<dark_gray>] &f${sender.name}<gray> is looking for a fight at ${Chat.secondaryColor}X: ${floor(sender.location.x)}<gray>, ${Chat.secondaryColor}Y: ${floor(sender.location.y)}<gray>, ${Chat.secondaryColor}Z: ${floor(sender.location.z)}<gray>!")
+        Chat.broadcast("<dark_gray>[${Chat.primaryColor}<bold>PvP<dark_gray>] <white>${sender.name}<gray> is looking for a fight at ${Chat.secondaryColor}X: ${floor(sender.location.x)}<gray>, ${Chat.secondaryColor}Y: ${floor(sender.location.y)}<gray>, ${Chat.secondaryColor}Z: ${floor(sender.location.z)}<gray>!")
         return true
     }
 }

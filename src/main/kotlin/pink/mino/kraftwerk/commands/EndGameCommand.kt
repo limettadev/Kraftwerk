@@ -53,9 +53,9 @@ class EndGameCommand : CommandExecutor {
 
         for (player in Bukkit.getOnlinePlayers()) {
             if (winners.contains(player.name)) {
-                player.showTitle(Title.title(Chat.colored("&6&lVICTORY!"), Chat.colored("<gray>Congratulations, you won the game!")))
+                player.showTitle(Title.title(Chat.colored("<gold><bold>VICTORY!"), Chat.colored("<gray>Congratulations, you won the game!")))
             } else {
-                player.showTitle(Title.title(Chat.colored("${Chat.primaryColor}&lGAME OVER!"), Chat.colored("<gray>The game has concluded!")))
+                player.showTitle(Title.title(Chat.colored("${Chat.primaryColor}<bold>GAME OVER!"), Chat.colored("<gray>The game has concluded!")))
             }
         }
 
@@ -166,7 +166,7 @@ class EndGameCommand : CommandExecutor {
         for (player in Bukkit.getOnlinePlayers()) {
             if (SpecFeature.instance.isSpec(player)) SpecFeature.instance.unspec(player)
             SpawnFeature.instance.send(player)
-            Chat.sendCenteredMessage(player, "${Chat.primaryColor}&lGAME OVER!")
+            Chat.sendCenteredMessage(player, "${Chat.primaryColor}<bold>GAME OVER!")
             Chat.sendMessage(player, " ")
             Chat.sendCenteredMessage(player, "<gray>Congratulations to the winners: ${Chat.secondaryColor}${winners.joinToString(", ")}<gray>!")
             Chat.sendCenteredMessage(player, "<gray>The server will restart in ${Chat.secondaryColor}45 seconds<gray>.")

@@ -16,8 +16,8 @@ class DragonArmorRecipe : Recipe(
 ) {
     init {
         val dragonArmor = ItemBuilder(Material.DIAMOND_CHESTPLATE)
-            .name("&5Dragon Armor")
-            .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4)
+            .name("<dark_purple>Dragon Armor")
+            .addEnchantment(Enchantment.PROTECTION, 4)
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(dragonArmor, id)).shape(" B ", " D ", "OAO")
             .setIngredient('B', Material.MAGMA_CREAM)

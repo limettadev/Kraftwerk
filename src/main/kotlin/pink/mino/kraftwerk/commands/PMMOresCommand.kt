@@ -15,7 +15,7 @@ import pink.mino.kraftwerk.utils.GameState
  */
 class PMMOresCommand : CommandExecutor {
 
-    override fun onCommand(sender: CommandSender, command: Command?, label: String?, args: Array<String>): Boolean {
+    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
         if (sender !is Player) {
             sender.sendMessage("You can't use this command as you technically aren't a player.")
             return false
@@ -32,7 +32,7 @@ class PMMOresCommand : CommandExecutor {
 
         if (sender.scoreboard.getPlayerTeam(sender) != null) {
 
-            for (team in sender.scoreboard.getPlayerTeam(sender).players) {
+            for (team in sender.scoreboard.getPlayerTeam(sender)!!.players) {
                 if (team is Player) {
                     team.sendMessage(Chat.colored("§8[${Chat.primaryColor}Team Chat§8] ${ChatColor.WHITE}${sender.name} §7has mined §6${if (SpecFeature.instance.goldMined[sender.uniqueId] == null) "0" else "${SpecFeature.instance.goldMined[sender.uniqueId]}"} gold§7, and §b${if (SpecFeature.instance.diamondsMined[sender.uniqueId] == null) "0" else "${SpecFeature.instance.diamondsMined[sender.uniqueId]}"} diamonds§7."))
                 }

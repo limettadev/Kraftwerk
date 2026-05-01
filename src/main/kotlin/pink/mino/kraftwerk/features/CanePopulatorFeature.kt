@@ -29,9 +29,9 @@ class CanePopulatorFeature : Listener {
         if (rand.nextInt(100) <= ConfigFeature.instance.worlds!!.getInt("${chunk.world!!.name}.canerate")) {
             for (x in 0..15) {
                 val block: Block? = if (rand.nextBoolean()) {
-                    getHighestBlock(chunk, rand.nextInt(16), x)
+                    getHighestBlock(chunk, rand.nextInt(15), x)
                 } else {
-                    getHighestBlock(chunk, x, rand.nextInt(16))
+                    getHighestBlock(chunk, x, rand.nextInt(15))
                 }
                 if (block == null) continue
                 if (block.type == Material.GRASS_BLOCK || block.type == Material.SAND) {

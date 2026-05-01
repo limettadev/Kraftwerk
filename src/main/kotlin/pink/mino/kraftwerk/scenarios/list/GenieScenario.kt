@@ -1,5 +1,6 @@
 package pink.mino.kraftwerk.scenarios.list
 
+import net.minecraft.world.item.alchemy.Potion
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.command.Command
@@ -8,7 +9,8 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
-import org.bukkit.potion.Potion
+import org.bukkit.potion.PotionEffect
+import org.bukkit.potion.PotionEffectType
 import org.bukkit.potion.PotionType
 import pink.mino.kraftwerk.Kraftwerk
 import pink.mino.kraftwerk.features.ConfigFeature
@@ -18,19 +20,20 @@ import pink.mino.kraftwerk.utils.Chat
 import pink.mino.kraftwerk.utils.GuiBuilder
 import pink.mino.kraftwerk.utils.ItemBuilder
 import pink.mino.kraftwerk.utils.PlayerUtils
+import pink.mino.kraftwerk.utils.PotionBuilder
 import java.util.*
 
 class GenieScenario : Scenario(
     "Genie",
     "You are given 3 wishes and you cannot get more. Based on the number of kills you have in the game is what you can wish for. (If you have 0 kills, you can get the following: Golden Apple, Diamond Sword, Anvil. If you have 1 Kill, you can get the following: Player Head, Speed 1 Potion, Strength 1 Potion. If you have 2 Kills, you can get the following: Enchantment Table, Brewing Stand, 5 Diamond Ore. If you have 4 Kills, you can get the following: Instant Health 2 Potion Not Splashable, 128 Bottles of Enchanting, 1 Glowstone Block, 1 Blaze Rod. If you have 5+ Kills, you can get the following: 64 Obsidian, 8 Gold Ingots, 4 Soul Sand, 3 Wither Skeleton Heads.)",
     "genie",
-    Material.EXP_BOTTLE
+    Material.EXPERIENCE_BOTTLE
 ), CommandExecutor {
     val prefix = Chat.colored("<dark_gray>[${Chat.primaryColor}Genie<dark_gray>]<gray>")
     val wishes = hashMapOf<UUID, Int>()
 
     init {
-        JavaPlugin.getPlugin(Kraftwerk::class.java).getCommand("genie").executor = this
+        JavaPlugin.getPlugin(Kraftwerk::class.java).getCommand("genie")!!.setExecutor(this)
     }
 
     override fun onStart() {
@@ -61,19 +64,19 @@ class GenieScenario : Scenario(
         if (ConfigFeature.instance.data!!.getInt("game.kills.${player.name}") >= 1) {
             rewards.addAll(
                 arrayListOf(
-                    ItemBuilder(Material.SKULL_ITEM)
+                    ItemBuilder(Material.PLAYER_HEAD)
                         .toSkull()
                         .setOwner(player.name)
                         .make(),
-                    Potion(PotionType.SPEED).toItemStack(1),
-                    Potion(PotionType.STRENGTH).toItemStack(1) // 3
+                    PotionBuilder.createPotion(PotionEffect(PotionEffectType.STRENGTH, 3 * 60 * 20, 0)),
+                    PotionBuilder.createPotion(PotionEffect(PotionEffectType.STRENGTH, 3 * 60 * 20, 0)) // 3
                 )
             )
         }
         if (ConfigFeature.instance.data!!.getInt("game.kills.${player.name}") >= 2) {
             rewards.addAll(
                 arrayListOf(
-                    ItemStack(Material.ENCHANTMENT_TABLE, 1),
+                    ItemStack(Material.ENCHANTING_TABLE, 1),
                     ItemStack(Material.BREWING_STAND, 1),
                     ItemStack(Material.DIAMOND_ORE, 5) // 3
                 )
@@ -82,8 +85,8 @@ class GenieScenario : Scenario(
         if (ConfigFeature.instance.data!!.getInt("game.kills.${player.name}") >= 4) {
             rewards.addAll(
                 arrayListOf(
-                    Potion(PotionType.INSTANT_HEAL, 2, false).toItemStack(1),
-                    ItemStack(Material.EXP_BOTTLE, 128),
+                    PotionBuilder.createPotion(PotionEffect(PotionEffectType.INSTANT_HEALTH, 1, 1)),
+                    ItemStack(Material.EXPERIENCE_BOTTLE, 128),
                     ItemStack(Material.GLOWSTONE, 1),
                     ItemStack(Material.BLAZE_ROD, 1) // 3
                 )
@@ -95,7 +98,7 @@ class GenieScenario : Scenario(
                     ItemStack(Material.OBSIDIAN, 64),
                     ItemStack(Material.GOLD_INGOT, 8),
                     ItemStack(Material.SOUL_SAND, 4),
-                    ItemStack(Material.SKULL_ITEM, 1, 1) // 4
+                    ItemStack(Material.PLAYER_HEAD, 1, 1) // 4
                 )
             )
         }

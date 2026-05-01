@@ -16,9 +16,9 @@ class ArtemisBookRecipe : Recipe(
 ) {
     init {
         val artemisBook = ItemBuilder(Material.ENCHANTED_BOOK)
-            .name("&5Artemis' Book")
+            .name("<dark_purple>Artemis' Book")
             .toEnchant()
-            .addStoredEnchant(Enchantment.PROTECTION_PROJECTILE, 1)
+            .addStoredEnchant(Enchantment.PROJECTILE_PROTECTION, 1)
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(artemisBook, id)).shape("   ", " PP", " PA")
             .setIngredient('P', Material.PAPER)

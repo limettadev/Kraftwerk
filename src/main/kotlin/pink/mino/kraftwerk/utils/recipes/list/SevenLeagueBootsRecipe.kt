@@ -16,9 +16,9 @@ class SevenLeagueBootsRecipe : Recipe(
 ) {
     init {
         val sevenLeagueBoots = ItemBuilder(Material.DIAMOND_BOOTS)
-            .name("&5Seven League Boots")
-            .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3)
-            .addEnchantment(Enchantment.PROTECTION_FALL, 3)
+            .name("<dark_purple>Seven League Boots")
+            .addEnchantment(Enchantment.PROTECTION, 3)
+            .addEnchantment(Enchantment.FEATHER_FALLING, 3)
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(sevenLeagueBoots, id)).shape("FEF", "FDF", "FWF")
             .setIngredient('F', Material.FEATHER)

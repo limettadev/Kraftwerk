@@ -9,18 +9,18 @@ import pink.mino.kraftwerk.utils.ItemBuilder
 class GoldenHeadRecipe : Recipe(
     "Golden Head",
     "Bloodcraft Craft",
-    ItemStack(Material.SKULL_ITEM),
+    ItemStack(Material.PLAYER_HEAD),
     3,
     "golden_head"
 ) {
     init {
-        val goldenHead = ItemBuilder(Material.SKULL_ITEM)
+        val goldenHead = ItemBuilder(Material.PLAYER_HEAD)
             .toSkull()
             .setOwner("PhantomTupac")
-            .name("&6Golden Head")
+            .name("<gold>Golden Head")
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(goldenHead, id)).shape("GGG", "GHG", "GGG")
-            .setIngredient('H', Material.SKULL_ITEM, 3)
+            .setIngredient('H', Material.PLAYER_HEAD, 3)
             .setIngredient('G', Material.GOLD_INGOT)
     }
 }

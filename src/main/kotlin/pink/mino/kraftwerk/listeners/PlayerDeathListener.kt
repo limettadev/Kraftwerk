@@ -1,5 +1,6 @@
 package pink.mino.kraftwerk.listeners
 import net.citizensnpcs.api.CitizensAPI
+import net.kyori.adventure.title.Title
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
@@ -25,7 +26,7 @@ class PlayerDeathListener : Listener {
             val player = e.entity as Player
             val old = e.deathMessage
             if (ConfigOptionHandler.getOption("deathlightning")!!.enabled) player.world.strikeLightningEffect(player.location)
-            e.deathMessage = ChatColor.translateAlternateColorCodes('&', "<dark_gray>»&f $old")
+            e.deathMessage = ChatColor.translateAlternateColorCodes('&', "<dark_gray>»<white> $old")
             if (player.world.name == "Arena") {
                 e.deathMessage = null
             }
@@ -37,12 +38,12 @@ class PlayerDeathListener : Listener {
                     val color: String = if (TeamsFeature.manager.getTeam(killer) != null) {
                         TeamsFeature.manager.getTeam(killer)!!.prefix
                     } else {
-                        "&f"
+                        "<white>"
                     }
-                    Scoreboard.setScore(Chat.colored(" ${color}${killer.name}"), o + 1)
+                    Scoreboard.setScore(" ${color}${killer.name}", o + 1)
                 } else {
                     JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.pve++
-                    Scoreboard.setScore(Chat.colored("${Chat.dash} <green>PvE"), JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.pve)
+                    Scoreboard.setScore("${Chat.dash} <green>PvE", JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.pve)
                 }
                 val list = ConfigFeature.instance.data!!.getStringList("game.list")
                 list.remove(player.name)
@@ -52,11 +53,11 @@ class PlayerDeathListener : Listener {
                 val color: String = if (TeamsFeature.manager.getTeam(player) != null) {
                     TeamsFeature.manager.getTeam(player)!!.prefix
                 } else {
-                    "&f"
+                    "<white>"
                 }
-                Scoreboard.deleteScore(Chat.colored(" ${color}${player.name}"))
-                if (kills > 0) Scoreboard.setScore(Chat.colored(" ${color}<strikethrough>${player.name}"), kills)
-                Scoreboard.setScore(Chat.colored("${Chat.dash} <gray>Playing..."), Math.max(PlayerUtils.getPlayingPlayers().size - 1, 0))
+                Scoreboard.deleteScore(" ${color}${player.name}")
+                if (kills > 0) Scoreboard.setScore(" ${color}<strikethrough>${player.name}", kills)
+                Scoreboard.setScore("${Chat.dash} <gray>Playing...", Math.max(PlayerUtils.getPlayingPlayers().size - 1, 0))
                 CombatLogFeature.instance.removeCombatLog(player.name)
                 if (!player.hasPermission("uhc.staff")) {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wl remove ${player.name}")
@@ -65,7 +66,7 @@ class PlayerDeathListener : Listener {
                 if (TeamsFeature.manager.getTeam(player) != null) TeamsFeature.manager.getTeam(player)!!.removePlayer(player)
                 val preference = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.deathMessageOnScreen
                 if (preference) {
-                    player.sendTitle(Chat.colored("&4&lYOU DIED!"), Chat.colored("<gray>${e.deathMessage}"))
+                    player.showTitle(Title.title(Chat.colored("<dark_red><bold>YOU DIED!"), Chat.colored("<gray>${e.deathMessage}")))
                 }
             }
             Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
@@ -78,16 +79,16 @@ class PlayerDeathListener : Listener {
                 val killer = e.entity.killer
                 val npc = CitizensAPI.getNPCRegistry().getNPC(e.entity)
                 e.deathMessage =
-                    ChatColor.translateAlternateColorCodes('&', "<dark_gray>»&f ${killer!!.name} has killed ${npc.name}")
+                    ChatColor.translateAlternateColorCodes('&', "<dark_gray>»<white> ${killer!!.name} has killed ${npc.name}")
                 if (killer != null) {
                     val o = ConfigFeature.instance.data!!.getInt("game.kills.${killer.name}")
                     ConfigFeature.instance.data!!.set("game.kills.${killer.name}", o + 1)
                     val color: String = if (TeamsFeature.manager.getTeam(killer) != null) {
                         TeamsFeature.manager.getTeam(killer)!!.prefix
                     } else {
-                        "&f"
+                        "<white>"
                     }
-                    Scoreboard.setScore(Chat.colored(" ${color}${killer.name}"), o + 1)
+                    Scoreboard.setScore(" ${color}${killer.name}", o + 1)
                 }
                 val list = ConfigFeature.instance.data!!.getStringList("game.list")
                 list.remove(player.name)

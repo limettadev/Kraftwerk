@@ -31,8 +31,8 @@ class PotionOfVitalityRecipe : Recipe(
             PotionEffect(PotionEffectType.WITHER, 20 * 6, 1, false, true)
         )
         recipe = ShapedRecipe(convertToRecipeItem(potionOfVitality, id)).shape(" S ", " N ", " B")
-            .setIngredient('S', Material.SKULL_ITEM, 0)
-            .setIngredient('N', Material.NETHER_WARTS)
+            .setIngredient('S', Material.PLAYER_HEAD, 0)
+            .setIngredient('N', Material.NETHER_WART)
             .setIngredient('B', Material.GLASS_BOTTLE)
     }
 }

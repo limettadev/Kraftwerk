@@ -50,8 +50,8 @@ class BowlessScenario : Scenario(
         if (e.whoClicked == null) return
         if (e.click == null) return
         if (e.currentItem == null) return
-        if (e.currentItem.type === Material.BOW) {
-            e.currentItem.type = Material.AIR //Chests, Villagers, etc
+        if (e.currentItem!!.type === Material.BOW) {
+            e.currentItem!!.type = Material.AIR //Chests, Villagers, etc
         }
     }
 

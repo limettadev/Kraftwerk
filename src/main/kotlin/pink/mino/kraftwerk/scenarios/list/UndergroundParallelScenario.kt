@@ -27,7 +27,7 @@ class UndergroundParallelScenario : Scenario(
         val surface: Block = world.getBlockAt(block.x, block.y + 59, block.z)
 
         when (surface.type) {
-            Material.LEAVES, Material.LEAVES_2 -> {
+            Material.OAK_LEAVES -> {
                 var randomPerLogs: Double = Random.nextDouble() * 100
                 if (randomPerLogs < 50.0) {
                     block.type = Material.STONE
@@ -56,7 +56,7 @@ class UndergroundParallelScenario : Scenario(
                 block.type = Material.DIAMOND_ORE
                 return
             }
-            Material.LOG, Material.LOG_2 -> {
+            Material.OAK_LOG -> {
                 var randomPerLeaves: Double = Random.nextDouble() * 100
                 if (randomPerLeaves < 5.0) {
                     block.type = Material.REDSTONE_ORE
@@ -72,7 +72,7 @@ class UndergroundParallelScenario : Scenario(
             }
             else -> {
                 block.type = surface.type
-                block.data = surface.data
+                block.blockData = surface.blockData
                 if (surface.state is InventoryHolder) {
                     val surfaceInv = surface.state as InventoryHolder
                     val inv = block.state as InventoryHolder

@@ -17,20 +17,20 @@ class HasteyBoysScenario : Scenario(
 
     private var types: List<Material> = ArrayList(
         listOf(
-            Material.WOOD_PICKAXE,
+            Material.WOODEN_PICKAXE,
             Material.STONE_PICKAXE,
             Material.IRON_PICKAXE,
-            Material.GOLD_PICKAXE,
+            Material.GOLDEN_PICKAXE,
             Material.DIAMOND_PICKAXE,
-            Material.WOOD_SPADE,
-            Material.GOLD_SPADE,
-            Material.IRON_SPADE,
-            Material.STONE_SPADE,
-            Material.DIAMOND_SPADE,
-            Material.WOOD_AXE,
+            Material.WOODEN_SHOVEL,
+            Material.GOLDEN_SHOVEL,
+            Material.IRON_SHOVEL,
+            Material.STONE_SHOVEL,
+            Material.DIAMOND_SHOVEL,
+            Material.WOODEN_AXE,
             Material.STONE_AXE,
             Material.IRON_AXE,
-            Material.GOLD_AXE,
+            Material.GOLDEN_AXE,
             Material.DIAMOND_AXE
         )
     )
@@ -39,10 +39,10 @@ class HasteyBoysScenario : Scenario(
     fun onCraft(e: PrepareItemCraftEvent) {
         if (!enabled) return
         if (GameState.currentState !== GameState.INGAME) return
-        if (types.contains(e.recipe.result.type)) {
-            val item = e.recipe.result
-            item.addEnchantment(Enchantment.DIG_SPEED, 3)
-            item.addEnchantment(Enchantment.DURABILITY, 1)
+        if (types.contains(e.recipe!!.result.type)) {
+            val item = e.recipe!!.result
+            item.addEnchantment(Enchantment.EFFICIENCY, 3)
+            item.addEnchantment(Enchantment.UNBREAKING, 1)
             e.inventory.result = item
         }
     }

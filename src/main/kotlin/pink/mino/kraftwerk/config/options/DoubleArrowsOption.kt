@@ -17,8 +17,8 @@ class DoubleArrowsOption : ConfigOption(
     fun onPrepareCraft(event: PrepareItemCraftEvent) {
         if (!enabled) return
         if (event.inventory.result == null) return
-        if (event.inventory.result.type != Material.ARROW) return
-        event.inventory.result.amount = event.inventory.result.amount * 2
+        if (event.inventory.result!!.type != Material.ARROW) return
+        event.inventory.result!!.amount = event.inventory.result!!.amount * 2
     }
 
 }

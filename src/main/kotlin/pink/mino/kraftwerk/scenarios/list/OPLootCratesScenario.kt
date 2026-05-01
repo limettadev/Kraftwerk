@@ -13,12 +13,14 @@ import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.EnchantmentStorageMeta
 import org.bukkit.plugin.java.JavaPlugin
-import org.bukkit.potion.Potion
+import org.bukkit.potion.PotionEffect
+import org.bukkit.potion.PotionEffectType
 import org.bukkit.potion.PotionType
 import pink.mino.kraftwerk.Kraftwerk
 import pink.mino.kraftwerk.features.SpecFeature
 import pink.mino.kraftwerk.scenarios.Scenario
 import pink.mino.kraftwerk.utils.Chat
+import pink.mino.kraftwerk.utils.PotionBuilder
 import kotlin.random.Random
 
 class OPLootCratesScenario : Scenario(
@@ -33,7 +35,7 @@ class OPLootCratesScenario : Scenario(
             ItemStack(Material.DIAMOND_HELMET),
             ItemStack(Material.DIAMOND_BOOTS),
             ItemStack(Material.DIAMOND_PICKAXE),
-            ItemStack(Material.ENCHANTMENT_TABLE),
+            ItemStack(Material.ENCHANTING_TABLE),
             ItemStack(Material.GOLDEN_APPLE),
             ItemStack(Material.DIAMOND, 5),
             ItemStack(Material.APPLE, 8),
@@ -43,15 +45,15 @@ class OPLootCratesScenario : Scenario(
         )
         val sharpness2 = ItemStack(Material.ENCHANTED_BOOK)
         val sharpness2Meta = sharpness2.itemMeta as EnchantmentStorageMeta
-        sharpness2Meta.addStoredEnchant(Enchantment.DAMAGE_ALL, 2, true)
+        sharpness2Meta.addStoredEnchant(Enchantment.SHARPNESS, 2, true)
         sharpness2.itemMeta = sharpness2Meta
         val power2 = ItemStack(Material.ENCHANTED_BOOK)
         val power2Meta = power2.itemMeta as EnchantmentStorageMeta
-        power2Meta.addStoredEnchant(Enchantment.ARROW_DAMAGE, 2, true)
+        power2Meta.addStoredEnchant(Enchantment.POWER, 2, true)
         power2.itemMeta = power2Meta
         val protection2 = ItemStack(Material.ENCHANTED_BOOK)
         val protection2Meta = protection2.itemMeta as EnchantmentStorageMeta
-        protection2Meta.addStoredEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2, true)
+        protection2Meta.addStoredEnchant(Enchantment.PROTECTION, 2, true)
         protection2.itemMeta = protection2Meta
         list.add(sharpness2)
         list.add(protection2)
@@ -78,23 +80,24 @@ class OPLootCratesScenario : Scenario(
             ItemStack(Material.GOLD_BLOCK, 2),
             ItemStack(Material.DIAMOND_BLOCK, 2),
         )
-        val speed1 = Potion(PotionType.SPEED, 2)
-        list.add(speed1.toItemStack(1))
+        val speed1 =
+            PotionBuilder.createPotion(PotionEffect(PotionEffectType.SPEED, 3 * 60 * 20, 3, false, true))
+        list.add(speed1)
         val chestplate = ItemStack(Material.DIAMOND_CHESTPLATE)
         val chestplateMeta = chestplate.itemMeta
-        chestplateMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true)
+        chestplateMeta.addEnchant(Enchantment.PROTECTION, 1, true)
         chestplate.itemMeta = chestplateMeta
         val leggings = ItemStack(Material.DIAMOND_LEGGINGS)
         val leggingsMeta = chestplate.itemMeta
-        leggingsMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true)
+        leggingsMeta.addEnchant(Enchantment.PROTECTION, 1, true)
         leggings.itemMeta = leggingsMeta
         val helmet = ItemStack(Material.DIAMOND_HELMET)
         val helmetMeta = chestplate.itemMeta
-        helmetMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true)
+        helmetMeta.addEnchant(Enchantment.PROTECTION, 1, true)
         helmet.itemMeta = helmetMeta
         val boots = ItemStack(Material.DIAMOND_BOOTS)
         val bootsMeta = boots.itemMeta
-        bootsMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true)
+        bootsMeta.addEnchant(Enchantment.PROTECTION, 1, true)
         boots.itemMeta = bootsMeta
         list.add(boots)
         list.add(leggings)
@@ -102,33 +105,33 @@ class OPLootCratesScenario : Scenario(
         list.add(helmet)
         val sword = ItemStack(Material.DIAMOND_SWORD)
         val swordMeta = sword.itemMeta
-        swordMeta.addEnchant(Enchantment.DAMAGE_ALL, 2, true)
+        swordMeta.addEnchant(Enchantment.SHARPNESS, 2, true)
         sword.itemMeta = swordMeta
         list.add(sword)
 
         val protection4 = ItemStack(Material.ENCHANTED_BOOK)
         val protection4Meta = protection4.itemMeta as EnchantmentStorageMeta
-        protection4Meta.addStoredEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 3, true)
+        protection4Meta.addStoredEnchant(Enchantment.PROTECTION, 3, true)
         protection4.itemMeta = protection4Meta
 
         val projProt4 = ItemStack(Material.ENCHANTED_BOOK)
         val projProt4Meta = projProt4.itemMeta as EnchantmentStorageMeta
-        projProt4Meta.addStoredEnchant(Enchantment.PROTECTION_PROJECTILE, 3, true)
+        projProt4Meta.addStoredEnchant(Enchantment.PROJECTILE_PROTECTION, 3, true)
         projProt4.itemMeta = projProt4Meta
 
         val sharp4 = ItemStack(Material.ENCHANTED_BOOK)
         val sharp4Meta = sharp4.itemMeta as EnchantmentStorageMeta
-        sharp4Meta.addStoredEnchant(Enchantment.DAMAGE_ALL, 3, true)
+        sharp4Meta.addStoredEnchant(Enchantment.SHARPNESS, 3, true)
         sharp4.itemMeta = sharp4Meta
 
         val power4 = ItemStack(Material.ENCHANTED_BOOK)
         val power4Meta = power4.itemMeta as EnchantmentStorageMeta
-        power4Meta.addStoredEnchant(Enchantment.ARROW_DAMAGE, 3, true)
+        power4Meta.addStoredEnchant(Enchantment.POWER, 3, true)
         power4.itemMeta = power4Meta
 
         val fortune3 = ItemStack(Material.ENCHANTED_BOOK)
         val fortune3Meta = fortune3.itemMeta as EnchantmentStorageMeta
-        fortune3Meta.addStoredEnchant(Enchantment.LOOT_BONUS_BLOCKS, 3, true)
+        fortune3Meta.addStoredEnchant(Enchantment.FORTUNE, 3, true)
         fortune3.itemMeta = fortune3Meta
 
         list.add(protection4)
@@ -156,31 +159,27 @@ class OPLootCratesScenario : Scenario(
             val itemStack = p.itemInHand
             if (!itemStack.hasItemMeta() || !itemStack.itemMeta.hasDisplayName()) return
             if (itemStack.type == Material.CHEST) {
-                if (!itemStack.itemMeta.displayName.equals(
-                        Chat.colored("${Chat.primaryColor}Tier I Loot Crate"),
-                        ignoreCase = true
-                    )
+                if (itemStack.itemMeta.displayName() !=
+                        Chat.colored("${Chat.primaryColor}Tier I Loot Crate")
                 ) return
                 if (itemStack.amount > 1) {
                     Chat.sendMessage(p, "${Chat.prefix} <gray>You can only open one lootcrate at a time!")
                     return
                 }
                 val stack = generateTier1()[Random.nextInt(generateTier1().size)]
-                p.inventory.itemInHand = null
+                p.inventory.setItemInHand(ItemStack(Material.AIR))
                 p.inventory.addItem(stack)
                 Chat.sendMessage(p, "${Chat.prefix} You have received ${Chat.primaryColor}${stack.amount} ${stack.type.name}<gray> from your lootcrate!")
             } else if (itemStack.type == Material.ENDER_CHEST) {
-                if (!itemStack.itemMeta.displayName.equals(
-                        Chat.colored("${Chat.primaryColor}Tier II Loot Crate"),
-                        ignoreCase = true
-                    )
+                if (itemStack.itemMeta.displayName() !=
+                        Chat.colored("${Chat.primaryColor}Tier II Loot Crate")
                 ) return
                 if (itemStack.amount > 1) {
                     Chat.sendMessage(p, "${Chat.prefix} <gray>You can only open one loot-crate at a time!")
                     return
                 }
                 val stack = generateTier2()[Random.nextInt(generateTier2().size)]
-                p.inventory.itemInHand = null
+                p.inventory.setItemInHand(ItemStack(Material.AIR))
                 p.inventory.addItem(stack)
                 Chat.sendMessage(p, "${Chat.prefix} You have received ${Chat.primaryColor}${stack.amount} ${stack.type.name}<gray> from your lootcrate!")
             }
@@ -190,16 +189,16 @@ class OPLootCratesScenario : Scenario(
     override fun givePlayer(player: Player) {
         val tier1Chest = ItemStack(Material.CHEST)
         var meta = tier1Chest.itemMeta
-        meta.displayName = Chat.colored("${Chat.primaryColor}Tier I Loot Crate")
-        meta.lore = listOf(
-            "<gray>Right-click to redeem a Tier I item!"
+        meta.displayName(Chat.colored("${Chat.primaryColor}Tier I Loot Crate"))
+        meta.lore(
+            listOf(Chat.colored("<gray>Right-click to redeem a Tier I item!"))
         )
         tier1Chest.itemMeta = meta
         val tier2Chest = ItemStack(Material.ENDER_CHEST)
         meta = tier2Chest.itemMeta
-        meta.displayName = Chat.colored("${Chat.primaryColor}Tier II Loot Crate")
-        meta.lore = listOf(
-            "<gray>Right-click to redeem a Tier II item!"
+        meta.displayName(Chat.colored("${Chat.primaryColor}Tier II Loot Crate"))
+        meta.lore(
+            listOf(Chat.colored("<gray>Right-click to redeem a Tier II item!"))
         )
         tier2Chest.itemMeta = meta
         val chance = Random.nextInt(2)
@@ -210,7 +209,7 @@ class OPLootCratesScenario : Scenario(
             player.inventory.addItem(tier2Chest)
             Chat.sendMessage(player, "${Chat.prefix} You've been given a ${Chat.primaryColor}Tier II<gray> Loot Crate.")
         }
-        player.playSound(player.location, Sound.NOTE_PLING, 10F, 1F)
+        player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_PLING, 10F, 1F)
     }
 
     @EventHandler
@@ -229,7 +228,7 @@ class OPLootCratesScenario : Scenario(
         if (!enabled) {
             return
         }
-        if (e.currentItem.type == Material.ENDER_CHEST || e.currentItem.type == Material.CHEST) {
+        if (e.currentItem!!.type == Material.ENDER_CHEST || e.currentItem!!.type == Material.CHEST) {
             e.isCancelled = true
             Chat.sendMessage(e.whoClicked, "${Chat.prefix} You can't craft chests in Loot Crates.")
         }
@@ -239,16 +238,16 @@ class OPLootCratesScenario : Scenario(
     override fun onStart() {
         val tier1Chest = ItemStack(Material.CHEST)
         var meta = tier1Chest.itemMeta
-        meta.displayName = Chat.colored("${Chat.primaryColor}Tier I Loot Crate")
-        meta.lore = listOf(
-            "<gray>Right-click to redeem a Tier I item!"
+        meta.displayName(Chat.colored("${Chat.primaryColor}Tier I Loot Crate"))
+        meta.lore(
+            listOf(Chat.colored("<gray>Right-click to redeem a Tier I item!"))
         )
         tier1Chest.itemMeta = meta
         val tier2Chest = ItemStack(Material.ENDER_CHEST)
         meta = tier2Chest.itemMeta
-        meta.displayName = Chat.colored("${Chat.primaryColor}Tier II Loot Crate")
-        meta.lore = listOf(
-            "<gray>Right-click to redeem a Tier II item!"
+        meta.displayName(Chat.colored("${Chat.primaryColor}Tier II Loot Crate"))
+        meta.lore(
+            listOf(Chat.colored("<gray>Right-click to redeem a Tier II item!"))
         )
         tier2Chest.itemMeta = meta
         for (player in Bukkit.getOnlinePlayers()) {
@@ -264,7 +263,7 @@ class OPLootCratesScenario : Scenario(
                     Chat.sendMessage(player, "${Chat.prefix} You've been given a ${Chat.primaryColor}Tier II<gray> Loot Crate.")
                 }
             }
-            player.playSound(player.location, Sound.NOTE_PLING, 10F, 1F)
+            player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_PLING, 10F, 1F)
         }
         task = GiveLootCrates()
         task!!.runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 20L, 20L)

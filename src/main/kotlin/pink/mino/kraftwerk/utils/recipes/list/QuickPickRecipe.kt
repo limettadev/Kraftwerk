@@ -24,8 +24,8 @@ class QuickPickRecipe : Recipe(
 ) {
     init {
         val quickPick = ItemBuilder(Material.IRON_PICKAXE)
-            .name("&5Quick Pick")
-            .addEnchantment(Enchantment.DIG_SPEED, 1)
+            .name("<dark_purple>Quick Pick")
+            .addEnchantment(Enchantment.EFFICIENCY, 1)
             .make()
 
         recipe = ShapedRecipe(quickPick).shape("III", "CSC", " S ")

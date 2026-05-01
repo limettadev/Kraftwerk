@@ -152,5 +152,9 @@ class Chat {
             text = ChatColor.translateAlternateColorCodes('&', message!!)
             player.sendMessage(text)
         }
+
+        fun sendMessage(player: CommandSender, component: Component) {
+            player.sendMessage(component)
+        }
     }
 }

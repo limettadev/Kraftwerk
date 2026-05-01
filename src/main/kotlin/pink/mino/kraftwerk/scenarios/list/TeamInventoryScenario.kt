@@ -37,7 +37,7 @@ class TeamInventoryScenario : Scenario(
         if (team != null) {
             for (member in team.entries) {
                 val p = Bukkit.getPlayer(member)
-                if (p != null && !SpecFeature.instance.isSpec(p) && ConfigFeature.instance.data!!.getString("game.list").contains(p.name)) {
+                if (p != null && !SpecFeature.instance.isSpec(p) && ConfigFeature.instance.data!!.getString("game.list")!!.contains(p.name)) {
                     teammates.add(p)
                 }
             }
@@ -57,7 +57,7 @@ class TeamInventoryScenario : Scenario(
                     e.drops.add(item)
                 }
                 teamInventories!![team]!!.clear()
-                Chat.sendMessage(e.entity.killer, "$prefix The contents of their ${Chat.secondaryColor}&oTeam Inventory<gray> have been dropped as well.")
+                Chat.sendMessage(e.entity.killer!!, "$prefix The contents of their ${Chat.secondaryColor}<italic>Team Inventory<gray> have been dropped as well.")
             }
         } else {
             if (soloInventories!![player.uniqueId] != null) {
@@ -65,7 +65,7 @@ class TeamInventoryScenario : Scenario(
                     e.drops.add(item)
                 }
                 soloInventories!![player.uniqueId]!!.clear()
-                Chat.sendMessage(e.entity.killer, "$prefix The contents of their ${Chat.secondaryColor}&oTeam Inventory<gray> have been dropped as well.")
+                Chat.sendMessage(e.entity.killer!!, "$prefix The contents of their ${Chat.secondaryColor}<italic>Team Inventory<gray> have been dropped as well.")
             }
         }
     }

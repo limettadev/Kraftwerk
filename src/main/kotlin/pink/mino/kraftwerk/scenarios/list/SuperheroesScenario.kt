@@ -37,15 +37,15 @@ class SuperheroesScenario : Scenario(
             val pool = arrayListOf(
                 PotionEffectType.HEALTH_BOOST,
                 PotionEffectType.SPEED,
-                PotionEffectType.FAST_DIGGING,
-                PotionEffectType.DAMAGE_RESISTANCE,
-                PotionEffectType.INCREASE_DAMAGE,
+                PotionEffectType.HASTE,
+                PotionEffectType.RESISTANCE,
+                PotionEffectType.STRENGTH,
             )
             if (ConfigFeature.instance.data!!.getInt("game.teamSize") >= 6) {
                 pool.add(PotionEffectType.INVISIBILITY)
             }
             if (ConfigFeature.instance.data!!.getInt("game.teamSize") >= 5) {
-                pool.add(PotionEffectType.JUMP)
+                pool.add(PotionEffectType.JUMP_BOOST)
             }
             if (TeamsFeature.manager.getTeam(player) != null) {
                 for (teammate in TeamsFeature.manager.getTeam(player)!!.players) {
@@ -66,14 +66,14 @@ class SuperheroesScenario : Scenario(
                     val pool = arrayListOf(
                         PotionEffectType.HEALTH_BOOST,
                         PotionEffectType.SPEED,
-                        PotionEffectType.DAMAGE_RESISTANCE,
-                        PotionEffectType.INCREASE_DAMAGE,
+                        PotionEffectType.RESISTANCE,
+                        PotionEffectType.STRENGTH,
                     )
                     if (ConfigFeature.instance.data!!.getInt("game.teamSize") >= 6) {
                         pool.add(PotionEffectType.INVISIBILITY)
                     }
                     if (ConfigFeature.instance.data!!.getInt("game.teamSize") >= 5) {
-                        pool.add(PotionEffectType.JUMP)
+                        pool.add(PotionEffectType.JUMP_BOOST)
                     }
                     for (player in team.players) {
                         if (pool.size == 0) continue
@@ -94,14 +94,14 @@ class SuperheroesScenario : Scenario(
                 val pool = arrayListOf(
                     PotionEffectType.HEALTH_BOOST,
                     PotionEffectType.SPEED,
-                    PotionEffectType.DAMAGE_RESISTANCE,
-                    PotionEffectType.INCREASE_DAMAGE,
+                    PotionEffectType.RESISTANCE,
+                    PotionEffectType.STRENGTH,
                 )
                 if (ConfigFeature.instance.data!!.getInt("game.teamSize") >= 6) {
                     pool.add(PotionEffectType.INVISIBILITY)
                 }
                 if (ConfigFeature.instance.data!!.getInt("game.teamSize") >= 5) {
-                    pool.add(PotionEffectType.JUMP)
+                    pool.add(PotionEffectType.JUMP_BOOST)
                 }
                 val hero = pool[Random.nextInt(pool.size)]
                 superheroes[player as Player] = hero
@@ -122,7 +122,7 @@ class SuperheroesScenario : Scenario(
     @EventHandler
     fun onPlayerToggleFlight(e: PlayerToggleFlightEvent) {
         val player = e.player
-        if (player.gameMode == GameMode.SPECTATOR || player.gameMode == GameMode.SPECTATOR || player.isFlying || superheroes[e.player] != PotionEffectType.JUMP) {
+        if (player.gameMode == GameMode.SPECTATOR || player.gameMode == GameMode.SPECTATOR || player.isFlying || superheroes[e.player] != PotionEffectType.JUMP_BOOST) {
             return
         } else {
             e.isCancelled = true
@@ -148,7 +148,7 @@ class SuperheroesScenario : Scenario(
     fun onPlayerDamage(e: EntityDamageEvent) {
         if (!enabled) return
         if (e.entity.type == EntityType.PLAYER) {
-            if (superheroes[(e.entity as Player)] == PotionEffectType.JUMP) {
+            if (superheroes[(e.entity as Player)] == PotionEffectType.JUMP_BOOST) {
                 if (e.cause == EntityDamageEvent.DamageCause.FALL) e.isCancelled = true
             }
         }
@@ -189,26 +189,26 @@ class SuperheroesScenario : Scenario(
             }
             PotionEffectType.SPEED -> {
                 player.addPotionEffect(PotionEffect(PotionEffectType.SPEED, 99999, 1))
-                player.addPotionEffect(PotionEffect(PotionEffectType.FAST_DIGGING, 99999, 1))
+                player.addPotionEffect(PotionEffect(PotionEffectType.HASTE, 99999, 1))
             }
-            PotionEffectType.JUMP -> {
-                player.addPotionEffect(PotionEffect(PotionEffectType.JUMP, 99999, 3))
+            PotionEffectType.JUMP_BOOST -> {
+                player.addPotionEffect(PotionEffect(PotionEffectType.JUMP_BOOST, 99999, 3))
                 player.addPotionEffect(PotionEffect(PotionEffectType.SATURATION, 99999, 0))
             }
-            PotionEffectType.DAMAGE_RESISTANCE -> {
-                player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE)
+            PotionEffectType.RESISTANCE -> {
+                player.removePotionEffect(PotionEffectType.RESISTANCE)
                 if (!absorption) {
-                    player.addPotionEffect(PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 99999, 1))
+                    player.addPotionEffect(PotionEffect(PotionEffectType.RESISTANCE, 99999, 1))
                 } else {
-                    player.addPotionEffect(PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 99999, 0))
+                    player.addPotionEffect(PotionEffect(PotionEffectType.RESISTANCE, 99999, 0))
                     player.addPotionEffect(PotionEffect(PotionEffectType.FIRE_RESISTANCE, 99999, 0))
                 }
             }
-            PotionEffectType.INCREASE_DAMAGE -> {
+            PotionEffectType.STRENGTH -> {
                 if (!absorption) {
-                    player.addPotionEffect(PotionEffect(PotionEffectType.INCREASE_DAMAGE, 99999, 0))
+                    player.addPotionEffect(PotionEffect(PotionEffectType.STRENGTH, 99999, 0))
                 } else {
-                    player.addPotionEffect(PotionEffect(PotionEffectType.INCREASE_DAMAGE, 99999, 0))
+                    player.addPotionEffect(PotionEffect(PotionEffectType.STRENGTH, 99999, 0))
                     player.addPotionEffect(PotionEffect(PotionEffectType.FIRE_RESISTANCE, 99999, 0))
                 }
             }

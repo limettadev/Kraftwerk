@@ -26,8 +26,7 @@ class MonstersIncScenario : Scenario(
         Material.SPRUCE_DOOR,
         Material.BIRCH_DOOR,
         Material.JUNGLE_DOOR,
-        Material.WOODEN_DOOR,
-        Material.WOOD_DOOR
+        Material.OAK_DOOR
     )
 
     val prefix = "<dark_gray>[${Chat.primaryColor}Monsters Inc.<dark_gray>]<gray>"
@@ -54,7 +53,7 @@ class MonstersIncScenario : Scenario(
         if (GameState.currentState != GameState.INGAME) return
         if (e.clickedBlock == null) return
         if (e.action != Action.RIGHT_CLICK_BLOCK && e.action != Action.RIGHT_CLICK_AIR) return
-        if (doorList.contains(e.clickedBlock.type)) {
+        if (doorList.contains(e.clickedBlock!!.type)) {
             Chat.sendMessage(e.player, "$prefix Teleporting to a random door...")
             val location = doors[Random.nextInt(doors.size)]
             e.player.teleport(location)

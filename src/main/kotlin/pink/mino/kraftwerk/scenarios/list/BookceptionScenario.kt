@@ -15,15 +15,15 @@ class BookceptionScenario : Scenario(
     Material.ENCHANTED_BOOK
 ) {
     val enchantments = listOf<Enchantment>(
-        Enchantment.DIG_SPEED,
-        Enchantment.DAMAGE_ALL,
-        Enchantment.ARROW_FIRE,
+        Enchantment.EFFICIENCY,
+        Enchantment.SHARPNESS,
+        Enchantment.FLAME,
         Enchantment.FIRE_ASPECT,
-        Enchantment.LOOT_BONUS_BLOCKS,
-        Enchantment.PROTECTION_ENVIRONMENTAL,
-        Enchantment.ARROW_DAMAGE,
-        Enchantment.ARROW_INFINITE,
-        Enchantment.DURABILITY
+        Enchantment.FORTUNE,
+        Enchantment.PROTECTION,
+        Enchantment.POWER,
+        Enchantment.INFINITY,
+        Enchantment.UNBREAKING
     )
 
     @EventHandler

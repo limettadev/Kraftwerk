@@ -29,7 +29,7 @@ class StatsFeature : Listener {
         if (GameState.currentState != GameState.INGAME) return
         if (ConfigOptionHandler.getOption("statless")!!.enabled) return
         JavaPlugin.getPlugin(Kraftwerk::class.java).statsHandler.getStatsPlayer(e.entity as Player)!!.deaths++
-        if (e.entity.killer != null && e.entity.killer.type == EntityType.PLAYER) {
+        if (e.entity.killer != null && e.entity.killer!!.type == EntityType.PLAYER) {
             JavaPlugin.getPlugin(Kraftwerk::class.java).statsHandler.getStatsPlayer(e.entity.killer as Player)!!.kills++
         }
     }
@@ -66,7 +66,7 @@ class StatsFeature : Listener {
         if (GameState.currentState != GameState.INGAME) return
         if (ConfigOptionHandler.getOption("statless")!!.enabled) return
         JavaPlugin.getPlugin(Kraftwerk::class.java).statsHandler.getStatsPlayer(e.whoClicked as Player)!!.timesCrafted++
-        if (e.currentItem.type == Material.GOLDEN_APPLE) {
+        if (e.currentItem!!.type == Material.GOLDEN_APPLE) {
             JavaPlugin.getPlugin(Kraftwerk::class.java).statsHandler.getStatsPlayer(e.whoClicked as Player)!!.gapplesCrafted++
         }
     }

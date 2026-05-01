@@ -60,7 +60,7 @@ class EggsScenario : Scenario(
         if (!enabled) return
         if (GameState.currentState !== GameState.INGAME) return
         if (event.item == null) return
-        if (event.item.type != Material.EGG) return
+        if (event.item!!.type != Material.EGG) return
         if (event.action != Action.RIGHT_CLICK_AIR && event.action != Action.RIGHT_CLICK_BLOCK) return
         if (canUse) return
         event.isCancelled = true
@@ -87,7 +87,7 @@ class EggsScenario : Scenario(
         val loc = event.entity.location
         val world = event.entity.world
 
-        val gameWorld = Bukkit.getWorld(ConfigFeature.instance.data!!.getString("pregen.world"))
+        val gameWorld = Bukkit.getWorld(ConfigFeature.instance.data!!.getString("pregen.world")!!)
 
         if (world != gameWorld) return
 

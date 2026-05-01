@@ -1,5 +1,6 @@
 package pink.mino.kraftwerk.utils.recipes
 
+import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -22,7 +23,7 @@ class RecipesMenu : PaginatedMenu() {
             .sorted(Comparator.comparing(Recipe::name))
             .forEach { recipe ->
                 buttons[count.get()] = object : Button() {
-                    override fun getName(p0: Player): String {
+                    override fun getName(p0: Player): Component {
                         return Chat.colored("${Chat.primaryColor}${recipe.name}")
                     }
 
@@ -30,12 +31,12 @@ class RecipesMenu : PaginatedMenu() {
                         return recipe.icon.type
                     }
 
-                    override fun getDescription(p0: Player): List<String> {
+                    override fun getDescription(p0: Player): List<Component> {
                         return mutableListOf(
                             Chat.colored("<gray>Crafts: ${Chat.primaryColor}${recipe.crafts}"),
-                            " ",
+                            Chat.colored(" "),
                             Chat.colored("<gray>${recipe.description}"),
-                            " ",
+                            Chat.colored(" "),
                             Chat.colored("${Chat.primaryColor}Click to view crafting recipe.")
                         ).toList()
                     }

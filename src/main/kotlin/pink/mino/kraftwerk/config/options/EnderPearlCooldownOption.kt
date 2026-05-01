@@ -12,13 +12,13 @@ class EnderPearlCooldownOption : ConfigOption(
     "When toggles, introduces a cooldown to whether you can throw an enderpearl.",
     "options",
     "pearlcooldown",
-    Material.EYE_OF_ENDER
+    Material.ENDER_EYE
 ) {
     var cooldowns = HashMap<String, Long>()
     @EventHandler
     fun onPlayerInteract(e: PlayerInteractEvent) {
         if (!enabled) return
-        if (e.item != null && e.item.type == Material.ENDER_PEARL) {
+        if (e.item != null && e.item!!.type == Material.ENDER_PEARL) {
             if (e.action == Action.RIGHT_CLICK_AIR || e.action == Action.RIGHT_CLICK_BLOCK) {
                 val cooldownTime = 10
                 if (cooldowns.containsKey(e.player.name)) {

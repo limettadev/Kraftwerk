@@ -47,6 +47,6 @@ class UnendurableHealingScenario : Scenario(
                 inventory.boots!!.durability = (inventory.boots!!.durability + (inventory.boots!!.type.maxDurability * 0.2)).toInt().toShort()
             }
         }
-        player.playSound(player.location, Sound.ITEM_BREAK, 1F, 1F)
+        player.playSound(player.location, Sound.ENTITY_ITEM_BREAK, 1F, 1F)
     }
 }

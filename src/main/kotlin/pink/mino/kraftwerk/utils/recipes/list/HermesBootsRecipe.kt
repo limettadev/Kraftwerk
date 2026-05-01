@@ -29,21 +29,21 @@ class HermesBootsRecipe : Recipe(
     init {
         val hermesBoots = ItemBuilder(Material.DIAMOND_BOOTS)
             .name("<yellow>Hermes' Boots")
-            .addEnchantment(Enchantment.PROTECTION_FALL, 1)
-            .addEnchantment(Enchantment.DURABILITY, 2)
-            .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2)
+            .addEnchantment(Enchantment.FEATHER_FALLING, 1)
+            .addEnchantment(Enchantment.UNBREAKING, 2)
+            .addEnchantment(Enchantment.PROTECTION, 2)
             .addLore("<gray>While wearing: 10% movement speed increase.")
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(hermesBoots, id)).shape("DHD", "PBP", "F F")
             .setIngredient('D', Material.DIAMOND)
-            .setIngredient('H', Material.SKULL_ITEM, 3)
+            .setIngredient('H', Material.PLAYER_HEAD, 3)
             .setIngredient('P', Material.BLAZE_POWDER)
             .setIngredient('F', Material.FEATHER)
             .setIngredient('B', Material.DIAMOND_BOOTS)
         object : BukkitRunnable() {
             override fun run() {
                 for (player in Bukkit.getOnlinePlayers()) {
-                    if (player.inventory.boots != null && player.inventory.boots.hasItemMeta() && player.inventory.boots.itemMeta.displayName == Chat.colored(
+                    if (player.inventory.boots != null && player.inventory.boots!!.hasItemMeta() && player.inventory.boots!!.itemMeta.displayName() == Chat.colored(
                             "<yellow>Hermes' Boots"
                         )
                     ) {

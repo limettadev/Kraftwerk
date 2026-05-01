@@ -9,7 +9,7 @@ import pink.mino.kraftwerk.utils.Chat
 import pink.mino.kraftwerk.utils.PlayerUtils
 
 class PMCommand : CommandExecutor {
-    override fun onCommand(sender: CommandSender, command: Command?, label: String?, args: Array<String>): Boolean {
+    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
         if (sender !is Player) {
             sender.sendMessage("You can't use this command as you technically aren't a player.")
             return false
@@ -30,9 +30,9 @@ class PMCommand : CommandExecutor {
 
             val msg = message.toString().trim()
 
-            for (team in sender.scoreboard.getPlayerTeam(sender).players) {
+            for (team in sender.scoreboard.getPlayerTeam(sender)!!.players) {
                 if (team is Player) {
-                    Chat.sendMessage(team, "<dark_gray>[${Chat.primaryColor}Team Chat<dark_gray>] ${PlayerUtils.getPrefix(sender)}${sender.name} ${Chat.dash} <gray>&o${msg}")
+                    Chat.sendMessage(team, "<dark_gray>[${Chat.primaryColor}Team Chat<dark_gray>] ${PlayerUtils.getPrefix(sender)}${sender.name} ${Chat.dash} <gray><italic>${msg}")
                 }
             }
         }

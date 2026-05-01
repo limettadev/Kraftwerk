@@ -12,7 +12,6 @@ import pink.mino.kraftwerk.Kraftwerk
 import pink.mino.kraftwerk.features.ConfigFeature
 import pink.mino.kraftwerk.scenarios.Scenario
 import pink.mino.kraftwerk.scenarios.ScenarioHandler
-import pink.mino.kraftwerk.utils.ActionBar
 import pink.mino.kraftwerk.utils.Chat
 
 class GenerateTask(val world: World, private val chunks: ArrayList<Location>) : BukkitRunnable() {
@@ -35,7 +34,7 @@ class GenerateTask(val world: World, private val chunks: ArrayList<Location>) : 
             }
         }
         for (player in Bukkit.getOnlinePlayers()) {
-            ActionBar.sendActionBarMessage(player, ChatColor.translateAlternateColorCodes('&', "<dark_gray>[${Chat.primaryColor}Scenario Generation<dark_gray>] <gray>Chunks Left: ${Chat.primaryColor}${chunks.size}<dark_gray>/${Chat.primaryColor}${size} <dark_gray>| <gray>World: <dark_gray>'${Chat.primaryColor}${world.name}<dark_gray>'"))
+            player.sendActionBar(Chat.colored("<dark_gray>[${Chat.primaryColor}Scenario Generation<dark_gray>] <gray>Chunks Left: ${Chat.primaryColor}${chunks.size}<dark_gray>/${Chat.primaryColor}${size} <dark_gray>| <gray>World: <dark_gray>'${Chat.primaryColor}${world.name}<dark_gray>'"))
         }
     }
 }

@@ -24,8 +24,8 @@ class PhilosophersPickaxeRecipe : Recipe(
 ) {
     init {
         val philosophersPickaxe = ItemBuilder(Material.DIAMOND_PICKAXE)
-            .name("&5Philosopher's Pickaxe")
-            .addEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 2)
+            .name("<dark_purple>Philosopher's Pickaxe")
+            .addEnchantment(Enchantment.FORTUNE, 2)
         philosophersPickaxe.setDurability((philosophersPickaxe.item.type.maxDurability - 2).toShort())
         recipe = ShapedRecipe(convertToRecipeItem(philosophersPickaxe.make(), id)).shape("IGI", "LSL", " S ")
             .setIngredient('I', Material.IRON_ORE)

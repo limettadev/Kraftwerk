@@ -47,7 +47,7 @@ class KrenzinatorScenario : Scenario(
         val player = e.whoClicked as Player
         val inv = e.inventory
         val item = inv.result
-        if (item.type == Material.DIAMOND_SWORD) {
+        if (item!!.type == Material.DIAMOND_SWORD) {
             player.damage(2.0)
             Chat.sendMessage(player, "$prefix Krenzinator doesn't like diamond swords, therefore crafting a diamond sword will result in a loss of 1 heart")
         }

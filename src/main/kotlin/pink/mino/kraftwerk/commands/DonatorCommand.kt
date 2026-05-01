@@ -27,12 +27,12 @@ class DonatorCommand : CommandExecutor {
             pink.mino.kraftwerk.utils.Chat.sendMessage(sender, "<red>You do not have any perks, buy some on the store at <yellow>${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store app set in config tough tits"}<gray>!")
             return true
         }
-        val gui = GuiBuilder().rows(perks.size / 9 + 1).name("&2&lDonator Perks").owner(sender)
+        val gui = GuiBuilder().rows(perks.size / 9 + 1).name("<dark_green><bold>Donator Perks").owner(sender)
         for ((index, perk) in perks.withIndex()) {
             when (perk) {
                 Perk.BYPASS_DEATH_KICK -> {
                     val item = ItemBuilder(Material.IRON_CHESTPLATE)
-                        .name("&2&lBypass Death Kick")
+                        .name("<dark_green><bold>Bypass Death Kick")
                         .addLore("<gray>You will not be kicked automatically after a minute in-game.")
                         .addLore("<dark_gray>Automatic")
                         .make()
@@ -42,7 +42,7 @@ class DonatorCommand : CommandExecutor {
                 }
                 Perk.BODY_SPEC -> {
                     val item = ItemBuilder(Material.IRON_CHESTPLATE)
-                        .name("&2&lBody Spectating")
+                        .name("<dark_green><bold>Body Spectating")
                         .addLore("<gray>Dying in a UHC automatically will make you spectate a random teammate.")
                         .addLore("<dark_gray>Automatic")
                         .make()
@@ -52,7 +52,7 @@ class DonatorCommand : CommandExecutor {
                 }
                 Perk.WHITE_CHAT -> {
                     val item = ItemBuilder(Material.WHITE_WOOL)
-                        .name("&2&lWhite Chat")
+                        .name("<dark_green><bold>White Chat")
                         .addLore("<gray>Your chat messages by default are white instead of gray.")
                         .addLore("<dark_gray>Automatic")
                         .make()
@@ -62,7 +62,7 @@ class DonatorCommand : CommandExecutor {
                 }
                 Perk.NO_CHAT_DELAY -> {
                     val item = ItemBuilder(Material.CARROT_ON_A_STICK)
-                        .name("&2&lNo Chat Delay")
+                        .name("<dark_green><bold>No Chat Delay")
                         .addLore("<gray>You are exempt from the chat cooldown")
                         .addLore("<dark_gray>Automatic")
                         .make()
@@ -72,7 +72,7 @@ class DonatorCommand : CommandExecutor {
                 }
                 Perk.EMOTES -> {
                     val item = ItemBuilder(Material.DIAMOND)
-                        .name("&2&lEmotes")
+                        .name("<dark_green><bold>Emotes")
                         .addLore("<gray>You are provided some chat emotes to spice up chat!")
                         .addLore("<gray>View the list in <yellow>/emotes<gray>!")
                         .addLore("<dark_gray>Automatic")
@@ -83,7 +83,7 @@ class DonatorCommand : CommandExecutor {
                 }
                 Perk.RIDE_PLAYERS -> {
                     val item = ItemBuilder(Material.PLAYER_HEAD)
-                        .name("&2&lRide Players")
+                        .name("<dark_green><bold>Ride Players")
                         .addLore("<gray>You may ride a player by right-clicking them!")
                         .make()
                     gui.item(index, item).onClick runnable@ {
@@ -92,7 +92,7 @@ class DonatorCommand : CommandExecutor {
                 }
                 Perk.STATS_RESET -> {
                     val item = ItemBuilder(Material.NAME_TAG)
-                        .name("&2&lStats Reset")
+                        .name("<dark_green><bold>Stats Reset")
                         .addLore("<gray>You may reset your stats in the stats interface.")
                         .addLore("<dark_gray>Reset your stats in /stats")
                         .make()
@@ -102,7 +102,7 @@ class DonatorCommand : CommandExecutor {
                 }
                 Perk.TEAM_COLORS -> {
                     val item = ItemBuilder(Material.BLUE_WOOL)
-                        .name("&2&lTeam Colors")
+                        .name("<dark_green><bold>Team Colors")
                         .addLore("<gray>You can choose your team's color.")
                         .addLore("<dark_gray>Change your team color using /team color")
                         .make()
@@ -112,7 +112,7 @@ class DonatorCommand : CommandExecutor {
                 }
                 Perk.CHOOSE_ARENA_BLOCKS -> {
                     val item = ItemBuilder(Material.COBBLESTONE)
-                        .name("&2&lChoose Arena Blocks")
+                        .name("<dark_green><bold>Choose Arena Blocks")
                         .addLore("<gray>You may choose the arena blocks you spawn in while in the pre-game <red>/arena<gray>.")
                         .addLore("<dark_gray>Choose in /profile!")
                         .make()
@@ -122,9 +122,9 @@ class DonatorCommand : CommandExecutor {
                 }
                 Perk.TOGGLE_PICKUPS -> {
                     val item = ItemBuilder(Material.LAPIS_BLOCK)
-                        .name("&2&lToggle Pickups")
+                        .name("<dark_green><bold>Toggle Pickups")
                         .addLore("<gray>You may toggle your pickups for certain ores!")
-                        .addLore("<dark_gray>Toggle pickups using <red>/redstone<dark_gray> & or &1/lapis<dark_gray>!")
+                        .addLore("<dark_gray>Toggle pickups using <red>/redstone<dark_gray> & or <dark_blue>/lapis<dark_gray>!")
                         .make()
                     gui.item(index, item).onClick runnable@ {
                         it.isCancelled = true
@@ -132,7 +132,7 @@ class DonatorCommand : CommandExecutor {
                 }
                 Perk.SPAWN_FLY -> {
                     val item = ItemBuilder(Material.FEATHER)
-                        .name("&2&lSpawn Fly")
+                        .name("<dark_green><bold>Spawn Fly")
                         .addLore("<gray>You may fly in spawn!")
                         .addLore("<dark_gray>Fly in spawn using /fly")
                         .addLore("<dark_gray>Automatic & with /fly")

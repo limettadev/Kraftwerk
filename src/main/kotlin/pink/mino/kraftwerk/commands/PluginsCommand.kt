@@ -12,9 +12,9 @@ import java.io.InputStreamReader
 class PluginsCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
-        command: Command?,
-        label: String?,
-        args: Array<out String>?
+        command: Command,
+        label: String,
+        args: Array<out String>
     ): Boolean {
         var gitHash = "(unknown version)"
         try {

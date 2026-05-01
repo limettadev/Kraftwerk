@@ -1,6 +1,6 @@
 chat:
   prefix: '<dark_gray>[<red>UHC<dark_gray>]<gray>'
-  secondaryColor: '&f'
+  secondaryColor: '<white>'
   primaryColor: '<red>'
   motd: '<red>apple<green>juice'
   scoreboardTitle: '<red>apple<green>juice'

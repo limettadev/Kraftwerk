@@ -16,10 +16,10 @@ class TarnhelmRecipe : Recipe(
 ) {
     init {
         val tarnhelm = ItemBuilder(Material.DIAMOND_HELMET)
-            .name("&5Tarnhelm")
-            .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1)
-            .addEnchantment(Enchantment.PROTECTION_FIRE, 1)
-            .addEnchantment(Enchantment.WATER_WORKER, 1)
+            .name("<dark_purple>Tarnhelm")
+            .addEnchantment(Enchantment.PROTECTION, 1)
+            .addEnchantment(Enchantment.FIRE_PROTECTION, 1)
+            .addEnchantment(Enchantment.AQUA_AFFINITY, 1)
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(tarnhelm, id)).shape("DID", "DRD", "   ")
             .setIngredient('D', Material.DIAMOND)

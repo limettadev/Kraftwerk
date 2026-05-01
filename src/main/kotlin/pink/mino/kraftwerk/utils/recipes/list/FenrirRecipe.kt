@@ -16,8 +16,8 @@ import org.bukkit.entity.Wolf
 import org.bukkit.event.EventHandler
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
+import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ShapedRecipe
-import org.bukkit.material.SpawnEgg
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import pink.mino.kraftwerk.utils.recipes.Recipe
@@ -25,15 +25,15 @@ import pink.mino.kraftwerk.utils.recipes.Recipe
 class FenrirRecipe : Recipe(
     "Fenrir",
     "Hunter Ultimate",
-    SpawnEgg(EntityType.WOLF).toItemStack(1),
+    ItemStack(Material.WOLF_SPAWN_EGG),
     1,
     "fenrir"
 ) {
     init {
-        val fenrir = SpawnEgg(EntityType.WOLF).toItemStack(1)
+        val fenrir = ItemStack(Material.WOLF_SPAWN_EGG)
         recipe = ShapedRecipe(convertToRecipeItem(fenrir, id)).shape("LLL", "BXB", "LLL")
             .setIngredient('L', Material.LEATHER)
-            .setIngredient('X', Material.EXP_BOTTLE)
+            .setIngredient('X', Material.EXPERIENCE_BOTTLE)
             .setIngredient('B', Material.BONE)
     }
 
@@ -49,10 +49,7 @@ class FenrirRecipe : Recipe(
         if (item == null) {
             return
         }
-        if (item.type != Material.MONSTER_EGG) {
-            return
-        }
-        if (item.durability.toInt() != 95) {
+        if (item.type != Material.WOLF_SPAWN_EGG) {
             return
         }
         item = item.clone()
@@ -66,7 +63,7 @@ class FenrirRecipe : Recipe(
         wolf.maxHealth = 40.0
         wolf.health = 40.0
         wolf.addPotionEffect(PotionEffect(PotionEffectType.SPEED, Int.MAX_VALUE, 3))
-        wolf.addPotionEffect(PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Int.MAX_VALUE, 0))
+        wolf.addPotionEffect(PotionEffect(PotionEffectType.RESISTANCE, Int.MAX_VALUE, 0))
         event.isCancelled = true
     }
 }

@@ -1,8 +1,8 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "2.1.21"
+    id("org.jetbrains.kotlin.jvm") version "2.3.21"
     id("java")
     id("io.github.goooler.shadow") version "8.1.8"
-    id("io.papermc.paperweight.userdev") version "2.0.0-beta.17"
+    id("io.papermc.paperweight.userdev") version "2.0.0-beta.21"
 }
 
 group = "pink.mino.Kraftwerk"
@@ -12,6 +12,7 @@ repositories {
     mavenCentral()
     gradlePluginPortal()
     maven(url = "https://repo.papermc.io/repository/maven-public/")
+    maven("https://repo.papermc.io/repository/maven-public/")
     maven(url = "https://repo.dmulloy2.net/nexus/repository/public/")
     maven(url = "https://oss.sonatype.org/content/repositories/snapshots")
     maven(url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
@@ -27,9 +28,10 @@ repositories {
 
 dependencies {
     implementation("redis.clients:jedis:5.2.0-beta4")
-    implementation("me.lucko:helper:5.6.10")
+    implementation("me.lucko:helper:5.6.14")
     implementation("me.lucko:helper-profiles:1.2.0")
-    implementation("org.mongodb:mongodb-driver:3.12.11")
+    implementation(platform("org.mongodb:mongodb-driver-bom:5.6.5"))
+    implementation("org.mongodb:mongodb-driver-sync")
     implementation("me.lucko:spark-api:0.1-SNAPSHOT")
     compileOnly("com.comphenix.protocol:ProtocolLib:4.5.0")
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
@@ -43,10 +45,12 @@ dependencies {
     implementation("com.github.MilkBowl:VaultAPI:1.7") {
         isTransitive = false
     }
-    paperweight.paperDevBundle("1.21.5-R0.1-SNAPSHOT")
-    implementation("net.kyori:adventure-api:4.21.0")
-    compileOnly("com.lunarclient:apollo-api:1.1.8")
-    compileOnly("com.lunarclient:apollo-extra-adventure4:1.1.8")
+    paperweight.paperDevBundle("1.21.11-R0.1-SNAPSHOT")
+    implementation("net.kyori:adventure-api:5.0.0")
+    compileOnly("com.lunarclient:apollo-api:1.2.5")
+    compileOnly(group = "org.popcraft", name = "chunky-common", version = "1.3.38")
+    compileOnly("com.lunarclient:apollo-extra-adventure4:1.2.5")
+    compileOnly("com.github.decentsoftware-eu:decentholograms:2.9.9")
 }
 
 tasks.test {

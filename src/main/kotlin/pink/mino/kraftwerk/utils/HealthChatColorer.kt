@@ -9,16 +9,16 @@ class HealthChatColorer {
                     c = "§2"
                 }
                 health >= 80 -> {
-                    c = "§a"
+                    c = "<green>"
                 }
                 health >= 70 -> {
                     c = "§6"
                 }
                 health >= 35 -> {
-                    c = "§e"
+                    c = "<yellow>"
                 }
                 health >= 0 -> {
-                    c = "§c"
+                    c = "<red>"
                 }
                 else -> {
                     c = "§8"

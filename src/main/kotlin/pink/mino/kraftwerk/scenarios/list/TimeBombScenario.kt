@@ -1,7 +1,7 @@
 package pink.mino.kraftwerk.scenarios.list
 
-import com.gmail.filoghost.holographicdisplays.api.Hologram
-import com.gmail.filoghost.holographicdisplays.api.HologramsAPI
+import eu.decentsoftware.holograms.api.DHAPI
+import eu.decentsoftware.holograms.api.holograms.Hologram
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
@@ -16,8 +16,9 @@ import pink.mino.kraftwerk.Kraftwerk
 import pink.mino.kraftwerk.scenarios.Scenario
 import pink.mino.kraftwerk.utils.Chat
 import pink.mino.kraftwerk.utils.GameState
+import java.util.UUID
 
-class TimeBombTask(val player: Player, val location: Location, private val hologram: Hologram) : BukkitRunnable() {
+class TimeBombTask(val player: Player, val location: Location, private val hologram: eu.decentsoftware.holograms.api.holograms.Hologram) : BukkitRunnable() {
     var timer = 30
     val prefix = "<dark_gray>[${Chat.primaryColor}TimeBomb<dark_gray>]<gray>"
     override fun run() {
@@ -30,14 +31,14 @@ class TimeBombTask(val player: Player, val location: Location, private val holog
             }
             location.world.createExplosion(location.blockX + 0.5, location.blockY + 0.5, location.blockZ + 0.5, 10F, false, true)
             location.world.strikeLightning(location)
-            hologram.delete()
-            Bukkit.broadcastMessage(Chat.colored("$prefix ${Chat.secondaryColor}${player.name}<gray>'s corpse has exploded."))
+            DHAPI.removeHologram(hologram.name)
+            Bukkit.broadcast(Chat.colored("$prefix ${Chat.secondaryColor}${player.name}<gray>'s corpse has exploded."))
             cancel()
             return
         }
         timer--
-        if (hologram.size() == 1) hologram.removeLine(0)
-        hologram.appendTextLine(Chat.colored("<yellow>${timer}s"))
+        if (hologram.size() == 1) DHAPI.removeHologramLine(hologram, 0)
+        DHAPI.addHologramLine(hologram, "<yellow>${timer}s")
     }
 }
 
@@ -63,8 +64,10 @@ class TimeBombScenario : Scenario(
             }
         }
         e.drops.clear()
-        val hologram = HologramsAPI.createHologram(JavaPlugin.getPlugin(Kraftwerk::class.java), Location(e.entity.world, e.entity.location.x, e.entity.location.y + 1.5, e.entity.location.z))
-
+        val hologram = DHAPI.createHologram(
+            UUID.randomUUID().toString(),
+            Location(e.entity.world, e.entity.location.x, e.entity.location.y + 1.5, e.entity.location.z)
+        )
         TimeBombTask(e.entity, e.entity.location, hologram).runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, 20L)
     }
 }

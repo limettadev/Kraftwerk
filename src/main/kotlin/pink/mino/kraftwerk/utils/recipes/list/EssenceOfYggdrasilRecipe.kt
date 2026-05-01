@@ -21,17 +21,17 @@ import pink.mino.kraftwerk.utils.recipes.Recipe
 class EssenceOfYggdrasilRecipe : Recipe(
     "Essence of Yggdrasil",
     "Gives 2 Enchanting Tables as well as 30 EXP levels",
-    ItemStack(Material.EXP_BOTTLE, 32),
+    ItemStack(Material.EXPERIENCE_BOTTLE, 32),
     1,
     "essence_of_yggdrasil"
 ) {
     init {
-        val essenceOfYggdrasil = ItemBuilder(Material.EXP_BOTTLE)
+        val essenceOfYggdrasil = ItemBuilder(Material.EXPERIENCE_BOTTLE)
             .name("<yellow>Essence of Yggdrasil")
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(essenceOfYggdrasil, id)).shape("LEL", "GBG", "LRL")
             .setIngredient('L', Material.LAPIS_BLOCK)
-            .setIngredient('E', Material.ENCHANTMENT_TABLE)
+            .setIngredient('E', Material.ENCHANTING_TABLE)
             .setIngredient('G', Material.GLOWSTONE)
             .setIngredient('R', Material.REDSTONE_BLOCK)
             .setIngredient('B', Material.GLASS_BOTTLE)
@@ -41,16 +41,16 @@ class EssenceOfYggdrasilRecipe : Recipe(
     fun on(e: CraftItemEvent) {
         val player = e.whoClicked as Player
         val inv = e.inventory
-        val item = inv.result
+        val item = inv.result!!
         if (!item.hasItemMeta() || !item.itemMeta.hasDisplayName()) {
             return
         }
-        val name = item.itemMeta.displayName
+        val name = item.itemMeta.displayName()
         if (name == Chat.colored("<yellow>Essence of Yggdrasil")) {
             inv.result = null
             player.level += 30
             Chat.sendMessage(player, "<yellow>You've been blessed by the Essence of Yggdrasil.")
-            player.inventory.addItem(ItemStack(Material.ENCHANTMENT_TABLE, 2))
+            player.inventory.addItem(ItemStack(Material.ENCHANTING_TABLE, 2))
         }
     }
 }

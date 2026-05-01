@@ -29,10 +29,10 @@ class ApprenticeSwordRecipe : Recipe(
 ) {
     init {
         val apprenticeSword = ItemBuilder(Material.IRON_SWORD)
-            .name("&5Apprentice Sword")
-            .addLore("<gray>Gains &fSharpness I<gray> after 10 minutes<gray>.")
-            .addLore("<gray>Gains &fSharpness II<gray> after 20 minutes<gray>.")
-            .addLore("<gray>Gains &fSharpness III<gray> after 40 minutes<gray>.")
+            .name("<dark_purple>Apprentice Sword")
+            .addLore("<gray>Gains <white>Sharpness I<gray> after 10 minutes<gray>.")
+            .addLore("<gray>Gains <white>Sharpness II<gray> after 20 minutes<gray>.")
+            .addLore("<gray>Gains <white>Sharpness III<gray> after 40 minutes<gray>.")
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(apprenticeSword, id)).shape(" R ", " I ", " R ")
             .setIngredient('I', Material.IRON_SWORD)
@@ -46,65 +46,65 @@ class ApprenticeSwordRecipe : Recipe(
                         if (item == null) continue
                         if (!item.hasItemMeta()) continue
                         if (Kraftwerk.instance.game!!.timer > (10 * 60)) {
-                            if (item.itemMeta.displayName == Chat.colored("&5Apprentice Bow")) {
+                            if (item.itemMeta.displayName() == Chat.colored("<dark_purple>Apprentice Bow")) {
                                 val bow = ItemBuilder(Material.BOW)
-                                    .name("&5Apprentice Bow")
-                                    .addLore("<gray>Gains &fPower I<gray> after 10 minutes<gray>.")
-                                    .addLore("<gray>Gains &fPower II<gray> after 20 minutes<gray>.")
-                                    .addLore("<gray>Gains &fPower III<gray> after 40 minutes<gray>.")
-                                    .addEnchantment(Enchantment.ARROW_DAMAGE, 1)
+                                    .name("<dark_purple>Apprentice Bow")
+                                    .addLore("<gray>Gains <white>Power I<gray> after 10 minutes<gray>.")
+                                    .addLore("<gray>Gains <white>Power II<gray> after 20 minutes<gray>.")
+                                    .addLore("<gray>Gains <white>Power III<gray> after 40 minutes<gray>.")
+                                    .addEnchantment(Enchantment.POWER, 1)
                                     .make()
                                 item.itemMeta = bow.itemMeta
                             }
-                            if (item.itemMeta.displayName == Chat.colored("&5Apprentice Sword")) {
+                            if (item.itemMeta.displayName() == Chat.colored("<dark_purple>Apprentice Sword")) {
                                 val sword = ItemBuilder(Material.IRON_SWORD)
-                                    .name("&5Apprentice Sword")
-                                    .addEnchantment(Enchantment.DAMAGE_ALL, 1)
-                                    .addLore("<gray>Gains &fSharpness I<gray> after 10 minutes<gray>.")
-                                    .addLore("<gray>Gains &fSharpness II<gray> after 20 minutes<gray>.")
-                                    .addLore("<gray>Gains &fSharpness III<gray> after 40 minutes<gray>.")
+                                    .name("<dark_purple>Apprentice Sword")
+                                    .addEnchantment(Enchantment.SHARPNESS, 1)
+                                    .addLore("<gray>Gains <white>Sharpness I<gray> after 10 minutes<gray>.")
+                                    .addLore("<gray>Gains <white>Sharpness II<gray> after 20 minutes<gray>.")
+                                    .addLore("<gray>Gains <white>Sharpness III<gray> after 40 minutes<gray>.")
                                     .make()
                                 item.itemMeta = sword.itemMeta
                             }
                         } else if (Kraftwerk.instance.game!!.timer > (20 * 60)) {
-                            if (item.itemMeta.displayName == Chat.colored("&5Apprentice Bow")) {
+                            if (item.itemMeta.displayName() == Chat.colored("<dark_purple>Apprentice Bow")) {
                                 val bow = ItemBuilder(Material.BOW)
-                                    .name("&5Apprentice Bow")
-                                    .addLore("<gray>Gains &fPower I<gray> after 10 minutes<gray>.")
-                                    .addLore("<gray>Gains &fPower II<gray> after 20 minutes<gray>.")
-                                    .addLore("<gray>Gains &fPower III<gray> after 40 minutes<gray>.")
-                                    .addEnchantment(Enchantment.ARROW_DAMAGE, 2)
+                                    .name("<dark_purple>Apprentice Bow")
+                                    .addLore("<gray>Gains <white>Power I<gray> after 10 minutes<gray>.")
+                                    .addLore("<gray>Gains <white>Power II<gray> after 20 minutes<gray>.")
+                                    .addLore("<gray>Gains <white>Power III<gray> after 40 minutes<gray>.")
+                                    .addEnchantment(Enchantment.POWER, 2)
                                     .make()
                                 item.itemMeta = bow.itemMeta
                             }
-                            if (item.itemMeta.displayName == Chat.colored("&5Apprentice Sword")) {
+                            if (item.itemMeta.displayName() == Chat.colored("<dark_purple>Apprentice Sword")) {
                                 val sword = ItemBuilder(Material.IRON_SWORD)
-                                    .name("&5Apprentice Sword")
-                                    .addEnchantment(Enchantment.DAMAGE_ALL, 2)
-                                    .addLore("<gray>Gains &fSharpness I<gray> after 10 minutes<gray>.")
-                                    .addLore("<gray>Gains &fSharpness II<gray> after 20 minutes<gray>.")
-                                    .addLore("<gray>Gains &fSharpness III<gray> after 40 minutes<gray>.")
+                                    .name("<dark_purple>Apprentice Sword")
+                                    .addEnchantment(Enchantment.SHARPNESS, 2)
+                                    .addLore("<gray>Gains <white>Sharpness I<gray> after 10 minutes<gray>.")
+                                    .addLore("<gray>Gains <white>Sharpness II<gray> after 20 minutes<gray>.")
+                                    .addLore("<gray>Gains <white>Sharpness III<gray> after 40 minutes<gray>.")
                                     .make()
                                 item.itemMeta = sword.itemMeta
                             }
                         } else if (Kraftwerk.instance.game!!.timer > (40 * 60)) {
-                            if (item.itemMeta.displayName == Chat.colored("&5Apprentice Bow")) {
+                            if (item.itemMeta.displayName() == Chat.colored("<dark_purple>Apprentice Bow")) {
                                 val bow = ItemBuilder(Material.BOW)
-                                    .name("&5Apprentice Bow")
-                                    .addLore("<gray>Gains &fPower I<gray> after 10 minutes<gray>.")
-                                    .addLore("<gray>Gains &fPower II<gray> after 20 minutes<gray>.")
-                                    .addLore("<gray>Gains &fPower III<gray> after 40 minutes<gray>.")
-                                    .addEnchantment(Enchantment.ARROW_DAMAGE, 3)
+                                    .name("<dark_purple>Apprentice Bow")
+                                    .addLore("<gray>Gains <white>Power I<gray> after 10 minutes<gray>.")
+                                    .addLore("<gray>Gains <white>Power II<gray> after 20 minutes<gray>.")
+                                    .addLore("<gray>Gains <white>Power III<gray> after 40 minutes<gray>.")
+                                    .addEnchantment(Enchantment.POWER, 3)
                                     .make()
                                 item.itemMeta = bow.itemMeta
                             }
-                            if (item.itemMeta.displayName == Chat.colored("&5Apprentice Sword")) {
+                            if (item.itemMeta.displayName() == Chat.colored("<dark_purple>Apprentice Sword")) {
                                 val sword = ItemBuilder(Material.IRON_SWORD)
-                                    .name("&5Apprentice Sword")
-                                    .addEnchantment(Enchantment.DAMAGE_ALL, 3)
-                                    .addLore("<gray>Gains &fSharpness I<gray> after 10 minutes<gray>.")
-                                    .addLore("<gray>Gains &fSharpness II<gray> after 20 minutes<gray>.")
-                                    .addLore("<gray>Gains &fSharpness III<gray> after 40 minutes<gray>.")
+                                    .name("<dark_purple>Apprentice Sword")
+                                    .addEnchantment(Enchantment.SHARPNESS, 3)
+                                    .addLore("<gray>Gains <white>Sharpness I<gray> after 10 minutes<gray>.")
+                                    .addLore("<gray>Gains <white>Sharpness II<gray> after 20 minutes<gray>.")
+                                    .addLore("<gray>Gains <white>Sharpness III<gray> after 40 minutes<gray>.")
                                     .make()
                                 item.itemMeta = sword.itemMeta
                             }

@@ -64,17 +64,17 @@ class FlyCommand : CommandExecutor {
         } else {
             if (PerkChecker.checkPerks(sender).contains(Perk.SPAWN_FLY)) {
                 if (sender.world.name != "Spawn" || GameState.currentState != GameState.LOBBY) {
-                    Chat.sendMessage(sender, "<dark_gray>[&2$$$<dark_gray>] You can only use this command in the spawn world while a game isn't running.")
+                    Chat.sendMessage(sender, "<dark_gray>[<dark_green>$$$<dark_gray>] You can only use this command in the spawn world while a game isn't running.")
                     return false
                 }
                 if (sender.allowFlight) {
                     sender.allowFlight = true
                     sender.isFlying = true
-                    Chat.sendMessage(sender, "<dark_gray>[&2$$$<dark_gray>] <gray>You have <green>enabled<gray> flight for yourself.")
+                    Chat.sendMessage(sender, "<dark_gray>[<dark_green>$$$<dark_gray>] <gray>You have <green>enabled<gray> flight for yourself.")
                 } else {
                     sender.allowFlight = false
                     sender.isFlying = false
-                    Chat.sendMessage(sender, "<dark_gray>[&2$$$<dark_gray>] <gray>You have <red>disabled<gray> flight for yourself.")
+                    Chat.sendMessage(sender, "<dark_gray>[<dark_green>$$$<dark_gray>] <gray>You have <red>disabled<gray> flight for yourself.")
                 }
                 return true
             } else {

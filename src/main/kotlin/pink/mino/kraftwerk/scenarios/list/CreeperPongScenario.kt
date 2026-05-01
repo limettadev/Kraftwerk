@@ -5,7 +5,7 @@ import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
-import org.bukkit.material.SpawnEgg
+import org.bukkit.inventory.ItemStack
 import pink.mino.kraftwerk.features.SpecFeature
 import pink.mino.kraftwerk.scenarios.Scenario
 import pink.mino.kraftwerk.utils.Chat
@@ -16,12 +16,12 @@ class CreeperPongScenario : Scenario(
     "Creeper Pong",
     "At the start of the game, you receive 64 creeper spawn eggs & a knockback stick.",
     "creeperpong",
-    Material.SULPHUR
+    Material.GUNPOWDER
 ) {
     override fun onStart() {
         for (player in Bukkit.getOnlinePlayers()) {
             if (!SpecFeature.instance.getSpecs().contains(player.name)) {
-                val spawnEgg = SpawnEgg(EntityType.CREEPER).toItemStack()
+                val spawnEgg = ItemStack(Material.CREEPER_SPAWN_EGG)
                 spawnEgg.amount = 64
                 val stick = ItemBuilder(Material.STICK)
                     .name("${Chat.primaryColor}Knockybacky Stick")
@@ -37,7 +37,7 @@ class CreeperPongScenario : Scenario(
     }
 
     override fun givePlayer(player: Player) {
-        val spawnEgg = SpawnEgg(EntityType.CREEPER).toItemStack()
+        val spawnEgg = ItemStack(Material.CREEPER_SPAWN_EGG)
         spawnEgg.amount = 64
         val stick = ItemBuilder(Material.STICK)
             .name("${Chat.primaryColor}Knockybacky Stick")

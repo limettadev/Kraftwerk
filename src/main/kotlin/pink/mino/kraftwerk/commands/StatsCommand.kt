@@ -1,6 +1,7 @@
 package pink.mino.kraftwerk.commands
 
 import me.lucko.helper.promise.Promise
+import net.kyori.adventure.title.Title
 import org.bukkit.*
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -60,7 +61,7 @@ class StatsCommand : CommandExecutor {
             }
             .thenAcceptSync { statsPlayer ->
                 val ores = ItemBuilder(Material.DIAMOND_ORE)
-                    .name(" ${Chat.primaryColor}&lOres")
+                    .name(" ${Chat.primaryColor}<bold>Ores")
                     .addLore(" ")
                     .addLore(" <gray>Diamonds Mined ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.diamondsMined}")
                     .addLore(" <gray>Gold Mined ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.goldMined}")
@@ -68,7 +69,7 @@ class StatsCommand : CommandExecutor {
                     .addLore(" ")
                     .make()
                 val general = ItemBuilder(Material.DIAMOND)
-                    .name(" ${Chat.primaryColor}&lGeneral")
+                    .name(" ${Chat.primaryColor}<bold>General")
                     .addLore(" ")
                     .addLore(" <gray>Kills ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.kills}")
                     .addLore(" <gray>Deaths ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.deaths}")
@@ -81,28 +82,28 @@ class StatsCommand : CommandExecutor {
                     .make()
                 val pvp = ItemBuilder(Material.DIAMOND_SWORD)
                     .noAttributes()
-                    .name(" ${Chat.primaryColor}&lPvP")
+                    .name(" ${Chat.primaryColor}<bold>PvP")
                     .addLore(" ")
                     .addLore(" <gray>Damage Dealt ${Chat.dash } ${Chat.secondaryColor}${round(statsPlayer.damageDealt)}❤")
                     .addLore(" <gray>Damage Taken ${Chat.dash } ${Chat.secondaryColor}${round(statsPlayer.damageTaken)}❤")
                     .addLore(" ")
                     .addLore(" <gray>Bow Shots ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.bowShots}")
-                    .addLore(" <dark_gray>&o(${statsPlayer.bowMisses} misses, ${statsPlayer.bowHits} hits)")
+                    .addLore(" <dark_gray><italic>(${statsPlayer.bowMisses} misses, ${statsPlayer.bowHits} hits)")
                     .addLore(" ")
                     .addLore(" <gray>Melee Hits ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.meleeHits}")
                     .addLore(" ")
                     .make()
                 val arena = ItemBuilder(Material.IRON_SWORD)
                     .noAttributes()
-                    .name(" ${Chat.primaryColor}&lArena")
+                    .name(" ${Chat.primaryColor}<bold>Arena")
                     .addLore(" ")
                     .addLore(" <gray>Kills ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.arenaKills}")
                     .addLore(" <gray>Deaths ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.arenaDeaths}")
                     .addLore(" <gray>Highest Killstreak ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.highestArenaKs}")
                     .addLore(" ")
                     .make()
-                val misc = ItemBuilder(Material.WORKBENCH)
-                    .name(" ${Chat.primaryColor}&lMisc.")
+                val misc = ItemBuilder(Material.CRAFTING_TABLE)
+                    .name(" ${Chat.primaryColor}<bold>Misc.")
                     .addLore(" ")
                     .addLore(" <gray>Times Enchanted ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.timesEnchanted}")
                     .addLore(" <gray>Times Crafted  ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.timesCrafted}")
@@ -113,15 +114,15 @@ class StatsCommand : CommandExecutor {
                     .addLore(" ")
                     .make()
 
-                val skull = ItemBuilder(Material.SKULL_ITEM)
+                val skull = ItemBuilder(Material.PLAYER_HEAD)
                     .name("${Chat.secondaryColor}${statsPlayer.player.name}")
                     .addLore("<gray>The statistics for ${Chat.secondaryColor}${statsPlayer.player.name}<gray>.")
                     .toSkull()
-                    .setOwner(statsPlayer.player.name)
+                    .setOwner(statsPlayer.player.name!!)
                     .make()
 
                 val staff = ItemBuilder(Material.IRON_BLOCK)
-                    .name(" ${Chat.primaryColor}&lStaff")
+                    .name(" ${Chat.primaryColor}<bold>Staff")
                     .addLore(" ")
                     .addLore(" <gray>Time Spectated ${Chat.dash} ${Chat.secondaryColor}${timeToString(round(statsPlayer.timeSpectated.toDouble() / 1000).toLong())} ")
                     .addLore(" <gray>Thank Yous ${Chat.dash} ${Chat.secondaryColor}${statsPlayer.thankYous}")
@@ -129,10 +130,10 @@ class StatsCommand : CommandExecutor {
                     .make()
 
                 val resetStats = ItemBuilder(Material.BARRIER)
-                    .name(" &4&lReset Stats <gray>(Donator Perk)")
+                    .name(" <dark_red><bold>Reset Stats <gray>(Donator Perk)")
                     .addLore(" ")
                     .addLore(" <gray>Clicking this will allow you to reset your statistics. ")
-                    .addLore(" <red>&lWARNING:<red> Doing this is a dangerous action! ")
+                    .addLore(" <red><bold>WARNING:<red> Doing this is a dangerous action! ")
                     .addLore(" ")
                     .make()
 
@@ -160,13 +161,13 @@ class StatsCommand : CommandExecutor {
                 if (target == sender) {
                     gui.item(8, resetStats).onClick runnable@ {
                         if (PerkChecker.checkPerks(sender as Player).contains(Perk.STATS_RESET)) {
-                            gui = GuiBuilder().rows(1).name(Chat.colored("Reset your stats?")).owner(sender)
+                            gui = GuiBuilder().rows(1).name("Reset your stats?").owner(sender)
 
-                            val accept = ItemBuilder(Material.WOOL)
+                            val accept = ItemBuilder(Material.WHITE_WOOL)
                                 .setDurability(5)
                                 .name("<green>Accept")
                                 .addLore("<gray>Accept and reset your stats.")
-                            val decline = ItemBuilder(Material.WOOL)
+                            val decline = ItemBuilder(Material.WHITE_WOOL)
                                 .setDurability(14)
                                 .name("<red>Decline")
                                 .addLore("<gray>Decline & go back to your stats page.")
@@ -197,16 +198,16 @@ class StatsCommand : CommandExecutor {
                                 Kraftwerk.instance.statsHandler.savePlayerData(statsPlayer)
 
                                 sender.closeInventory()
-                                sender.sendTitle(Chat.colored("&4RESET STATS!"), Chat.colored("<gray>Your statistics have been reset!"))
+                                sender.showTitle(Title.title(Chat.colored("<dark_red>RESET STATS!"), Chat.colored("<gray>Your statistics have been reset!")))
                                 Chat.sendMessage(sender, "${Chat.prefix} Your stats have been reset!")
-                                sender.playSound(sender.location, Sound.ANVIL_LAND, 1f, 1f)
+                                sender.playSound(sender.location, Sound.BLOCK_ANVIL_LAND, 1f, 1f)
                             }
                             gui.item(5, decline).onClick runnable@ {
                                 Bukkit.dispatchCommand(sender, "stats")
                             }
                             sender.openInventory(gui.make())
                         } else {
-                            Chat.sendMessage(sender, "<red>&2Donator <red>ranks can reset their stats. Buy it at the store <yellow>${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store url setup in config tough tits"}")
+                            Chat.sendMessage(sender, "<red><dark_green>Donator <red>ranks can reset their stats. Buy it at the store <yellow>${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store url setup in config tough tits"}")
                         }
                     }
                 }

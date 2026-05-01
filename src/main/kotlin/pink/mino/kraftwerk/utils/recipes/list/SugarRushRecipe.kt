@@ -23,8 +23,8 @@ class SugarRushRecipe : Recipe(
     init {
         recipe = ShapedRecipe(convertToRecipeItem(ItemStack(Material.SUGAR_CANE, 4), id))
             .shape(" G ", "SRS", "   ")
-            .setIngredient('G', Material.SAPLING)
+            .setIngredient('G', Material.OAK_SAPLING)
             .setIngredient('R', Material.SUGAR)
-            .setIngredient('S', Material.SEEDS)
+            .setIngredient('S', Material.WHEAT_SEEDS)
     }
 }

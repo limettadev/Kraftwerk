@@ -1,8 +1,10 @@
 package pink.mino.kraftwerk.listeners.donator
 
+import me.lucko.helper.Schedulers
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.level.storage.ValueInput
 import org.bukkit.Bukkit
 import org.bukkit.Material
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity
 import org.bukkit.entity.*
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -18,16 +20,8 @@ import java.util.*
 
 class MobEggsListener : Listener{
 
-    private fun noAI(bukkitEntity: Entity) {
-        val craftEntity = bukkitEntity as CraftEntity
-        val nmsEntity: net.minecraft.server.v1_8_R3.Entity = craftEntity.handle
-        var tag: net.minecraft.server.v1_8_R3.NBTTagCompound? = nmsEntity.nbtTag
-        if (tag == null) {
-            tag = net.minecraft.server.v1_8_R3.NBTTagCompound()
-        }
-        nmsEntity.c(tag)
-        tag.setInt("NoAI", 1)
-        nmsEntity.f(tag)
+    private fun noAI(entity: Entity) {
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "data merge entity ${entity.uniqueId} {NoAI:1}")
     }
 
     @EventHandler
@@ -57,11 +51,11 @@ class MobEggsListener : Listener{
 
         // find a better way to find a spawn loc, because with no ai, it'll just fly in the air where it lands
         val entity = world.spawnEntity(LocationUtils.getHighestBlock(loc).add(0.0, 1.0, 0.0), entityType)
-        entity.customName = Chat.colored("&6${player.name}'s <yellow>${entityType.name}")
+        entity.customName(Chat.colored("<gold>${player.name}'s <yellow>${entityType.name}"))
         if (entity is LivingEntity) {
             noAI(entity)
         }
-        Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+        Schedulers.sync().runLater({
             entity.remove()
         }, 20 * 10)
     }
@@ -76,7 +70,7 @@ class MobEggsListener : Listener{
     fun onRightClick(event: PlayerInteractEvent) {
         if (GameState.currentState == GameState.INGAME) return
         if (event.item == null) return
-        if (event.item.type != Material.EGG) return
+        if (event.item!!.type != Material.EGG) return
         val player = event.player
         if (!PerkChecker.checkPerk(player, "mobEggs")) {
             player.sendMessage(Chat.colored("<red>You do not have the Mob Eggs perk, buy a rank on the store at <yellow>applejuice.tebex.io<red>!"))
@@ -84,16 +78,16 @@ class MobEggsListener : Listener{
             return
         }
 
-        if (event.item.amount == 1) {
-            Chat.sendMessage(player, "<dark_gray>[&2$$$<dark_gray>] <gray>You have no more mob eggs! Giving you more in <red>10 seconds<gray>!")
+        if (event.item!!.amount == 1) {
+            Chat.sendMessage(player, "<dark_gray>[<dark_green>$$$<dark_gray>] <gray>You have no more mob eggs! Giving you more in <red>10 seconds<gray>!")
             val mobEggs = ItemBuilder(Material.EGG)
-                .name("&2Mob Eggs <gray>(Throw)")
+                .name("<dark_green>Mob Eggs <gray>(Throw)")
                 .addLore("<gray>Throw these eggs in the Spawn to spawn mobs!")
-                .addLore("<gray>&oMobs last for 10 seconds.")
-                .addLore("<gray>&oEggs replenish after 10 seconds of no eggs.")
+                .addLore("<gray><italic>Mobs last for 10 seconds.")
+                .addLore("<gray><italic>Eggs replenish after 10 seconds of no eggs.")
                 .setAmount(5)
                 .make()
-            Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), {
+            Schedulers.sync().runLater({
                 if (player.isOnline && player.world.name == "Spawn") {
                     player.inventory.setItem(7, mobEggs)
                 }

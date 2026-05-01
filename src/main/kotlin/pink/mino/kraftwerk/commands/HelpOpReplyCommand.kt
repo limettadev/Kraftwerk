@@ -41,12 +41,12 @@ class HelpOpReplyCommand : CommandExecutor {
             Chat.sendMessage(sender, "${Chat.prefix} Invalid ID: ${Chat.secondaryColor}/hr <id> <reply><gray>.")
             return false
         }
-        Chat.sendMessage(player, "<dark_gray>[${Chat.primaryColor}Help-OP<dark_gray>]${Chat.secondaryColor} ${sender.name}<gray> replied with ${Chat.dash} &f&o${msg}")
-        Chat.sendMessage(sender, "<dark_gray>[${Chat.primaryColor}Help-OP<dark_gray>]<gray> Successfully responded to ${Chat.secondaryColor}${player.name} ${Chat.dash} &f&o${msg}")
+        Chat.sendMessage(player, "<dark_gray>[${Chat.primaryColor}Help-OP<dark_gray>]${Chat.secondaryColor} ${sender.name}<gray> replied with ${Chat.dash} <white><italic>${msg}")
+        Chat.sendMessage(sender, "<dark_gray>[${Chat.primaryColor}Help-OP<dark_gray>]<gray> Successfully responded to ${Chat.secondaryColor}${player.name} ${Chat.dash} <white><italic>${msg}")
         HelpOp.answered(args[0].toInt())
         for (p in Bukkit.getOnlinePlayers()) {
             if (SpecFeature.instance.getSpecs().contains(p.name) && p != sender) {
-                if (player.name !== sender.name) Chat.sendMessage(p, "<dark_gray>[${Chat.primaryColor}Help-OP<dark_gray>]${Chat.secondaryColor} ${sender.name}<gray> responded to ${Chat.secondaryColor}${player.name}<gray> ${Chat.dash} &f&o${msg}")
+                if (player.name !== sender.name) Chat.sendMessage(p, "<dark_gray>[${Chat.primaryColor}Help-OP<dark_gray>]${Chat.secondaryColor} ${sender.name}<gray> responded to ${Chat.secondaryColor}${player.name}<gray> ${Chat.dash} <white><italic>${msg}")
             }
         }
         return true

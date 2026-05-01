@@ -14,7 +14,7 @@ class DeliciousMealRecipe : Recipe(
 ) {
     init {
         recipe = ShapedRecipe(convertToRecipeItem(ItemStack(Material.COOKED_BEEF, 10), id)).shape("BBB", "BCB", "BBB")
-            .setIngredient('B', Material.RAW_BEEF)
+            .setIngredient('B', Material.BEEF)
             .setIngredient('C', Material.COAL)
     }
 }

@@ -3,8 +3,10 @@ package pink.mino.kraftwerk.listeners
 import com.google.gson.Gson
 import com.mongodb.client.model.Filters
 import me.lucko.helper.Schedulers
+import net.kyori.adventure.text.minimessage.MiniMessage
 import net.md_5.bungee.api.chat.ClickEvent
 import net.md_5.bungee.api.chat.TextComponent
+import org.bson.BsonBinary
 import org.bukkit.*
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -83,7 +85,7 @@ class PlayerJoinListener : Listener {
             val matching = find(
                 Filters.and(
                     Filters.eq("lastKnownIp", currentIp),
-                    Filters.ne("uuid", player.uniqueId) // use UUID object directly
+                    Filters.ne("uuid", BsonBinary(player.uniqueId)) // use UUID object directly
                 )
             ).toList()
 
@@ -115,7 +117,7 @@ class PlayerJoinListener : Listener {
     @EventHandler
     fun onPlayerJoin(e: PlayerJoinEvent) {
         val player = e.player
-        Scoreboard.setScore(Chat.colored("${Chat.dash} <gray>Playing..."), PlayerUtils.getPlayingPlayers().size)
+        Scoreboard.setScore("${Chat.dash} <gray>Playing...", PlayerUtils.getPlayingPlayers().size)
 
         for (online in Bukkit.getOnlinePlayers()) {
             if (online != player) {
@@ -125,8 +127,8 @@ class PlayerJoinListener : Listener {
         }
 
         val group: String = vaultChat!!.getPrimaryGroup(player)
-        val prefix: String = if (vaultChat!!.getGroupPrefix(player.world, group) != "<gray>") Chat.colored(vaultChat!!.getGroupPrefix(player.world, group)) else Chat.colored("<green>")
-        e.joinMessage = ChatColor.translateAlternateColorCodes('&', "<dark_gray>(&2+<dark_gray>)&r ${prefix}${player.displayName} <dark_gray>[&2${Bukkit.getOnlinePlayers().size}<dark_gray>/&2${Bukkit.getServer().maxPlayers}<dark_gray>]")
+        val prefix = if (vaultChat!!.getGroupPrefix(player.world, group) != "<gray>") Chat.colored(vaultChat!!.getGroupPrefix(player.world, group)) else Chat.colored("<green>")
+        e.joinMessage = ChatColor.translateAlternateColorCodes('&', "<dark_gray>(<dark_green>+<dark_gray>)<reset> ${prefix}${player.displayName} <dark_gray>[<dark_green>${Bukkit.getOnlinePlayers().size}<dark_gray>/<dark_green>${Bukkit.getServer().maxPlayers}<dark_gray>]")
         /*Schedulers.sync().runLater({
             Chat.sendMessage(player, "<dark_gray>➡ <gray>Please consider donating to the server to keep it up for another month! The store link is <yellow>https://applejuice.tebex.io<gray> or just use <red>/buy<gray>!")
         }, 1L)*/
@@ -169,7 +171,7 @@ class PlayerJoinListener : Listener {
                     }
                 }
 
-                Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Automatically late scattered ${Chat.primaryColor}${player.name}<gray>."))
+                Bukkit.broadcast(Chat.colored("${Chat.prefix} Automatically late scattered ${Chat.primaryColor}${player.name}<gray>."))
                 player.playSound(player.location, Sound.BLOCK_LEVER_CLICK, 10F, 1F)
                 player.maxHealth = 20.0
                 player.health = player.maxHealth
@@ -179,10 +181,10 @@ class PlayerJoinListener : Listener {
                 player.saturation = 20F
                 player.gameMode = GameMode.SURVIVAL
                 player.inventory.clear()
-                player.inventory.helmet = ItemStack(Material.AIR)
-                player.inventory.chestplate = ItemStack(Material.AIR)
-                player.inventory.leggings = ItemStack(Material.AIR)
-                player.inventory.boots = ItemStack(Material.AIR)
+                player.inventory.setHelmet(ItemStack(Material.AIR))
+                player.inventory.setChestplate(ItemStack(Material.AIR))
+                player.inventory.setLeggings(ItemStack(Material.AIR))
+                player.inventory.setBoots(ItemStack(Material.AIR))
                 player.inventory.setItemInOffHand(ItemStack(Material.AIR))
                 player.enderChest.clear()
                 player.setItemOnCursor(ItemStack(Material.AIR))
@@ -229,21 +231,17 @@ class PlayerJoinListener : Listener {
                         SpawnFeature.instance.send(player)
                     }, 1L)
                     SpecFeature.instance.specChat("${Chat.secondaryColor}${player.name}<gray> hasn't been late-scattered, sending them to spawn.")
-                    val comp = TextComponent(Chat.colored("${Chat.dash} &d&lLatescatter player?"))
-                    val comp2 = TextComponent(Chat.colored("${Chat.dash} ${Chat.primaryColor}&lInsert latescatter command?"))
-                    comp.clickEvent = ClickEvent(
-                        ClickEvent.Action.RUN_COMMAND,
-                        "/ls ${player.name}"
+                    val comp = MiniMessage.miniMessage().deserialize(
+                        "<click:run_command:/ls ${player.name}>${Chat.dash} <light_purple><bold>Latescatter player?</bold></light_purple></click>"
                     )
-                    comp2.clickEvent = ClickEvent(
-                        ClickEvent.Action.SUGGEST_COMMAND,
-                        "/ls ${player.name} "
+                    val comp2 = MiniMessage.miniMessage().deserialize(
+                        "<click:suggest_command:/ls ${player.name} >${Chat.dash} <${Chat.primaryColor}><bold>Insert latescatter command?</bold></${Chat.primaryColor}></click>"
                     )
                     SpecFeature.instance.getSpecs().forEach {
                         val p = Bukkit.getOfflinePlayer(it)
                         if (p.isOnline) {
-                            (p as Player).spigot().sendMessage(comp)
-                            p.spigot().sendMessage(comp2)
+                            (p as Player).sendMessage(comp)
+                            p.sendMessage(comp2)
                         }
                     }
                 }

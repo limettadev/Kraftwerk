@@ -54,7 +54,7 @@ class SplitCommand : CommandExecutor {
         }
 
         sender.level = sender.level - size
-        sender.itemInHand = null
+        sender.setItemInHand(ItemStack(Material.AIR))
 
         for (entry in storedEnchants) {
             val book = ItemStack(Material.ENCHANTED_BOOK)

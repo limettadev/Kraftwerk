@@ -1,5 +1,6 @@
 package pink.mino.kraftwerk.utils.menus.pagination
 
+import net.kyori.adventure.text.Component
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
@@ -17,12 +18,12 @@ class BackButton @ConstructorProperties(value = ["back"]) constructor(private va
         return 0
     }
 
-    override fun getName(player: Player): String {
+    override fun getName(player: Player): Component {
         return Chat.colored("<red>" + if (back == null) "Close" else "Back")
     }
 
-    override fun getDescription(player: Player): List<String> {
-        val lines: MutableList<String> = ArrayList()
+    override fun getDescription(player: Player): List<Component> {
+        val lines: MutableList<Component> = ArrayList()
         if (back != null) {
             lines.add(Chat.colored("<gray>Click here to return to"))
             lines.add(Chat.colored("<gray>the previous menu."))

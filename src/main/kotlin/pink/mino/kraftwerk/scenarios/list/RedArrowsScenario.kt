@@ -39,49 +39,36 @@ class RedArrowsScenario : Scenario(
             .getRelative(BlockFace.UP)
             .getRelative(BlockFace.UP)
             .getRelative(BlockFace.UP)
-        block.type = Material.STAINED_CLAY
-        block.setData(1)
+        block.type = Material.ORANGE_TERRACOTTA
         block = block.getRelative(BlockFace.UP)
-        block.type = Material.STAINED_CLAY
-        block.setData(1)
+        block.type = Material.ORANGE_TERRACOTTA
         block = block.getRelative(BlockFace.EAST)
-        block.type = Material.STAINED_CLAY
-        block.setData(1)
+        block.type = Material.ORANGE_TERRACOTTA
         block = block.getRelative(BlockFace.UP)
         block = block.getRelative(BlockFace.EAST)
-        block.type = Material.STAINED_CLAY
-        block.setData(1)
+        block.type = Material.ORANGE_TERRACOTTA
         block = block.getRelative(BlockFace.WEST)
         block = block.getRelative(BlockFace.WEST)
         block = block.getRelative(BlockFace.WEST)
         block = block.getRelative(BlockFace.WEST)
-        block.type = Material.STAINED_CLAY
-        block.setData(1)
+        block.type = Material.ORANGE_TERRACOTTA
         block = block.getRelative(BlockFace.DOWN)
         block = block.getRelative(BlockFace.EAST)
-        block.type = Material.STAINED_CLAY
-        block.setData(1)
+        block.type = Material.ORANGE_TERRACOTTA
         block = block.getRelative(BlockFace.DOWN)
         block = block.getRelative(BlockFace.EAST)
-        block.type = Material.STAINED_CLAY
-        block.setData(1)
+        block.type = Material.ORANGE_TERRACOTTA
         block = block.getRelative(BlockFace.UP)
-        block.type = Material.STAINED_CLAY
-        block.setData(1)
+        block.type = Material.ORANGE_TERRACOTTA
         block = block.getRelative(BlockFace.UP)
-        block.type = Material.STAINED_CLAY
-        block.setData(1)
+        block.type = Material.ORANGE_TERRACOTTA
         block = block.getRelative(BlockFace.UP)
-        block.type = Material.STAINED_CLAY
-        block.setData(1)
+        block.type = Material.ORANGE_TERRACOTTA
         block = block.getRelative(BlockFace.UP)
-        block.type = Material.STAINED_CLAY
-        block.setData(1)
+        block.type = Material.ORANGE_TERRACOTTA
         block = block.getRelative(BlockFace.UP)
-        block.type = Material.STAINED_CLAY
-        block.setData(1)
+        block.type = Material.ORANGE_TERRACOTTA
         block = block.getRelative(BlockFace.UP)
-        block.type = Material.STAINED_CLAY
-        block.setData(1)
+        block.type = Material.ORANGE_TERRACOTTA
     }
 }

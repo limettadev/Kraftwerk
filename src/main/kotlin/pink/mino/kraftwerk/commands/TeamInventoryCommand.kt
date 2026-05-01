@@ -35,23 +35,23 @@ class TeamInventoryCommand : CommandExecutor {
         if (team == null) { // Solo
             if (TeamInventoryScenario.instance.soloInventories!!.containsKey(sender.uniqueId)) {
                 Chat.sendMessage(sender, "${Chat.prefix} Opening your team inventory...")
-                sender.openInventory(TeamInventoryScenario.instance.soloInventories!![sender.uniqueId])
+                sender.openInventory(TeamInventoryScenario.instance.soloInventories!![sender.uniqueId]!!)
                 return true
             }
             TeamInventoryScenario.instance.soloInventories!![sender.uniqueId] = Bukkit.createInventory(null, 27, "${sender.name}'s Inventory")
             Chat.sendMessage(sender, "${Chat.prefix} Opening your team inventory...")
-            sender.openInventory(TeamInventoryScenario.instance.soloInventories!![sender.uniqueId])
+            sender.openInventory(TeamInventoryScenario.instance.soloInventories!![sender.uniqueId]!!)
             return true
         } else { // In a team
             if (TeamInventoryScenario.instance.teamInventories!!.containsKey(team)) {
                 Chat.sendMessage(sender, "${Chat.prefix} Opening your team inventory...")
-                sender.openInventory(TeamInventoryScenario.instance.teamInventories!![team])
+                sender.openInventory(TeamInventoryScenario.instance.teamInventories!![team]!!)
                 return true
             }
 
             TeamInventoryScenario.instance.teamInventories!![team] = Bukkit.createInventory(null, 27, "${team.prefix}${team.name}'s Inventory")
             Chat.sendMessage(sender, "${Chat.prefix} Opening your team inventory...")
-            sender.openInventory(TeamInventoryScenario.instance.soloInventories!![sender.uniqueId])
+            sender.openInventory(TeamInventoryScenario.instance.soloInventories!![sender.uniqueId]!!)
             return true
         }
     }

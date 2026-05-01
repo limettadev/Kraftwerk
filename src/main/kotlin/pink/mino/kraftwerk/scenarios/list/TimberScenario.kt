@@ -16,14 +16,14 @@ class TimberScenario : Scenario(
     "Timber",
     "Breaking one part of a tree breaks the entire tree.",
     "timber",
-    Material.LOG
+    Material.OAK_LOG
 ) {
     @EventHandler
     fun onBreak(event: BlockBreakEvent) {
         if (!enabled) return
         if (event.isCancelled) return
         if (GameState.currentState !== GameState.INGAME) return
-        if (event.block.type != Material.LOG && event.block.type != Material.LOG_2) return
+        if (event.block.type != Material.BIRCH_WOOD && event.block.type != Material.OAK_LOG) return
         timberTree(event.block.location, event.block.type, event.player)
     }
 
@@ -34,7 +34,7 @@ class TimberScenario : Scenario(
                     val newLoc = Location(loc.world, x.toDouble(), y.toDouble(), z.toDouble())
                     if (loc.world.getBlockAt(x, y, z).type == material) {
                         loc.world.getBlockAt(x, y, z).breakNaturally()
-                        loc.world.playSound(newLoc, Sound.DIG_WOOD, 1f, 1f)
+                        loc.world.playSound(newLoc, Sound.BLOCK_WOOD_BREAK, 1f, 1f)
                         BlockUtil().degradeDurability(player)
                         timberTree(newLoc, material, player)
                     }

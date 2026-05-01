@@ -16,9 +16,9 @@ class BookOfPowerRecipe : Recipe(
 ) {
     init {
         val bookOfPower = ItemBuilder(Material.ENCHANTED_BOOK)
-            .name("&5Book of Power")
+            .name("<dark_purple>Book of Power")
             .toEnchant()
-            .addStoredEnchant(Enchantment.ARROW_DAMAGE, 1)
+            .addStoredEnchant(Enchantment.POWER, 1)
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(bookOfPower, id)).shape("F  ", " PP", " PB")
             .setIngredient('F', Material.FLINT)

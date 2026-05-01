@@ -19,7 +19,7 @@ class AntiBurnOption : ConfigOption(
             return
         }
         val entity = e.entity
-        if (entity.type === EntityType.DROPPED_ITEM) {
+        if (entity.type === EntityType.ITEM) {
             e.isCancelled = true
         }
     }

@@ -35,12 +35,12 @@ class ModularBowRecipe : Recipe(
     init {
         val modularBow = ItemBuilder(Material.BOW)
             .name("<yellow>Modular Bow")
-            .addEnchantment(Enchantment.ARROW_KNOCKBACK, 1)
-            .addLore("&dLeft click to switch modes")
+            .addEnchantment(Enchantment.PUNCH, 1)
+            .addLore("<light_purple>Left click to switch modes")
             .addLore("<gray>Mode 1: Punch I, Mode 2: Poison I, Mode 3: Lightning (1.5 hearts)")
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(modularBow, id)).shape(" W ", "PBP", "ESE")
-            .setIngredient('W', Material.WATCH)
+            .setIngredient('W', Material.CLOCK)
             .setIngredient('P', Material.BLAZE_POWDER)
             .setIngredient('E', Material.SPIDER_EYE)
             .setIngredient('B', Material.BOW)
@@ -51,36 +51,36 @@ class ModularBowRecipe : Recipe(
     fun onPlayerInteract(e: PlayerInteractEvent) {
         try {
             if (e.item != null) {
-                if (e.item.type == Material.BOW && e.item.hasItemMeta() && e.item.itemMeta.displayName == Chat.colored("<yellow>Modular Bow")) {
-                    val bow = ItemBuilder(Material.BOW).name(Chat.colored("<yellow>Modular Bow (Punch)"))
-                        .addEnchantment(Enchantment.ARROW_KNOCKBACK, 1).make()
-                    e.player.itemInHand = bow
+                if (e.item!!.type == Material.BOW && e.item!!.hasItemMeta() && e.item!!.itemMeta.displayName() == Chat.colored("<yellow>Modular Bow")) {
+                    val bow = ItemBuilder(Material.BOW).name("<yellow>Modular Bow (Punch)")
+                        .addEnchantment(Enchantment.PUNCH, 1).make()
+                    e.player.setItemInHand(bow)
                     Chat.sendMessage(e.player, "<yellow>Modular Bow: Mode switched to Punch.")
                 }
                 if (e.action == Action.LEFT_CLICK_AIR || e.action == Action.LEFT_CLICK_BLOCK) {
-                    if (e.item.type == Material.BOW && e.item.hasItemMeta() && e.item.itemMeta.displayName == Chat.colored(
+                    if (e.item!!.type == Material.BOW && e.item!!.hasItemMeta() && e.item!!.itemMeta.displayName() == Chat.colored(
                             "<yellow>Modular Bow (Punch)"
                         )
                     ) {
-                        val bow = ItemBuilder(Material.BOW).name(Chat.colored("<yellow>Modular Bow (Poison I)")).make()
-                        e.player.itemInHand = bow
+                        val bow = ItemBuilder(Material.BOW).name("<yellow>Modular Bow (Poison I)").make()
+                        e.player.setItemInHand(bow)
                         Chat.sendMessage(e.player, "<yellow>Modular Bow: Mode switched to Poison I.")
                     }
-                    if (e.item.type == Material.BOW && e.item.hasItemMeta() && e.item.itemMeta.displayName == Chat.colored(
+                    if (e.item!!.type == Material.BOW && e.item!!.hasItemMeta() && e.item!!.itemMeta.displayName() == Chat.colored(
                             "<yellow>Modular Bow (Poison I)"
                         )
                     ) {
-                        val bow = ItemBuilder(Material.BOW).name(Chat.colored("<yellow>Modular Bow (Lightning)")).make()
-                        e.player.itemInHand = bow
+                        val bow = ItemBuilder(Material.BOW).name("<yellow>Modular Bow (Lightning)").make()
+                        e.player.setItemInHand(bow)
                         Chat.sendMessage(e.player, "<yellow>Modular Bow: Mode switched to Lightning.")
                     }
-                    if (e.item.type == Material.BOW && e.item.hasItemMeta() && e.item.itemMeta.displayName == Chat.colored(
+                    if (e.item!!.type == Material.BOW && e.item!!.hasItemMeta() && e.item!!.itemMeta.displayName() == Chat.colored(
                             "<yellow>Modular Bow (Lightning)"
                         )
                     ) {
-                        val bow = ItemBuilder(Material.BOW).name(Chat.colored("<yellow>Modular Bow (Punch)"))
-                            .addEnchantment(Enchantment.ARROW_KNOCKBACK, 1).make()
-                        e.player.itemInHand = bow
+                        val bow = ItemBuilder(Material.BOW).name("<yellow>Modular Bow (Punch)")
+                            .addEnchantment(Enchantment.PUNCH, 1).make()
+                        e.player.setItemInHand(bow)
                         Chat.sendMessage(e.player, "<yellow>Modular Bow: Mode switched to Punch.")
                     }
                 }
@@ -93,13 +93,13 @@ class ModularBowRecipe : Recipe(
     @EventHandler
     fun onModularBowShot(e: EntityDamageByEntityEvent) {
         if (e.damager.type == EntityType.ARROW && ((e.damager as Arrow).shooter) is Player && e.entity.type == EntityType.PLAYER) {
-            if (((e.damager as Arrow).shooter as Player).itemInHand.type == Material.BOW && ((e.damager as Arrow).shooter as Player).itemInHand.itemMeta.displayName == Chat.colored(
+            if (((e.damager as Arrow).shooter as Player).itemInHand.type == Material.BOW && ((e.damager as Arrow).shooter as Player).itemInHand.itemMeta!!.displayName() == Chat.colored(
                     "<yellow>Modular Bow (Poison I)"
                 )
             ) {
                 (e.entity as Player).addPotionEffect(PotionEffect(PotionEffectType.POISON, 20 * 3, 0, false, true))
             }
-            if (((e.damager as Arrow).shooter as Player).itemInHand.type == Material.BOW && ((e.damager as Arrow).shooter as Player).itemInHand.itemMeta.displayName == Chat.colored(
+            if (((e.damager as Arrow).shooter as Player).itemInHand.type == Material.BOW && ((e.damager as Arrow).shooter as Player).itemInHand.itemMeta.displayName() == Chat.colored(
                     "<yellow>Modular Bow (Lightning)"
                 )
             ) {

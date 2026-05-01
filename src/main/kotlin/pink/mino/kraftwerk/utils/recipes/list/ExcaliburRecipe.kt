@@ -43,7 +43,7 @@ class ExcaliburRecipe : Recipe(
     fun onPvP(e: EntityDamageByEntityEvent) {
         if (!ScenarioHandler.getActiveScenarios().contains(ScenarioHandler.getScenario("champions"))) return
         if ((e.damager !is Player)) return
-        if ((e.damager as Player).inventory.itemInHand != null && (e.damager as Player).inventory.itemInHand.hasItemMeta() && (e.damager as Player).inventory.itemInHand.itemMeta.displayName == Chat.colored(
+        if ((e.damager as Player).inventory.itemInHand != null && (e.damager as Player).inventory.itemInHand.hasItemMeta() && (e.damager as Player).inventory.itemInHand.itemMeta.displayName() == Chat.colored(
                 "<yellow>Excalibur"
             )
         ) {

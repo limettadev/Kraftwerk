@@ -1,5 +1,6 @@
 package pink.mino.kraftwerk.scenarios.list
 
+import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -17,7 +18,7 @@ class MolesScenario : Scenario(
     "Moles",
     "At PvP, a random teammate is assigned as a mole, moles must kill their own teammates.",
     "moles",
-    Material.STONE_SPADE
+    Material.STONE_SHOVEL
 ) {
     companion object {
         val instance = MolesScenario()
@@ -42,8 +43,8 @@ class MolesScenario : Scenario(
         }
     }
 
-    fun getMoles(): ArrayList<String> {
-        val list: ArrayList<String> = ArrayList<String>()
+    fun getMoles(): ArrayList<Component> {
+        val list: ArrayList<Component> = ArrayList<Component>()
         for (mole in moles) {
             val player = Bukkit.getOfflinePlayer(mole.key)
             if (player.isOnline) {
@@ -81,6 +82,6 @@ class MolesScenario : Scenario(
 
     override fun onPvP() {
         assignMoles()
-        Bukkit.broadcastMessage(Chat.colored("$prefix Moles have been assigned!"))
+        Bukkit.broadcast(Chat.colored("$prefix Moles have been assigned!"))
     }
 }

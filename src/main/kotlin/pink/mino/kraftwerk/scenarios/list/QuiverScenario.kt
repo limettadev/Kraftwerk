@@ -1,5 +1,6 @@
 package pink.mino.kraftwerk.scenarios.list
 
+import me.lucko.helper.Schedulers
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -27,8 +28,7 @@ class QuiverScenario : Scenario(
         if (event.item.itemStack.type == Material.ARROW) {
             val player = event.player
             // Delay to let the pickup finish, then enforce
-            player.server.scheduler.runTaskLater(
-                pink.mino.kraftwerk.Kraftwerk.instance,
+            Schedulers.sync().runLater(
                 { enforceArrowLimit(player) },
                 1L
             )

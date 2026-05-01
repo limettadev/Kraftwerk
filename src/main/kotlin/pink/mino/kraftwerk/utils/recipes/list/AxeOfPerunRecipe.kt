@@ -34,13 +34,13 @@ class AxeOfPerunRecipe : Recipe(
         recipe = ShapedRecipe(convertToRecipeItem(axeOfPerun, id)).shape("DTF", "DS ", " S ")
             .setIngredient('D', Material.DIAMOND)
             .setIngredient('T', Material.TNT)
-            .setIngredient('F', Material.FIREBALL)
+            .setIngredient('F', Material.FIRE_CHARGE)
             .setIngredient('S', Material.STICK)
     }
 
     @EventHandler
     fun onPvP(e: EntityDamageByEntityEvent) {
-        if ((e.damager as Player).inventory.itemInHand != null && (e.damager as Player).inventory.itemInHand.hasItemMeta() && (e.damager as Player).inventory.itemInHand.itemMeta.displayName == Chat.colored(
+        if ((e.damager as Player).inventory.itemInHand != null && (e.damager as Player).inventory.itemInHand.hasItemMeta() && (e.damager as Player).inventory.itemInHand.itemMeta.displayName() == Chat.colored(
                 "<yellow>Axe of Perun"
             )
         ) {

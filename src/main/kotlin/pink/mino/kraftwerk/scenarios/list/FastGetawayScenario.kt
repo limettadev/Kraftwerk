@@ -19,7 +19,7 @@ class FastGetawayScenario : Scenario(
         if (!enabled) return
         if (GameState.currentState != GameState.INGAME) return
         if (e.entity.killer != null) {
-            e.entity.killer.addPotionEffect(PotionEffect(PotionEffectType.SPEED, 45 * 20, 2, true, false))
+            e.entity.killer!!.addPotionEffect(PotionEffect(PotionEffectType.SPEED, 45 * 20, 2, true, false))
         }
     }
 }

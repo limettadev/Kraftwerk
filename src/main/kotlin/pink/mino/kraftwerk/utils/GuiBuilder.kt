@@ -1,5 +1,6 @@
 package pink.mino.kraftwerk.utils
 
+import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.Material

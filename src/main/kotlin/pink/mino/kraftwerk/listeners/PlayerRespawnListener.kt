@@ -38,7 +38,7 @@ class DeathKick(val player: Player) : BukkitRunnable() {
         }
         timer--
         if (timer <= 0) {
-            player.kickPlayer(Chat.colored(if (ConfigFeature.instance.config!!.getString("chat.deathKick") != null) ConfigFeature.instance.config!!.getString("chat.deathKick")!! else "no death kick message sent but... thanks for playing :3"))
+            player.kick(Chat.colored(if (ConfigFeature.instance.config!!.getString("chat.deathKick") != null) ConfigFeature.instance.config!!.getString("chat.deathKick")!! else "no death kick message sent but... thanks for playing :3"))
             cancel()
         }
     }

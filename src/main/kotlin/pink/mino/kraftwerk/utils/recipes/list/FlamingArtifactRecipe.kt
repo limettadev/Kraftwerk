@@ -6,7 +6,7 @@ import org.bukkit.inventory.ShapedRecipe
 import pink.mino.kraftwerk.utils.recipes.Recipe
 
 class FlamingArtifactRecipe : Recipe(
-    "Flaming Artifact",
+    "Nether Artifact",
     "Alchemy Ultimate",
     ItemStack(Material.BLAZE_ROD),
     1,
@@ -14,8 +14,8 @@ class FlamingArtifactRecipe : Recipe(
 ) {
     init {
         recipe = ShapedRecipe(convertToRecipeItem(ItemStack(Material.BLAZE_ROD), id)).shape("OLO", "OFO", "OLO")
-            .setIngredient('O', Material.STAINED_GLASS, 1)
+            .setIngredient('O', Material.ORANGE_STAINED_GLASS)
             .setIngredient('L', Material.LAVA_BUCKET)
-            .setIngredient('F', Material.FIREWORK)
+            .setIngredient('F', Material.FIREWORK_ROCKET)
     }
 }

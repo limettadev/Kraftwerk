@@ -34,9 +34,9 @@ class OreLimiterListener : Listener {
         val diamondRate = ConfigFeature.instance.worlds!!.getInt(chunk.world.name + ".orerates.diamond")
         val oresOutsideCaves = ConfigFeature.instance.worlds!!.getBoolean("${chunk.world.name}.oresOutsideCaves")
 
-        for (x in 0..16) {
+        for (x in 0..15) {
             for (y in 0..64) {
-                for (z in 0..16) {
+                for (z in 0..15) {
                     val block = chunk.getBlock(x, y, z)
 
                     if (checked.contains(block)) continue

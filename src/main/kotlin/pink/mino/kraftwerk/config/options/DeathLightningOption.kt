@@ -8,5 +8,5 @@ class DeathLightningOption : ConfigOption(
     "Toggles lightning when a player dies.",
     "options",
     "deathlightning",
-    Material.IRON_BARDING
+    Material.LIGHTNING_ROD
 )

@@ -16,9 +16,9 @@ class BookOfSharpeningRecipe : Recipe(
 ) {
     init {
         val bookOfSharpening = ItemBuilder(Material.ENCHANTED_BOOK)
-            .name("&5Book of Sharpening")
+            .name("<dark_purple>Book of Sharpening")
             .toEnchant()
-            .addStoredEnchant(Enchantment.DAMAGE_ALL, 1)
+            .addStoredEnchant(Enchantment.SHARPNESS, 1)
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(bookOfSharpening, id)).shape("F  ", " PP", " PS")
             .setIngredient('F', Material.FLINT)

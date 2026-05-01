@@ -30,7 +30,7 @@ class LumberjackAxeRecipe : Recipe(
 ) {
     init {
         val lumberjackAxe = ItemBuilder(Material.IRON_AXE)
-            .name("&5Lumberjack Axe")
+            .name("<dark_purple>Lumberjack Axe")
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(lumberjackAxe, id)).shape("IIF", "IS ", " S ")
             .setIngredient('I', Material.IRON_INGOT)
@@ -43,7 +43,7 @@ class LumberjackAxeRecipe : Recipe(
         if (
             e.player.inventory.itemInHand != null &&
             e.player.inventory.itemInHand.hasItemMeta() &&
-            e.player.inventory.itemInHand.itemMeta.displayName == Chat.colored("&5Lumberjack Axe")
+            e.player.inventory.itemInHand.itemMeta.displayName() == Chat.colored("<dark_purple>Lumberjack Axe")
         ) {
             timberTree(e.block.location, e.block.type, e.player)
         }
@@ -56,7 +56,7 @@ class LumberjackAxeRecipe : Recipe(
                     val newLoc = Location(loc.world, x.toDouble(), y.toDouble(), z.toDouble())
                     if (loc.world.getBlockAt(x, y, z).type == material) {
                         loc.world.getBlockAt(x, y, z).breakNaturally()
-                        loc.world.playSound(newLoc, Sound.DIG_WOOD, 1f, 1f)
+                        loc.world.playSound(newLoc, Sound.BLOCK_WOOD_BREAK, 1f, 1f)
                         timberTree(newLoc, material, player)
                     }
                 }

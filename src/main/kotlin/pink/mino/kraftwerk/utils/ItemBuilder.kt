@@ -139,6 +139,7 @@ class PotionBuilder {
     }
 }
 class ItemBuilder(material: Material) {
+    var owner: String? = "minota"
     var item: ItemStack = ItemStack(material)
     var meta: ItemMeta = item.itemMeta
 
@@ -150,7 +151,7 @@ class ItemBuilder(material: Material) {
     fun addLore(line: String): ItemBuilder {
         var lore = meta.lore
         if (lore == null) lore = ArrayList()
-        lore.add(Chat.colored(line))
+        lore.add(Chat.colored(line).toString())
         meta.lore = lore
         item.itemMeta = meta
         return this

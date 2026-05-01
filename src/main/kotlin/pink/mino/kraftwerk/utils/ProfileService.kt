@@ -9,6 +9,7 @@ import me.lucko.helper.profiles.plugin.external.caffeine.cache.Cache
 import me.lucko.helper.profiles.plugin.external.caffeine.cache.Caffeine
 import me.lucko.helper.promise.Promise
 import me.lucko.helper.utils.Log
+import org.bson.BsonBinary
 import org.bson.Document
 import org.bukkit.event.EventPriority
 import org.bukkit.event.player.PlayerLoginEvent
@@ -71,8 +72,8 @@ class ProfileService {
 
     fun saveProfile(profile: ImmutableProfile) {
         with(JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("players")) {
-            val filter = Filters.eq("uuid", profile.uniqueId)
-            val document = Document("uuid", profile.uniqueId)
+            val filter = Filters.eq("uuid", BsonBinary(profile.uniqueId))
+            val document = Document("uuid", BsonBinary(profile.uniqueId))
                 .append("name", profile.name)
                 .append("lastLogin", Timestamp(profile.timestamp))
                 .append("disableRedstonePickup", profile.disableRedstonePickup)
@@ -110,48 +111,44 @@ class ProfileService {
         }
         return Schedulers.async().supply {
             try {
-                with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("players")) {
-                    val filter = Filters.eq("uuid", uniqueId)
-                    val document = this.find(filter).first()
-                    val p: ImmutableProfile
-                    if (document != null) {
-                        p = ImmutableProfile(
-                            uniqueId,
-                            document["name"] as String,
-                            (document["lastLogin"] as Date).time,
-                            (document["disableRedstonePickup"] as Boolean),
-                            (document["disableLapisPickup"] as Boolean),
-                            (document["projectileMessages"] as String),
-                            (document["healthType"] as String),
-                            (document["borderPreference"] as String),
-                            (document["ignored"] as ArrayList<UUID>),
-                            (document["deathMessageOnScreen"] as Boolean),
-                            (document["xpNeeded"] as? Double ?: 150.0),
-                            (document["xp"] as? Double ?: 0.0),
-                            (document["level"] as? Int ?: 1),
-                            (document["chatMode"] as? String ?: "PUBLIC"),
-                            (document["coins"] as? Double ?: 0.0),
-                            (document["specSocialSpy"] as? Int ?: 0),
-                            (document["selectedTag"] as? String),
-                            (document["unlockedTags"] as? ArrayList<String>) ?: arrayListOf(),
-                            (document["arenaBlock"] as? String) ?: "COBBLESTONE",
-                            (document["alts"] as? ArrayList<UUID> ?: arrayListOf()),
-                            document["lastKnownIp"] as String?
-                        )
-                    } else {
-                        p = ImmutableProfile(
-                            uniqueId,
-                            null,
-                            0
-                        )
-                    }
-                    updateCache(p)
-                    return@supply p
+                val collection = JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("players")
+                val filter = Filters.eq("uuid", BsonBinary(uniqueId))
+                val document = collection.find(filter).first()
+
+                val p: ImmutableProfile = if (document != null) {
+                    ImmutableProfile(
+                        uniqueId,
+                        document["name"] as String,
+                        (document["lastLogin"] as Date).time,
+                        document["disableRedstonePickup"] as Boolean,
+                        document["disableLapisPickup"] as Boolean,
+                        document["projectileMessages"] as String,
+                        document["healthType"] as String,
+                        document["borderPreference"] as String,
+                        document["ignored"] as ArrayList<UUID>,
+                        document["deathMessageOnScreen"] as Boolean,
+                        (document["xpNeeded"] as? Double) ?: 150.0,
+                        (document["xp"] as? Double) ?: 0.0,
+                        (document["level"] as? Int) ?: 1,
+                        (document["chatMode"] as? String) ?: "PUBLIC",
+                        (document["coins"] as? Double) ?: 0.0,
+                        (document["specSocialSpy"] as? Int) ?: 0,
+                        document["selectedTag"] as? String,
+                        (document["unlockedTags"] as? ArrayList<String>) ?: arrayListOf(),
+                        (document["arenaBlock"] as? String) ?: "COBBLESTONE",
+                        (document["alts"] as? ArrayList<UUID>) ?: arrayListOf(),
+                        document["lastKnownIp"] as? String
+                    )
+                } else {
+                    ImmutableProfile(uniqueId, null, 0)
                 }
+
+                updateCache(p)
+                p
             } catch (e: MongoException) {
                 e.printStackTrace()
+                null
             }
-            return@supply null
         }
     }
 }

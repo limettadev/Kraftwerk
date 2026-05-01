@@ -17,10 +17,10 @@ class PotionOfToughnessRecipe : Recipe(
 ) {
     init {
         val potionOfToughness =
-            PotionBuilder.createPotion(PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 2400, 1, false, true))
+            PotionBuilder.createPotion(PotionEffect(PotionEffectType.RESISTANCE, 2400, 1, false, true))
         recipe = ShapedRecipe(convertToRecipeItem(potionOfToughness, id)).shape(" S ", " W ", " P ")
             .setIngredient('P', Material.GLASS_BOTTLE)
             .setIngredient('S', Material.SLIME_BALL)
-            .setIngredient('W', Material.WOOL)
+            .setIngredient('W', Material.WHITE_WOOL)
     }
 }

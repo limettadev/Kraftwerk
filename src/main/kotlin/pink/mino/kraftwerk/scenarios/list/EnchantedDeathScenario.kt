@@ -12,7 +12,7 @@ class EnchantedDeathScenario : Scenario(
     "Enchanted Death",
     "Enchantment Tables are disabled, the only way to acquire one is by killing someone.",
     "enchanteddeath",
-    Material.ENCHANTMENT_TABLE
+    Material.ENCHANTING_TABLE
 ) {
     @EventHandler
     fun onPlayerCraft(e: CraftItemEvent) {
@@ -20,7 +20,7 @@ class EnchantedDeathScenario : Scenario(
         if (GameState.currentState != GameState.INGAME) return
         val item: ItemStack? = e.currentItem
         if (item != null) {
-            e.isCancelled = item == ItemStack(Material.ENCHANTMENT_TABLE)
+            e.isCancelled = item == ItemStack(Material.ENCHANTING_TABLE)
         }
     }
 
@@ -28,6 +28,6 @@ class EnchantedDeathScenario : Scenario(
     fun onPlayerDeath(e: PlayerDeathEvent) {
         if (!enabled) return
         if (GameState.currentState != GameState.INGAME) return
-        e.drops.add(ItemStack(Material.ENCHANTMENT_TABLE))
+        e.drops.add(ItemStack(Material.ENCHANTING_TABLE))
     }
 }

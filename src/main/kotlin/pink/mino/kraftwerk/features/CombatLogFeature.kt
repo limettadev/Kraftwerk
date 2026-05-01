@@ -116,7 +116,7 @@ class CombatLogFeature : Listener {
                     npc.spawn(e.player.location)
                     Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                         if (npc.isSpawned) {
-                            npc.name = Chat.colored("<dark_gray>(<green>Logger<dark_gray>)&f ${e.player.name}")
+                            npc.name = "<dark_gray>(<green>Logger<dark_gray>)<white> ${e.player.name}"
                             npc.isProtected = false
                             npc.getOrAddTrait(Equipment::class.java)
                                 .set(Equipment.EquipmentSlot.HELMET, e.player.inventory.helmet)
@@ -141,7 +141,7 @@ class CombatLogFeature : Listener {
                             entity.maxHealth = e.player.maxHealth
                         }
                     }, 20L)
-                    Bukkit.broadcastMessage(Chat.colored("${Chat.dash} ${Chat.secondaryColor}${e.player.name}<gray> has been removed from the game for combat logging."))
+                    Bukkit.broadcast(Chat.colored("${Chat.dash} ${Chat.secondaryColor}${e.player.name}<gray> has been removed from the game for combat logging."))
                 }
             }
         }

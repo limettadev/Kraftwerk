@@ -37,16 +37,16 @@ class GraveRobbersScenario : Scenario(
         block = block.getRelative(BlockFace.NORTH)
         block.type = Material.COBBLESTONE
         block = block.getRelative(BlockFace.UP)
-        block.type = Material.COBBLE_WALL
+        block.type = Material.COBBLESTONE_WALL
         block = block.getRelative(BlockFace.UP)
-        block.type = Material.COBBLE_WALL
+        block.type = Material.COBBLESTONE_WALL
         block = block.getRelative(BlockFace.UP)
-        block.type = Material.COBBLE_WALL
+        block.type = Material.COBBLESTONE_WALL
         block = block.getRelative(BlockFace.EAST)
-        block.type = Material.COBBLE_WALL
+        block.type = Material.COBBLESTONE_WALL
         block = block.getRelative(BlockFace.WEST).getRelative(BlockFace.WEST)
-        block.type = Material.COBBLE_WALL
+        block.type = Material.COBBLESTONE_WALL
         block = block.getRelative(BlockFace.EAST).getRelative(BlockFace.UP)
-        block.type = Material.COBBLE_WALL
+        block.type = Material.COBBLESTONE_WALL
     }
 }

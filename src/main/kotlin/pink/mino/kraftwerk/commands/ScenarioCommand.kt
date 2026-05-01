@@ -34,14 +34,14 @@ class ScenarioCommand : CommandExecutor {
         } else if (ScenarioHandler.getActiveScenarios().size > 45) {
             size = 6
         }
-        val gui = GuiBuilder().rows(size).name(Chat.colored("<dark_gray>Active Scenarios")).owner(sender)
+        val gui = GuiBuilder().rows(size).name("<dark_gray>Active Scenarios").owner(sender)
         for ((index, scenario) in ScenarioHandler.getActiveScenarios().withIndex()) {
             val item = ItemStack(scenario.material)
             val meta = item.itemMeta
             val color: String = if (scenario.enabled) "<green>"
             else "<red>"
-            meta.displayName = Chat.colored("${color}${scenario.name}")
-            meta.lore = Chat.scenarioTextWrap(Chat.colored("<gray>${scenario.description}"), 40)
+            meta.displayName(Chat.colored("${color}${scenario.name}"))
+            meta.lore(Chat.scenarioTextWrap("<gray>${scenario.description}", 40))
             meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
             item.itemMeta = meta
             gui.item(index, item).onClick runnable@ {
@@ -51,7 +51,7 @@ class ScenarioCommand : CommandExecutor {
         }
         sender.openInventory(gui.make())
         sender.sendMessage(Chat.colored("${Chat.prefix} Opening active scenarios menu..."))
-        sender.playSound(sender.location, Sound.CLICK, 10.toFloat(), 10.toFloat())
+        sender.playSound(sender.location, Sound.UI_BUTTON_CLICK, 10.toFloat(), 10.toFloat())
         return true
     }
 

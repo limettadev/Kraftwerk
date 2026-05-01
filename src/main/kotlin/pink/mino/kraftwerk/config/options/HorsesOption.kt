@@ -5,7 +5,7 @@ import org.bukkit.Material
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
-import org.spigotmc.event.entity.EntityMountEvent
+import org.bukkit.event.entity.EntityMountEvent
 import pink.mino.kraftwerk.config.ConfigOption
 import pink.mino.kraftwerk.utils.Chat
 
@@ -35,8 +35,8 @@ class HorsesOption : ConfigOption(
             return
         }
         for (player in Bukkit.getOnlinePlayers()) {
-            if (player.vehicle !== null && player.vehicle.type === EntityType.HORSE) {
-                player.vehicle.eject()
+            if (player.vehicle !== null && player.vehicle!!.type === EntityType.HORSE) {
+                player.vehicle!!.eject()
                 Chat.sendMessage(player, "<red>Horse riding has now been disabled by the host.")
             }
         }

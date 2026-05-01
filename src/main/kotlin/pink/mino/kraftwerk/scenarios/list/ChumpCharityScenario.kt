@@ -16,11 +16,11 @@ class ChumpCharityIterator : BukkitRunnable() {
         timer -= 1
         if (timer == 0) {
             if (WeakestLinkScenario().isAllSameHealth()) {
-                Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}Everyone<gray> has the same health, not granting a heal."))
+                Bukkit.broadcast(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}Everyone<gray> has the same health, not granting a heal."))
             } else {
                 val player = WeakestLinkScenario().getLowestHealth()
                 player.health = player.maxHealth
-                Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${player.name}<gray> has the least health, they've been granted a &6heal<gray>!"))
+                Bukkit.broadcast(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${player.name}<gray> has the least health, they've been granted a <gold>heal<gray>!"))
             }
             timer = 600
         }

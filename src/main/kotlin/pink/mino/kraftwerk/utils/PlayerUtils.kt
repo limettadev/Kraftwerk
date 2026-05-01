@@ -19,7 +19,7 @@ class PlayerUtils {
             return if (TeamsFeature.manager.getTeam(player) != null) {
                 TeamsFeature.manager.getTeam(player)!!.prefix
             } else {
-                "&f"
+                "<white>"
             }
         }
 

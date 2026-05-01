@@ -45,7 +45,7 @@ abstract class ConfigOption(
             }
         }
         onToggle(enabled)
-        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} <yellow>$name<gray> is now $changerText<gray>."))
+        Bukkit.broadcast(Chat.colored("${Chat.prefix} <yellow>$name<gray> is now $changerText<gray>."))
         ConfigFeature.instance.data!!.set("game.$category.$id", enabled)
         ConfigFeature.instance.saveData()
     }
@@ -67,7 +67,7 @@ abstract class ConfigOption(
             }
         }
         onToggle(to)
-        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} <yellow>$name<gray> is now $changerText<gray>."))
+        Bukkit.broadcast(Chat.colored("${Chat.prefix} <yellow>$name<gray> is now $changerText<gray>."))
         ConfigFeature.instance.data!!.set("game.$category.$id", to)
         ConfigFeature.instance.saveData()
     }

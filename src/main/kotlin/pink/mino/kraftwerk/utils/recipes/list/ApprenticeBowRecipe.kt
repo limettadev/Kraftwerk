@@ -23,13 +23,13 @@ class ApprenticeBowRecipe : Recipe(
 ) {
     init {
         val apprenticeBow = ItemBuilder(Material.BOW)
-            .name("&5Apprentice Bow")
-            .addLore("<gray>Gains &fPower I<gray> after 10 minutes<gray>.")
-            .addLore("<gray>Gains &fPower II<gray> after 20 minutes<gray>.")
-            .addLore("<gray>Gains &fPower III<gray> after 40 minutes<gray>.")
+            .name("<dark_purple>Apprentice Bow")
+            .addLore("<gray>Gains <white>Power I<gray> after 10 minutes<gray>.")
+            .addLore("<gray>Gains <white>Power II<gray> after 20 minutes<gray>.")
+            .addLore("<gray>Gains <white>Power III<gray> after 40 minutes<gray>.")
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(apprenticeBow, id)).shape(" RS", "R S", " RS")
-            .setIngredient('R', Material.REDSTONE_TORCH_ON)
+            .setIngredient('R', Material.REDSTONE_TORCH)
 
             .setIngredient('S', Material.STRING)
     }

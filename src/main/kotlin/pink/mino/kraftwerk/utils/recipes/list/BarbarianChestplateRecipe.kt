@@ -31,7 +31,7 @@ class BarbarianChestplateRecipe : Recipe(
     init {
         val barbarianChestplate = ItemBuilder(Material.DIAMOND_CHESTPLATE)
             .name("<yellow>Barbarian Chestplate")
-            .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1)
+            .addEnchantment(Enchantment.PROTECTION, 1)
             .addLore("<gray>While wearing: Gives Strength I, Resistance I")
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(barbarianChestplate, id)).shape("RCR", "ISI", "   ")
@@ -42,12 +42,12 @@ class BarbarianChestplateRecipe : Recipe(
         object : BukkitRunnable() {
             override fun run() {
                 for (player in Bukkit.getOnlinePlayers()) {
-                    if (player.inventory.chestplate != null && player.inventory.chestplate.hasItemMeta() && player.inventory.chestplate.itemMeta.displayName == Chat.colored(
+                    if (player.inventory.chestplate != null && player.inventory.chestplate!!.hasItemMeta() && player.inventory.chestplate!!.itemMeta.displayName() == Chat.colored(
                             "<yellow>Barbarian Chestplate"
                         )
                     ) {
-                        player.addPotionEffect(PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20 * 3, 0, false, true))
-                        player.addPotionEffect(PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20 * 3, 0, false, true))
+                        player.addPotionEffect(PotionEffect(PotionEffectType.STRENGTH, 20 * 3, 0, false, true))
+                        player.addPotionEffect(PotionEffect(PotionEffectType.RESISTANCE, 20 * 3, 0, false, true))
                     }
                 }
             }

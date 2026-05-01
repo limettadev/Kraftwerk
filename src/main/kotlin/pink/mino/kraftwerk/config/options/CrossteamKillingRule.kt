@@ -8,5 +8,5 @@ class CrossteamKillingRule : ConfigOption(
     "Allows people to kill the player they are crossteaming with.",
     "rules",
     "scumballing",
-    Material.IRON_BARDING
+    Material.IRON_BARS
 )

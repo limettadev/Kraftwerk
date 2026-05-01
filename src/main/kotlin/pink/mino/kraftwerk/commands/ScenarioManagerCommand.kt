@@ -42,7 +42,7 @@ class ScenarioManagerCommand : CommandExecutor {
             }
             args[0].toInt()
         }
-        val gui = GuiBuilder().rows(4).name(Chat.colored("${Chat.primaryColor}Scenario Manager")).owner(sender)
+        val gui = GuiBuilder().rows(4).name("${Chat.primaryColor}Scenario Manager").owner(sender)
         var i = 0
         for ((index, scenario) in ScenarioHandler.getScenarios().withIndex()) {
             if (page == 0) {
@@ -51,16 +51,16 @@ class ScenarioManagerCommand : CommandExecutor {
                     var meta = item.itemMeta
                     var color: String = if (scenario.enabled) "<green>"
                     else "<red>"
-                    meta.displayName = Chat.colored("${color}${scenario.name}")
-                    meta.lore = Chat.scenarioTextWrap(Chat.colored("<gray>${scenario.description}"), 40)
+                    meta.displayName(Chat.colored("${color}${scenario.name}"))
+                    meta.lore(Chat.scenarioTextWrap("<gray>${scenario.description}", 40))
                     item.itemMeta = meta
                     gui.item(i, item).onClick runnable@ {
                         ScenarioHandler.getScenario(scenario.id)?.toggle()
                         color = if (scenario.enabled) "<green>"
                         else "<red>"
-                        meta = it.currentItem.itemMeta
-                        meta.displayName = Chat.colored("${color}${scenario.name}")
-                        it.currentItem.itemMeta = meta
+                        meta = it.currentItem!!.itemMeta
+                        meta.displayName(Chat.colored("${color}${scenario.name}"))
+                        it.currentItem!!.itemMeta = meta
                         it.isCancelled = true
                     }
                     i++
@@ -71,16 +71,16 @@ class ScenarioManagerCommand : CommandExecutor {
                     var meta = item.itemMeta
                     var color: String = if (scenario.enabled) "<green>"
                     else "<red>"
-                    meta.displayName = Chat.colored("${color}${scenario.name}")
-                    meta.lore = Chat.scenarioTextWrap(Chat.colored("<gray>${scenario.description}"), 40)
+                    meta.displayName(Chat.colored("${color}${scenario.name}"))
+                    meta.lore(Chat.scenarioTextWrap("<gray>${scenario.description}", 40))
                     item.itemMeta = meta
                     gui.item(i, item).onClick runnable@ {
                         ScenarioHandler.getScenario(scenario.id)?.toggle()
                         color = if (scenario.enabled) "<green>"
                         else "<red>"
-                        meta = it.currentItem.itemMeta
-                        meta.displayName = Chat.colored("${color}${scenario.name}")
-                        it.currentItem.itemMeta = meta
+                        meta = it.currentItem!!.itemMeta
+                        meta.displayName(Chat.colored("${color}${scenario.name}"))
+                        it.currentItem!!.itemMeta = meta
                         it.isCancelled = true
                     }
                     i++
@@ -96,7 +96,7 @@ class ScenarioManagerCommand : CommandExecutor {
             .addLore("<gray>Go to the previous page.")
             .make()
         val resetScenarios = ItemBuilder(Material.REDSTONE_BLOCK)
-            .name("&4Reset Scenarios")
+            .name("<dark_red>Reset Scenarios")
             .addLore("<gray>Disables all scenarios.")
             .make()
         if (page > 0) {
@@ -136,7 +136,7 @@ class ScenarioManagerCommand : CommandExecutor {
         }
         sender.openInventory(gui.make())
         sender.sendMessage(Chat.colored("${Chat.prefix} Opening scenario manager menu..."))
-        sender.playSound(sender.location, Sound.CLICK, 10.toFloat(), 10.toFloat())
+        sender.playSound(sender.location, Sound.UI_BUTTON_CLICK, 10.toFloat(), 10.toFloat())
         return true
     }
 }

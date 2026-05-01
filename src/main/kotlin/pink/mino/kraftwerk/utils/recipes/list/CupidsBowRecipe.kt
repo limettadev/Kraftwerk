@@ -24,13 +24,13 @@ class CupidsBowRecipe : Recipe(
 ) {
     init {
         val cupidsBow = ItemBuilder(Material.BOW)
-            .name("&5Cupid's Bow")
-            .addEnchantment(Enchantment.ARROW_DAMAGE, 2)
-            .addEnchantment(Enchantment.ARROW_FIRE, 1)
+            .name("<dark_purple>Cupid's Bow")
+            .addEnchantment(Enchantment.POWER, 2)
+            .addEnchantment(Enchantment.FLAME, 1)
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(cupidsBow, id)).shape(" R ", "HBH", " L ")
             .setIngredient('B', Material.BOW)
-            .setIngredient('H', Material.SKULL_ITEM, 3)
+            .setIngredient('H', Material.PLAYER_HEAD, 3)
             .setIngredient('L', Material.LAVA_BUCKET)
             .setIngredient('R', Material.BLAZE_ROD)
     }

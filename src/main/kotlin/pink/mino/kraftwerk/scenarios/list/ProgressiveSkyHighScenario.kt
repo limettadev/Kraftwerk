@@ -26,16 +26,16 @@ class ProgressiveSkyHighScenario : Scenario(
     private val playerStrikes = mutableMapOf<String, Int>()
 
     override fun onStart() {
-        val shovel = ItemStack(Material.DIAMOND_SPADE)
+        val shovel = ItemStack(Material.DIAMOND_SHOVEL)
         val meta = shovel.itemMeta
-        meta.spigot().isUnbreakable = true
-        meta.addEnchant(Enchantment.DIG_SPEED, 10, true)
+        meta.isUnbreakable = true
+        meta.addEnchant(Enchantment.EFFICIENCY, 10, true)
         shovel.itemMeta = meta
         for (player in Bukkit.getOnlinePlayers()) {
             if (!SpecFeature.instance.getSpecs().contains(player.name)) {
                 PlayerUtils.bulkItems(player, arrayListOf(
-                    ItemStack(Material.STAINED_CLAY, 128, 14),
-                    ItemStack(Material.STAINED_CLAY, 128, 14),
+                    ItemStack(Material.ORANGE_TERRACOTTA, 128, 14),
+                    ItemStack(Material.ORANGE_TERRACOTTA, 128, 14),
                     ItemStack(Material.PUMPKIN, 2),
                     ItemStack(Material.SNOW_BLOCK, 8),
                     shovel
@@ -60,18 +60,18 @@ class ProgressiveSkyHighScenario : Scenario(
     private fun startDamageTask() {
         task = ProgressiveSkyHighIterator()
         task!!.runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, 30 * 20L)
-        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} Progressive SkyHigh is now active! Stay near 0,0 and above Y: 150 or take increasing damage every 30 seconds."))
+        Bukkit.broadcast(Chat.colored("${Chat.prefix} Progressive SkyHigh is now active! Stay near 0,0 and above Y: 150 or take increasing damage every 30 seconds."))
     }
 
     override fun givePlayer(player: Player) {
-        val shovel = ItemStack(Material.DIAMOND_SPADE)
+        val shovel = ItemStack(Material.DIAMOND_SHOVEL)
         val meta = shovel.itemMeta
-        meta.spigot().isUnbreakable = true
-        meta.addEnchant(Enchantment.DIG_SPEED, 10, true)
+        meta.isUnbreakable = true
+        meta.addEnchant(Enchantment.EFFICIENCY, 10, true)
         shovel.itemMeta = meta
         PlayerUtils.bulkItems(player, arrayListOf(
-            ItemStack(Material.STAINED_CLAY, 128, 14),
-            ItemStack(Material.STAINED_CLAY, 128, 14),
+            ItemStack(Material.ORANGE_TERRACOTTA, 128, 14),
+            ItemStack(Material.ORANGE_TERRACOTTA, 128, 14),
             ItemStack(Material.PUMPKIN, 2),
             ItemStack(Material.SNOW_BLOCK, 8),
             shovel

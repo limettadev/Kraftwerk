@@ -10,7 +10,7 @@ class NoEnchantsScenario : Scenario(
     "No Enchants",
     "Enchantments from the enchantment table are disabled.",
     "noenchants",
-    Material.ENCHANTMENT_TABLE
+    Material.ENCHANTING_TABLE
 ) {
     @EventHandler
     fun onPrepareItemEnchant(e: PrepareItemEnchantEvent) {

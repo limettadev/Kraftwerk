@@ -25,10 +25,10 @@ class PanaceaRecipe : Recipe(
     "panacea"
 ) {
     init {
-        val panacea = PotionBuilder.createPotion(PotionEffect(PotionEffectType.HEAL, 1, 3, false, true))
+        val panacea = PotionBuilder.createPotion(PotionEffect(PotionEffectType.INSTANT_HEALTH, 1, 3, false, true))
         recipe = ShapedRecipe(convertToRecipeItem(panacea, id)).shape("   ", "HGH", " P ")
-            .setIngredient('H', Material.SKULL_ITEM, 3)
+            .setIngredient('H', Material.PLAYER_HEAD, 3)
             .setIngredient('P', Material.GLASS_BOTTLE)
-            .setIngredient('G', Material.SPECKLED_MELON)
+            .setIngredient('G', Material.GLISTERING_MELON_SLICE)
     }
 }

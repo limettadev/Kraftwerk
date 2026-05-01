@@ -32,19 +32,19 @@ class ForceCommand : CommandExecutor {
         }
         if (args[0] == "start") {
             JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.timer = 30
-            Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has forced <yellow>Game Start<gray>."))
+            Bukkit.broadcast(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has forced <yellow>Game Start<gray>."))
         } else if (args[0] == "fh") {
             JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.timer = JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.finalHeal
-            Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has forced <yellow>Final Heal<gray>."))
+            Bukkit.broadcast(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has forced <yellow>Final Heal<gray>."))
         } else if (args[0] == "pvp") {
             JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.timer = JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.pvp
-            Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has forced <yellow>PvP<gray>."))
+            Bukkit.broadcast(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has forced <yellow>PvP<gray>."))
         } else if (args[0] == "meetup") {
             JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.timer = JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.meetup
-            Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has forced <yellow>Meetup<gray>."))
+            Bukkit.broadcast(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has forced <yellow>Meetup<gray>."))
         } else if (args[0] == "bs") {
             JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.timer = JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.borderShrink
-            Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has forced <yellow>Border Shrinks<gray>."))
+            Bukkit.broadcast(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has forced <yellow>Border Shrinks<gray>."))
         } else {
             Chat.sendMessage(sender, "${Chat.prefix} Invalid usage: ${Chat.secondaryColor}/force <start/fh/pvp/meetup/bs><gray>.")
             return false

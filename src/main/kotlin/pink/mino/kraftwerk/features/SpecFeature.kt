@@ -7,6 +7,7 @@ import com.comphenix.protocol.events.PacketEvent
 import com.lunarclient.apollo.Apollo
 import com.lunarclient.apollo.module.staffmod.StaffModModule
 import com.mongodb.MongoException
+import net.kyori.adventure.text.minimessage.MiniMessage
 import net.md_5.bungee.api.chat.ClickEvent
 import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.*
@@ -69,8 +70,8 @@ class InvSeeFeature(private val player: Player, private val target: Player) : Bu
             .addLore(" ${Chat.dot} World ${Chat.dash} ${Chat.primaryColor}${target.location.world.name}")
             .addLore(" ")
             .addLore("<red>Mining: ")
-            .addLore(" ${Chat.dot} Diamond ${Chat.dash} &b${SpecFeature.instance.diamondsMined[target.uniqueId] ?: 0}")
-            .addLore(" ${Chat.dot} Gold ${Chat.dash} &6${SpecFeature.instance.goldMined[target.uniqueId] ?: 0}")
+            .addLore(" ${Chat.dot} Diamond ${Chat.dash} <aqua>${SpecFeature.instance.diamondsMined[target.uniqueId] ?: 0}")
+            .addLore(" ${Chat.dot} Gold ${Chat.dash} <gold>${SpecFeature.instance.goldMined[target.uniqueId] ?: 0}")
             .addLore(" ")
             .addLore("<red>Potion Effects: ")
         if (target.activePotionEffects.isEmpty()) {
@@ -115,8 +116,8 @@ class SpecClickFeature : PacketAdapter(JavaPlugin.getPlugin(Kraftwerk::class.jav
 
                         val statusText = when (mode) {
                             0 -> "Disabled"
-                            1 -> "Enabled for &dsocial<gray> commands"
-                            2 -> "Enabled for &dall<gray> commands"
+                            1 -> "Enabled for <light_purple>social<gray> commands"
+                            2 -> "Enabled for <light_purple>all<gray> commands"
                             else -> "Unknown"
                         }
 
@@ -144,11 +145,11 @@ class SpecClickFeature : PacketAdapter(JavaPlugin.getPlugin(Kraftwerk::class.jav
                             return
                         }
                         Chat.sendMessage(p, Chat.line)
-                        Chat.sendCenteredMessage(p, "${Chat.primaryColor}&lPlayer Locations")
+                        Chat.sendCenteredMessage(p, "${Chat.primaryColor}<bold>Player Locations")
                         for (player in list) {
                             Chat.sendMessage(
                                 p,
-                                "${Chat.dash} <gray>${player.name} <gray>is at &b${floor(player.location.x)}<gray>, &b${floor(player.location.y)}<gray>, &b${
+                                "${Chat.dash} <gray>${player.name} <gray>is at <aqua>${floor(player.location.x)}<gray>, <aqua>${floor(player.location.y)}<gray>, <aqua>${
                                     floor(player.location.z)
                                 }"
                             )
@@ -188,10 +189,10 @@ class SpecFeature : Listener {
             p.removePotionEffect(effect.type)
         }
         p.inventory.clear()
-        p.inventory.helmet = ItemStack(Material.AIR)
-        p.inventory.chestplate = ItemStack(Material.AIR)
-        p.inventory.leggings = ItemStack(Material.AIR)
-        p.inventory.boots = ItemStack(Material.AIR)
+        p.inventory.setHelmet(ItemStack(Material.AIR))
+        p.inventory.setChestplate(ItemStack(Material.AIR))
+        p.inventory.setLeggings(ItemStack(Material.AIR))
+        p.inventory.setBoots(ItemStack(Material.AIR))
         p.inventory.setItemInOffHand(ItemStack(Material.AIR))
         p.gameMode = GameMode.SPECTATOR
 
@@ -204,7 +205,7 @@ class SpecFeature : Listener {
         ConfigFeature.instance.saveData()
 
         specChat("${Chat.secondaryColor}${p.name}<gray> has entered spectator mode.", p)
-        Scoreboard.setScore(Chat.colored("${Chat.dash} <gray>Playing..."), PlayerUtils.getPlayingPlayers().size)
+        Scoreboard.setScore("${Chat.dash} <gray>Playing...", PlayerUtils.getPlayingPlayers().size)
 
         val teleportTo00 = ItemBuilder(Material.ENDER_EYE)
             .name("${Chat.primaryColor}Teleport to 0,0")
@@ -244,7 +245,7 @@ class SpecFeature : Listener {
 
         Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
             if (Apollo.getPlayerManager().hasSupport(p.uniqueId)) {
-                Chat.sendMessage(p, "${Chat.dash} <gray>Your &bLunar Client<gray> staff modules have been enabled.")
+                Chat.sendMessage(p, "${Chat.dash} <gray>Your <aqua>Lunar Client<gray> staff modules have been enabled.")
                 val apolloPlayer = Apollo.getPlayerManager().getPlayer(p.uniqueId).get()
                 val staffModule = Apollo.getModuleManager().getModule(StaffModModule::class.java)
                 staffModule.enableAllStaffMods(apolloPlayer)
@@ -277,11 +278,11 @@ class SpecFeature : Listener {
             when (profile.specSocialSpy) {
                 1 -> { // Mode 1: Social only
                     if (baseCommand in commands) {
-                        Chat.sendMessage(player, "<yellow>&o${e.player.name} ${Chat.dash} <gray>${messageParts.joinToString(" ")}")
+                        Chat.sendMessage(player, "<yellow><italic>${e.player.name} ${Chat.dash} <gray>${messageParts.joinToString(" ")}")
                     }
                 }
                 2 -> { // Mode 2: All commands
-                    Chat.sendMessage(player, "<yellow>&o${e.player.name} ${Chat.dash} <gray>${messageParts.joinToString(" ")}")
+                    Chat.sendMessage(player, "<yellow><italic>${e.player.name} ${Chat.dash} <gray>${messageParts.joinToString(" ")}")
                 }
             }
         }
@@ -301,10 +302,10 @@ class SpecFeature : Listener {
             p.removePotionEffect(effect.type)
         }
         p.inventory.clear()
-        p.inventory.helmet = ItemStack(Material.AIR)
-        p.inventory.chestplate = ItemStack(Material.AIR)
-        p.inventory.leggings = ItemStack(Material.AIR)
-        p.inventory.boots = ItemStack(Material.AIR)
+        p.inventory.setHelmet(ItemStack(Material.AIR))
+        p.inventory.setChestplate(ItemStack(Material.AIR))
+        p.inventory.setLeggings(ItemStack(Material.AIR))
+        p.inventory.setBoots(ItemStack(Material.AIR))
         p.inventory.setItemInOffHand(ItemStack(Material.AIR))
         p.gameMode = GameMode.SPECTATOR
 
@@ -317,7 +318,7 @@ class SpecFeature : Listener {
         ConfigFeature.instance.saveData()
 
         specChat("${Chat.secondaryColor}${p.name}<gray> has entered spectator mode.", p)
-        Scoreboard.setScore(Chat.colored("${Chat.dash} <gray>Playing..."), PlayerUtils.getPlayingPlayers().size)
+        Scoreboard.setScore("${Chat.dash} <gray>Playing...", PlayerUtils.getPlayingPlayers().size)
 
         val teleportTo00 = ItemBuilder(Material.ENDER_EYE)
             .name("${Chat.primaryColor}Teleport to 0,0")
@@ -360,7 +361,7 @@ class SpecFeature : Listener {
                 val apolloPlayer = Apollo.getPlayerManager().getPlayer(p.uniqueId).get()
                 val staffModule = Apollo.getModuleManager().getModule(StaffModModule::class.java)
                 staffModule.enableAllStaffMods(apolloPlayer)
-                Chat.sendMessage(p, "${Chat.dash} <gray>Your &bLunar Client<gray> staff modules have been enabled.")
+                Chat.sendMessage(p, "${Chat.dash} <gray>Your <aqua>Lunar Client<gray> staff modules have been enabled.")
             }
         }, 5L)
     }
@@ -382,10 +383,10 @@ class SpecFeature : Listener {
             p.removePotionEffect(effect.type)
         }
         p.inventory.clear()
-        p.inventory.helmet = ItemStack(Material.AIR)
-        p.inventory.chestplate = ItemStack(Material.AIR)
-        p.inventory.leggings = ItemStack(Material.AIR)
-        p.inventory.boots = ItemStack(Material.AIR)
+        p.inventory.setHelmet(ItemStack(Material.AIR))
+        p.inventory.setChestplate(ItemStack(Material.AIR))
+        p.inventory.setLeggings(ItemStack(Material.AIR))
+        p.inventory.setBoots(ItemStack(Material.AIR))
         p.inventory.setItemInOffHand(ItemStack(Material.AIR))
 
         SpawnFeature.instance.send(p)
@@ -399,14 +400,14 @@ class SpecFeature : Listener {
 
         specChat("${Chat.secondaryColor}${p.name}<gray> has left spectator mode.", p)
         Chat.sendMessage(p, "${prefix} You are no longer in spectator mode.")
-        Scoreboard.setScore(Chat.colored("${Chat.dash} <gray>Playing..."), PlayerUtils.getPlayingPlayers().size)
+        Scoreboard.setScore("${Chat.dash} <gray>Playing...", PlayerUtils.getPlayingPlayers().size)
 
         Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
             if (Apollo.getPlayerManager().hasSupport(p.uniqueId)) {
                 val apolloPlayer = Apollo.getPlayerManager().getPlayer(p.uniqueId).get()
                 val staffModule = Apollo.getModuleManager().getModule(StaffModModule::class.java)
                 staffModule.disableAllStaffMods(apolloPlayer)
-                Chat.sendMessage(p, "${Chat.dash} <gray>Your &bLunar Client<gray> staff modules have been disabled.")
+                Chat.sendMessage(p, "${Chat.dash} <gray>Your <aqua>Lunar Client<gray> staff modules have been disabled.")
             }
         }, 5L)
 
@@ -456,9 +457,9 @@ class SpecFeature : Listener {
                             Chat.sendMessage(p, "${prefix} There are no players online.")
                         }
                         Chat.sendMessage(p, Chat.line)
-                        Chat.sendCenteredMessage(p, "${Chat.primaryColor}&lPlayer Locations")
+                        Chat.sendCenteredMessage(p, "${Chat.primaryColor}<bold>Player Locations")
                         for (player in list) {
-                            Chat.sendMessage(p, "${prefix} <gray>${player.name} <gray>is at &b${floor(player.location.x)}, <gray>${floor(player.location.y)}, <gray>${floor(player.location.z)}")
+                            Chat.sendMessage(p, "${prefix} <gray>${player.name} <gray>is at <aqua>${floor(player.location.x)}, <gray>${floor(player.location.y)}, <gray>${floor(player.location.z)}")
                         }
                         Chat.sendMessage(p, Chat.line)
                     }
@@ -581,12 +582,10 @@ class SpecFeature : Listener {
             for (player in Bukkit.getOnlinePlayers()) {
                 if (getSpecs().contains(player.name)) {
                     Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
-                        val comp = TextComponent(Chat.colored("$prefix ${PlayerUtils.getPrefix(p)}${p.name}<gray> has mined &bDiamond Ore<gray>. <dark_gray>(<gray>T: &b${diamondsMined[p.uniqueId]} <dark_gray>| <gray>V: &b${diamonds}<dark_gray>)"))
-                        comp.clickEvent = ClickEvent(
-                            ClickEvent.Action.RUN_COMMAND,
-                            "/tp ${p.name}"
+                        val comp = MiniMessage.miniMessage().deserialize(
+                            "$prefix <${Chat.secondaryColor}>${PlayerUtils.getPrefix(p)}${p.name}<gray> has mined <aqua>Diamond Ore<gray>. <dark_gray>(<gray>T: <aqua>${diamondsMined[p.uniqueId]} <dark_gray>| <gray>V: <aqua>${diamonds}<dark_gray>)<click:run_command:/tp ${p.name}>"
                         )
-                        player.spigot().sendMessage(comp)
+                        player.sendMessage(comp)
                     }, 1L)
                 }
             }
@@ -616,12 +615,10 @@ class SpecFeature : Listener {
             for (player in Bukkit.getOnlinePlayers()) {
                 if (getSpecs().contains(player.name)) {
                     Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
-                        val comp = TextComponent(Chat.colored("$prefix ${PlayerUtils.getPrefix(p)}${p.name}<gray> has mined &6Gold Ore<gray>. <dark_gray>(<gray>T: &6${goldMined[p.uniqueId]} <dark_gray>| <gray>V: &6${gold}<dark_gray>)"))
-                        comp.clickEvent = ClickEvent(
-                            ClickEvent.Action.RUN_COMMAND,
-                            "/tp ${p.name}"
+                        val comp = MiniMessage.miniMessage().deserialize(
+                            "$prefix <${Chat.secondaryColor}>${PlayerUtils.getPrefix(p)}${p.name}<gray> has mined <gold>Gold Ore<gray>. <dark_gray>(<gray>T: <gold>${goldMined[p.uniqueId]} <dark_gray>| <gray>V: <gold>${gold}<dark_gray>)<click:run_command:/tp ${p.name}>"
                         )
-                        player.spigot().sendMessage(comp)
+                        player.sendMessage(comp)
                     }, 1L)
                 }
             }
@@ -641,12 +638,10 @@ class SpecFeature : Listener {
                 for (player in Bukkit.getOnlinePlayers()) {
                     if (getSpecs().contains(player.name)) {
                         Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
-                            val comp = TextComponent(Chat.colored("$prefix ${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to &fFall<gray>."))
-                            comp.clickEvent = ClickEvent(
-                                ClickEvent.Action.RUN_COMMAND,
-                                "/tp ${p.name}"
+                            val comp = MiniMessage.miniMessage().deserialize(
+                                "$prefix <${Chat.secondaryColor}>${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to <white>Fall<gray>.<click:run_command:/tp ${p.name}>"
                             )
-                            player.spigot().sendMessage(comp)
+                            player.sendMessage(comp)
                         }, 1L)
                     }
                 }
@@ -654,12 +649,10 @@ class SpecFeature : Listener {
             EntityDamageEvent.DamageCause.FIRE, EntityDamageEvent.DamageCause.FIRE_TICK, EntityDamageEvent.DamageCause.LAVA, EntityDamageEvent.DamageCause.MELTING -> {
                 for (player in Bukkit.getOnlinePlayers()) {
                     if (getSpecs().contains(player.name)) {
-                        val comp = TextComponent(Chat.colored("$prefix ${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to &fBurning<gray>."))
-                        comp.clickEvent = ClickEvent(
-                            ClickEvent.Action.RUN_COMMAND,
-                            "/tp ${p.name}"
+                        val comp = MiniMessage.miniMessage().deserialize(
+                            "$prefix <${Chat.secondaryColor}>${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to <white>Burning<gray>.<click:run_command:/tp ${p.name}>"
                         )
-                        player.spigot().sendMessage(comp)
+                        player.sendMessage(comp)
                     }
                 }
             }
@@ -670,12 +663,10 @@ class SpecFeature : Listener {
                 for (player in Bukkit.getOnlinePlayers()) {
                     if (getSpecs().contains(player.name)) {
                         Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
-                            val comp = TextComponent(Chat.colored("$prefix ${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to &fUnknown<gray>."))
-                            comp.clickEvent = ClickEvent(
-                                ClickEvent.Action.RUN_COMMAND,
-                                "/tp ${p.name}"
+                            val comp = MiniMessage.miniMessage().deserialize(
+                                "$prefix <${Chat.secondaryColor}>${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to <white>Unknown<gray>.<click:run_command:/tp ${p.name}>"
                             )
-                            player.spigot().sendMessage(comp)
+                            player.sendMessage(comp)
                         }, 1L)
                     }
                 }
@@ -695,12 +686,10 @@ class SpecFeature : Listener {
             for (player in Bukkit.getOnlinePlayers()) {
                 if (getSpecs().contains(player.name)) {
                     Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
-                        val comp = TextComponent(Chat.colored("$prefix ${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to &fPvE<gray>."))
-                        comp.clickEvent = ClickEvent(
-                            ClickEvent.Action.RUN_COMMAND,
-                            "/tp ${p.name}"
+                        val comp = MiniMessage.miniMessage().deserialize(
+                            "$prefix <${Chat.secondaryColor}>${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to <white>PvE<gray>.<click:run_command:/tp ${p.name}>"
                         )
-                        player.spigot().sendMessage(comp)
+                        player.sendMessage(comp)
                     }, 1L)
                 }
             }
@@ -710,12 +699,10 @@ class SpecFeature : Listener {
             for (player in Bukkit.getOnlinePlayers()) {
                 if (getSpecs().contains(player.name)) {
                     Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
-                        val comp = TextComponent(Chat.colored("$prefix ${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to ${PlayerUtils.getPrefix(damager)}${damager.name} <dark_gray>(${PlayerUtils.getHealth(damager)}<dark_gray>)<gray>. <dark_gray>(&fPvP<dark_gray>)"))
-                        comp.clickEvent = ClickEvent(
-                            ClickEvent.Action.RUN_COMMAND,
-                            "/tp ${p.name}"
+                        val comp = MiniMessage.miniMessage().deserialize(
+                            "$prefix <${Chat.secondaryColor}>${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to ${PlayerUtils.getPrefix(damager)}${damager.name} <dark_gray>(${PlayerUtils.getHealth(damager)}<dark_gray>)<gray>. <dark_gray>(<white>PvP<dark_gray>)<click:run_command:/tp ${p.name}>"
                         )
-                        player.spigot().sendMessage(comp)
+                        player.sendMessage(comp)
                     }, 1L)
                 }
             }
@@ -726,12 +713,10 @@ class SpecFeature : Listener {
                 for (player in Bukkit.getOnlinePlayers()) {
                     if (getSpecs().contains(player.name)) {
                         Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
-                            val comp = TextComponent(Chat.colored("$prefix ${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to ${PlayerUtils.getPrefix(damager)}${damager.name} <dark_gray>(${PlayerUtils.getHealth(damager)}<dark_gray>)<gray>. <dark_gray>(&fBow<dark_gray>)"))
-                            comp.clickEvent = ClickEvent(
-                                ClickEvent.Action.RUN_COMMAND,
-                                "/tp ${p.name}"
+                            val comp = MiniMessage.miniMessage().deserialize(
+                                "$prefix <${Chat.secondaryColor}>${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to ${PlayerUtils.getPrefix(damager)}${damager.name} <dark_gray>(${PlayerUtils.getHealth(damager)}<dark_gray>)<gray>. <dark_gray>(<white>Bow<dark_gray>)<click:run_command:/tp ${p.name}>"
                             )
-                            player.spigot().sendMessage(comp)
+                            player.sendMessage(comp)
                         }, 1L)
                     }
                 }

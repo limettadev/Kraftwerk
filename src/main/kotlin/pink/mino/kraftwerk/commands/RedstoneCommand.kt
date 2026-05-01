@@ -26,7 +26,7 @@ class PickupFeature : Listener {
         val profile = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(e.player.uniqueId)
         if (PerkChecker.checkPerks(e.player).contains(Perk.TOGGLE_PICKUPS)) {
             if (profile!!.disableLapisPickup) {
-                if (e.item.itemStack.type == Material.INK_SACK && e.item.itemStack.durability == 4.toShort() && e.player.inventory.containsAtLeast(ItemStack(Material.INK_SACK, 64, 4), 64)) {
+                if (e.item.itemStack.type == Material.LAPIS_LAZULI && e.player.inventory.containsAtLeast(ItemStack(Material.LAPIS_LAZULI, 64, 4), 64)) {
                     e.isCancelled = true
                 }
             }
@@ -43,7 +43,7 @@ class RedstoneCommand : CommandExecutor {
     override fun onCommand(
         sender: CommandSender,
         command: Command,
-        label: String?,
+        label: String,
         args: Array<out String>
     ): Boolean {
         if (sender !is Player) {
@@ -51,7 +51,7 @@ class RedstoneCommand : CommandExecutor {
             return false
         }
         if (!PerkChecker.checkPerks(sender).contains(Perk.TOGGLE_PICKUPS)) {
-            Chat.sendMessage(sender, "<red>You must be a &2Donator<red> to use this command. Buy it at <yellow>${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store url setup in config tough tits"}")
+            Chat.sendMessage(sender, "<red>You must be a <dark_green>Donator<red> to use this command. Buy it at <yellow>${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store url setup in config tough tits"}")
             return false
         }
         if (JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(sender.uniqueId)!!.disableRedstonePickup) {

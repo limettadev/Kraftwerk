@@ -35,7 +35,7 @@ class InfoFeature : BukkitRunnable() {
     override fun run() {
         if (Bukkit.getOnlinePlayers().isNotEmpty()) {
             if (!ConfigOptionHandler.getOption("private")!!.enabled) {
-                Bukkit.broadcastMessage(announcements[Random.nextInt(announcements.size)])
+                Bukkit.broadcast(announcements[Random.nextInt(announcements.size)])
             }
         }
     }

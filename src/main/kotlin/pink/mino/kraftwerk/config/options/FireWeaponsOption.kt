@@ -15,7 +15,7 @@ class FireWeaponsOption : ConfigOption(
     Material.BLAZE_POWDER
 ) {
     private val fireAspectEnchant: Enchantment = Enchantment.FIRE_ASPECT
-    private val flameEnchant: Enchantment = Enchantment.ARROW_FIRE
+    private val flameEnchant: Enchantment = Enchantment.FLAME
 
     @EventHandler
     fun onPlayerEnchant(event: EnchantItemEvent) {
@@ -26,10 +26,10 @@ class FireWeaponsOption : ConfigOption(
         } else {
             return
         }
-        if (event.enchantsToAdd.containsKey(Enchantment.DAMAGE_ALL) || event.enchantsToAdd.containsKey(Enchantment.DAMAGE_UNDEAD) || event.enchantsToAdd.containsKey(Enchantment.DAMAGE_ARTHROPODS)) {
+        if (event.enchantsToAdd.containsKey(Enchantment.SHARPNESS) || event.enchantsToAdd.containsKey(Enchantment.SMITE) || event.enchantsToAdd.containsKey(Enchantment.BANE_OF_ARTHROPODS)) {
             return
         }
-        event.enchantsToAdd[Enchantment.DAMAGE_ALL] = (event.whichButton() + 1).coerceAtMost(3)
+        event.enchantsToAdd[Enchantment.SHARPNESS] = (event.whichButton() + 1).coerceAtMost(3)
 
     }
 }

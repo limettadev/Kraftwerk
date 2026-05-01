@@ -29,10 +29,10 @@ class ClearInventoryCommand : CommandExecutor {
                 inv.clear()
 
                 // clear armour slots
-                inv.helmet = ItemStack(Material.AIR)
-                inv.chestplate = ItemStack(Material.AIR)
-                inv.leggings = ItemStack(Material.AIR)
-                inv.boots = ItemStack(Material.AIR)
+                inv.setHelmet(ItemStack(Material.AIR))
+                inv.setChestplate(ItemStack(Material.AIR))
+                inv.setLeggings(ItemStack(Material.AIR))
+                inv.setBoots(ItemStack(Material.AIR))
                 inv.setItemInOffHand(ItemStack(Material.AIR))
 
                 player.setItemOnCursor(ItemStack(Material.AIR))
@@ -56,10 +56,10 @@ class ClearInventoryCommand : CommandExecutor {
 
                     // clear armour slots
 
-                    inv.helmet = ItemStack(Material.AIR)
-                    inv.chestplate = ItemStack(Material.AIR)
-                    inv.leggings = ItemStack(Material.AIR)
-                    inv.boots = ItemStack(Material.AIR)
+                    inv.setHelmet(ItemStack(Material.AIR))
+                    inv.setChestplate(ItemStack(Material.AIR))
+                    inv.setLeggings(ItemStack(Material.AIR))
+                    inv.setBoots(ItemStack(Material.AIR))
                     inv.setItemInOffHand(ItemStack(Material.AIR))
 
                     online.setItemOnCursor(ItemStack(Material.AIR))
@@ -83,10 +83,10 @@ class ClearInventoryCommand : CommandExecutor {
                 inv.clear()
 
                 // clear armour slots
-                inv.helmet = ItemStack(Material.AIR)
-                inv.chestplate = ItemStack(Material.AIR)
-                inv.leggings = ItemStack(Material.AIR)
-                inv.boots = ItemStack(Material.AIR)
+                inv.setHelmet(ItemStack(Material.AIR))
+                inv.setChestplate(ItemStack(Material.AIR))
+                inv.setLeggings(ItemStack(Material.AIR))
+                inv.setBoots(ItemStack(Material.AIR))
                 inv.setItemInOffHand(ItemStack(Material.AIR))
 
                 target.setItemOnCursor(ItemStack(Material.AIR))

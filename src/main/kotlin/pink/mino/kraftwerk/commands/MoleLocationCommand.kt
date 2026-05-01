@@ -37,7 +37,7 @@ class MoleLocationCommand : CommandExecutor {
         val x = (sender.location.x * 100.0).roundToInt() / 100.0
         val y = (sender.location.y * 100.0).roundToInt() / 100.0
         val z = (sender.location.z * 100.0).roundToInt() / 100.0
-        MolesScenario.instance.sendMoles("<dark_gray>[${Chat.primaryColor}Mole Chat<dark_gray>]&f ${PlayerUtils.getPrefix(sender)}${sender.name}<gray>'s location: ${Chat.secondaryColor}${x}, ${y}, ${z}<gray>. <dark_gray>| <gray>Dimension: ${Chat.primaryColor}${sender.location.world.worldType}<gray>.")
+        MolesScenario.instance.sendMoles("<dark_gray>[${Chat.primaryColor}Mole Chat<dark_gray>]<white> ${PlayerUtils.getPrefix(sender)}${sender.name}<gray>'s location: ${Chat.secondaryColor}${x}, ${y}, ${z}<gray>. <dark_gray>| <gray>Dimension: ${Chat.primaryColor}${sender.location.world.worldType}<gray>.")
         return true
     }
 }

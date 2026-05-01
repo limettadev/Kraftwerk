@@ -43,8 +43,8 @@ class DragonSwordRecipe : Recipe(
             e.damager is Player &&
             (e.damager as Player).itemInHand != null &&
             (e.damager as Player).itemInHand.hasItemMeta() &&
-            (e.damager as Player).itemInHand.itemMeta.displayName != null &&
-            (e.damager as Player).itemInHand.itemMeta.displayName == Chat.colored("<yellow>Dragon Sword")
+            (e.damager as Player).itemInHand.itemMeta.displayName() != null &&
+            (e.damager as Player).itemInHand.itemMeta.displayName() == Chat.colored("<yellow>Dragon Sword")
             ) {
             e.damage = e.damage + 2.0
         }

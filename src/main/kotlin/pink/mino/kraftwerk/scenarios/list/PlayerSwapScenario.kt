@@ -39,7 +39,7 @@ class PlayerSwapTimer : BukkitRunnable() {
             val loc2 = player2.location
             player1.teleport(loc2)
             player2.teleport(loc1)
-            Chat.broadcast("${PlayerSwapScenario.prefix} ${Chat.secondaryColor}${PlayerUtils.getPrefix(player1)}${player1.name}<gray> has swapped with &f${PlayerUtils.getPrefix(player2)}${player2.name}<gray>! View ${Chat.secondaryColor}/timer<gray> for the next swap.")
+            Chat.broadcast("${PlayerSwapScenario.prefix} ${Chat.secondaryColor}${PlayerUtils.getPrefix(player1)}${player1.name}<gray> has swapped with <white>${PlayerUtils.getPrefix(player2)}${player2.name}<gray>! View ${Chat.secondaryColor}/timer<gray> for the next swap.")
         }
     }
 }

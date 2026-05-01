@@ -33,8 +33,8 @@ class LoveAtFirstSightScenario : Scenario(
                     TeamsFeature.manager.joinTeam(team.name, player)
                     Chat.sendMessage(player, "$prefix You are now teamed with ${Chat.secondaryColor}${PlayerUtils.getPrefix(damager)}${damager.name}<gray>!")
                     Chat.sendMessage(damager, "$prefix You are now teamed with ${Chat.secondaryColor}${PlayerUtils.getPrefix(player)}${player.name}<gray>!")
-                    player.playSound(player.location, Sound.LEVEL_UP, 1f, 1f)
-                    damager.playSound(damager.location, Sound.LEVEL_UP, 1f, 1f)
+                    player.playSound(player.location, Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f)
+                    damager.playSound(damager.location, Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f)
                 }
             }
         }

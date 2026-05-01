@@ -33,7 +33,7 @@ class HotbarCommand : CommandExecutor {
             gui.item(6, ItemStack(Material.GOLDEN_CARROT, 16))
             gui.item(7, ItemStack(Material.GOLDEN_APPLE, 5))
             val goldenHeads = ItemBuilder(Material.GOLDEN_APPLE)
-                .name("&6Golden Head")
+                .name("<gold>Golden Head")
                 .setAmount(3)
                 .make()
             gui.item(8, goldenHeads)

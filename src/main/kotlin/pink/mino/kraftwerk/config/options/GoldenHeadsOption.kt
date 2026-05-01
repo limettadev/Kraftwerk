@@ -1,5 +1,6 @@
 package pink.mino.kraftwerk.config.options
 
+import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.SkullType
 import org.bukkit.block.Block
@@ -43,27 +44,27 @@ class GoldenHeadsOption : ConfigOption(
         return
       }
       if (ScenarioHandler.getScenario("graverobbers")!!.enabled || ScenarioHandler.getScenario("timebomb")!!.enabled) {
-        val skull = ItemBuilder(Material.SKULL_ITEM)
+        val skull = ItemBuilder(Material.PLAYER_HEAD)
           .toSkull()
           .setOwner(player.name)
           .make()
         e.drops.add(skull)
         return
       }
-      player.location.block.type = Material.NETHER_FENCE
-      player.location.add(0.0, 1.0, 0.0).block.type = Material.SKULL
+      player.location.block.type = Material.NETHER_BRICK_FENCE
+      player.location.add(0.0, 1.0, 0.0).block.type = Material.PLAYER_HEAD
 
-      val skull: Skull = player.location.add(0.0, 1.0, 0.0).block.state as Skull
-      skull.skullType = SkullType.PLAYER
-      skull.owner = player.name
-      skull.rotation = BlockRotation.getBlockFaceDirection(player.location)
-      skull.update()
+        val block = player.location.add(0.0, 1.0, 0.0).block
+        block.type = Material.PLAYER_HEAD
+        val skull = block.state as Skull
+        skull.setOwningPlayer(Bukkit.getOfflinePlayer(player.uniqueId))
+        skull.rotation = player.facing
+        skull.update()
 
       val b: Block = player.location.add(0.0, 1.0, 0.0).block
-      b.setData(0x1.toByte(), true)
     }
     if (ScenarioHandler.getScenario("champions")!!.enabled) {
-      val skull = ItemBuilder(Material.SKULL_ITEM)
+      val skull = ItemBuilder(Material.PLAYER_HEAD)
         .name("${player.name}'s Head")
         .addLore("<gray>Gives you beneficial effects...")
         .make()

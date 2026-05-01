@@ -59,10 +59,10 @@ class LatescatterCommand : CommandExecutor {
             player.saturation = 20F
             player.gameMode = GameMode.SURVIVAL
             player.inventory.clear()
-            player.inventory.helmet = ItemStack(Material.AIR)
-            player.inventory.chestplate = ItemStack(Material.AIR)
-            player.inventory.leggings = ItemStack(Material.AIR)
-            player.inventory.boots = ItemStack(Material.AIR)
+            player.inventory.setHelmet(ItemStack(Material.AIR))
+            player.inventory.setChestplate(ItemStack(Material.AIR))
+            player.inventory.setLeggings(ItemStack(Material.AIR))
+            player.inventory.setBoots(ItemStack(Material.AIR))
             player.inventory.setItemInOffHand(ItemStack(Material.AIR))
 
             player.enderChest.clear()
@@ -109,10 +109,10 @@ class LatescatterCommand : CommandExecutor {
             player.gameMode = GameMode.SURVIVAL
             player.inventory.clear()
             player.enderChest.clear()
-            player.inventory.helmet = ItemStack(Material.AIR)
-            player.inventory.chestplate = ItemStack(Material.AIR)
-            player.inventory.leggings = ItemStack(Material.AIR)
-            player.inventory.boots = ItemStack(Material.AIR)
+            player.inventory.setHelmet(ItemStack(Material.AIR))
+            player.inventory.setChestplate(ItemStack(Material.AIR))
+            player.inventory.setLeggings(ItemStack(Material.AIR))
+            player.inventory.setBoots(ItemStack(Material.AIR))
             player.inventory.setItemInOffHand(ItemStack(Material.AIR))
             player.inventory.setItemInMainHand(ItemStack(Material.AIR))
 
@@ -140,7 +140,7 @@ class LatescatterCommand : CommandExecutor {
         }
         ConfigFeature.instance.data!!.set("game.list", list)
         ConfigFeature.instance.saveData()
-        Scoreboard.setScore(Chat.colored("${Chat.dash} <gray>Playing..."), PlayerUtils.getPlayingPlayers().size)
+        Scoreboard.setScore(Chat.colored("${Chat.dash} <gray>Playing...").toString(), PlayerUtils.getPlayingPlayers().size)
         return true
     }
 

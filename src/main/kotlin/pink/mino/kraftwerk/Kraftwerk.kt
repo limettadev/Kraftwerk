@@ -3,9 +3,10 @@ package pink.mino.kraftwerk
 import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.ProtocolManager
 import com.google.gson.Gson
-import com.mongodb.MongoClient
+import com.mongodb.ConnectionString
 import com.mongodb.MongoClientException
-import com.mongodb.MongoClientURI
+import com.mongodb.MongoClientSettings
+import com.mongodb.client.MongoClients
 import com.mongodb.client.MongoDatabase
 import me.lucko.helper.Schedulers
 import me.lucko.helper.plugin.ExtendedJavaPlugin
@@ -18,6 +19,7 @@ import org.bukkit.*
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ShapedRecipe
 import org.bukkit.inventory.meta.ItemMeta
+import org.popcraft.chunky.api.ChunkyAPI
 import pink.mino.kraftwerk.commands.*
 import pink.mino.kraftwerk.config.ConfigOptionHandler
 import pink.mino.kraftwerk.discord.Discord
@@ -65,7 +67,7 @@ class Kraftwerk : ExtendedJavaPlugin() {
     lateinit var statsHandler: StatsHandler
     lateinit var dataSource: MongoDatabase
     lateinit var redisManager: RedisManager
-    lateinit var spark: Spark
+    lateinit var chunky: ChunkyAPI
     lateinit var profileHandler: ProfileService
 
     val sessionId = UUID.randomUUID()
@@ -242,6 +244,13 @@ class Kraftwerk : ExtendedJavaPlugin() {
             Bukkit.getPluginManager().disablePlugin(this)
             return
         }
+        if (Bukkit.getPluginManager().getPlugin("Chunky") == null) {
+            println("You need Chunky in order to use this plugin.")
+            Bukkit.getPluginManager().disablePlugin(this)
+            return
+        } else {
+            chunky = Bukkit.getServicesManager().load(ChunkyAPI::class.java)!!
+        }
 
         /* This just enables Hardcore Hearts */
         protocolManager?.addPacketListener(HardcoreHeartsFeature())
@@ -262,13 +271,6 @@ class Kraftwerk : ExtendedJavaPlugin() {
 
         statsHandler = StatsHandler()
         profileHandler = ProfileService()
-
-        val provider = Bukkit.getServicesManager().getRegistration(
-            Spark::class.java
-        )
-        if (provider != null) {
-            spark = provider.provider
-        }
 
         try {
             if (ConfigFeature.instance.config!!.getBoolean("database.redis.enabled")) {
@@ -355,14 +357,18 @@ class Kraftwerk : ExtendedJavaPlugin() {
                 server.createWorld(WorldCreator(world))
             } else {
                 val wc = WorldCreator(world)
-                if (ConfigFeature.instance.worlds!!.getString("${world}.type")!!.lowercase() == "normal") {
-                    wc.environment(World.Environment.NORMAL)
-                } else if (ConfigFeature.instance.worlds!!.getString("${world}.type")!!.lowercase() == "nether") {
-                    wc.environment(World.Environment.NETHER)
-                } else if (ConfigFeature.instance.worlds!!.getString("${world}.type")!!.lowercase() == "end") {
-                    wc.environment(World.Environment.THE_END)
+                if (ConfigFeature.instance.worlds!!.getString("${world}.type") == null) {
+                    wc.environment()
                 } else {
-                    wc.environment(World.Environment.NORMAL)
+                    if (ConfigFeature.instance.worlds!!.getString("${world}.type")!!.lowercase() == "normal") {
+                        wc.environment(World.Environment.NORMAL)
+                    } else if (ConfigFeature.instance.worlds!!.getString("${world}.type")!!.lowercase() == "nether") {
+                        wc.environment(World.Environment.NETHER)
+                    } else if (ConfigFeature.instance.worlds!!.getString("${world}.type")!!.lowercase() == "end") {
+                        wc.environment(World.Environment.THE_END)
+                    } else {
+                        wc.environment()
+                    }
                 }
                 server.createWorld(wc)
             }
@@ -395,8 +401,11 @@ class Kraftwerk : ExtendedJavaPlugin() {
         }
         var client: MongoDatabase? = null
         try {
-            val connectionString = MongoClientURI(uri)
-            client = MongoClient(connectionString).getDatabase(connectionString.database!!)
+            val connectionString = ConnectionString(uri)
+            client = MongoClients.create(
+                MongoClientSettings.builder()
+                    .applyConnectionString(connectionString)
+                    .build()).getDatabase(connectionString.database!!)
         } catch (e: MongoClientException) {
             e.printStackTrace()
         }

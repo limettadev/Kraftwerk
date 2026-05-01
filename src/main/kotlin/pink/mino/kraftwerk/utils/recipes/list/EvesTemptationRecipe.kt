@@ -14,6 +14,6 @@ class EvesTemptationRecipe : Recipe(
 ) {
   init {
     recipe = ShapelessRecipe(convertToRecipeItem(ItemStack(Material.APPLE, 2), id)).addIngredient(Material.APPLE)
-      .addIngredient(Material.INK_SACK, 15)
+      .addIngredient(Material.BONE_MEAL)
   }
 }

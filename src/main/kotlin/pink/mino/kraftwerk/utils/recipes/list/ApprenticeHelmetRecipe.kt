@@ -24,14 +24,14 @@ class ApprenticeHelmetRecipe : Recipe(
 ) {
     init {
         val apprenticeHelmet = ItemBuilder(Material.IRON_HELMET)
-            .name("&5Apprentice Helmet")
-            .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1)
-            .addEnchantment(Enchantment.PROTECTION_FIRE, 1)
-            .addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 1)
-            .addEnchantment(Enchantment.PROTECTION_PROJECTILE, 1)
+            .name("<dark_purple>Apprentice Helmet")
+            .addEnchantment(Enchantment.PROTECTION, 1)
+            .addEnchantment(Enchantment.FIRE_PROTECTION, 1)
+            .addEnchantment(Enchantment.BLAST_PROTECTION, 1)
+            .addEnchantment(Enchantment.PROJECTILE_PROTECTION, 1)
             .make()
         recipe = ShapedRecipe(apprenticeHelmet).shape("III", "IRI", "   ")
             .setIngredient('I', Material.IRON_INGOT)
-            .setIngredient('R', Material.REDSTONE_TORCH_ON)
+            .setIngredient('R', Material.REDSTONE_TORCH)
     }
 }

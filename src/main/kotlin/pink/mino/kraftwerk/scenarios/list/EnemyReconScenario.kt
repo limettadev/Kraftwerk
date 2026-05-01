@@ -16,7 +16,7 @@ class EnemyReconScenario : Scenario(
     "Enemy Recon",
     "You can do /er <player> to see their inventory and some basic information on them. You get one 'recon' for every kill you get. There's a 30% chance that you get caught spying on someone, as a message is broadcasted in chat.",
     "enemyrecon",
-    Material.EYE_OF_ENDER
+    Material.ENDER_EYE
 ) {
     companion object {
         val instance = EnemyReconScenario()
@@ -39,7 +39,7 @@ class EnemyReconScenario : Scenario(
         if (!enabled) return
         if (GameState.currentState != GameState.INGAME) return
         if (e.entity.killer == null) return
-        if (e.entity.killer.type == EntityType.PLAYER) {
+        if (e.entity.killer!!.type == EntityType.PLAYER) {
             val killer = e.entity.killer as Player
             if (recons[killer.uniqueId] == null) {
                 recons[killer.uniqueId] = 1
@@ -47,7 +47,7 @@ class EnemyReconScenario : Scenario(
                 recons[killer.uniqueId] = recons[killer.uniqueId]!! + 1
             }
             Chat.sendMessage(killer, "$prefix You have gained an extra recon! (Recons: ${Chat.secondaryColor}${recons[killer.uniqueId]}<gray>)")
-        } else if (e.entity.killer.type == EntityType.ARROW && (e.entity as Arrow).shooter is Player) {
+        } else if (e.entity.killer!!.type == EntityType.ARROW && (e.entity as Arrow).shooter is Player) {
             val killer = (e.entity as Arrow).shooter as Player
             if (recons[killer.uniqueId] == null) {
                 recons[killer.uniqueId] = 1

@@ -25,15 +25,15 @@ class HideOfLeviathanRecipe : Recipe(
     init {
         val hideOfLeviathan = ItemBuilder(Material.DIAMOND_LEGGINGS)
             .name("<yellow>Hide of Leviathan")
-            .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4)
-            .addEnchantment(Enchantment.OXYGEN, 3)
-            .addEnchantment(Enchantment.WATER_WORKER, 1)
+            .addEnchantment(Enchantment.PROTECTION, 4)
+            .addEnchantment(Enchantment.RESPIRATION, 3)
+            .addEnchantment(Enchantment.AQUA_AFFINITY, 1)
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(hideOfLeviathan, id)).shape("LWL", "DGD", "P P")
             .setIngredient('L', Material.LAPIS_BLOCK)
             .setIngredient('W', Material.WATER_BUCKET)
             .setIngredient('D', Material.DIAMOND)
             .setIngredient('G', Material.DIAMOND_LEGGINGS)
-            .setIngredient('P', Material.WATER_LILY)
+            .setIngredient('P', Material.LILY_PAD)
     }
 }

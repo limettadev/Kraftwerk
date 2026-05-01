@@ -33,7 +33,7 @@ abstract class Scenario(
             "<red>disabled"
         }
         onToggle(enabled)
-        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} <yellow>$name<gray> has been $changerText<gray>."))
+        Bukkit.broadcast(Chat.colored("${Chat.prefix} <yellow>$name<gray> has been $changerText<gray>."))
         ConfigFeature.instance.data!!.set("game.scenarios.$id", enabled)
         ConfigFeature.instance.saveData()
     }
@@ -47,7 +47,7 @@ abstract class Scenario(
                 "<red>disabled"
             }
         onToggle(to)
-        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} &d$name<gray> has been $changerText<gray>."))
+        Bukkit.broadcast(Chat.colored("${Chat.prefix} <light_purple>$name<gray> has been $changerText<gray>."))
         ConfigFeature.instance.data!!.set("game.scenarios.$id", to)
         ConfigFeature.instance.saveData()
     }

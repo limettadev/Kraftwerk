@@ -9,16 +9,19 @@
 package pink.mino.kraftwerk.utils.recipes.list
 
 import org.bukkit.Material
+import org.bukkit.NamespacedKey
 import org.bukkit.block.Block
 import org.bukkit.block.Chest
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.inventory.CraftItemEvent
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ShapedRecipe
+import org.bukkit.persistence.PersistentDataType
+import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
+import pink.mino.kraftwerk.Kraftwerk
 import pink.mino.kraftwerk.utils.Chat
 import pink.mino.kraftwerk.utils.ItemBuilder
 import pink.mino.kraftwerk.utils.PotionBuilder
@@ -37,39 +40,37 @@ class ChestOfFateRecipe : Recipe(
             .name("<yellow>Chest of Fate")
             .make()
         recipe = ShapedRecipe(convertToRecipeItem(chestOfFate, id)).shape("WWW", "WHW", "WWW")
-            .setIngredient('W', Material.WOOD)
-            .setIngredient('H', Material.SKULL_ITEM, 3)
+            .setIngredient('W', Material.OAK_PLANKS)
+            .setIngredient('H', Material.PLAYER_HEAD, 3)
     }
 
     @EventHandler
     fun onCraftItemEvent(e: CraftItemEvent) {
         val player = e.whoClicked as Player
-        val item = e.inventory.result
-        val craftItem = CraftItemStack.asNMSCopy(item)
-        if (craftItem.hasTag()) {
-            val tag = craftItem.tag
-            if (tag.getString("uhcId") != null) {
-                if (tag.getString("uhcId") == "chest_of_fate") {
-                    val block: Block? = player.getTargetBlock(null as Set<Material?>?, 10)
-                    if (block == null || block.type !== Material.WORKBENCH) {
-                        Chat.sendMessage(player, "<red>You are not looking at a crafting table.")
-                        e.isCancelled = true
-                        return
-                    }
-                    e.isCancelled = true
-                    e.view.topInventory.clear()
-                    if (Random.nextInt(1, 3) == 1) {
-                        player.world.createExplosion(block.location, 5F, false)
-                    } else {
-                        val potion = PotionBuilder.createPotion(
-                            PotionEffect(PotionEffectType.ABSORPTION, 105 * 20, 3, true, true),
-                            PotionEffect(PotionEffectType.SPEED, 30 * 20, 2, true, true)
-                        )
-                        block.type = Material.CHEST
-                        val chest: Chest = block.state as Chest
-                        chest.inventory.setItem(13, potion)
-                    }
-                }
+        val item = e.inventory.result ?: return
+        val meta = item.itemMeta ?: return
+        val key = NamespacedKey(JavaPlugin.getPlugin(Kraftwerk::class.java), "uhcId")
+        val uhcId = meta.persistentDataContainer.get(key, PersistentDataType.STRING) ?: return
+
+        if (uhcId == "chest_of_fate") {
+            val block: Block? = player.getTargetBlock(null as Set<Material?>?, 10)
+            if (block == null || block.type !== Material.CRAFTING_TABLE) {
+                Chat.sendMessage(player, "<red>You are not looking at a crafting table.")
+                e.isCancelled = true
+                return
+            }
+            e.isCancelled = true
+            e.view.topInventory.clear()
+            if (Random.nextInt(1, 3) == 1) {
+                player.world.createExplosion(block.location, 5F, false)
+            } else {
+                val potion = PotionBuilder.createPotion(
+                    PotionEffect(PotionEffectType.ABSORPTION, 105 * 20, 3, true, true),
+                    PotionEffect(PotionEffectType.SPEED, 30 * 20, 2, true, true)
+                )
+                block.type = Material.CHEST
+                val chest: Chest = block.state as Chest
+                chest.inventory.setItem(13, potion)
             }
         }
     }

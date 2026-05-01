@@ -43,7 +43,7 @@ class MoleChatCommand : CommandExecutor {
             message.append(element).append(" ")
         }
         val msg = message.toString().trim()
-        MolesScenario.instance.sendMoles("<dark_gray>[${Chat.primaryColor}Mole Chat<dark_gray>]&f ${PlayerUtils.getPrefix(sender)}${sender.name} <dark_gray>- &f${msg}")
+        MolesScenario.instance.sendMoles("<dark_gray>[${Chat.primaryColor}Mole Chat<dark_gray>]<white> ${PlayerUtils.getPrefix(sender)}${sender.name} <dark_gray>- <white>${msg}")
         return true
     }
 }

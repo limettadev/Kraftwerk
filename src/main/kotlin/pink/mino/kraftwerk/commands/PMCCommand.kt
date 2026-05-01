@@ -28,7 +28,7 @@ class PMCCommand : CommandExecutor {
         val y = (player.location.y * 100.0).roundToInt() / 100.0
         val z = (player.location.z * 100.0).roundToInt() / 100.0
         if (player.scoreboard.getPlayerTeam(player) != null) {
-            for (team in player.scoreboard.getPlayerTeam(player).players) {
+            for (team in player.scoreboard.getPlayerTeam(player)!!.players) {
                 if (team is Player) {
                     Chat.sendMessage(team, "§8[${Chat.primaryColor}Team Chat§8] ${ChatColor.WHITE}${sender.name} ${Chat.dash} ${Chat.primaryColor}${player.name}'s<gray> location: ${Chat.primaryColor}${x}<gray>, ${Chat.primaryColor}${y}<gray>, ${Chat.primaryColor}${z} <dark_gray>| <gray>Dimension: ${Chat.primaryColor}${player.world.worldType.toString().uppercase()}")
                 }

@@ -28,10 +28,10 @@ class PlayerQuitListener : Listener {
     fun onPlayerQuit(e: PlayerQuitEvent) {
         val player = e.player
         val group: String = vaultChat!!.getPrimaryGroup(player)
-        val prefix: String = if (vaultChat!!.getGroupPrefix(player.world, group) != "<gray>") Chat.colored(vaultChat!!.getGroupPrefix(player.world, group)) else Chat.colored("<red>")
-        e.quitMessage = ChatColor.translateAlternateColorCodes('&', "<dark_gray>(&4-<dark_gray>)&r ${prefix}${player.displayName} <dark_gray>[&4${Bukkit.getOnlinePlayers().size - 1}<dark_gray>/&4${Bukkit.getServer().maxPlayers}<dark_gray>]")
+        val prefix = if (vaultChat!!.getGroupPrefix(player.world, group) != "<gray>") Chat.colored(vaultChat!!.getGroupPrefix(player.world, group)) else Chat.colored("<red>")
+        e.quitMessage = ChatColor.translateAlternateColorCodes('&', "<dark_gray>(<dark_red>-<dark_gray>)<reset> ${prefix}${player.displayName} <dark_gray>[<dark_red>${Bukkit.getOnlinePlayers().size - 1}<dark_gray>/<dark_red>${Bukkit.getServer().maxPlayers}<dark_gray>]")
         Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
-            Scoreboard.setScore(Chat.colored("${Chat.dash} <gray>Playing..."), Math.max(PlayerUtils.getPlayingPlayers().size, 0))
+            Scoreboard.setScore("${Chat.dash} <gray>Playing...", Math.max(PlayerUtils.getPlayingPlayers().size, 0))
         }, 3L)
 
         if (GameState.currentState == GameState.INGAME) {
@@ -58,7 +58,7 @@ class PlayerQuitListener : Listener {
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "wl remove ${player.name}")
                         }
 
-                        Bukkit.broadcastMessage(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${player.name}<gray> has been disqualified for being offline for more than 5 minutes."))
+                        Bukkit.broadcast(Chat.colored("${Chat.prefix} ${Chat.secondaryColor}${player.name}<gray> has been disqualified for being offline for more than 5 minutes."))
                     }
                 }
 

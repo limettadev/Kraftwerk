@@ -4,7 +4,7 @@ import org.bukkit.Chunk
 import org.bukkit.event.HandlerList
 import org.bukkit.event.world.ChunkEvent
 
-class ChunkModifiableEvent(chunk: Chunk?) : ChunkEvent(chunk) {
+class ChunkModifiableEvent(chunk: Chunk?) : ChunkEvent(chunk!!) {
 
     override fun getHandlers(): HandlerList {
         return HANDLERS

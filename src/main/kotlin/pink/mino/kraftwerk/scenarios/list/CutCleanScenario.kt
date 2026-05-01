@@ -29,11 +29,11 @@ class CutCleanScenario : Scenario(
                 (e.location.world.spawn(e.location, ExperienceOrb::class.java) as ExperienceOrb).experience = 1
                 e.entity.itemStack.type = Material.GOLD_INGOT
             }
-            Material.RAW_CHICKEN -> {
+            Material.CHICKEN -> {
                 (e.location.world.spawn(e.location, ExperienceOrb::class.java) as ExperienceOrb).experience = 1
                 e.entity.itemStack.type = Material.COOKED_CHICKEN
             }
-            Material.RAW_BEEF -> {
+            Material.BEEF -> {
                 (e.location.world.spawn(e.location, ExperienceOrb::class.java) as ExperienceOrb).experience = 1
                 e.entity.itemStack.type = Material.COOKED_BEEF
             }
@@ -41,9 +41,9 @@ class CutCleanScenario : Scenario(
                 (e.location.world.spawn(e.location, ExperienceOrb::class.java) as ExperienceOrb).experience = 1
                 e.entity.itemStack.type = Material.COOKED_MUTTON
             }
-            Material.PORK -> {
+            Material.PORKCHOP -> {
                 (e.location.world.spawn(e.location, ExperienceOrb::class.java) as ExperienceOrb).experience = 1
-                e.entity.itemStack.type = Material.GRILLED_PORK
+                e.entity.itemStack.type = Material.COOKED_PORKCHOP
             }
             Material.RABBIT -> {
                 (e.location.world.spawn(e.location, ExperienceOrb::class.java) as ExperienceOrb).experience = 1

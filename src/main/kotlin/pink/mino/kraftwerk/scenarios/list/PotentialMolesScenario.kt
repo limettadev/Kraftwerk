@@ -12,7 +12,7 @@ class PotentialMolesScenario : Scenario(
     "Potential Moles",
     "At PvP, every player has a chance to be a mole.",
     "potential_moles",
-    Material.IRON_SPADE
+    Material.IRON_SHOVEL
 ) {
     val prefix = "<dark_gray>[${Chat.primaryColor}Potential Moles<dark_gray>]<gray>"
 
@@ -31,6 +31,6 @@ class PotentialMolesScenario : Scenario(
 
         override fun onPvP() {
         assignMoles()
-        Bukkit.broadcastMessage(Chat.colored("$prefix Moles have been assigned!"))
+        Bukkit.broadcast(Chat.colored("$prefix Moles have been assigned!"))
     }
 }

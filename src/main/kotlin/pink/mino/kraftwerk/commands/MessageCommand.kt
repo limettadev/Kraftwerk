@@ -52,13 +52,13 @@ class MessageCommand : CommandExecutor {
             }
         }
 
-        Chat.sendMessage(sender, "<gray>To: &f${target.displayName} <dark_gray>- <gray>$message")
-        Chat.sendMessage(target, "<gray>From: &f${player.displayName} <dark_gray>- <gray>$message")
+        Chat.sendMessage(sender, "<gray>To: <white>${target.displayName} <dark_gray>- <gray>$message")
+        Chat.sendMessage(target, "<gray>From: <white>${player.displayName} <dark_gray>- <gray>$message")
 
         ReplyTo.setRepliedTo(player.uniqueId, target.uniqueId)
         ReplyTo.setRepliedTo(target.uniqueId, player.uniqueId)
 
-        target.playSound(target.location, Sound.NOTE_PLING, 10.toFloat(), 0.toFloat())
+        target.playSound(target.location, Sound.BLOCK_NOTE_BLOCK_PLING, 10.toFloat(), 0.toFloat())
         return true
     }
 

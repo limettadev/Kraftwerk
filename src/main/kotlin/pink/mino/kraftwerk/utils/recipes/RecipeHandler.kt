@@ -2,7 +2,7 @@ package pink.mino.kraftwerk.utils.recipes
 
 import me.lucko.helper.utils.Log
 import org.bukkit.Bukkit
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack
+import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -10,6 +10,8 @@ import org.bukkit.event.inventory.CraftItemEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.inventory.ShapedRecipe
 import org.bukkit.inventory.ShapelessRecipe
+import org.bukkit.persistence.PersistentDataType
+import org.bukkit.plugin.java.JavaPlugin
 import pink.mino.kraftwerk.Kraftwerk
 import pink.mino.kraftwerk.scenarios.ScenarioHandler
 import pink.mino.kraftwerk.utils.Chat
@@ -28,47 +30,44 @@ class RecipeHandler : Listener {
     @EventHandler
     fun onPlayerCraft(e: CraftItemEvent) {
         val player = e.whoClicked as Player
-        val item = e.inventory.result
-        val craftItem = CraftItemStack.asNMSCopy(item)
-        if (craftItem.hasTag()) {
-            val tag = craftItem.tag
-            if (tag.getString("uhcId") != null) {
-                if (crafts[player.uniqueId]!![getRecipe(tag.getString("uhcId"))!!.id] == null) {
-                    crafts[player.uniqueId]!![getRecipe(tag.getString("uhcId"))!!.id] = getRecipe(tag.getString("uhcId"))!!.crafts
-                    crafts[player.uniqueId]!![getRecipe(tag.getString("uhcId"))!!.id] = crafts[player.uniqueId]!![getRecipe(tag.getString("uhcId"))!!.id]!! - 1
-                    Chat.sendMessage(
-                        player,
-                        "$prefix You crafted a &9${item.itemMeta.displayName}<yellow>! <dark_gray>(&b${
-                            crafts[player.uniqueId]!![getRecipe(tag.getString("uhcId"))!!.id]!!
-                        }<dark_gray>/&b${getRecipe(tag.getString("uhcId"))!!.crafts}<dark_gray>)"
-                    )
-                    Log.info("[Recipes] Allowing player to craft ${getRecipe(tag.getString("uhcId"))!!.id.uppercase()} recipe.")
-                    craftItem.tag.remove("uhcId")
-                    e.inventory.result = CraftItemStack.asBukkitCopy(craftItem)
-                } else {
-                    if (crafts[player.uniqueId]!![getRecipe(tag.getString("uhcId"))!!.id]!! <= 0) {
-                        Chat.sendMessage(player, "$prefix <gray>You ran out of crafts for this item!")
-                        e.isCancelled = true
-                        return
-                    }
-                    crafts[player.uniqueId]!![getRecipe(tag.getString("uhcId"))!!.id] = crafts[player.uniqueId]!![getRecipe(tag.getString("uhcId"))!!.id]!! - 1
-                    Chat.sendMessage(
-                        player,
-                        "$prefix <yellow>You crafted a &9${item.itemMeta.displayName}<yellow>! <dark_gray>(&b${
-                            crafts[player.uniqueId]!![getRecipe(tag.getString("uhcId"))!!.id]!!
-                        }<dark_gray>/&b${getRecipe(tag.getString("uhcId"))!!.crafts}<dark_gray>)"
-                    )
-                    Log.info("[Recipes] Allowing player to craft ${getRecipe(tag.getString("uhcId"))!!.id.uppercase()} recipe.")
-                    craftItem.tag.remove("uhcId")
-                    e.inventory.result = CraftItemStack.asBukkitCopy(craftItem)
-                }
+        val item = e.inventory.result ?: return
+        val meta = item.itemMeta ?: return
+        val key = NamespacedKey(JavaPlugin.getPlugin(Kraftwerk::class.java), "uhcId")
+        val uhcId = meta.persistentDataContainer.get(key, PersistentDataType.STRING) ?: return
+        val recipe = getRecipe(uhcId) ?: return
+
+        if (crafts[player.uniqueId]!![recipe.id] == null) {
+            crafts[player.uniqueId]!![recipe.id] = recipe.crafts
+            crafts[player.uniqueId]!![recipe.id] = crafts[player.uniqueId]!![recipe.id]!! - 1
+            Chat.sendMessage(
+                player,
+                "$prefix You crafted a <blue>${meta.displayName}<yellow>! <dark_gray>(<aqua>${crafts[player.uniqueId]!![recipe.id]!!}<dark_gray>/<aqua>${recipe.crafts}<dark_gray>)"
+            )
+            Log.info("[Recipes] Allowing player to craft ${recipe.id.uppercase()} recipe.")
+            meta.persistentDataContainer.remove(key)
+            item.itemMeta = meta
+            e.inventory.result = item
+        } else {
+            if (crafts[player.uniqueId]!![recipe.id]!! <= 0) {
+                Chat.sendMessage(player, "$prefix <gray>You ran out of crafts for this item!")
+                e.isCancelled = true
+                return
             }
+            crafts[player.uniqueId]!![recipe.id] = crafts[player.uniqueId]!![recipe.id]!! - 1
+            Chat.sendMessage(
+                player,
+                "$prefix <yellow>You crafted a <blue>${meta.displayName}<yellow>! <dark_gray>(<aqua>${crafts[player.uniqueId]!![recipe.id]!!}<dark_gray>/<aqua>${recipe.crafts}<dark_gray>)"
+            )
+            Log.info("[Recipes] Allowing player to craft ${recipe.id.uppercase()} recipe.")
+            meta.persistentDataContainer.remove(key)
+            item.itemMeta = meta
+            e.inventory.result = item
         }
     }
 
     companion object {
         var recipes = ArrayList<Recipe>()
-        val prefix = "<dark_gray>[${Chat.primaryColor}&lUHC<dark_gray>]<gray>"
+        val prefix = "<dark_gray>[${Chat.primaryColor}<bold>UHC<dark_gray>]<gray>"
 
         fun setup() {
             recipes = arrayListOf()

@@ -35,13 +35,13 @@ class BareBonesScenario : Scenario(
     fun onCraft(e: PrepareItemCraftEvent) {
         if (!enabled) return
         if (GameState.currentState != GameState.INGAME) return
-        if (e.recipe.result.type == Material.ENCHANTMENT_TABLE) {
+        if (e.recipe!!.result.type == Material.ENCHANTING_TABLE) {
             e.inventory.result = ItemStack(Material.AIR)
         }
-        if (e.recipe.result.type == Material.ANVIL) {
+        if (e.recipe!!.result.type == Material.ANVIL) {
             e.inventory.result = ItemStack(Material.AIR)
         }
-        if (e.recipe.result.type == Material.GOLDEN_APPLE) {
+        if (e.recipe!!.result.type == Material.GOLDEN_APPLE) {
             e.inventory.result = ItemStack(Material.AIR)
         }
     }
