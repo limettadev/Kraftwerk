@@ -20,12 +20,12 @@ class UndergroundParallelScenario : Scenario(
     override fun handleBlock(block: Block) {
         val loc: Location = block.location
 
-        if (loc.blockY == 0 || loc.blockY > 42) {
+        if (loc.blockY == -64 || loc.blockY > 42) {
             return
         }
 
         val world: World = block.world
-        val surface: Block = world.getBlockAt(block.x, block.y + 59, block.z)
+        val surface: Block = world.getBlockAt(block.x, block.y + 123, block.z)
 
         if (BlockUtil.logs.contains(surface.type)) {
             var randomPerLeaves: Double = Random.nextDouble() * 100
