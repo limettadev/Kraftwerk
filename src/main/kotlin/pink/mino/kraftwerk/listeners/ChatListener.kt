@@ -1,32 +1,24 @@
 package pink.mino.kraftwerk.listeners
 
+import io.papermc.paper.event.player.AsyncChatEvent
 import me.lucko.helper.Schedulers
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.TextComponent
 import org.bukkit.Bukkit
-import org.bukkit.ChatColor
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
-import org.bukkit.event.player.AsyncPlayerChatEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.plugin.java.JavaPlugin
 import pink.mino.kraftwerk.Kraftwerk
 import pink.mino.kraftwerk.features.*
 import pink.mino.kraftwerk.scenarios.ScenarioHandler
 import pink.mino.kraftwerk.scenarios.list.MolesScenario
-import pink.mino.kraftwerk.utils.Perk
-import pink.mino.kraftwerk.utils.PerkChecker
-import pink.mino.kraftwerk.utils.PlayerUtils
-import pink.mino.kraftwerk.utils.Tags
+import pink.mino.kraftwerk.utils.*
 import java.util.*
-import net.milkbowl.vault.chat.Chat as VaultChat
 
 class ChatListener : Listener {
-
-    private var vaultChat: VaultChat? = null
-
-    init {
-        vaultChat = Bukkit.getServer().servicesManager.getRegistration(VaultChat::class.java)!!.provider
-    }
 
     val slurs = arrayListOf(
         "tranny",
@@ -49,12 +41,13 @@ class ChatListener : Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    fun onPlayerChat(e: AsyncPlayerChatEvent) {
+    fun onPlayerChat(e: AsyncChatEvent) {
         val player = e.player
-        val group: String? = vaultChat?.getPrimaryGroup(player)
-        val prefix: String = ChatColor.translateAlternateColorCodes('&', vaultChat?.getGroupPrefix(player.world, group)!!)
+        val message = e.message()
+        val user = Kraftwerk.instance.luckPerms.getPlayerAdapter(Player::class.java).getUser(player)
+        val prefix: String = user.cachedData.metaData.prefix!!
         if (PerkChecker.checkPerks(player).contains(Perk.EMOTES)) {
-            var msg = e.message
+            var msg = (e.message() as TextComponent).content()
 
             if (msg.contains(":shrug:", true))
                 msg = msg.replace(":shrug:", "<yellow>¯\\_(ツ)_/¯</yellow>")
@@ -77,54 +70,54 @@ class ChatListener : Listener {
             if (msg.contains(":blush:", true))
                 msg = msg.replace(":blush:", "<light_purple>(◡‿◡✿)</light_purple>")
 
-            e.message = msg
+            e.message(Component.text(msg))
         }
         var preference = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.chatMode
         if (preference == "MOLES") {
             e.isCancelled = true
             if (!ScenarioHandler.getActiveScenarios().contains(ScenarioHandler.getScenario("moles")) || MolesScenario.instance.moles[player.uniqueId] == null) {
-                pink.mino.kraftwerk.utils.Chat.sendMessage(player, "<red>Moles is not enabled. Setting your chat mode back to PUBLIC.")
+                Chat.sendMessage(player, "<red>Moles is not enabled. Setting your chat mode back to PUBLIC.")
                 preference = "PUBLIC"
                 JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.chatMode = "PUBLIC"
             } else {
                 Schedulers.sync().run {
-                    Bukkit.dispatchCommand(player, "mcc ${e.message}")
+                    Bukkit.dispatchCommand(player, "mcc ${(e.message() as TextComponent).content()}")
                 }
             }
         }
         if (preference == "STAFF") {
             e.isCancelled = true
             if (!player.hasPermission("uhc.staff")) {
-                pink.mino.kraftwerk.utils.Chat.sendMessage(player, "<red>You aren't a Staff member. Setting your chat mode back to PUBLIC.")
+                Chat.sendMessage(player, "<red>You aren't a Staff member. Setting your chat mode back to PUBLIC.")
                 preference = "PUBLIC"
                 JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.chatMode = "PUBLIC"
             } else {
                 Schedulers.sync().run {
-                    Bukkit.dispatchCommand(player, "ac ${e.message}")
+                    Bukkit.dispatchCommand(player, "ac ${(e.message() as TextComponent).content()}")
                 }
             }
         }
         if (preference == "SPEC") {
             e.isCancelled = true
             if (!SpecFeature.instance.isSpec(player)) {
-                pink.mino.kraftwerk.utils.Chat.sendMessage(player, "<red>You aren't a Staff member. Setting your chat mode back to PUBLIC.")
+                Chat.sendMessage(player, "<red>You aren't a Staff member. Setting your chat mode back to PUBLIC.")
                 preference = "PUBLIC"
                 JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.chatMode = "PUBLIC"
             } else {
                 Schedulers.sync().run {
-                    Bukkit.dispatchCommand(player, "sc ${e.message}")
+                    Bukkit.dispatchCommand(player, "sc ${(e.message() as TextComponent).content()}")
                 }
             }
         }
         if (preference == "TEAM") {
             e.isCancelled = true
             if (TeamsFeature.manager.getTeam(player) == null) {
-                pink.mino.kraftwerk.utils.Chat.sendMessage(player, "<red>You aren't on a Team. Setting your chat mode back to PUBLIC.")
+                Chat.sendMessage(player, "<red>You aren't on a Team. Setting your chat mode back to PUBLIC.")
                 preference = "PUBLIC"
                 JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.chatMode = "PUBLIC"
             } else {
                 Schedulers.sync().run {
-                    Bukkit.dispatchCommand(player, "pm ${e.message}")
+                    Bukkit.dispatchCommand(player, "pm ${(e.message() as TextComponent).content()}")
                 }
             }
         }
@@ -133,18 +126,18 @@ class ChatListener : Listener {
                 val secondsLeft: Long = cooldowns[e.player.uniqueId]!! / 1000 + cooldownTime - System.currentTimeMillis() / 1000
                 if (secondsLeft > 0) {
                     e.isCancelled = true
-                    pink.mino.kraftwerk.utils.Chat.sendMessage(player, "<red>You are currently on cooldown for ${secondsLeft}s. Skip the cooldown by purchasing a rank at <yellow>${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store url setup in config soft titties"}<red>.")
+                    Chat.sendMessage(player, "<red>You are currently on cooldown for ${secondsLeft}s. Skip the cooldown by purchasing a rank at <yellow>${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store url setup in config soft titties"}<red>.")
                     return
                 }
             }
 
             e.isCancelled = false
             if (!PerkChecker.checkPerks(e.player).contains(Perk.WHITE_CHAT)) {
-                val words = e.message.split(" ")
+                val words = (e.message() as TextComponent).content().split(" ")
                 for (word in words) {
                     if (slurs.contains(word.lowercase())) {
                         e.isCancelled = true
-                        pink.mino.kraftwerk.utils.Chat.sendMessage(e.player, "$prefix ${PlayerUtils.getPrefix(player)}${player.name} <dark_gray>»<gray> ${e.message}")
+                        Chat.sendMessage(e.player, "$prefix ${PlayerUtils.getPrefix(player)}${player.name} <dark_gray>»<gray> ${e.message()}")
                         Schedulers.sync().runLater({
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mute ${player.name} -s 1d Inappropiate Language (auto)")
                         }, (5 * 20).toLong())
@@ -164,10 +157,10 @@ class ChatListener : Listener {
                 if (remaining > 0) {
                     e.isCancelled = true
                     val timeLeft = PunishmentFeature.timeToString(remaining)
-                    player.sendMessage(pink.mino.kraftwerk.utils.Chat.colored("<red>You are muted for another $timeLeft. Reason: ${mutePunishment.reason}"))
+                    player.sendMessage(Chat.colored("<red>You are muted for another $timeLeft. Reason: ${mutePunishment.reason}"))
                 }
             }
-            e.format = prefix + pink.mino.kraftwerk.utils.Chat.colored("${PlayerUtils.getPrefix(player)}%s") + pink.mino.kraftwerk.utils.Chat.colored(display) + ChatColor.DARK_GRAY + " » " + pink.mino.kraftwerk.utils.Chat.colored(color) + "%s"
+            e.message(Chat.colored(prefix + "${PlayerUtils.getPrefix(player)}%s" + display + "<dark_gray>" + " » " + color + "%s"))
             cooldowns[player.uniqueId] = System.currentTimeMillis()
         }
     }

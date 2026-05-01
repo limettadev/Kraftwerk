@@ -42,9 +42,7 @@ dependencies {
     compileOnly("net.citizensnpcs:citizens-main:2.0.30-SNAPSHOT") {
         exclude(group = "*", module = "*")
     }
-    implementation("com.github.MilkBowl:VaultAPI:1.7") {
-        isTransitive = false
-    }
+    compileOnly("net.luckperms:api:5.4")
     paperweight.paperDevBundle("1.21.11-R0.1-SNAPSHOT")
     implementation("net.kyori:adventure-api:5.0.0")
     compileOnly("com.lunarclient:apollo-api:1.2.5")

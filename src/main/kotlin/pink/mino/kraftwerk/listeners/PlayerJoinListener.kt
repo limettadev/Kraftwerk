@@ -23,15 +23,8 @@ import pink.mino.kraftwerk.scenarios.ScenarioHandler
 import pink.mino.kraftwerk.utils.*
 import redis.clients.jedis.Jedis
 import java.util.*
-import net.milkbowl.vault.chat.Chat as VaultChat
 
 class PlayerJoinListener : Listener {
-
-    private var vaultChat: VaultChat? = null
-
-    init {
-        vaultChat = Bukkit.getServer().servicesManager.getRegistration(VaultChat::class.java)!!.provider
-    }
 
     fun checkEvaders(player: OfflinePlayer) {
         val profile = Kraftwerk.instance.profileHandler.getProfile(player.uniqueId) ?: return
@@ -124,8 +117,8 @@ class PlayerJoinListener : Listener {
             }
         }
 
-        val group: String = vaultChat!!.getPrimaryGroup(player)
-        val prefix = if (vaultChat!!.getGroupPrefix(player.world, group) != "<gray>") Chat.colored(vaultChat!!.getGroupPrefix(player.world, group)) else Chat.colored("<green>")
+        val user = Kraftwerk.instance.luckPerms.getPlayerAdapter(Player::class.java).getUser(player)
+        val prefix = if (user.cachedData.metaData.prefix!! != "<gray>") user.cachedData.metaData.prefix!! else Chat.colored("<white>")
         e.joinMessage = ChatColor.translateAlternateColorCodes('&', "<dark_gray>(<dark_green>+<dark_gray>)<reset> ${prefix}${player.displayName} <dark_gray>[<dark_green>${Bukkit.getOnlinePlayers().size}<dark_gray>/<dark_green>${Bukkit.getServer().maxPlayers}<dark_gray>]")
         /*Schedulers.sync().runLater({
             Chat.sendMessage(player, "<dark_gray>➡ <gray>Please consider donating to the server to keep it up for another month! The store link is <yellow>https://applejuice.tebex.io<gray> or just use <red>/buy<gray>!")

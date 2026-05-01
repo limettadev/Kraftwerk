@@ -11,10 +11,10 @@ import com.mongodb.client.MongoDatabase
 import me.lucko.helper.Schedulers
 import me.lucko.helper.plugin.ExtendedJavaPlugin
 import me.lucko.helper.utils.Log
-import me.lucko.spark.api.Spark
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.entities.Activity
 import net.kyori.adventure.text.minimessage.MiniMessage
+import net.luckperms.api.LuckPerms
 import org.bukkit.*
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ShapedRecipe
@@ -69,6 +69,7 @@ class Kraftwerk : ExtendedJavaPlugin() {
     lateinit var redisManager: RedisManager
     lateinit var chunky: ChunkyAPI
     lateinit var profileHandler: ProfileService
+    lateinit var luckPerms: LuckPerms
 
     val sessionId = UUID.randomUUID()
 
@@ -251,6 +252,7 @@ class Kraftwerk : ExtendedJavaPlugin() {
         } else {
             chunky = Bukkit.getServicesManager().load(ChunkyAPI::class.java)!!
         }
+        luckPerms = server.servicesManager.load(LuckPerms::class.java)!!
 
         /* This just enables Hardcore Hearts */
         protocolManager?.addPacketListener(HardcoreHeartsFeature())
