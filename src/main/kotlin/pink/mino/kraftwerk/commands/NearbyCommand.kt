@@ -30,9 +30,9 @@ class NearbyCommand : CommandExecutor {
             }
         }
         Chat.sendMessage(sender, Chat.line)
-        Chat.sendCenteredMessage(sender, "${Chat.primaryColor}<bold>Nearby Players")
+        Chat.sendMessage(sender, "${Chat.primaryColor}<bold>Nearby Players")
         if (players.isEmpty()) {
-            Chat.sendCenteredMessage(sender, "<gray>No players nearby!")
+            Chat.sendMessage(sender, "<gray>No players nearby!")
         } else {
             for (player in players) {
                 val text = MiniMessage.miniMessage().deserialize(

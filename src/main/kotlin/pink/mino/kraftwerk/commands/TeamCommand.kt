@@ -455,7 +455,7 @@ class TeamCommand : CommandExecutor {
             }
         } else if (args[0] == "list") {
             Chat.sendMessage(sender, Chat.line)
-            Chat.sendCenteredMessage(sender, "${Chat.primaryColor}<bold>Teams List")
+            Chat.sendMessage(sender, "${Chat.primaryColor}<bold>Teams List")
             Chat.sendMessage(sender, " ")
             val teamList = ArrayList<Team>()
             if (ScenarioHandler.getActiveScenarios().contains(ScenarioHandler.getScenario("moles"))) {
@@ -473,7 +473,7 @@ class TeamCommand : CommandExecutor {
                     }
                 }
                 if (teamList.isEmpty()) {
-                    Chat.sendCenteredMessage(sender, "<gray><bold>There are no teams right now!")
+                    Chat.sendMessage(sender, "<gray><bold>There are no teams right now!")
                 }
                 Chat.sendMessage(sender, Chat.line)
             } else {
@@ -493,7 +493,7 @@ class TeamCommand : CommandExecutor {
                     }
                 }
                 if (keys.isEmpty()) {
-                    Chat.sendCenteredMessage(sender, "<gray><bold>There are no teams right now!")
+                    Chat.sendMessage(sender, "<gray><bold>There are no teams right now!")
                 }
                 Chat.sendMessage(sender, Chat.line)
             }

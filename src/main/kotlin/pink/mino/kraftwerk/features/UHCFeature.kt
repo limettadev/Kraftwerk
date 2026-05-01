@@ -240,7 +240,7 @@ class UHCTask : BukkitRunnable() {
                 }
                 Bukkit.broadcast(Chat.colored(Chat.line))
                 for (player in Bukkit.getOnlinePlayers()) {
-                    Chat.sendCenteredMessage(player, "${Chat.primaryColor}<bold>UHC")
+                    Chat.sendMessage(player, "${Chat.primaryColor}<bold>UHC")
                 }
                 Bukkit.broadcast(Chat.colored(" "))
                 for (player in Bukkit.getOnlinePlayers()) {
@@ -254,7 +254,7 @@ class UHCTask : BukkitRunnable() {
                     Chat.sendMessage(player, "<gray>You may <green>begin<gray>! The host for this game is ${Chat.primaryColor}${ConfigFeature.instance.data!!.getString("game.host")}<gray>!")
 
                     Chat.sendMessage(player, "<gray>Scenarios: <white>${scenarios.joinToString(", ")}<gray>")
-                    Chat.sendCenteredMessage(player, " ")
+                    Chat.sendMessage(player, " ")
                     Chat.sendMessage(player, Chat.line)
                     player.playSound(player.location, Sound.ENTITY_ENDER_DRAGON_GROWL, 10F, 1F)
                     player.showTitle(Title.title(Chat.colored("<green><bold>GO!"), Chat.colored("<gray>You may now play the game, do ${Chat.primaryColor}/helpop<gray> for help!")))
@@ -294,10 +294,10 @@ class UHCTask : BukkitRunnable() {
                     player.saturation = 20F
                     player.fireTicks = 0
                     Chat.sendMessage(player, Chat.line)
-                    Chat.sendCenteredMessage(player, "${Chat.primaryColor}<bold>UHC")
+                    Chat.sendMessage(player, "${Chat.primaryColor}<bold>UHC")
                     Chat.sendMessage(player, " ")
-                    Chat.sendCenteredMessage(player, "<gray>All players have been healed & fed.")
-                    Chat.sendCenteredMessage(player, "<red>PvP<gray> is enabled in ${Chat.primaryColor}${rawPvP / 60} minutes<gray>.")
+                    Chat.sendMessage(player, "<gray>All players have been healed & fed.")
+                    Chat.sendMessage(player, "<red>PvP<gray> is enabled in ${Chat.primaryColor}${rawPvP / 60} minutes<gray>.")
                     Chat.sendMessage(player, Chat.line)
                     player.playSound(player.location, Sound.ENTITY_PLAYER_BURP, 10F, 1F)
                 }
@@ -313,11 +313,11 @@ class UHCTask : BukkitRunnable() {
                 }
                 for (player in Bukkit.getOnlinePlayers()) {
                     Chat.sendMessage(player, Chat.line)
-                    Chat.sendCenteredMessage(player, "${Chat.primaryColor}<bold>UHC")
+                    Chat.sendMessage(player, "${Chat.primaryColor}<bold>UHC")
                     Chat.sendMessage(player, " ")
-                    Chat.sendCenteredMessage(player, "<gray>PvP has been <green>enabled<gray>.")
-                    Chat.sendCenteredMessage(player, "${Chat.primaryColor}Meetup<gray> will start in ${Chat.primaryColor}${rawMeetup / 60} minutes<gray>.")
-                    Chat.sendCenteredMessage(player, "<gray>The border will begin ${Chat.primaryColor}shrinking<gray> in ${Chat.primaryColor}${rawBs / 60} minutes<gray>.")
+                    Chat.sendMessage(player, "<gray>PvP has been <green>enabled<gray>.")
+                    Chat.sendMessage(player, "${Chat.primaryColor}Meetup<gray> will start in ${Chat.primaryColor}${rawMeetup / 60} minutes<gray>.")
+                    Chat.sendMessage(player, "<gray>The border will begin ${Chat.primaryColor}shrinking<gray> in ${Chat.primaryColor}${rawBs / 60} minutes<gray>.")
                     Chat.sendMessage(player, Chat.line)
                     player.playSound(player.location, Sound.BLOCK_ANVIL_LAND, 10F, 1F)
                     if (!ConfigOptionHandler.getOption("statless")!!.enabled) XpFeature().add(player, 20.0)
@@ -339,12 +339,12 @@ class UHCTask : BukkitRunnable() {
                 currentEvent = Events.BORDER_SHRINK_ONE
                 Bukkit.broadcast(Chat.colored(Chat.line))
                 for (player in Bukkit.getOnlinePlayers()) {
-                    Chat.sendCenteredMessage(player, "${Chat.primaryColor}<bold>UHC")
+                    Chat.sendMessage(player, "${Chat.primaryColor}<bold>UHC")
                     Chat.sendMessage(player, " ")
                     if (ScenarioHandler.getScenario("bigcrack")!!.enabled) {
-                        Chat.sendCenteredMessage(player, "<gray>The border will start shrinking until it's at ${Chat.secondaryColor}150x150 (±75)<gray>!")
+                        Chat.sendMessage(player, "<gray>The border will start shrinking until it's at ${Chat.secondaryColor}150x150 (±75)<gray>!")
                     } else {
-                        Chat.sendCenteredMessage(player, "<gray>The border will start shrinking until it's at ${Chat.secondaryColor}50x50 (±25)<gray>!")
+                        Chat.sendMessage(player, "<gray>The border will start shrinking until it's at ${Chat.secondaryColor}50x50 (±25)<gray>!")
                     }
                 }
                 Bukkit.broadcast(Chat.colored(Chat.line))
@@ -366,9 +366,9 @@ class UHCTask : BukkitRunnable() {
                 }
                 Bukkit.broadcast(Chat.colored(Chat.line))
                 for (player in Bukkit.getOnlinePlayers()) {
-                    Chat.sendCenteredMessage(player, "${Chat.primaryColor}<bold>UHC")
+                    Chat.sendMessage(player, "${Chat.primaryColor}<bold>UHC")
                     Chat.sendMessage(player, " ")
-                    Chat.sendCenteredMessage(player, "<gray>It's now ${Chat.primaryColor}Meetup<gray>! Head to <green>0,0<gray>!")
+                    Chat.sendMessage(player, "<gray>It's now ${Chat.primaryColor}Meetup<gray>! Head to <green>0,0<gray>!")
                     if (!ConfigOptionHandler.getOption("statless")!!.enabled) XpFeature().add(player, 25.0)
                 }
                 for (scenario in ScenarioHandler.getActiveScenarios()) {

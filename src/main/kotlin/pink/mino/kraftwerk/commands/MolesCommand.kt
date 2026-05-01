@@ -33,7 +33,7 @@ class MolesCommand : CommandExecutor {
             return false
         }
         Chat.sendMessage(sender, Chat.line)
-        Chat.sendCenteredMessage(sender, "${Chat.primaryColor}<bold>Moles Help")
+        Chat.sendMessage(sender, "${Chat.primaryColor}<bold>Moles Help")
         Chat.sendMessage(sender, "${Chat.prefix} ${Chat.secondaryColor}/molekit [kit] <dark_gray>-<gray> Chooses a mole kit.")
         Chat.sendMessage(sender, "${Chat.prefix} ${Chat.secondaryColor}/mcl <dark_gray>-<gray> Sends your location out to other moles.")
         Chat.sendMessage(sender, "${Chat.prefix} ${Chat.secondaryColor}/mcc <message> <dark_gray>-<gray> Message other moles.")

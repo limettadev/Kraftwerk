@@ -123,7 +123,7 @@ class OrganizedFightsCommand : CommandExecutor {
             for (player in Bukkit.getOnlinePlayers()) {
                 Chat.sendMessage(player, Chat.colored(Chat.line))
                 Chat.sendMessage(player, " ")
-                Chat.sendCenteredMessage(player, "${Chat.primaryColor}<bold>ORGANIZED FIGHTS HAS BEEN ENABLED!")
+                Chat.sendMessage(player, "${Chat.primaryColor}<bold>ORGANIZED FIGHTS HAS BEEN ENABLED!")
                 Chat.sendMessage(player, "<gray>Organized Fights has been enabled, PvP is now disabled. Please standby for more instructions.")
                 Chat.sendMessage(player, " ")
                 Chat.sendMessage(player, Chat.colored(Chat.line))
@@ -134,7 +134,7 @@ class OrganizedFightsCommand : CommandExecutor {
             for (player in Bukkit.getOnlinePlayers()) {
                 Chat.sendMessage(player, Chat.colored(Chat.line))
                 Chat.sendMessage(player, " ")
-                Chat.sendCenteredMessage(player, "${Chat.primaryColor}<bold>ORGANIZED FIGHTS HAS BEEN DISABLED!")
+                Chat.sendMessage(player, "${Chat.primaryColor}<bold>ORGANIZED FIGHTS HAS BEEN DISABLED!")
                 Chat.sendMessage(player, "<gray>Organized Fights has been disabled, PvP is now enabled.")
                 Chat.sendMessage(player, " ")
                 Chat.sendMessage(player, Chat.colored(Chat.line))

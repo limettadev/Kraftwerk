@@ -165,10 +165,10 @@ class EndGameCommand : CommandExecutor {
         for (player in Bukkit.getOnlinePlayers()) {
             if (SpecFeature.instance.isSpec(player)) SpecFeature.instance.unspec(player)
             SpawnFeature.instance.send(player)
-            Chat.sendCenteredMessage(player, "${Chat.primaryColor}<bold>GAME OVER!")
+            Chat.sendMessage(player, "${Chat.primaryColor}<bold>GAME OVER!")
             Chat.sendMessage(player, " ")
-            Chat.sendCenteredMessage(player, "<gray>Congratulations to the winners: ${Chat.secondaryColor}${winners.joinToString(", ")}<gray>!")
-            Chat.sendCenteredMessage(player, "<gray>The server will restart in ${Chat.secondaryColor}45 seconds<gray>.")
+            Chat.sendMessage(player, "<gray>Congratulations to the winners: ${Chat.secondaryColor}${winners.joinToString(", ")}<gray>!")
+            Chat.sendMessage(player, "<gray>The server will restart in ${Chat.secondaryColor}45 seconds<gray>.")
         }
         for (world in Bukkit.getWorlds()) {
             world.pvp = true

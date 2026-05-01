@@ -109,42 +109,6 @@ class Chat {
             return sb.toString() + text
         }
 
-        /* Function to send centered messages to players */
-        fun sendCenteredMessage(player: CommandSender, message: String?) {
-            var text = message
-            if (text == null || text == "") player.sendMessage("")
-            text = (colored(message!!) as TextComponent).content()
-            var messagePxSize = 0
-            var previousCode = false
-            var isBold = false
-            for (c in text.toCharArray()) {
-                if (c == '§') {
-                    previousCode = true
-                    continue
-                } else if (previousCode) {
-                    previousCode = false
-                    if (c == 'l' || c == 'L') {
-                        isBold = true
-                        continue
-                    } else isBold = false
-                } else {
-                    val dFI: DefaultFontInfo = DefaultFontInfo.getDefaultFontInfo(c)
-                    messagePxSize += if (isBold) dFI.boldLength else dFI.length
-                    messagePxSize++
-                }
-            }
-            val halvedMessageSize = messagePxSize / 2
-            val toCompensate = CENTER_PX - halvedMessageSize
-            val spaceLength = DefaultFontInfo.SPACE.length + 1
-            var compensated = 0
-            val sb = StringBuilder()
-            while (compensated < toCompensate) {
-                sb.append(" ")
-                compensated += spaceLength
-            }
-            player.sendMessage(colored(sb.toString() + text))
-        }
-
         /* Simple function to send colored messages to players */
         fun sendMessage(player: CommandSender, message: String?) {
             if (message == null || message == "") player.sendMessage("")

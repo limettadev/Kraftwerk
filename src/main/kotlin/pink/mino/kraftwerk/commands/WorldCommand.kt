@@ -33,7 +33,7 @@ class WorldCommand : CommandExecutor {
         val player = sender as Player
         if (args.isEmpty()) {
             Chat.sendMessage(player, Chat.line)
-            Chat.sendCenteredMessage(player, "${Chat.primaryColor}<bold>World Help")
+            Chat.sendMessage(player, "${Chat.primaryColor}<bold>World Help")
             Chat.sendMessage(player, "${Chat.dash} ${Chat.secondaryColor}/world tp <world> <dark_gray>- <gray>Teleport to the provided world.")
             Chat.sendMessage(player, "${Chat.dash} ${Chat.secondaryColor}/world list <dark_gray>- <gray>List all worlds.")
             Chat.sendMessage(player, "${Chat.dash} ${Chat.secondaryColor}/world worlds <dark_gray>- <gray>List all UHC worlds.")
@@ -42,7 +42,7 @@ class WorldCommand : CommandExecutor {
             return false
         } else if (args[0].lowercase() == "list") {
             Chat.sendMessage(player, Chat.line)
-            Chat.sendCenteredMessage(player, "<red><bold>World List")
+            Chat.sendMessage(player, "<red><bold>World List")
             for (world in Bukkit.getServer().worlds) {
                 when (world.environment) {
                     World.Environment.NORMAL -> {

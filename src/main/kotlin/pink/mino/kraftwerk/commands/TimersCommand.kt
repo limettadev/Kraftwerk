@@ -23,15 +23,15 @@ class TimersCommand : CommandExecutor {
         }
         val valid = arrayListOf<Scenario>()
         Chat.sendMessage(sender, Chat.line)
-        Chat.sendCenteredMessage(sender, "${Chat.primaryColor}<bold>Scenario Timers")
+        Chat.sendMessage(sender, "${Chat.primaryColor}<bold>Scenario Timers")
         for (scenario in ScenarioHandler.getActiveScenarios()) {
             if (scenario.returnTimer() != null) {
                 valid.add(scenario)
-                Chat.sendCenteredMessage(sender, "<gray>${scenario.name} <dark_gray>- ${Chat.secondaryColor}${MiscUtils.timeToString(scenario.returnTimer()!!.toLong())}")
+                Chat.sendMessage(sender, "<gray>${scenario.name} <dark_gray>- ${Chat.secondaryColor}${MiscUtils.timeToString(scenario.returnTimer()!!.toLong())}")
             }
         }
         if (valid.isEmpty()) {
-            Chat.sendCenteredMessage(sender, "<red>No valid scenarios with timers are running.")
+            Chat.sendMessage(sender, "<red>No valid scenarios with timers are running.")
         }
         Chat.sendMessage(sender, Chat.line)
         return true

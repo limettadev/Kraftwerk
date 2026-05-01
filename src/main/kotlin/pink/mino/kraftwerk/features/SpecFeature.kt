@@ -143,7 +143,7 @@ class SpecClickFeature : PacketAdapter(JavaPlugin.getPlugin(Kraftwerk::class.jav
                             return
                         }
                         Chat.sendMessage(p, Chat.line)
-                        Chat.sendCenteredMessage(p, "${Chat.primaryColor}<bold>Player Locations")
+                        Chat.sendMessage(p, "${Chat.primaryColor}<bold>Player Locations")
                         for (player in list) {
                             Chat.sendMessage(
                                 p,
@@ -455,7 +455,7 @@ class SpecFeature : Listener {
                             Chat.sendMessage(p, "${prefix} There are no players online.")
                         }
                         Chat.sendMessage(p, Chat.line)
-                        Chat.sendCenteredMessage(p, "${Chat.primaryColor}<bold>Player Locations")
+                        Chat.sendMessage(p, "${Chat.primaryColor}<bold>Player Locations")
                         for (player in list) {
                             Chat.sendMessage(p, "${prefix} <gray>${player.name} <gray>is at <aqua>${floor(player.location.x)}, <gray>${floor(player.location.y)}, <gray>${floor(player.location.z)}")
                         }
