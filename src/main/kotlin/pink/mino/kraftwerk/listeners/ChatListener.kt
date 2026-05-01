@@ -160,7 +160,9 @@ class ChatListener : Listener {
                     player.sendMessage(Chat.colored("<red>You are muted for another $timeLeft. Reason: ${mutePunishment.reason}"))
                 }
             }
-            e.message(Chat.colored(prefix + "${PlayerUtils.getPrefix(player)}%s" + display + "<dark_gray>" + " » " + color + "%s"))
+            e.renderer { player, sourceDisplayName, message, audience ->
+                Chat.colored("$prefix ${PlayerUtils.getPrefix(player)}${player.name} <dark_gray>» $color${(e.message() as TextComponent).content()}")
+            }
             cooldowns[player.uniqueId] = System.currentTimeMillis()
         }
     }
