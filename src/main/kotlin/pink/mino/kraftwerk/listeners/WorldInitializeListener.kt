@@ -13,5 +13,6 @@ class WorldInitializeListener : Listener {
         world.setGameRule(GameRules.IMMEDIATE_RESPAWN, true)
         world.setGameRule(GameRules.SHOW_ADVANCEMENT_MESSAGES, false)
         world.setGameRule(GameRules.NATURAL_HEALTH_REGENERATION, false)
+        world.setGameRule(GameRules.LOCATOR_BAR, false)
     }
 }
