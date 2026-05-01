@@ -404,8 +404,10 @@ class SpawnFeature : Listener {
             }
         }
         if (e.player.world.name == "Spawn" && (Kraftwerk.instance.buildMode[e.player.uniqueId] == false || Kraftwerk.instance.buildMode[e.player.uniqueId] == null)) {
+            Log.info("yaaa2")
             if (e.item != null) {
                 val itemName = e.item!!.itemMeta?.displayName() ?: return
+                Log.info(itemName.toString())
                 when (itemName) {
                     Chat.colored("${Chat.primaryColor}View Stats <gray>(Right Click)") -> {
                         e.isCancelled = true
