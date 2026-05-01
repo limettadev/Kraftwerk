@@ -630,7 +630,7 @@ class EditConfigCommand : CommandExecutor {
             size = 8
             var iterator = 0
             for (option in ConfigOptionHandler.configOptions) {
-                if (option.category === "specials") {
+                if (option.category == "specials") {
                     val item = ItemStack(option.material)
                     val itemMeta = item.itemMeta
                     var color: String = if (option.enabled) "<green>"

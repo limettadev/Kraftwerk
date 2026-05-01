@@ -10,6 +10,7 @@ import org.bukkit.event.HandlerList
 import org.bukkit.event.Listener
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
+import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
@@ -56,41 +57,51 @@ class GuiBuilder : Listener {
         runnableHashMap[slot] = runnable
     }
 
+    private fun expectedTitle(): Component = name.decoration(TextDecoration.ITALIC, false)
+
     @EventHandler
     fun onInventoryClick(e: InventoryClickEvent) {
-        if (e.whoClicked is Player && owner != null) {
-            val clicker = e.whoClicked as Player
-            if (clicker.uniqueId == owner!!.uniqueId) {
-                val view = e.view
-                val inventoryTitle = view.title() // returns net.kyori.adventure.text.Component
-                val expectedTitle = name.decoration(TextDecoration.ITALIC, false)
-                if (inventoryTitle == expectedTitle) {
-                    val currentItem = e.currentItem
-                    if (currentItem != null && currentItem.type != Material.AIR) {
-                        val slot = e.slot
-                        runnableHashMap[slot]?.accept(e)
-                    }
-                }
-            }
+        if (owner == null) return
+        val clicker = e.whoClicked as? Player ?: return
+        if (clicker.uniqueId != owner!!.uniqueId) return
+
+        // Ignore clicks in the player's own bottom inventory
+        if (e.clickedInventory != e.view.topInventory) {
+            e.isCancelled = true
+            return
+        }
+
+        if (e.view.title() != expectedTitle()) return
+
+        e.isCancelled = true
+
+        val currentItem = e.currentItem
+        if (currentItem != null && currentItem.type != Material.AIR) {
+            runnableHashMap[e.slot]?.accept(e)
         }
     }
 
     @EventHandler
     fun onPlayerClose(event: InventoryCloseEvent) {
-        if (event.player is Player && owner != null) {
-            if (event.player.uniqueId == owner!!.uniqueId) {
-                val inventoryTitle = event.view.title() // Component
-                val expectedTitle = name
-                if (inventoryTitle == expectedTitle) {
-                    HandlerList.unregisterAll(this)
-                }
-            }
-        }
+        if (owner == null) return
+        val player = event.player as? Player ?: return
+        if (player.uniqueId != owner!!.uniqueId) return
+        if (event.view.title() != expectedTitle()) return
+
+        HandlerList.unregisterAll(this)
+    }
+
+    @EventHandler
+    fun onPlayerQuit(event: PlayerQuitEvent) {
+        if (owner == null) return
+        if (event.player.uniqueId != owner!!.uniqueId) return
+
+        HandlerList.unregisterAll(this)
     }
 
     fun make(): Inventory {
         require(rows * 9 <= 54) { "Too many rows in the created inventory!" }
-        val inv = Bukkit.createInventory(null, rows * 9, name.decoration(TextDecoration.ITALIC, false))
+        val inv = Bukkit.createInventory(null, rows * 9, expectedTitle())
         for (f in items.keys) {
             inv.setItem(f, items[f])
         }

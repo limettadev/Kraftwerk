@@ -9,7 +9,6 @@ import me.lucko.helper.promise.Promise
 import net.citizensnpcs.api.CitizensAPI
 import net.citizensnpcs.api.npc.MemoryNPCDataStore
 import net.citizensnpcs.api.npc.NPC
-import net.kyori.adventure.text.TextComponent
 import org.bson.BsonBinary
 import org.bson.Document
 import org.bukkit.*
@@ -193,21 +192,6 @@ class SpawnFeature : Listener {
 
         Chat.sendMessage(p, "${Chat.dash} Entered the arena kit editor, right click the signs in front of you for more actions.")
         Chat.sendMessage(p, "<red>Warning: Try not to move items outside of your hotbar, it will not be placed in your inventory when you enter the arena.")
-    }
-
-    @EventHandler
-    fun onPlayerInteract(e: PlayerInteractEvent) {
-        if (e.action != Action.RIGHT_CLICK_BLOCK) return
-        if (e.clickedBlock != null && e.clickedBlock!!.type.name.contains("SIGN")) {
-            val sign = e.clickedBlock!!.state as Sign
-            if (sign.getLine(1).toString() == "[Exit]") {
-                exitEditor(e.player)
-            }
-            if (sign.getLine(1).toString() == "[Save Kit]") {
-                Chat.sendMessage(e.player, "${prefix} Saving your kit...")
-                saveKit(e.player)
-            }
-        }
     }
 
     fun saveKit(p: Player) {
@@ -405,9 +389,22 @@ class SpawnFeature : Listener {
 
     @EventHandler
     fun onRightClick(e: PlayerInteractEvent) {
+        if (e.action == Action.RIGHT_CLICK_BLOCK) {
+            if (e.clickedBlock != null && e.clickedBlock!!.type.name.contains("SIGN")) {
+                val sign = e.clickedBlock!!.state as Sign
+                if (sign.getLine(1).toString() == "[Exit]") {
+                    exitEditor(e.player)
+                }
+                if (sign.getLine(1).toString() == "[Save Kit]") {
+                    Chat.sendMessage(e.player, "${prefix} Saving your kit...")
+                    saveKit(e.player)
+                }
+            }
+        }
         if (e.player.world.name == "Spawn" && (Kraftwerk.instance.buildMode[e.player.uniqueId] == false || Kraftwerk.instance.buildMode[e.player.uniqueId] == null)) {
             if (e.item != null) {
-                when ((e.item!!.itemMeta.customName() as TextComponent)) {
+                val itemName = e.item!!.itemMeta?.displayName() ?: return
+                when (itemName) {
                     Chat.colored("${Chat.primaryColor}View Stats <gray>(Right Click)") -> {
                         e.isCancelled = true
                         e.player.performCommand("stats")
