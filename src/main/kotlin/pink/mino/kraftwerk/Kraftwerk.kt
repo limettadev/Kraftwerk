@@ -121,7 +121,6 @@ class Kraftwerk : ExtendedJavaPlugin() {
         Bukkit.getServer().pluginManager.registerEvents(PickupFeature.instance, this)
         Bukkit.getServer().pluginManager.registerEvents(ChunkPopulateListener(), this)
         Bukkit.getServer().pluginManager.registerEvents(OreLimiterListener(), this)
-        Bukkit.getServer().pluginManager.registerEvents(PregenListener(), this)
         Bukkit.getServer().pluginManager.registerEvents(CanePopulatorFeature(), this)
         Bukkit.getServer().pluginManager.registerEvents(TeamsFeature.manager, this)
         Bukkit.getServer().pluginManager.registerEvents(OpenedMatchesListener(), this)
