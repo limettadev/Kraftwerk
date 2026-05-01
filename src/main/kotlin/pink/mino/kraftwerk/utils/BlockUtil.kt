@@ -1,6 +1,5 @@
 package pink.mino.kraftwerk.utils
 
-import com.google.common.collect.Lists
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.Sound
@@ -61,54 +60,34 @@ class BlockUtil {
     }
 
     companion object {
-        private val DEFAULT_VEIN_LIMIT = 100
+        const val DEFAULT_VEIN_LIMIT = 64
     }
 
-    fun getVein(start: Block): List<Block> {
-        start.type
-        return getVein(start, DEFAULT_VEIN_LIMIT)
-    }
-
-    fun getNearby(block: Block): List<Block> {
-        val nearby: ArrayList<Block> = arrayListOf()
-
-        for (dx in -1..1) {
-            for (dy in -1..1) {
-                for (dz in -1..1) {
-                    if (dx == 0 && dy == 0 && dz == 0) {
-                        continue
-                    }
-                    nearby.add(block.getRelative(dx, dy, dz))
-                }
-            }
-        }
-        return nearby
-    }
+    fun getVein(start: Block): List<Block> = getVein(start, DEFAULT_VEIN_LIMIT)
 
     fun getVein(start: Block, maxVeinSize: Int): List<Block> {
-        val toCheck: LinkedList<Block> = Lists.newLinkedList()
-        val vein: ArrayList<Block> = Lists.newArrayList()
+        val targetType = start.type
+        val visited = HashSet<Block>()
+        val toCheck = ArrayDeque<Block>()
 
+        visited.add(start)
         toCheck.add(start)
-        vein.add(start)
 
-        while (!toCheck.isEmpty()) {
-            val check = toCheck.poll()
+        while (toCheck.isNotEmpty()) {
+            val check = toCheck.removeFirst()
 
-            for (nearbyBlock in getNearby(check)) {
-                if (vein.contains(nearbyBlock)) continue
-                var type = nearbyBlock.type
-                if (type != start.type) continue
+            for (dx in -1..1) for (dy in -1..1) for (dz in -1..1) {
+                if (dx == 0 && dy == 0 && dz == 0) continue
+                val neighbor = check.getRelative(dx, dy, dz)
+                if (!visited.add(neighbor)) continue
+                if (neighbor.type != targetType) continue
 
-                toCheck.add(nearbyBlock)
-                vein.add(nearbyBlock)
+                toCheck.add(neighbor)
 
-                if (vein.size > maxVeinSize) {
-                    return vein
-                }
+                if (visited.size >= maxVeinSize) return visited.toList()
             }
         }
-        return vein
+        return visited.toList()
     }
 
 }

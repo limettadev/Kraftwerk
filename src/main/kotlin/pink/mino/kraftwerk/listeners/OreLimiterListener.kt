@@ -1,6 +1,5 @@
 package pink.mino.kraftwerk.listeners
 
-import com.google.common.collect.Sets
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.event.EventHandler
@@ -12,68 +11,71 @@ import java.util.*
 
 class OreLimiterListener : Listener {
 
-    private var random = Random()
-    val ores = listOf(
-        Material.COAL_ORE,
-        Material.IRON_ORE,
-        Material.GOLD_ORE,
-        Material.REDSTONE_ORE,
-        Material.LAPIS_ORE,
-        Material.DIAMOND_ORE,
-        Material.EMERALD_ORE
+    private val random = Random()
+    private val blockUtil = BlockUtil()
+
+    private val ores = hashSetOf(
+        Material.COAL_ORE,         Material.DEEPSLATE_COAL_ORE,
+        Material.IRON_ORE,         Material.DEEPSLATE_IRON_ORE,
+        Material.GOLD_ORE,         Material.DEEPSLATE_GOLD_ORE,
+        Material.REDSTONE_ORE,     Material.DEEPSLATE_REDSTONE_ORE,
+        Material.LAPIS_ORE,        Material.DEEPSLATE_LAPIS_ORE,
+        Material.DIAMOND_ORE,      Material.DEEPSLATE_DIAMOND_ORE,
+        Material.EMERALD_ORE,      Material.DEEPSLATE_EMERALD_ORE,
+    )
+
+    private val caveBlocks = hashSetOf(
+        Material.AIR,
+        Material.WATER,
+        Material.LAVA,
     )
 
     @EventHandler
     fun on(event: ChunkModifiableEvent) {
         val chunk = event.chunk
-        val checked: MutableSet<Block> = Sets.newHashSet()
+        val world = chunk.world
+        val worldConfig = ConfigFeature.instance.worlds!!
 
-        // Redstone removed 40% of the time (Just experimental, Inferno's is the same and gets no complaints)
-        // Diamond/Gold removed from SettingsFeature
-        val goldRate = ConfigFeature.instance.worlds!!.getInt(chunk.world.name + ".orerates.gold")
-        val diamondRate = ConfigFeature.instance.worlds!!.getInt(chunk.world.name + ".orerates.diamond")
-        val oresOutsideCaves = ConfigFeature.instance.worlds!!.getBoolean("${chunk.world.name}.oresOutsideCaves")
+        val goldRate = worldConfig.getInt("${world.name}.orerates.gold")
+        val diamondRate = worldConfig.getInt("${world.name}.orerates.diamond")
+        val oresOutsideCaves = worldConfig.getBoolean("${world.name}.oresOutsideCaves")
+
+        val checked = HashSet<Block>()
 
         for (x in 0..15) {
-            for (y in 0..64) {
+            for (y in world.minHeight until world.maxHeight) {
                 for (z in 0..15) {
                     val block = chunk.getBlock(x, y, z)
-
-                    if (checked.contains(block)) continue
+                    if (!checked.add(block)) continue
 
                     val type = block.type
+                    if (type !in ores) continue
 
-                    if (!ores.contains(type)) continue
-
-                    val vein: List<Block> = BlockUtil().getVein(block)
+                    val vein = blockUtil.getVein(block)
                     checked.addAll(vein)
 
+                    val replacement = if (type.name.startsWith("DEEPSLATE_")) Material.DEEPSLATE else Material.STONE
+
                     if (!oresOutsideCaves) {
-                        var good = false
-                        vein.forEach {
-                            BlockUtil().getBlocks(it, 2)
-                                .forEach { block -> if (block.type == Material.AIR ||
-                                    block.type == Material.WATER ||
-                                    block.type == Material.LAVA
-                                ) good = true }
+                        val nearCave = vein.any { ore ->
+                            blockUtil.getBlocks(ore, 2).any { it.type in caveBlocks }
                         }
-                        if (!good) {
-                            vein.forEach { it.type = Material.STONE }
+                        if (!nearCave) {
+                            vein.forEach { it.type = replacement }
                             continue
                         }
                     }
-                    if (type == Material.REDSTONE_ORE) {
-                        if ((random.nextInt(99) + 1) <= 40) {
-                            vein.forEach { it.type = Material.STONE }
-                        }
-                    } else if (type == Material.GOLD_ORE){
-                        if ((random.nextInt(99) + 1) <= goldRate) {
-                            vein.forEach { it.type = Material.STONE }
-                        }
-                    } else if (type == Material.DIAMOND_ORE) {
-                        if ((random.nextInt(99) + 1) <= diamondRate) {
-                            vein.forEach { it.type = Material.STONE }
-                        }
+
+                    val roll = random.nextInt(100) + 1
+                    val removeChance = when (type) {
+                        Material.REDSTONE_ORE, Material.DEEPSLATE_REDSTONE_ORE -> 40
+                        Material.GOLD_ORE,     Material.DEEPSLATE_GOLD_ORE     -> goldRate
+                        Material.DIAMOND_ORE,  Material.DEEPSLATE_DIAMOND_ORE  -> diamondRate
+                        else -> 0
+                    }
+
+                    if (roll <= removeChance) {
+                        vein.forEach { it.type = replacement }
                     }
                 }
             }
