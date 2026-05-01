@@ -6,6 +6,7 @@ import com.mongodb.client.model.Filters
 import com.mongodb.client.model.FindOneAndReplaceOptions
 import me.lucko.helper.Schedulers
 import me.lucko.helper.promise.Promise
+import me.lucko.helper.utils.Log
 import net.citizensnpcs.api.CitizensAPI
 import net.citizensnpcs.api.npc.MemoryNPCDataStore
 import net.citizensnpcs.api.npc.NPC
@@ -389,6 +390,7 @@ class SpawnFeature : Listener {
 
     @EventHandler
     fun onRightClick(e: PlayerInteractEvent) {
+        Log.info("yaaa")
         if (e.action == Action.RIGHT_CLICK_BLOCK) {
             if (e.clickedBlock != null && e.clickedBlock!!.type.name.contains("SIGN")) {
                 val sign = e.clickedBlock!!.state as Sign
