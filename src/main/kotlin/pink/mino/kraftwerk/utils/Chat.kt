@@ -147,10 +147,8 @@ class Chat {
 
         /* Simple function to send colored messages to players */
         fun sendMessage(player: CommandSender, message: String?) {
-            var text = message
-            if (text == null || text == "") player.sendMessage("")
-            text = ChatColor.translateAlternateColorCodes('&', message!!)
-            player.sendMessage(text)
+            if (message == null || message == "") player.sendMessage("")
+            player.sendMessage(colored(message!!))
         }
 
         fun sendMessage(player: CommandSender, component: Component) {

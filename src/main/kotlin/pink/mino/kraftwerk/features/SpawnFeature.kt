@@ -163,10 +163,10 @@ class SpawnFeature : Listener {
         editorList.add(p.uniqueId)
         p.teleport(Location(Bukkit.getWorld("Spawn"), -733.5,134.5, 254.0))
         p.inventory.clear()
-        p.inventory.setHelmet(ItemStack(Material.AIR))
-        p.inventory.setChestplate(ItemStack(Material.AIR))
-        p.inventory.setLeggings(ItemStack(Material.AIR))
-        p.inventory.setBoots(ItemStack(Material.AIR))
+        p.inventory.helmet = ItemStack(Material.AIR)
+        p.inventory.chestplate = ItemStack(Material.AIR)
+        p.inventory.leggings = ItemStack(Material.AIR)
+        p.inventory.boots = ItemStack(Material.AIR)
         p.inventory.setItemInOffHand(ItemStack(Material.AIR))
 
 
@@ -292,10 +292,10 @@ class SpawnFeature : Listener {
             p.removePotionEffect(effect.type)
         }
         p.inventory.clear()
-        p.inventory.setHelmet(ItemStack(Material.AIR))
-        p.inventory.setChestplate(ItemStack(Material.AIR))
-        p.inventory.setLeggings(ItemStack(Material.AIR))
-        p.inventory.setBoots(ItemStack(Material.AIR))
+        p.inventory.helmet = ItemStack(Material.AIR)
+        p.inventory.chestplate = ItemStack(Material.AIR)
+        p.inventory.leggings = ItemStack(Material.AIR)
+        p.inventory.boots = ItemStack(Material.AIR)
         p.inventory.setItemInOffHand(ItemStack(Material.AIR))
         p.gameMode = GameMode.ADVENTURE
         p.exp = 0F
@@ -337,7 +337,7 @@ class SpawnFeature : Listener {
             .setOwner(p.name)
             .make()
         val donator = ItemBuilder(Material.EMERALD)
-            .name("<dark_green><bold>Donator <gray>(Right Click)")
+            .name("<dark_green>Donator <gray>(Right Click)")
             .addLore("<gray>Right-click to view your donator perks.")
             .make()
         p.inventory.setItem(3, profile)
@@ -411,7 +411,7 @@ class SpawnFeature : Listener {
                         e.isCancelled = true
                         Bukkit.dispatchCommand(e.player, "stats")
                     }
-                    "<dark_green><bold>Donator <gray>(Right Click)" -> {
+                    "<dark_green>Donator <gray>(Right Click)" -> {
                         e.isCancelled = true
                         Bukkit.dispatchCommand(e.player, "donator")
                     }

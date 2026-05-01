@@ -1,14 +1,9 @@
 package pink.mino.kraftwerk.features
 
-import me.lucko.spark.api.statistic.StatisticWindow.TicksPerSecond
-import me.lucko.spark.api.statistic.types.DoubleStatistic
-import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
-import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitRunnable
-import pink.mino.kraftwerk.Kraftwerk
 import pink.mino.kraftwerk.config.ConfigOptionHandler
 import pink.mino.kraftwerk.scenarios.ScenarioHandler
 import pink.mino.kraftwerk.utils.Chat
@@ -39,19 +34,19 @@ class TabFeature : BukkitRunnable() {
         }
     }
 
-    fun scenarioTextWrap(text: String, width: Int): ArrayList<Component> {
+    fun scenarioTextWrap(text: String, width: Int): ArrayList<String> {
         val words = text.split(" ")
-        val lines = ArrayList<Component>()
+        val lines = ArrayList<String>()
         var currentLine = ""
         for (word in words) {
             if (currentLine.length + word.length + 1 > width) {
-                lines.add(Chat.colored("<white>${currentLine}"))
+                lines.add("<white>${currentLine}")
                 currentLine = "<white>$word "
             } else {
                 currentLine += "<white>$word "
             }
         }
-        lines.add(Chat.colored("<white>${currentLine}"))
+        lines.add("<white>${currentLine}")
         return lines
     }
 
@@ -65,21 +60,21 @@ class TabFeature : BukkitRunnable() {
         if (scenarios.isEmpty()) {
             scenarios.add("Vanilla+")
         }
-        val header = "<color:${Chat.primaryColor}>${Chat.scoreboardTitle}</color>\n" +
-            "<gray>TPS: ${checkTps(Math.round(tps * 100.0) / 100.0)} <dark_gray>|</dark_gray> Ping: <white>${checkPing(player.ping)}ms</white></gray>" +
+        val header = "${Chat.primaryColor}${Chat.scoreboardTitle}\n" +
+            "<gray>TPS: ${checkTps(Math.round(tps * 100.0) / 100.0)} <dark_gray>|</dark_gray> <gray>Ping: <white>${checkPing(player.ping)}ms</white></gray>" +
             (if (!ConfigOptionHandler.getOption("nobranding")!!.enabled) "\n<blue>/discord</blue>" else "")
         var game = "${ConfigFeature.instance.data!!.getString("game.host")}'s ${ConfigFeature.instance.data!!.getString("matchpost.team")}"
         if (ConfigFeature.instance.data!!.getString("matchpost.team") == null) {
             game = "Not set"
         }
         val footer = if (!ConfigOptionHandler.getOption("nobranding")!!.enabled) {
-            "<gray>Game: <color:${Chat.secondaryColor}>${game}</color>\nScenarios: <color:${Chat.secondaryColor}>${
+            "<gray>Game: ${Chat.secondaryColor}${game}\nScenarios: ${Chat.secondaryColor}${
                 scenarioTextWrap(scenarios.joinToString(", "), 40).joinToString("\n")
-            }</color></gray>"
+            }</gray>"
         } else {
-            "<gray>Scenarios: <color:${Chat.secondaryColor}>${
+            "<gray>Scenarios: ${Chat.secondaryColor}${
                 scenarioTextWrap(scenarios.joinToString(", "), 40).joinToString("\n")
-            }</color></gray>"
+            }</gray>"
         }
         player.sendPlayerListHeader(MiniMessage.miniMessage().deserialize(header))
         player.sendPlayerListFooter(MiniMessage.miniMessage().deserialize(footer))

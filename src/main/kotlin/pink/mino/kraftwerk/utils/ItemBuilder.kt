@@ -1,6 +1,7 @@
 package pink.mino.kraftwerk.utils
 
 import com.google.common.collect.Lists
+import net.kyori.adventure.text.format.TextDecoration
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.Color
 import org.bukkit.Material
@@ -25,7 +26,7 @@ class BookBuilder {
          *
          * @return The enchanted book itemstack.
          */
-        fun createEnchantedBook(ench: Enchantment, level: Int): ItemStack? {
+        fun createEnchantedBook(ench: Enchantment, level: Int): ItemStack {
             val item = ItemStack(Material.ENCHANTED_BOOK, 1)
             val meta = item.itemMeta as EnchantmentStorageMeta
             meta.addStoredEnchant(ench, level, true)
@@ -144,7 +145,7 @@ class ItemBuilder(material: Material) {
     var meta: ItemMeta = item.itemMeta
 
     fun name(name: String): ItemBuilder {
-        meta.displayName(MiniMessage.miniMessage().deserialize(name))
+        meta.displayName(MiniMessage.miniMessage().deserialize(name).decoration(TextDecoration.ITALIC, false))
         item.itemMeta = meta
         return this
     }
