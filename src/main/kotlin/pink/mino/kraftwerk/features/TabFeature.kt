@@ -60,21 +60,21 @@ class TabFeature : BukkitRunnable() {
         if (scenarios.isEmpty()) {
             scenarios.add("Vanilla+")
         }
-        val header = "${Chat.primaryColor}${Chat.scoreboardTitle}\n" +
+        val header = "\n\n${Chat.primaryColor}${Chat.scoreboardTitle}\n" +
             "<gray>TPS: ${checkTps(Math.round(tps * 100.0) / 100.0)} <dark_gray>|</dark_gray> <gray>Ping: <white>${checkPing(player.ping)}ms</white></gray>" +
-            (if (!ConfigOptionHandler.getOption("nobranding")!!.enabled) "\n<blue>/discord</blue>" else "")
+            (if (!ConfigOptionHandler.getOption("nobranding")!!.enabled) "\n<blue>/discord</blue>\n" else "")
         var game = "${ConfigFeature.instance.data!!.getString("game.host")}'s ${ConfigFeature.instance.data!!.getString("matchpost.team")}"
         if (ConfigFeature.instance.data!!.getString("matchpost.team") == null) {
             game = "Not set"
         }
         val footer = if (!ConfigOptionHandler.getOption("nobranding")!!.enabled) {
-            "<gray>Game: ${Chat.secondaryColor}${game}\nScenarios: ${Chat.secondaryColor}${
+            "\n\n<gray>Game: ${Chat.secondaryColor}${game}\n<gray>Scenarios: ${Chat.secondaryColor}${
                 scenarioTextWrap(scenarios.joinToString(", "), 40).joinToString("\n")
             }</gray>"
         } else {
-            "<gray>Scenarios: ${Chat.secondaryColor}${
+            "\n\n<gray>Scenarios: ${Chat.secondaryColor}${
                 scenarioTextWrap(scenarios.joinToString(", "), 40).joinToString("\n")
-            }</gray>"
+            }</gray>\n\n"
         }
         player.sendPlayerListHeader(MiniMessage.miniMessage().deserialize(header))
         player.sendPlayerListFooter(MiniMessage.miniMessage().deserialize(footer))

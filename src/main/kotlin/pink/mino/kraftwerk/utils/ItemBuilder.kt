@@ -150,20 +150,20 @@ class ItemBuilder(material: Material) {
         return this
     }
     fun addLore(line: String): ItemBuilder {
-        var lore = meta.lore
+        var lore = meta.lore()
         if (lore == null) lore = ArrayList()
-        lore.add(Chat.colored(line).toString())
-        meta.lore = lore
+        lore.add(Chat.colored(line))
+        meta.lore(lore)
         item.itemMeta = meta
         return this
     }
     fun removeLore(index: Int): ItemBuilder {
-        meta.lore!!.removeAt(index)
+        meta.lore()!!.removeAt(index)
         item.itemMeta = meta
         return this
     }
     fun clearLore(): ItemBuilder {
-        meta.lore!!.clear()
+        meta.lore()!!.clear()
         item.itemMeta = meta
         return this
     }
@@ -207,7 +207,7 @@ class ItemBuilder(material: Material) {
         return this
     }
     fun toEnchant(): ItemBuilder {
-        if (item.type != Material.ENCHANTED_BOOK) throw Error("You can't do this, this isn't an enchant book.")
+        if (item.type != Material.ENCHANTED_BOOK) throw Error("You can't do this, this isn't an enchantment book.")
         meta = meta as EnchantmentStorageMeta
         item.itemMeta = meta
         return this
