@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitRunnable
 import pink.mino.kraftwerk.Kraftwerk
 import pink.mino.kraftwerk.events.ChunkModifiableEvent
+import pink.mino.kraftwerk.features.ConfigFeature
 
 class ChunkPopulateListener : Listener {
 
@@ -22,7 +23,9 @@ class ChunkPopulateListener : Listener {
             override fun run() {
                 val world = Bukkit.getWorld(worldName) ?: return
                 val chunk = world.getChunkAt(chunkX, chunkZ) ?: return
-                Bukkit.getPluginManager().callEvent(ChunkModifiableEvent(chunk))
+                if (ConfigFeature.instance.worlds!!.getString("${world.name}.type") != null) {
+                    Bukkit.getPluginManager().callEvent(ChunkModifiableEvent(chunk))
+                }
             }
         }.runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), 400L)
     }

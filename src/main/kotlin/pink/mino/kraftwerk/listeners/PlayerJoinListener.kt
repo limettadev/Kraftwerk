@@ -4,8 +4,6 @@ import com.google.gson.Gson
 import com.mongodb.client.model.Filters
 import me.lucko.helper.Schedulers
 import net.kyori.adventure.text.minimessage.MiniMessage
-import net.md_5.bungee.api.chat.ClickEvent
-import net.md_5.bungee.api.chat.TextComponent
 import org.bson.BsonBinary
 import org.bukkit.*
 import org.bukkit.entity.Player
@@ -32,7 +30,7 @@ class PlayerJoinListener : Listener {
     private var vaultChat: VaultChat? = null
 
     init {
-        vaultChat = Bukkit.getServer().servicesManager.load(VaultChat::class.java)
+        vaultChat = Bukkit.getServer().servicesManager.getRegistration(VaultChat::class.java)!!.provider
     }
 
     fun checkEvaders(player: OfflinePlayer) {
@@ -181,10 +179,10 @@ class PlayerJoinListener : Listener {
                 player.saturation = 20F
                 player.gameMode = GameMode.SURVIVAL
                 player.inventory.clear()
-                player.inventory.setHelmet(ItemStack(Material.AIR))
-                player.inventory.setChestplate(ItemStack(Material.AIR))
-                player.inventory.setLeggings(ItemStack(Material.AIR))
-                player.inventory.setBoots(ItemStack(Material.AIR))
+                player.inventory.helmet = ItemStack(Material.AIR)
+                player.inventory.chestplate = ItemStack(Material.AIR)
+                player.inventory.leggings = ItemStack(Material.AIR)
+                player.inventory.boots = ItemStack(Material.AIR)
                 player.inventory.setItemInOffHand(ItemStack(Material.AIR))
                 player.enderChest.clear()
                 player.setItemOnCursor(ItemStack(Material.AIR))

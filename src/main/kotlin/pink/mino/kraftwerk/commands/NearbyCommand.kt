@@ -1,9 +1,6 @@
 package pink.mino.kraftwerk.commands
 
-import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.minimessage.MiniMessage
-import net.md_5.bungee.api.chat.ClickEvent
-import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -41,7 +38,7 @@ class NearbyCommand : CommandExecutor {
                 val text = MiniMessage.miniMessage().deserialize(
                     "<insert:/tp ${player.name}><${Chat.primaryColor}>${floor(player.location.x)}, ${floor(player.location.y)}, ${floor(player.location.z)} <dark_gray>- <${Chat.secondaryColor}>${PlayerUtils.getPrefix(player)}${player.name} <dark_gray>(<${Chat.primaryColor}>${floor(sender.location.distance(player.location))}m<dark_gray>)</insert>"
                 )
-                Chat.sendMessage(sender, "${Chat.primaryColor}${floor(player.location.x)}, ${floor(player.location.y)}, ${floor(player.location.z)} <dark_gray>- ${Chat.secondaryColor}${PlayerUtils.getPrefix(player)}${player.name} <dark_gray>(${Chat.primaryColor}${floor(sender.location.distance(player.location))}m<dark_gray>)")
+                Chat.sendMessage(sender, text)
             }
         }
         Chat.sendMessage(sender, Chat.line)

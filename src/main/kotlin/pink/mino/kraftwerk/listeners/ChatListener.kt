@@ -1,8 +1,6 @@
 package pink.mino.kraftwerk.listeners
 
 import me.lucko.helper.Schedulers
-import net.kyori.adventure.text.minimessage.MiniMessage
-import net.milkbowl.vault.chat.Chat
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.event.EventHandler
@@ -20,13 +18,14 @@ import pink.mino.kraftwerk.utils.PerkChecker
 import pink.mino.kraftwerk.utils.PlayerUtils
 import pink.mino.kraftwerk.utils.Tags
 import java.util.*
+import net.milkbowl.vault.chat.Chat as VaultChat
 
 class ChatListener : Listener {
 
-    private var vaultChat: Chat? = null
+    private var vaultChat: VaultChat? = null
 
     init {
-        vaultChat = Bukkit.getServer().servicesManager.load(Chat::class.java)
+        vaultChat = Bukkit.getServer().servicesManager.getRegistration(VaultChat::class.java)!!.provider
     }
 
     val slurs = arrayListOf(
