@@ -3,7 +3,7 @@ package pink.mino.kraftwerk.listeners
 import me.lucko.helper.Schedulers
 import me.lucko.helper.scheduler.Task
 import org.bukkit.Bukkit
-import org.bukkit.ChatColor
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
@@ -19,17 +19,13 @@ import java.util.*
 
 class PlayerQuitListener : Listener {
     private val logoutTimers = mutableMapOf<UUID, Task>()
-    private var vaultChat: net.milkbowl.vault.chat.Chat? = null
 
-    init {
-        vaultChat = Bukkit.getServer().servicesManager.load(net.milkbowl.vault.chat.Chat::class.java)
-    }
     @EventHandler
     fun onPlayerQuit(e: PlayerQuitEvent) {
         val player = e.player
-        val group: String = vaultChat!!.getPrimaryGroup(player)
-        val prefix = if (vaultChat!!.getGroupPrefix(player.world, group) != "<gray>") Chat.colored(vaultChat!!.getGroupPrefix(player.world, group)) else Chat.colored("<red>")
-        e.quitMessage = ChatColor.translateAlternateColorCodes('&', "<dark_gray>(<dark_red>-<dark_gray>)<reset> ${prefix}${player.displayName} <dark_gray>[<dark_red>${Bukkit.getOnlinePlayers().size - 1}<dark_gray>/<dark_red>${Bukkit.getServer().maxPlayers}<dark_gray>]")
+        val user = Kraftwerk.instance.luckPerms.getPlayerAdapter(Player::class.java).getUser(player)
+        val prefix = if (user.cachedData.metaData.prefix!! != "<gray>") user.cachedData.metaData.prefix!! else Chat.colored("<white>")
+        e.quitMessage(Chat.colored("<dark_gray>(<dark_red>-<dark_gray>)<reset> ${prefix}${player.displayName} <dark_gray>[<dark_red>${Bukkit.getOnlinePlayers().size - 1}<dark_gray>/<dark_red>${Bukkit.getServer().maxPlayers}<dark_gray>]"))
         Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
             Scoreboard.setScore("${Chat.dash} <gray>Playing...", Math.max(PlayerUtils.getPlayingPlayers().size, 0))
         }, 3L)
