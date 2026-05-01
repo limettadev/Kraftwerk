@@ -1,17 +1,17 @@
 package pink.mino.kraftwerk.listeners
 
+import org.bukkit.GameRules
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.bukkit.event.world.WorldInitEvent
-import pink.mino.kraftwerk.features.CanePopulatorFeature
+import org.bukkit.event.world.WorldLoadEvent
 
 class WorldInitializeListener : Listener {
-    /* Replaced for a Listener
     @EventHandler
-    fun onWorldInitialize(e: WorldInitEvent) {
+    fun onWorldInitialize(e: WorldLoadEvent) {
         val world = e.world
-        world.populators.add(CanePopulatorFeature())
+        world.setGameRule(GameRules.ADVANCE_WEATHER, false)
+        world.setGameRule(GameRules.IMMEDIATE_RESPAWN, true)
+        world.setGameRule(GameRules.SHOW_ADVANCEMENT_MESSAGES, false)
+        world.setGameRule(GameRules.NATURAL_HEALTH_REGENERATION, false)
     }
-
-     */
 }

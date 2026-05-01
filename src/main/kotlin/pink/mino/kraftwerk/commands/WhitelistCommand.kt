@@ -1,7 +1,6 @@
 package pink.mino.kraftwerk.commands
 
 import org.bukkit.Bukkit
-import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -129,7 +128,7 @@ class WhitelistCommand : CommandExecutor {
             args[0] == "on" -> {
                 ConfigFeature.instance.data!!.set("whitelist.enabled", true)
                 ConfigFeature.instance.saveData()
-                Bukkit.broadcast(Chat.colored("${Chat.prefix} The whitelist is now ${ChatColor.GREEN}enabled<white>."))
+                Bukkit.broadcast(Chat.colored("${Chat.prefix} The whitelist is now <green>enabled<white>."))
                 Bukkit.getPluginManager().callEvent(WhitelistStateChangeEvent(true))
             }
         }

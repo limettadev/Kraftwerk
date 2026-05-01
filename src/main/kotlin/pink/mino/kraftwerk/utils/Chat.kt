@@ -142,7 +142,7 @@ class Chat {
                 sb.append(" ")
                 compensated += spaceLength
             }
-            player.sendMessage(sb.toString() + text)
+            player.sendMessage(colored(sb.toString() + text))
         }
 
         /* Simple function to send colored messages to players */
