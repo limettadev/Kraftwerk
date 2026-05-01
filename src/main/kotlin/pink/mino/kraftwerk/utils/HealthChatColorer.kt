@@ -6,13 +6,13 @@ class HealthChatColorer {
             var c = ""
             when {
                 health >= 90 -> {
-                    c = "§2"
+                    c = "<dark_green>"
                 }
                 health >= 80 -> {
                     c = "<green>"
                 }
                 health >= 70 -> {
-                    c = "§6"
+                    c = "<gold>"
                 }
                 health >= 35 -> {
                     c = "<yellow>"
