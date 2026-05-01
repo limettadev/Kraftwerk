@@ -406,43 +406,44 @@ class SpawnFeature : Listener {
     fun onRightClick(e: PlayerInteractEvent) {
         if (e.player.world.name == "Spawn" && (Kraftwerk.instance.buildMode[e.player.uniqueId] == false || Kraftwerk.instance.buildMode[e.player.uniqueId] == null)) {
             if (e.item !== null) {
-                when (e.item!!.itemMeta.displayName) {
-                    "${Chat.primaryColor}View Stats <gray>(Right Click)" -> {
+                when (e.item!!.itemMeta.displayName()) {
+                    Chat.colored("${Chat.primaryColor}View Stats <gray>(Right Click)") -> {
                         e.isCancelled = true
                         Bukkit.dispatchCommand(e.player, "stats")
                     }
-                    "<dark_green>Donator <gray>(Right Click)" -> {
+                    Chat.colored("<dark_green>Donator <gray>(Right Click)") -> {
                         e.isCancelled = true
                         Bukkit.dispatchCommand(e.player, "donator")
                     }
-                    "${Chat.primaryColor}UHC Configuration <gray>(Right Click)" -> {
+                    Chat.colored("${Chat.primaryColor}UHC Configuration <gray>(Right Click)") -> {
                         e.isCancelled = true
                         Bukkit.dispatchCommand(e.player, "uhc")
                     }
-                    "${Chat.primaryColor}Active Scenarios <gray>(Right Click)" -> {
+                    Chat.colored("${Chat.primaryColor}Active Scenarios <gray>(Right Click)") -> {
                         e.isCancelled = true
                         Bukkit.dispatchCommand(e.player, "scen")
                     }
-                    "${Chat.primaryColor}FFA Arena <gray>(Right Click)" -> {
+                    Chat.colored("${Chat.primaryColor}FFA Arena <gray>(Right Click)") -> {
                         e.isCancelled = true
                         Bukkit.dispatchCommand(e.player, "a")
                     }
-                    "${Chat.primaryColor}Donator Menu <gray>(Right Click)" -> {
+                    Chat.colored("${Chat.primaryColor}Donator Menu <gray>(Right Click)") -> {
                         e.isCancelled = true
                         Bukkit.dispatchCommand(e.player, "donator")
                     }
-                    "${Chat.primaryColor}Champions Kit <gray>(Right Click)" -> {
+                    Chat.colored("${Chat.primaryColor}Champions Kit <gray>(Right Click)") -> {
                         e.isCancelled = true
                         Bukkit.dispatchCommand(e.player, "ckit")
                     }
-                    "${Chat.primaryColor}Your Profile <gray>(Right Click)" -> {
+                    Chat.colored("${Chat.primaryColor}Your Profile <gray>(Right Click)") -> {
                         e.isCancelled = true
                         Bukkit.dispatchCommand(e.player, "profile")
                     }
-                    "${Chat.primaryColor}Edit Arena Kit <gray>(Right Click)" -> {
+                    Chat.colored("${Chat.primaryColor}Edit Arena Kit <gray>(Right Click)") -> {
                         e.isCancelled = true
                         sendEditor(e.player)
                     }
+                    else -> {}
                 }
             }
         }

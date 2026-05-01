@@ -152,7 +152,7 @@ class ItemBuilder(material: Material) {
     fun addLore(line: String): ItemBuilder {
         var lore = meta.lore()
         if (lore == null) lore = ArrayList()
-        lore.add(Chat.colored(line))
+        lore.add(Chat.colored(line).decoration(TextDecoration.ITALIC, false))
         meta.lore(lore)
         item.itemMeta = meta
         return this
