@@ -96,7 +96,7 @@ class RespawnCommand : CommandExecutor {
             } else if (RespawnFeature.instance.respawnablePlayers.size >= 45) {
                 size = 6
             }
-            val gui = GuiBuilder().rows(size).name("${Chat.primaryColor}Respawnable Players").owner(sender as Player)
+            val gui = GuiBuilder().rows(size).name(Chat.colored("${Chat.primaryColor}Respawnable Players")).owner(sender as Player)
             for ((index, player) in RespawnFeature.instance.respawnablePlayers.withIndex()) {
                 val skull = ItemBuilder(Material.PLAYER_HEAD)
                     .name("<light_purple>${Bukkit.getOfflinePlayer(player).name}")

@@ -34,7 +34,7 @@ class EditConfigCommand : CommandExecutor {
         var gui: GuiBuilder? = null
         var size: Int = 35
         if (args.isEmpty()) {
-            gui = GuiBuilder().rows(2).name("${Chat.primaryColor}Edit UHC Config").owner(sender)
+            gui = GuiBuilder().rows(2).name(Chat.colored("${Chat.primaryColor}Edit UHC Config")).owner(sender)
             size = 17
             val rates = ItemBuilder(Material.FLINT)
                 .name("${Chat.primaryColor}Rates")
@@ -118,7 +118,7 @@ class EditConfigCommand : CommandExecutor {
                 player.performCommand("editconfig specials")
             }
         } else if (args[0].lowercase() == "options") {
-            gui = GuiBuilder().rows(3).name("${Chat.primaryColor}Edit UHC Config").owner(sender)
+            gui = GuiBuilder().rows(3).name(Chat.colored("${Chat.primaryColor}Edit UHC Config")).owner(sender)
             size = 17
             var iterator = 0
             for (option in ConfigOptionHandler.configOptions) {
@@ -143,7 +143,7 @@ class EditConfigCommand : CommandExecutor {
                 }
             }
         } else if (args[0].lowercase() == "nether") {
-            gui = GuiBuilder().rows(1).name("${Chat.primaryColor}Edit UHC Config").owner(sender)
+            gui = GuiBuilder().rows(1).name(Chat.colored("${Chat.primaryColor}Edit UHC Config")).owner(sender)
             size = 8
             var iterator = 0
             for (option in ConfigOptionHandler.configOptions) {
@@ -168,7 +168,7 @@ class EditConfigCommand : CommandExecutor {
                 }
             }
         } else if (args[0].lowercase() == "rules") {
-            gui = GuiBuilder().rows(2).name("${Chat.primaryColor}Edit UHC Config").owner(sender)
+            gui = GuiBuilder().rows(2).name(Chat.colored("${Chat.primaryColor}Edit UHC Config")).owner(sender)
             size = 17
             var iterator = 0
             for (option in ConfigOptionHandler.configOptions) {
@@ -193,7 +193,7 @@ class EditConfigCommand : CommandExecutor {
                 }
             }
         } else if (args[0] == "events") {
-            gui = GuiBuilder().rows(1).name("${Chat.primaryColor}Edit UHC Config").owner(sender)
+            gui = GuiBuilder().rows(1).name(Chat.colored("${Chat.primaryColor}Edit UHC Config")).owner(sender)
             size = 8
             val finalHeal = ItemStack(Material.REDSTONE)
             val pvp = ItemStack(Material.IRON_SWORD)
@@ -365,7 +365,7 @@ class EditConfigCommand : CommandExecutor {
             player.playSound(player.location, Sound.ENTITY_PLAYER_LEVELUP, 10.toFloat(), 1.toFloat())
             return true
         } else if (args[0].lowercase() == "starterfood") {
-            gui = GuiBuilder().rows(1).name("${Chat.primaryColor}Edit UHC Config").owner(sender)
+            gui = GuiBuilder().rows(1).name(Chat.colored("${Chat.primaryColor}Edit UHC Config")).owner(sender)
             size = 8
             val starterFood = ItemStack(Material.COOKED_BEEF)
             val starterFoodMeta = starterFood.itemMeta
@@ -408,7 +408,7 @@ class EditConfigCommand : CommandExecutor {
                 }
             }
         } else if (args[0].lowercase() == "teams") {
-            gui = GuiBuilder().rows(3).name("${Chat.primaryColor}Edit UHC Config").owner(sender)
+            gui = GuiBuilder().rows(3).name(Chat.colored("${Chat.primaryColor}Edit UHC Config")).owner(sender)
             size = 26
             val teamSize = ItemStack(Material.IRON_SWORD, ConfigFeature.instance.data!!.getInt("game.teamSize"))
             val teamSizeMeta = teamSize.itemMeta
@@ -535,7 +535,7 @@ class EditConfigCommand : CommandExecutor {
                 player.performCommand("team reset")
             }
         } else if (args[0].lowercase() == "rates") {
-            gui = GuiBuilder().rows(1).name("${Chat.primaryColor}Edit UHC Config").owner(sender)
+            gui = GuiBuilder().rows(1).name(Chat.colored("${Chat.primaryColor}Edit UHC Config")).owner(sender)
             size = 8
             val flintRates = ItemStack(Material.FLINT)
             val flintRatesMeta = flintRates.itemMeta
@@ -626,7 +626,7 @@ class EditConfigCommand : CommandExecutor {
                 }
             }
         }  else if (args[0].lowercase() == "specials") {
-            gui = GuiBuilder().rows(1).name("${Chat.primaryColor}Edit UHC Config").owner(sender)
+            gui = GuiBuilder().rows(1).name(Chat.colored("${Chat.primaryColor}Edit UHC Config")).owner(sender)
             size = 8
             var iterator = 0
             for (option in ConfigOptionHandler.configOptions) {

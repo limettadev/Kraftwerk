@@ -1,5 +1,6 @@
 package pink.mino.kraftwerk.listeners
 import net.citizensnpcs.api.CitizensAPI
+import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.title.Title
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -23,9 +24,9 @@ class PlayerDeathListener : Listener {
     fun onPlayerDeath(e: PlayerDeathEvent) {
         if (!e.entity.hasMetadata("NPC")) {
             val player = e.entity as Player
-            val old = e.deathMessage
+            val old = (e.deathMessage() as TextComponent).content()
             if (ConfigOptionHandler.getOption("deathlightning")!!.enabled) player.world.strikeLightningEffect(player.location)
-            e.deathMessage = Chat.colored("<dark_gray>»<white> $old")
+            e.deathMessage(Chat.colored("<dark_gray>»<white> $old"))
             if (player.world.name == "Arena") {
                 e.deathMessage = null
             }
@@ -77,8 +78,7 @@ class PlayerDeathListener : Listener {
                 val player = e.entity
                 val killer = e.entity.killer
                 val npc = CitizensAPI.getNPCRegistry().getNPC(e.entity)
-                e.deathMessage =
-                    Chat.colored("<dark_gray>»<white> ${killer!!.name} has killed ${npc.name}")
+                e.deathMessage(Chat.colored("<dark_gray>»<white> ${killer!!.name} has killed ${npc.name}"))
                 if (killer != null) {
                     val o = ConfigFeature.instance.data!!.getInt("game.kills.${killer.name}")
                     ConfigFeature.instance.data!!.set("game.kills.${killer.name}", o + 1)

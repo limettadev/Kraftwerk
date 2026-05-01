@@ -34,7 +34,7 @@ class ScenarioCommand : CommandExecutor {
         } else if (ScenarioHandler.getActiveScenarios().size > 45) {
             size = 6
         }
-        val gui = GuiBuilder().rows(size).name("<dark_gray>Active Scenarios").owner(sender)
+        val gui = GuiBuilder().rows(size).name(Chat.colored("<dark_gray>Active Scenarios")).owner(sender)
         for ((index, scenario) in ScenarioHandler.getActiveScenarios().withIndex()) {
             val item = ItemStack(scenario.material)
             val meta = item.itemMeta

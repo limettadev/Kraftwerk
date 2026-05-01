@@ -32,7 +32,7 @@ class RecipeCommand : CommandExecutor {
         }
         var gui = GuiBuilder()
             .owner(sender)
-            .name("Recipes")
+            .name(Chat.colored("Recipes"))
             .rows(5)
         gui = MiscUtils.populateCrafting(gui)
         val slots = arrayListOf(

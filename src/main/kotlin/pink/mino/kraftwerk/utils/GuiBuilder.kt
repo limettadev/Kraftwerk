@@ -1,5 +1,7 @@
 package pink.mino.kraftwerk.utils
 
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -15,7 +17,7 @@ import pink.mino.kraftwerk.Kraftwerk
 import java.util.function.Consumer
 
 class GuiBuilder : Listener {
-    private var name: String
+    private var name: Component
     private var rows: Int
     private val items: HashMap<Int, ItemStack>
     private val runnableHashMap: HashMap<Int, Consumer<InventoryClickEvent>?>
@@ -27,8 +29,8 @@ class GuiBuilder : Listener {
         return this
     }
 
-    fun name(newName: String): GuiBuilder {
-        name = Chat.colored(newName)
+    fun name(newName: Component): GuiBuilder {
+        name = newName
         return this
     }
 
@@ -61,7 +63,7 @@ class GuiBuilder : Listener {
             if (clicker.uniqueId == owner!!.uniqueId) {
                 val view = e.view
                 val inventoryTitle = view.title() // returns net.kyori.adventure.text.Component
-                val expectedTitle = net.kyori.adventure.text.minimessage.MiniMessage.miniMessage().deserialize(name)
+                val expectedTitle = name.decoration(TextDecoration.ITALIC, false)
                 if (inventoryTitle == expectedTitle) {
                     val currentItem = e.currentItem
                     if (currentItem != null && currentItem.type != Material.AIR) {
@@ -78,7 +80,7 @@ class GuiBuilder : Listener {
         if (event.player is Player && owner != null) {
             if (event.player.uniqueId == owner!!.uniqueId) {
                 val inventoryTitle = event.view.title() // Component
-                val expectedTitle = net.kyori.adventure.text.minimessage.MiniMessage.miniMessage().deserialize(name)
+                val expectedTitle = name
                 if (inventoryTitle == expectedTitle) {
                     HandlerList.unregisterAll(this)
                 }
@@ -97,7 +99,7 @@ class GuiBuilder : Listener {
 
     init {
         Bukkit.getPluginManager().registerEvents(this, JavaPlugin.getPlugin(Kraftwerk::class.java))
-        name = "Inventory"
+        name = Chat.colored("Inventory")
         rows = 1
         items = HashMap()
         runnableHashMap = HashMap()

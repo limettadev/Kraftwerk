@@ -78,7 +78,7 @@ class ConfigCommand : CommandExecutor {
             sender.sendMessage("You can't use this command as you technically aren't a player.")
             return false
         }
-        val gui = GuiBuilder().rows(3).name("${Chat.primaryColor}<bold>Game Configuration").owner(sender)
+        val gui = GuiBuilder().rows(3).name(Chat.colored("${Chat.primaryColor}<bold>Game Configuration")).owner(sender)
 
         sender.sendMessage(Chat.colored("${Chat.prefix} Opening the UHC configuration..."))
         val options = ItemBuilder(Material.LAVA_BUCKET)

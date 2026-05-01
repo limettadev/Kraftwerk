@@ -1,6 +1,5 @@
 package pink.mino.kraftwerk.scenarios.list
 
-import net.minecraft.world.item.alchemy.Potion
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.command.Command
@@ -11,16 +10,11 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
-import org.bukkit.potion.PotionType
 import pink.mino.kraftwerk.Kraftwerk
 import pink.mino.kraftwerk.features.ConfigFeature
 import pink.mino.kraftwerk.features.SpecFeature
 import pink.mino.kraftwerk.scenarios.Scenario
-import pink.mino.kraftwerk.utils.Chat
-import pink.mino.kraftwerk.utils.GuiBuilder
-import pink.mino.kraftwerk.utils.ItemBuilder
-import pink.mino.kraftwerk.utils.PlayerUtils
-import pink.mino.kraftwerk.utils.PotionBuilder
+import pink.mino.kraftwerk.utils.*
 import java.util.*
 
 class GenieScenario : Scenario(
@@ -127,7 +121,7 @@ class GenieScenario : Scenario(
             Chat.sendMessage(sender, "$prefix You do not have any wishes!")
             return true
         }
-        val gui = GuiBuilder().name("${Chat.primaryColor}Genie Menu").rows(2).owner(sender)
+        val gui = GuiBuilder().name(Chat.colored("${Chat.primaryColor}Genie Menu")).rows(2).owner(sender)
         val rewards = calculateRewards(sender)
         for ((index, reward) in rewards.withIndex()) {
             gui.item(index, reward).onClick {

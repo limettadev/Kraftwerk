@@ -164,7 +164,7 @@ class StatsCommand : CommandExecutor {
                 if (target == sender) {
                     gui.item(8, resetStats).onClick runnable@ {
                         if (PerkChecker.checkPerks(sender as Player).contains(Perk.STATS_RESET)) {
-                            gui = GuiBuilder().rows(1).name("Reset your stats?").owner(sender)
+                            gui = GuiBuilder().rows(1).name(Chat.colored("Reset your stats?")).owner(sender)
 
                             val accept = ItemBuilder(Material.WHITE_WOOL)
                                 .setDurability(5)

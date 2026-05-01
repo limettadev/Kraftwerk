@@ -46,7 +46,7 @@ class ProfileCommand : CommandExecutor {
         if (sender !is Player) {
             return false
         }
-        val gui = GuiBuilder().rows(3).name("${Chat.primaryColor}<bold>Your Profile").owner(sender)
+        val gui = GuiBuilder().rows(3).name(Chat.colored("${Chat.primaryColor}<bold>Your Profile")).owner(sender)
         val settings = ItemBuilder(Material.COMPARATOR)
             .name(" ${Chat.primaryColor}<bold>Settings")
             .addLore(" ")
@@ -81,7 +81,7 @@ class ProfileCommand : CommandExecutor {
         }
         gui.item(11, settings).onClick runnable@ { inventoryClickEvent ->
             val player = inventoryClickEvent.whoClicked as Player
-            val gui = GuiBuilder().rows(1).name("${Chat.primaryColor}<bold>Player Settings").owner(player)
+            val gui = GuiBuilder().rows(1).name(Chat.colored("${Chat.primaryColor}<bold>Player Settings")).owner(player)
             val disableRedstonePickup = ItemBuilder(Material.REDSTONE)
             if (profile.disableRedstonePickup) {
                 disableRedstonePickup.name("<green><bold>Disable Redstone Pickup")
@@ -263,7 +263,7 @@ class ProfileCommand : CommandExecutor {
             Bukkit.dispatchCommand(it.whoClicked as Player, "stats")
         }
         gui.item(15, display).onClick runnable@ {
-            val gui = GuiBuilder().rows(3).name("${Chat.primaryColor}<bold>Display Settings").owner(sender)
+            val gui = GuiBuilder().rows(3).name(Chat.colored("${Chat.primaryColor}<bold>Display Settings")).owner(sender)
             val tags = ItemBuilder(Material.NAME_TAG)
                 .name(" ${Chat.primaryColor}<bold>Tags")
                 .addLore("<gray>Grant yourself suffixes at the end of your name!")
@@ -273,7 +273,7 @@ class ProfileCommand : CommandExecutor {
                 .addLore("<gray>Customize the blocks given in your arena kit!")
                 .make()
             gui.item(12, tags).onClick runnable@ {
-                val gui = GuiBuilder().rows(3).name("${Chat.primaryColor}<bold>Tags").owner(sender)
+                val gui = GuiBuilder().rows(3).name(Chat.colored("${Chat.primaryColor}<bold>Tags")).owner(sender)
                 val profile = Kraftwerk.instance.profileHandler.getProfile(sender.uniqueId)!!
                 if (profile.unlockedTags.size == 0) {
                     Chat.sendMessage(sender, "<red>You have no tags unlocked, buy some at the store at <yellow>${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store url setup in config tough tits"}<red>!")
@@ -318,7 +318,7 @@ class ProfileCommand : CommandExecutor {
                     Chat.sendMessage(sender, "<red>You cannot use this feature, buy a rank on the store @ <yellow>${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store url setup in config tough tits"}<red>!")
                     return@runnable
                 }
-                val gui = GuiBuilder().rows(2).name("${Chat.primaryColor}<bold>Arena Blocks").owner(sender)
+                val gui = GuiBuilder().rows(2).name(Chat.colored("${Chat.primaryColor}<bold>Arena Blocks")).owner(sender)
                 val profile = Kraftwerk.instance.profileHandler.getProfile(sender.uniqueId)!!
                 var index = 0
                 for (block in availableArenaBlocks) {

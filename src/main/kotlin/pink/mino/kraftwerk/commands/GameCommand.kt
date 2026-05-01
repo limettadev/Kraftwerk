@@ -33,7 +33,7 @@ class GameCommand : CommandExecutor {
             Chat.sendMessage(sender, "<red>There is no game running!")
             return true
         }
-        val gui = GuiBuilder().name("${Chat.primaryColor}Game Manager").owner(sender).rows(3)
+        val gui = GuiBuilder().name(Chat.colored("${Chat.primaryColor}Game Manager")).owner(sender).rows(3)
         var pause = ItemBuilder(Material.TRIPWIRE_HOOK)
             .name("${Chat.primaryColor}Pause Game")
             .addLore("<gray>Click here to temporarily pause the game.")

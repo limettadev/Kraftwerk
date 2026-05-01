@@ -6,10 +6,7 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import pink.mino.kraftwerk.features.ConfigFeature
-import pink.mino.kraftwerk.utils.GuiBuilder
-import pink.mino.kraftwerk.utils.ItemBuilder
-import pink.mino.kraftwerk.utils.Perk
-import pink.mino.kraftwerk.utils.PerkChecker
+import pink.mino.kraftwerk.utils.*
 
 class DonatorCommand : CommandExecutor {
     override fun onCommand(
@@ -24,10 +21,10 @@ class DonatorCommand : CommandExecutor {
         }
         val perks = PerkChecker.checkPerks(sender)
         if (perks.isEmpty()) {
-            pink.mino.kraftwerk.utils.Chat.sendMessage(sender, "<red>You do not have any perks, buy some on the store at <yellow>${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store app set in config tough tits"}<gray>!")
+            Chat.sendMessage(sender, "<red>You do not have any perks, buy some on the store at <yellow>${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store app set in config tough tits"}<gray>!")
             return true
         }
-        val gui = GuiBuilder().rows(perks.size / 9 + 1).name("<dark_green><bold>Donator Perks").owner(sender)
+        val gui = GuiBuilder().rows(perks.size / 9 + 1).name(Chat.colored("<dark_green><bold>Donator Perks")).owner(sender)
         for ((index, perk) in perks.withIndex()) {
             when (perk) {
                 Perk.BYPASS_DEATH_KICK -> {

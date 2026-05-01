@@ -73,7 +73,7 @@ class WorldCommand : CommandExecutor {
             player.teleport(world!!.spawnLocation)
             Chat.sendMessage(player, "${Chat.dash} Teleported to ${Chat.primaryColor}${world.name}<gray>'s spawn.")
         } else if (args[0].lowercase() == "worlds") {
-            val gui = GuiBuilder().name("${Chat.primaryColor}<bold>Worlds").rows(4)
+            val gui = GuiBuilder().name(Chat.colored("${Chat.primaryColor}<bold>Worlds")).rows(4)
             for ((index, world) in Bukkit.getServer().worlds.withIndex()) {
                 var item: ItemBuilder
                 when (world.environment) {

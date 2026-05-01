@@ -585,7 +585,7 @@ class ChampionsScenario : Scenario(
             sender.sendMessage("$prefix Champions is not enabled.")
             return true
         }
-        val gui = GuiBuilder().rows(2).name("<red>Champions Kit Selector").owner(sender)
+        val gui = GuiBuilder().rows(2).name(Chat.colored("<red>Champions Kit Selector")).owner(sender)
         val leatherKit = ItemBuilder(Material.LEATHER_CHESTPLATE)
             .name("<green>Leather Armor")
             .addLore("<gold>Kit:")
