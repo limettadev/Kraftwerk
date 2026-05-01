@@ -1,6 +1,7 @@
 package pink.mino.kraftwerk.scenarios.list
 
 import me.lucko.helper.Schedulers
+import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
@@ -15,10 +16,8 @@ import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemStack
-import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
-import pink.mino.kraftwerk.Kraftwerk
 import pink.mino.kraftwerk.features.SpecFeature
 import pink.mino.kraftwerk.features.TeamsFeature
 import pink.mino.kraftwerk.scenarios.Scenario
@@ -116,10 +115,10 @@ class AvengersScenario : Scenario(
                 shield.itemMeta = shieldMeta
                 val superSoldier = ItemStack(Material.BLAZE_POWDER)
                 val superSoldierMeta = superSoldier.itemMeta
-                superSoldierMeta.displayName(Chat.colored("${Chat.primaryColor}Super Soldier Serum"))
+                superSoldierMeta.displayName(Chat.colored("${Chat.primaryColor}Super Soldier Serum").decoration(TextDecoration.ITALIC, false))
                 superSoldierMeta.lore(listOf(
-                    Chat.colored("<gray>Right-click: Gives all your teammates strength for 10s."),
-                    Chat.colored("<gray>Cooldown: 40 seconds")
+                    Chat.colored("<gray>Right-click: Gives all your teammates strength for 10s.").decoration(TextDecoration.ITALIC, false),
+                    Chat.colored("<gray>Cooldown: 40 seconds").decoration(TextDecoration.ITALIC, false)
                 ))
                 superSoldier.itemMeta = superSoldierMeta
                 player.inventory.addItem(superSoldier)
@@ -132,18 +131,18 @@ class AvengersScenario : Scenario(
                 player.addPotionEffect(PotionEffect(PotionEffectType.JUMP_BOOST, 99999999, 2, false, false))
                 val spideySense = ItemStack(Material.CLOCK)
                 val spideySenseMeta = spideySense.itemMeta
-                spideySenseMeta.displayName(Chat.colored("${Chat.primaryColor}Spidey Sense"))
+                spideySenseMeta.displayName(Chat.colored("${Chat.primaryColor}Spidey Sense").decoration(TextDecoration.ITALIC, false))
                 spideySenseMeta.lore(listOf(
-                    Chat.colored("<gray>Right-click: View all players within a 150 block radius."),
-                    Chat.colored("<gray>Cooldown: 20 seconds")
+                    Chat.colored("<gray>Right-click: View all players within a 150 block radius.").decoration(TextDecoration.ITALIC, false),
+                    Chat.colored("<gray>Cooldown: 20 seconds").decoration(TextDecoration.ITALIC, false)
                 ))
                 spideySense.itemMeta = spideySenseMeta
                 val webShooter = ItemStack(Material.COBWEB)
                 val webShooterMeta = webShooter.itemMeta
-                webShooterMeta.displayName(Chat.colored("${Chat.primaryColor}Web Shooter"))
+                webShooterMeta.displayName(Chat.colored("${Chat.primaryColor}Web Shooter").decoration(TextDecoration.ITALIC, false))
                 webShooterMeta.lore(listOf(
-                    Chat.colored("<gray>Right-click: Gives slowness to nearby enemies."),
-                    Chat.colored("<gray>Passive: Makes a webcage whenever you kill someone.")
+                    Chat.colored("<gray>Right-click: Gives slowness to nearby enemies.").decoration(TextDecoration.ITALIC, false),
+                    Chat.colored("<gray>Passive: Makes a webcage whenever you kill someone.").decoration(TextDecoration.ITALIC, false)
                 ))
                 webShooter.itemMeta = webShooterMeta
                 player.inventory.addItem(webShooter)
@@ -161,10 +160,10 @@ class AvengersScenario : Scenario(
                 combatBoots.itemMeta = combatBootsMeta
                 val bloodRush = ItemStack(Material.REDSTONE)
                 val bloodRushMeta = bloodRush.itemMeta
-                bloodRushMeta.displayName(Chat.colored("${Chat.primaryColor}Blood Rush"))
+                bloodRushMeta.displayName(Chat.colored("${Chat.primaryColor}Blood Rush").decoration(TextDecoration.ITALIC, false))
                 bloodRushMeta.lore(listOf(
-                    Chat.colored("<gray>Right-click: Receive ${Chat.primaryColor}12 seconds<gray> of Speed IV & Jump Boost II<gray>."),
-                    Chat.colored("<gray>Cooldown: 50 seconds")
+                    Chat.colored("<gray>Right-click: Receive ${Chat.primaryColor}12 seconds<gray> of Speed IV & Jump Boost II<gray>.").decoration(TextDecoration.ITALIC, false),
+                    Chat.colored("<gray>Cooldown: 50 seconds").decoration(TextDecoration.ITALIC, false)
                 ))
                 bloodRush.itemMeta = bloodRushMeta
                 player.inventory.addItem(bloodRush)
@@ -181,11 +180,11 @@ class AvengersScenario : Scenario(
                 player.addPotionEffect(PotionEffect(PotionEffectType.RESISTANCE, 99999999, 0, false, false))
                 val stormbreaker = ItemStack(Material.IRON_AXE)
                 val stormbreakerMeta = stormbreaker.itemMeta
-                stormbreakerMeta.displayName(Chat.colored("<red>Stormbreaker"))
+                stormbreakerMeta.displayName(Chat.colored("<red>Stormbreaker").decoration(TextDecoration.ITALIC, false))
                 stormbreakerMeta.isUnbreakable = true
                 stormbreakerMeta.lore(listOf(
-                    Chat.colored("<gray>Right-click: Smite everyone within a 7 block radius."),
-                    Chat.colored("<gray>Cooldown: 50 seconds")
+                    Chat.colored("<gray>Right-click: Smite everyone within a 7 block radius.").decoration(TextDecoration.ITALIC, false),
+                    Chat.colored("<gray>Cooldown: 50 seconds").decoration(TextDecoration.ITALIC, false)
                 ))
                 stormbreaker.itemMeta = stormbreakerMeta
                 player.inventory.addItem(stormbreaker)
@@ -198,10 +197,10 @@ class AvengersScenario : Scenario(
                 player.addPotionEffect(PotionEffect(PotionEffectType.SPEED, 99999999, 0, false, false))
                 val repulsorTech = ItemStack(Material.MAGMA_CREAM)
                 val repulsorTechMeta = repulsorTech.itemMeta
-                repulsorTechMeta.displayName(Chat.colored("<red>Repulsor Tech Mark LXXXV"))
+                repulsorTechMeta.displayName(Chat.colored("<red>Repulsor Tech Mark LXXXV").decoration(TextDecoration.ITALIC, false))
                 repulsorTechMeta.lore(listOf(
-                    Chat.colored("<reset>ight-click: Grants flight for <light_purple>5 seconds<gray> & all players <red>fire resistance<gray> for <light_purple>20 seconds<gray>."),
-                    Chat.colored("<gray>60 second cooldown")
+                    Chat.colored("<reset>Right-click: Grants flight for <light_purple>5 seconds<gray> & all players <red>fire resistance<gray> for <light_purple>20 seconds<gray>.").decoration(TextDecoration.ITALIC, false),
+                    Chat.colored("<gray>60 second cooldown").decoration(TextDecoration.ITALIC, false)
                 ))
                 repulsorTech.itemMeta = repulsorTechMeta
                 player.inventory.addItem(repulsorTech)
@@ -212,17 +211,17 @@ class AvengersScenario : Scenario(
                 bowMeta.isUnbreakable = true
                 bowMeta.addEnchant(Enchantment.INFINITY, 1, false)
                 bowMeta.addEnchant(Enchantment.POWER, 2, false)
-                bowMeta.displayName(Chat.colored("<red>Hoyt Gamemaster 2"))
+                bowMeta.displayName(Chat.colored("<red>Hoyt Gamemaster 2").decoration(TextDecoration.ITALIC, false))
                 bowMeta.lore(listOf(
-                    Chat.colored("<gray>Left-click: Has a 50% chance to fire <red>Fireball<gray>."),
-                    Chat.colored("<gray>Passive: Heals <red>2%<gray> of your health upon shooting someone with an arrow.")
+                    Chat.colored("<gray>Left-click: Has a 50% chance to fire <red>Fireball<gray>.").decoration(TextDecoration.ITALIC, false),
+                    Chat.colored("<gray>Passive: Heals <red>2%<gray> of your health upon shooting someone with an arrow.").decoration(TextDecoration.ITALIC, false)
                 ))
                 val chestplate = ItemStack(Material.IRON_CHESTPLATE)
                 val chestplateMeta = chestplate.itemMeta
                 chestplateMeta.isUnbreakable = true
                 chestplateMeta.addEnchant(Enchantment.PROJECTILE_PROTECTION, 4, true)
                 chestplateMeta.addEnchant(Enchantment.BLAST_PROTECTION, 1, true)
-                chestplateMeta.displayName(Chat.colored("<white>Hawkeye's Chestplate"))
+                chestplateMeta.displayName(Chat.colored("<white>Hawkeye's Chestplate").decoration(TextDecoration.ITALIC, false))
                 chestplate.itemMeta = chestplateMeta
                 bow.itemMeta = bowMeta
                 player.inventory.addItem(chestplate)

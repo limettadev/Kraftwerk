@@ -1,5 +1,6 @@
 package pink.mino.kraftwerk.commands
 
+import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.OfflinePlayer
@@ -53,12 +54,12 @@ class EditPregenCommand : CommandExecutor {
                 if (it.isLeftClick) {
                     pregenConfig.border += 50
                     val meta = it.currentItem!!.itemMeta
-                    meta.displayName(Chat.colored("<gray>Border: ${Chat.primaryColor}±${pregenConfig.border}"))
+                    meta.displayName(Chat.colored("<gray>Border: ${Chat.primaryColor}±${pregenConfig.border}").decoration(TextDecoration.ITALIC, false))
                     it.currentItem!!.itemMeta = meta
                 } else {
                     pregenConfig.border -= 50
                     val meta = it.currentItem!!.itemMeta
-                    meta.displayName(Chat.colored("<gray>Border: ${Chat.primaryColor}±${pregenConfig.border}"))
+                    meta.displayName(Chat.colored("<gray>Border: ${Chat.primaryColor}±${pregenConfig.border}").decoration(TextDecoration.ITALIC, false))
                     it.currentItem!!.itemMeta = meta
                 }
             }
@@ -88,7 +89,7 @@ class EditPregenCommand : CommandExecutor {
                     else -> {}
                 }
                 val meta = it.currentItem!!.itemMeta
-                meta.displayName(Chat.colored("<gray>World Environment: ${Chat.primaryColor}${pregenConfig.type}"))
+                meta.displayName(Chat.colored("<gray>World Environment: ${Chat.primaryColor}${pregenConfig.type}").decoration(TextDecoration.ITALIC, false))
                 it.currentItem!!.itemMeta = meta
                 Chat.sendMessage(sender, "${Chat.prefix} <gray>World environment set to ${Chat.primaryColor}${pregenConfig.type.name.uppercase()}<gray>.")
             }
@@ -110,7 +111,7 @@ class EditPregenCommand : CommandExecutor {
                     }
                 }
                 val meta = it.currentItem!!.itemMeta
-                meta.displayName(Chat.colored("<gray>Generator: ${Chat.primaryColor}${pregenConfig.generator}"))
+                meta.displayName(Chat.colored("<gray>Generator: ${Chat.primaryColor}${pregenConfig.generator}").decoration(TextDecoration.ITALIC, false))
                 it.currentItem!!.itemMeta = meta
                 Chat.sendMessage(sender, "${Chat.prefix} <gray>Generator set to ${Chat.primaryColor}${pregenConfig.generator.name.uppercase()}<gray>.")
             }
@@ -173,7 +174,7 @@ class EditPregenCommand : CommandExecutor {
                 it.isCancelled = true
                 pregenConfig.oresOutsideCaves = !pregenConfig.oresOutsideCaves
                 val meta = it.currentItem!!.itemMeta
-                meta.displayName(Chat.colored("<gray>Ores Outside Caves: ${Chat.primaryColor}${pregenConfig.oresOutsideCaves}"))
+                meta.displayName(Chat.colored("<gray>Ores Outside Caves: ${Chat.primaryColor}${pregenConfig.oresOutsideCaves}").decoration(TextDecoration.ITALIC, false))
                 it.currentItem!!.itemMeta = meta
                 Chat.sendMessage(sender, "${Chat.prefix} <gray>Ores outside caves set to ${Chat.primaryColor}${pregenConfig.oresOutsideCaves}<gray>.")
             }
@@ -181,7 +182,7 @@ class EditPregenCommand : CommandExecutor {
                 it.isCancelled = true
                 pregenConfig.clearTrees = !pregenConfig.clearTrees
                 val meta = it.currentItem!!.itemMeta
-                meta.displayName(Chat.colored("<gray>Clear Trees: ${Chat.primaryColor}${pregenConfig.clearTrees}"))
+                meta.displayName(Chat.colored("<gray>Clear Trees: ${Chat.primaryColor}${pregenConfig.clearTrees}").decoration(TextDecoration.ITALIC, false))
                 it.currentItem!!.itemMeta = meta
                 Chat.sendMessage(sender, "${Chat.prefix} <gray>Clear trees set to ${Chat.primaryColor}${pregenConfig.clearTrees}<gray>.")
             }
@@ -189,7 +190,7 @@ class EditPregenCommand : CommandExecutor {
                 it.isCancelled = true
                 pregenConfig.clearWater = !pregenConfig.clearWater
                 val meta = it.currentItem!!.itemMeta
-                meta.displayName(Chat.colored("<gray>Clear Water: ${Chat.primaryColor}${pregenConfig.clearWater}"))
+                meta.displayName(Chat.colored("<gray>Clear Water: ${Chat.primaryColor}${pregenConfig.clearWater}").decoration(TextDecoration.ITALIC, false))
                 it.currentItem!!.itemMeta = meta
                 Chat.sendMessage(sender, "${Chat.prefix} <gray>Clear water set to ${Chat.primaryColor}${pregenConfig.clearWater}<gray>.")
             }
@@ -201,7 +202,7 @@ class EditPregenCommand : CommandExecutor {
                         pregenConfig.diamondore = 100
                     }
                     val meta = it.currentItem!!.itemMeta
-                    meta.displayName(Chat.colored("<gray>Diamond Ore Rates: ${Chat.primaryColor}${pregenConfig.diamondore}% Removed"))
+                    meta.displayName(Chat.colored("<gray>Diamond Ore Rates: ${Chat.primaryColor}${pregenConfig.diamondore}% Removed").decoration(TextDecoration.ITALIC, false))
                     it.currentItem!!.itemMeta = meta
                 } else {
                     pregenConfig.diamondore -= 5
@@ -209,7 +210,7 @@ class EditPregenCommand : CommandExecutor {
                         pregenConfig.diamondore = 0
                     }
                     val meta = it.currentItem!!.itemMeta
-                    meta.displayName(Chat.colored("<gray>Diamond Ore Rates: ${Chat.primaryColor}${pregenConfig.diamondore}% Removed"))
+                    meta.displayName(Chat.colored("<gray>Diamond Ore Rates: ${Chat.primaryColor}${pregenConfig.diamondore}% Removed").decoration(TextDecoration.ITALIC, false))
                     it.currentItem!!.itemMeta = meta
                 }
             }
@@ -221,7 +222,7 @@ class EditPregenCommand : CommandExecutor {
                         pregenConfig.goldore = 100
                     }
                     val meta = it.currentItem!!.itemMeta
-                    meta.displayName(Chat.colored("<gray>Gold Ore Rates: ${Chat.primaryColor}${pregenConfig.goldore}% Removed"))
+                    meta.displayName(Chat.colored("<gray>Gold Ore Rates: ${Chat.primaryColor}${pregenConfig.goldore}% Removed").decoration(TextDecoration.ITALIC, false))
                     it.currentItem!!.itemMeta = meta
                 } else {
                     pregenConfig.goldore -= 5
@@ -229,7 +230,7 @@ class EditPregenCommand : CommandExecutor {
                         pregenConfig.goldore = 0
                     }
                     val meta = it.currentItem!!.itemMeta
-                    meta.displayName(Chat.colored("<gray>Gold Ore Rates: ${Chat.primaryColor}${pregenConfig.goldore}% Removed"))
+                    meta.displayName(Chat.colored("<gray>Gold Ore Rates: ${Chat.primaryColor}${pregenConfig.goldore}% Removed").decoration(TextDecoration.ITALIC, false))
                     it.currentItem!!.itemMeta = meta
                 }
             }
@@ -241,7 +242,7 @@ class EditPregenCommand : CommandExecutor {
                         pregenConfig.canerate = 100
                     }
                     val meta = it.currentItem!!.itemMeta
-                    meta.displayName(Chat.colored("<gray>Cane Rates: ${Chat.primaryColor}${pregenConfig.canerate}% Increased"))
+                    meta.displayName(Chat.colored("<gray>Cane Rates: ${Chat.primaryColor}${pregenConfig.canerate}% Increased").decoration(TextDecoration.ITALIC, false))
                     it.currentItem!!.itemMeta = meta
                 } else {
                     pregenConfig.canerate -= 5
@@ -249,7 +250,7 @@ class EditPregenCommand : CommandExecutor {
                         pregenConfig.canerate = 0
                     }
                     val meta = it.currentItem!!.itemMeta
-                    meta.displayName(Chat.colored("<gray>Cane Rates: ${Chat.primaryColor}${pregenConfig.canerate}% Increased"))
+                    meta.displayName(Chat.colored("<gray>Cane Rates: ${Chat.primaryColor}${pregenConfig.canerate}% Increased").decoration(TextDecoration.ITALIC, false))
                     it.currentItem!!.itemMeta = meta
                 }
             }
@@ -262,7 +263,7 @@ class EditPregenCommand : CommandExecutor {
                         pregenConfig.caveRate = 7
                     }
                     val meta = it.currentItem!!.itemMeta
-                    meta.displayName(Chat.colored("<gray>Cave Frequency: 1 in ${Chat.primaryColor}${pregenConfig.caveRate}"))
+                    meta.displayName(Chat.colored("<gray>Cave Frequency: 1 in ${Chat.primaryColor}${pregenConfig.caveRate}").decoration(TextDecoration.ITALIC, false))
                     it.currentItem!!.itemMeta = meta
                 } else {
                     pregenConfig.caveRate -= 1
@@ -270,16 +271,16 @@ class EditPregenCommand : CommandExecutor {
                         pregenConfig.caveRate = 1
                     }
                     val meta = it.currentItem!!.itemMeta
-                    meta.displayName(Chat.colored("<gray>Cave Frequency: 1 in ${Chat.primaryColor}${pregenConfig.caveRate}"))
+                    meta.displayName(Chat.colored("<gray>Cave Frequency: 1 in ${Chat.primaryColor}${pregenConfig.caveRate}").decoration(TextDecoration.ITALIC, false))
                     it.currentItem!!.itemMeta = meta
                 }
             }
         }
         val back = ItemStack(Material.ARROW)
         val backMeta = back.itemMeta
-        backMeta.displayName(Chat.colored("<red>Back"))
+        backMeta.displayName(Chat.colored("<red>Back").decoration(TextDecoration.ITALIC, false))
         backMeta.lore(listOf(
-            Chat.colored("<gray>Go back to the pregen config menu.")
+            Chat.colored("<gray>Go back to the pregen config menu.").decoration(TextDecoration.ITALIC, false)
         ))
         back.itemMeta = backMeta
         gui.item(8, back).onClick runnable@ {

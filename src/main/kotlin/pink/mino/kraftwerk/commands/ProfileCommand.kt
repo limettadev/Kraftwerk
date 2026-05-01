@@ -1,5 +1,6 @@
 package pink.mino.kraftwerk.commands
 
+import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.command.Command
@@ -134,8 +135,8 @@ class ProfileCommand : CommandExecutor {
                     Chat.sendMessage(player, "${Chat.prefix} Set your projectile messages to <dark_gray>'<yellow>DIAMETER<dark_gray>'<gray>.")
                     val meta = projectileMessages.itemMeta
                     meta.lore(listOf(
-                        Chat.colored("<gray>Currently ${Chat.dash} ${Chat.secondaryColor}DIAMETER"),
-                        Chat.colored("<dark_gray><italic>Click to toggle!")
+                        Chat.colored("<gray>Currently ${Chat.dash} ${Chat.secondaryColor}DIAMETER").decoration(TextDecoration.ITALIC, false),
+                        Chat.colored("<dark_gray><italic>Click to toggle!").decoration(TextDecoration.ITALIC, false)
                     ))
                     it.currentItem!!.itemMeta = meta
                 } else if (profile.borderPreference == "DIAMETER") {
@@ -143,8 +144,8 @@ class ProfileCommand : CommandExecutor {
                     Chat.sendMessage(player, "${Chat.prefix} Set your projectile messages to <dark_gray>'<yellow>RADIUS<dark_gray>'<gray>.")
                     val meta = projectileMessages.itemMeta
                     meta.lore(listOf(
-                        Chat.colored("<gray>Currently ${Chat.dash} ${Chat.secondaryColor}RADIUS"),
-                        Chat.colored("<dark_gray><italic>Click to toggle!")
+                        Chat.colored("<gray>Currently ${Chat.dash} ${Chat.secondaryColor}RADIUS").decoration(TextDecoration.ITALIC, false),
+                        Chat.colored("<dark_gray><italic>Click to toggle!").decoration(TextDecoration.ITALIC, false)
                     ))
                     it.currentItem!!.itemMeta = meta
                 }
@@ -154,20 +155,20 @@ class ProfileCommand : CommandExecutor {
                     JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.deathMessageOnScreen = false
                     Chat.sendMessage(player, "${Chat.prefix} <red>Disabled<bold> death message on screen.")
                     val meta = deathMessageOnScreen.meta
-                    meta.displayName(Chat.colored("<red><bold>Death Message on Screen"))
+                    meta.displayName(Chat.colored("<red><bold>Death Message on Screen").decoration(TextDecoration.ITALIC, false))
                     meta.lore(listOf(
-                        Chat.colored("<gray>Currently ${Chat.dash} <red>Disabled"),
-                        Chat.colored("<dark_gray><italic>Click to toggle!")
+                        Chat.colored("<gray>Currently ${Chat.dash} <red>Disabled").decoration(TextDecoration.ITALIC, false),
+                        Chat.colored("<dark_gray><italic>Click to toggle!").decoration(TextDecoration.ITALIC, false)
                     ))
                     it.currentItem!!.itemMeta = meta
                 } else {
                     JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.deathMessageOnScreen = true
                     Chat.sendMessage(player, "${Chat.prefix} <green>Enabled<bold> death message on screen.")
                     val meta = deathMessageOnScreen.meta
-                    meta.displayName(Chat.colored("<green><bold>Death Message on Screen"))
+                    meta.displayName(Chat.colored("<green><bold>Death Message on Screen").decoration(TextDecoration.ITALIC, false))
                     meta.lore(listOf(
-                        Chat.colored("<gray>Currently ${Chat.dash} <green>Enabled"),
-                        Chat.colored("<dark_gray><italic>Click to toggle!")
+                        Chat.colored("<gray>Currently ${Chat.dash} <green>Enabled").decoration(TextDecoration.ITALIC, false),
+                        Chat.colored("<dark_gray><italic>Click to toggle!").decoration(TextDecoration.ITALIC, false)
                     ))
                     it.currentItem!!.itemMeta = meta
                 }
@@ -178,8 +179,8 @@ class ProfileCommand : CommandExecutor {
                     Chat.sendMessage(player, "${Chat.prefix} Set your projectile messages to <dark_gray>'<yellow>SUBTITLE<dark_gray>'<gray>.")
                     val meta = projectileMessages.itemMeta
                     meta.lore(listOf(
-                        Chat.colored("<gray>Currently ${Chat.dash} ${Chat.secondaryColor}SUBTITLE"),
-                        Chat.colored("<dark_gray><italic>Click to toggle!")
+                        Chat.colored("<gray>Currently ${Chat.dash} ${Chat.secondaryColor}SUBTITLE").decoration(TextDecoration.ITALIC, false),
+                        Chat.colored("<dark_gray><italic>Click to toggle!").decoration(TextDecoration.ITALIC, false)
                     ))
                     it.currentItem!!.itemMeta = meta
                 } else if (profile.projectileMessages == "SUBTITLE") {
@@ -187,8 +188,8 @@ class ProfileCommand : CommandExecutor {
                     Chat.sendMessage(player, "${Chat.prefix} Set your projectile messages to <dark_gray>'<yellow>CHAT<dark_gray>'<gray>.")
                     val meta = projectileMessages.itemMeta
                     meta.lore(listOf(
-                        Chat.colored("<gray>Currently ${Chat.dash} ${Chat.secondaryColor}CHAT"),
-                        Chat.colored("<dark_gray><italic>Click to toggle!")
+                        Chat.colored("<gray>Currently ${Chat.dash} ${Chat.secondaryColor}CHAT").decoration(TextDecoration.ITALIC, false),
+                        Chat.colored("<dark_gray><italic>Click to toggle!").decoration(TextDecoration.ITALIC, false)
                     ))
                     it.currentItem!!.itemMeta = meta
                 }
@@ -201,10 +202,10 @@ class ProfileCommand : CommandExecutor {
                 if (profile.disableRedstonePickup) {
                     profile.disableRedstonePickup = false
                     val meta = disableRedstonePickup.meta
-                    meta.displayName(Chat.colored("<red><bold>Disable Redstone Pickup"))
+                    meta.displayName(Chat.colored("<red><bold>Disable Redstone Pickup").decoration(TextDecoration.ITALIC, false))
                     meta.lore(listOf(
-                        Chat.colored("<gray>Currently ${Chat.dash} <red>Disabled"),
-                        Chat.colored("<dark_gray><italic>Click to toggle!")
+                        Chat.colored("<gray>Currently ${Chat.dash} <red>Disabled").decoration(TextDecoration.ITALIC, false),
+                        Chat.colored("<dark_gray><italic>Click to toggle!").decoration(TextDecoration.ITALIC, false)
                     ))
                     it.currentItem!!.itemMeta = meta
                     Chat.sendMessage(player, "${Chat.prefix} Redstone pickup has been <green>enabled<gray>!")
@@ -212,10 +213,10 @@ class ProfileCommand : CommandExecutor {
                     profile.disableRedstonePickup = true
                     Chat.sendMessage(player, "${Chat.prefix} Redstone pickup has been <red>disabled<gray>!")
                     val meta = disableRedstonePickup.meta
-                    meta.displayName(Chat.colored("<green><bold>Disable Redstone Pickup"))
+                    meta.displayName(Chat.colored("<green><bold>Disable Redstone Pickup").decoration(TextDecoration.ITALIC, false))
                     meta.lore(listOf(
-                        Chat.colored("<gray>Currently ${Chat.dash} <green>Enabled"),
-                        Chat.colored("<dark_gray><italic>Click to toggle!")
+                        Chat.colored("<gray>Currently ${Chat.dash} <green>Enabled").decoration(TextDecoration.ITALIC, false),
+                        Chat.colored("<dark_gray><italic>Click to toggle!").decoration(TextDecoration.ITALIC, false)
                     ))
                     it.currentItem!!.itemMeta = meta
                 }
@@ -230,20 +231,20 @@ class ProfileCommand : CommandExecutor {
                     profile.disableLapisPickup = false
                     Chat.sendMessage(player, "${Chat.prefix} Lapis pickup has been <green>enabled<gray>!")
                     val meta = disableLapisPickup.meta
-                    meta.displayName(Chat.colored("<red><bold>Disable Lapis Pickup"))
+                    meta.displayName(Chat.colored("<red><bold>Disable Lapis Pickup").decoration(TextDecoration.ITALIC, false))
                     meta.lore(listOf(
-                        Chat.colored("<gray>Currently ${Chat.dash} <red>Disabled"),
-                        Chat.colored("<dark_gray><italic>Click to toggle!")
+                        Chat.colored("<gray>Currently ${Chat.dash} <red>Disabled").decoration(TextDecoration.ITALIC, false),
+                        Chat.colored("<dark_gray><italic>Click to toggle!").decoration(TextDecoration.ITALIC, false)
                     ))
                     it.currentItem!!.itemMeta = meta
                 } else {
                     profile.disableLapisPickup = true
                     Chat.sendMessage(player, "${Chat.prefix} Lapis pickup has been <red>disabled<gray>!")
                     val meta = disableLapisPickup.meta
-                    meta.displayName(Chat.colored("<green><bold>Disable Lapis Pickup"))
+                    meta.displayName(Chat.colored("<green><bold>Disable Lapis Pickup").decoration(TextDecoration.ITALIC, false))
                     meta.lore(listOf(
-                        Chat.colored("<gray>Currently ${Chat.dash} <green>Enabled"),
-                        Chat.colored("<dark_gray><italic>Click to toggle!")
+                        Chat.colored("<gray>Currently ${Chat.dash} <green>Enabled").decoration(TextDecoration.ITALIC, false),
+                        Chat.colored("<dark_gray><italic>Click to toggle!").decoration(TextDecoration.ITALIC, false)
                     ))
                     it.currentItem!!.itemMeta = meta
                 }

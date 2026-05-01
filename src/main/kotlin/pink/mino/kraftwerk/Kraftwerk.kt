@@ -13,6 +13,7 @@ import me.lucko.helper.plugin.ExtendedJavaPlugin
 import me.lucko.helper.utils.Log
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.entities.Activity
+import net.kyori.adventure.text.format.TextDecoration
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.luckperms.api.LuckPerms
 import org.bukkit.*
@@ -449,7 +450,8 @@ class Kraftwerk : ExtendedJavaPlugin() {
         val head = ItemStack(Material.GOLDEN_APPLE)
         val meta: ItemMeta = head.itemMeta
         meta.displayName(MiniMessage.miniMessage().deserialize("<gold>Golden Head"))
-        meta.lore(listOf(Chat.colored("Some say consuming the head of a\nfallen foe strengthens the blood.")))
+        meta.lore(listOf(Chat.colored("Some say consuming the head of a\nfallen foe strengthens the blood.")
+            .decoration(TextDecoration.ITALIC, false)))
         head.itemMeta = meta
         val goldenHead: ShapedRecipe = ShapedRecipe(head).shape("@@@", "@*@", "@@@").setIngredient('@', Material.GOLD_INGOT).setIngredient('*', mater)
         Bukkit.getServer().addRecipe(goldenHead)

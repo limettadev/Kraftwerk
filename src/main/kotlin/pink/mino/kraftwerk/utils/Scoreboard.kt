@@ -1,7 +1,7 @@
 package pink.mino.kraftwerk.utils
 
-import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
+import org.bukkit.scoreboard.Criteria
 import org.bukkit.scoreboard.DisplaySlot
 import org.bukkit.scoreboard.Objective
 import org.bukkit.scoreboard.Scoreboard
@@ -18,6 +18,7 @@ class Scoreboard {
 
         fun setScore(key: String, value: Int) {
             val score = kills!!.getScore(key)
+            score.customName(Chat.colored(key))
             score.score = value
         }
 
@@ -27,10 +28,10 @@ class Scoreboard {
 
         fun setup() {
             if (sb.getObjective("killboard") == null) {
-                kills = sb.registerNewObjective("killboard", "dummy")
+                kills = sb.registerNewObjective("killboard", Criteria.DUMMY, Chat.colored(Chat.scoreboardTitle!!))
             }
             // Use Adventure Component for display name
-            kills!!.displayName(Component.text(Chat.scoreboardTitle!!))
+            kills!!.displayName(Chat.colored(Chat.scoreboardTitle!!))
             kills!!.displaySlot = DisplaySlot.SIDEBAR
         }
     }

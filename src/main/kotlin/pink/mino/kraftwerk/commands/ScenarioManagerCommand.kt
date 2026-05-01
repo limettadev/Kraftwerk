@@ -1,5 +1,6 @@
 package pink.mino.kraftwerk.commands
 
+import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Material
 import org.bukkit.Sound
 import org.bukkit.command.Command
@@ -50,15 +51,15 @@ class ScenarioManagerCommand : CommandExecutor {
                     var meta = item.itemMeta
                     var color: String = if (scenario.enabled) "<green>"
                     else "<red>"
-                    meta.displayName(Chat.colored("${color}${scenario.name}"))
-                    meta.lore(Chat.scenarioTextWrap("<gray>${scenario.description}", 40))
+                    meta.displayName(Chat.colored("${color}${scenario.name}").decoration(TextDecoration.ITALIC, false))
+                    meta.lore(Chat.scenarioTextWrap("<gray>${scenario.description}", 40).map { it.decoration(TextDecoration.ITALIC, false) })
                     item.itemMeta = meta
                     gui.item(i, item).onClick runnable@ {
                         ScenarioHandler.getScenario(scenario.id)?.toggle()
                         color = if (scenario.enabled) "<green>"
                         else "<red>"
                         meta = it.currentItem!!.itemMeta
-                        meta.displayName(Chat.colored("${color}${scenario.name}"))
+                        meta.displayName(Chat.colored("${color}${scenario.name}").decoration(TextDecoration.ITALIC, false))
                         it.currentItem!!.itemMeta = meta
                         it.isCancelled = true
                     }
@@ -70,8 +71,8 @@ class ScenarioManagerCommand : CommandExecutor {
                     var meta = item.itemMeta
                     var color: String = if (scenario.enabled) "<green>"
                     else "<red>"
-                    meta.displayName(Chat.colored("${color}${scenario.name}"))
-                    meta.lore(Chat.scenarioTextWrap("<gray>${scenario.description}", 40))
+                    meta.displayName(Chat.colored("${color}${scenario.name}").decoration(TextDecoration.ITALIC, false))
+                    meta.lore(Chat.scenarioTextWrap("<gray>${scenario.description}", 40).map { it.decoration(TextDecoration.ITALIC, false) })
                     item.itemMeta = meta
                     gui.item(i, item).onClick runnable@ {
                         ScenarioHandler.getScenario(scenario.id)?.toggle()

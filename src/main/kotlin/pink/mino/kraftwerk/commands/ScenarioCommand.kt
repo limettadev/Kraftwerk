@@ -1,5 +1,6 @@
 package pink.mino.kraftwerk.commands
 
+import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Sound
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -40,8 +41,8 @@ class ScenarioCommand : CommandExecutor {
             val meta = item.itemMeta
             val color: String = if (scenario.enabled) "<green>"
             else "<red>"
-            meta.displayName(Chat.colored("${color}${scenario.name}"))
-            meta.lore(Chat.scenarioTextWrap("<gray>${scenario.description}", 40))
+            meta.displayName(Chat.colored("${color}${scenario.name}").decoration(TextDecoration.ITALIC, false))
+            meta.lore(Chat.scenarioTextWrap("<gray>${scenario.description}", 40).map { it.decoration(TextDecoration.ITALIC, false) })
             meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
             item.itemMeta = meta
             gui.item(index, item).onClick runnable@ {
