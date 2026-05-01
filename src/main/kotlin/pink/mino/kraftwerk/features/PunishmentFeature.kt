@@ -95,7 +95,7 @@ class PunishmentFeature {
                 val collection = plugin.dataSource.getCollection("punishments")
 
                 val filter = Filters.and(
-                    Filters.eq("playerUniqueId", punishmentUuid),
+                    Filters.eq("playerUniqueId", BsonBinary(punishmentUuid)),
                     Filters.eq("type", type.toString()),
                     Filters.eq("revoked", false)
                 )
@@ -107,7 +107,7 @@ class PunishmentFeature {
                 if (newestPunishment != null) {
                     Bukkit.getLogger().info(newestPunishment.toString())
                     val updateResult = collection.updateOne(
-                        Filters.eq("uuid", newestPunishment.get("uuid", UUID::class.java)),
+                        Filters.eq("uuid", BsonBinary(newestPunishment.get("uuid", UUID::class.java))),
                         Document("\$set", Document("revoked", true))
                     )
                     Bukkit.getLogger().info("${updateResult.modifiedCount > 0}")
@@ -120,7 +120,7 @@ class PunishmentFeature {
         fun getActivePunishment(player: OfflinePlayer, punishmentType: PunishmentType): Punishment? {
             with(JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("punishments")) {
                 val filter = Filters.and(
-                    Filters.eq("playerUniqueId", player.uniqueId),
+                    Filters.eq("playerUniqueId", BsonBinary(player.uniqueId)),
                     Filters.eq("type", punishmentType.toString()),
                     Filters.eq("revoked", false)
                 )
@@ -147,7 +147,7 @@ class PunishmentFeature {
         fun hasActivePunishment(player: OfflinePlayer, punishmentType: PunishmentType): Boolean {
             with(JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("punishments")) {
                 val filter = Filters.and(
-                    Filters.eq("playerUniqueId", player.uniqueId),
+                    Filters.eq("playerUniqueId", BsonBinary(player.uniqueId)),
                     Filters.eq("type", punishmentType.toString()),
                     Filters.eq("revoked", false)
                 )
@@ -217,7 +217,7 @@ class PunishmentFeature {
                 try {
                     with(JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("punishments")) {
                         val uuid = UUID.randomUUID()
-                        val document = Document("uuid", BsonBinary(uuid))
+                        val document = Document("uuid", uuid)
                             .append("playerUniqueId", punishment.uuid)
                             .append("punisherUniqueId", punishment.punisherUuid)
                             .append("type", punishment.type.toString())
