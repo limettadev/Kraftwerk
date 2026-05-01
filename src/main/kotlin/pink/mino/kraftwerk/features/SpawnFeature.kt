@@ -9,6 +9,7 @@ import me.lucko.helper.promise.Promise
 import net.citizensnpcs.api.CitizensAPI
 import net.citizensnpcs.api.npc.MemoryNPCDataStore
 import net.citizensnpcs.api.npc.NPC
+import net.kyori.adventure.text.TextComponent
 import org.bson.BsonBinary
 import org.bson.Document
 import org.bukkit.*
@@ -405,8 +406,8 @@ class SpawnFeature : Listener {
     @EventHandler
     fun onRightClick(e: PlayerInteractEvent) {
         if (e.player.world.name == "Spawn" && (Kraftwerk.instance.buildMode[e.player.uniqueId] == false || Kraftwerk.instance.buildMode[e.player.uniqueId] == null)) {
-            if (e.item !== null) {
-                when (e.item!!.itemMeta.displayName()) {
+            if (e.item != null) {
+                when ((e.item!!.itemMeta.customName() as TextComponent)) {
                     Chat.colored("${Chat.primaryColor}View Stats <gray>(Right Click)") -> {
                         e.isCancelled = true
                         e.player.performCommand("stats")

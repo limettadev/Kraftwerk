@@ -90,7 +90,7 @@ class GuiBuilder : Listener {
 
     fun make(): Inventory {
         require(rows * 9 <= 54) { "Too many rows in the created inventory!" }
-        val inv = Bukkit.createInventory(null, rows * 9, name)
+        val inv = Bukkit.createInventory(null, rows * 9, name.decoration(TextDecoration.ITALIC, false))
         for (f in items.keys) {
             inv.setItem(f, items[f])
         }
