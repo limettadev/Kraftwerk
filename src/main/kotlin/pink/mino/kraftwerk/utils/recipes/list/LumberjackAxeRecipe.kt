@@ -16,10 +16,10 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ShapedRecipe
-import pink.mino.kraftwerk.utils.recipes.Recipe
+import pink.mino.kraftwerk.utils.BlockUtil
 import pink.mino.kraftwerk.utils.Chat
 import pink.mino.kraftwerk.utils.ItemBuilder
-import pink.mino.kraftwerk.utils.PlayerUtils
+import pink.mino.kraftwerk.utils.recipes.Recipe
 
 class LumberjackAxeRecipe : Recipe(
     "Lumberjack Axe",
@@ -41,9 +41,10 @@ class LumberjackAxeRecipe : Recipe(
     @EventHandler
     fun onLumberjackAxe(e: BlockBreakEvent) {
         if (
-            e.player.inventory.itemInHand != null &&
-            e.player.inventory.itemInHand.hasItemMeta() &&
-            e.player.inventory.itemInHand.itemMeta.displayName() == Chat.colored("<dark_purple>Lumberjack Axe")
+            e.player.inventory.itemInMainHand != null &&
+            e.player.inventory.itemInMainHand.hasItemMeta() &&
+            e.player.inventory.itemInMainHand.itemMeta.displayName() == Chat.colored("<dark_purple>Lumberjack Axe") &&
+            BlockUtil.logs.contains(e.block.type)
         ) {
             timberTree(e.block.location, e.block.type, e.player)
         }

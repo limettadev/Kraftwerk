@@ -6,6 +6,7 @@ import org.bukkit.World
 import org.bukkit.block.Block
 import org.bukkit.inventory.InventoryHolder
 import pink.mino.kraftwerk.scenarios.Scenario
+import pink.mino.kraftwerk.utils.BlockUtil
 import kotlin.random.Random
 
 
@@ -26,58 +27,54 @@ class UndergroundParallelScenario : Scenario(
         val world: World = block.world
         val surface: Block = world.getBlockAt(block.x, block.y + 59, block.z)
 
-        when (surface.type) {
-            Material.OAK_LEAVES -> {
-                var randomPerLogs: Double = Random.nextDouble() * 100
-                if (randomPerLogs < 50.0) {
-                    block.type = Material.STONE
-                    return
-                }
-                randomPerLogs -= 50.0
-                if (randomPerLogs < 24.5) {
-                    block.type = Material.COAL_ORE
-                    return
-                }
-                randomPerLogs -= 24.5
-                if (randomPerLogs < 23.5) {
-                    block.type = Material.IRON_ORE
-                    return
-                }
-                randomPerLogs -= 23.5
-                if (randomPerLogs < 1.0) {
-                    block.type = Material.GOLD_ORE
-                    return
-                }
-                randomPerLogs -= 1.0
-                if (randomPerLogs < 0.5) {
-                    block.type = Material.LAPIS_ORE
-                    return
-                }
-                block.type = Material.DIAMOND_ORE
+        if (BlockUtil.logs.contains(surface.type)) {
+            var randomPerLeaves: Double = Random.nextDouble() * 100
+            if (randomPerLeaves < 5.0) {
+                block.type = Material.REDSTONE_ORE
                 return
             }
-            Material.OAK_LOG -> {
-                var randomPerLeaves: Double = Random.nextDouble() * 100
-                if (randomPerLeaves < 5.0) {
-                    block.type = Material.REDSTONE_ORE
-                    return
-                }
-                randomPerLeaves -= 5.0
-                if (randomPerLeaves < 5.0) {
-                    block.type = Material.GLOWSTONE
-                    return
-                }
-                block.type = Material.GRAVEL
+            randomPerLeaves -= 5.0
+            if (randomPerLeaves < 5.0) {
+                block.type = Material.GLOWSTONE
                 return
             }
-            else -> {
-                block.type = surface.type
-                block.blockData = surface.blockData
-                if (surface.state is InventoryHolder) {
-                    val surfaceInv = surface.state as InventoryHolder
-                    val inv = block.state as InventoryHolder
-                    inv.inventory.contents = surfaceInv.inventory.contents
-                }
+            block.type = Material.GRAVEL
+            return
+        } else if (BlockUtil.leaves.contains(surface.type)) {
+            var randomPerLogs: Double = Random.nextDouble() * 100
+            if (randomPerLogs < 50.0) {
+                block.type = Material.STONE
+                return
+            }
+            randomPerLogs -= 50.0
+            if (randomPerLogs < 24.5) {
+                block.type = Material.COAL_ORE
+                return
+            }
+            randomPerLogs -= 24.5
+            if (randomPerLogs < 23.5) {
+                block.type = Material.IRON_ORE
+                return
+            }
+            randomPerLogs -= 23.5
+            if (randomPerLogs < 1.0) {
+                block.type = Material.GOLD_ORE
+                return
+            }
+            randomPerLogs -= 1.0
+            if (randomPerLogs < 0.5) {
+                block.type = Material.LAPIS_ORE
+                return
+            }
+            block.type = Material.DIAMOND_ORE
+            return
+        } else {
+            block.type = surface.type
+            block.blockData = surface.blockData
+            if (surface.state is InventoryHolder) {
+                val surfaceInv = surface.state as InventoryHolder
+                val inv = block.state as InventoryHolder
+                inv.inventory.contents = surfaceInv.inventory.contents
             }
         }
     }

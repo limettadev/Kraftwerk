@@ -6,7 +6,6 @@ import com.mongodb.client.model.Filters
 import com.mongodb.client.model.FindOneAndReplaceOptions
 import me.lucko.helper.Schedulers
 import me.lucko.helper.promise.Promise
-import me.lucko.helper.utils.Log
 import net.citizensnpcs.api.CitizensAPI
 import net.citizensnpcs.api.npc.MemoryNPCDataStore
 import net.citizensnpcs.api.npc.NPC
@@ -391,7 +390,6 @@ class SpawnFeature : Listener {
 
     @EventHandler
     fun onRightClick(e: PlayerInteractEvent) {
-        Log.info("yaaa")
         if (e.action == Action.RIGHT_CLICK_BLOCK) {
             if (e.clickedBlock != null && e.clickedBlock!!.type.name.contains("SIGN")) {
                 val sign = e.clickedBlock!!.state as Sign
@@ -405,11 +403,8 @@ class SpawnFeature : Listener {
             }
         }
         if (e.player.world.name == "Spawn" && (Kraftwerk.instance.buildMode[e.player.uniqueId] == false || Kraftwerk.instance.buildMode[e.player.uniqueId] == null)) {
-            Log.info("yaaa2")
             if (e.item != null) {
                 val itemName = e.item!!.itemMeta?.displayName() ?: return
-                Log.info((itemName as TextComponent).content().toString())
-                Log.info((Chat.colored("${Chat.primaryColor}View Stats <gray>(Right Click)") as TextComponent).content() )
                 when ((itemName as TextComponent).content()) {
                     (Chat.colored("${Chat.primaryColor}View Stats <gray>(Right Click)") as TextComponent).content() -> {
                         e.isCancelled = true

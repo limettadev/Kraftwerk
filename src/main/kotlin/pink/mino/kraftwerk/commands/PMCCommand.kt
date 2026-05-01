@@ -29,7 +29,7 @@ class PMCCommand : CommandExecutor {
         if (player.scoreboard.getPlayerTeam(player) != null) {
             for (team in player.scoreboard.getPlayerTeam(player)!!.players) {
                 if (team is Player) {
-                    Chat.sendMessage(team, "§8[${Chat.primaryColor}Team Chat§8] <white>${sender.name} ${Chat.dash} ${Chat.primaryColor}${player.name}'s<gray> location: ${Chat.primaryColor}${x}<gray>, ${Chat.primaryColor}${y}<gray>, ${Chat.primaryColor}${z} <dark_gray>| <gray>Dimension: ${Chat.primaryColor}${player.world.worldType.toString().uppercase()}")
+                    Chat.sendMessage(team, "<dark_gray>[${Chat.primaryColor}Team Chat<dark_gray>] <white>${sender.name} ${Chat.dash} ${Chat.primaryColor}${player.name}'s<gray> location: ${Chat.primaryColor}${x}<gray>, ${Chat.primaryColor}${y}<gray>, ${Chat.primaryColor}${z} <dark_gray>| <gray>Dimension: ${Chat.primaryColor}${player.world.worldType.toString().uppercase()}")
                 }
             }
         }

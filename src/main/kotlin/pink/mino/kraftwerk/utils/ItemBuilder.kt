@@ -125,12 +125,12 @@ class PotionBuilder {
                 pot.addCustomEffect(effect, true)
                 if (effect.duration > 0) {
                     lore.add(
-                        "§7" + getPotionName(effect.type) + " " + getTierString(effect.amplifier) + " (" + potionTicksToString(
+                        "<gray>" + getPotionName(effect.type) + " " + getTierString(effect.amplifier) + " (" + potionTicksToString(
                             effect.duration.toLong()
                         ) + ")"
                     )
                 } else {
-                    lore.add("§7" + getPotionName(effect.type) + " " + getTierString(effect.amplifier))
+                    lore.add("<gray>" + getPotionName(effect.type) + " " + getTierString(effect.amplifier))
                 }
             }
             pot.lore = lore

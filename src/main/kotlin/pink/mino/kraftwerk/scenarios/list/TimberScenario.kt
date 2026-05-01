@@ -3,7 +3,6 @@ package pink.mino.kraftwerk.scenarios.list
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.Sound
-import org.bukkit.block.Block
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.block.BlockBreakEvent
@@ -23,7 +22,7 @@ class TimberScenario : Scenario(
         if (!enabled) return
         if (event.isCancelled) return
         if (GameState.currentState !== GameState.INGAME) return
-        if (event.block.type != Material.BIRCH_WOOD && event.block.type != Material.OAK_LOG) return
+        if (!BlockUtil.logs.contains(event.block.type)) return
         timberTree(event.block.location, event.block.type, event.player)
     }
 

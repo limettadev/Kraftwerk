@@ -263,7 +263,7 @@ class Leaderboards : BukkitRunnable() {
                         "<gray>Scenarios (${(match["scenarios"] as List<*>).size}) ${Chat.dash}"
                     )
                     for (scenario in match["scenarios"] as List<*>) {
-                        DHAPI.addHologramLine(latestMatch, " §8●§7 <white>${scenario}<dark_gray>")
+                        DHAPI.addHologramLine(latestMatch, " <dark_gray>●<gray> <white>${scenario}<dark_gray>")
                     }
                     DHAPI.addHologramLine(latestMatch, " ")
                     var kills = 0

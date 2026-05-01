@@ -33,7 +33,12 @@ val availableArenaBlocks = listOf(
     Material.AMETHYST_BLOCK,
     Material.NETHERITE_BLOCK,
     Material.MOSSY_COBBLESTONE,
-    Material.GLOWSTONE
+    Material.GLOWSTONE,
+    Material.HONEYCOMB_BLOCK,
+    Material.SCULK,
+    Material.STRIPPED_BAMBOO_BLOCK,
+    Material.REINFORCED_DEEPSLATE,
+    Material.RESIN_BRICKS
 )
 
 class ProfileCommand : CommandExecutor {
@@ -318,7 +323,7 @@ class ProfileCommand : CommandExecutor {
                     Chat.sendMessage(sender, "<red>You cannot use this feature, buy a rank on the store @ <yellow>${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store url setup in config tough tits"}<red>!")
                     return@runnable
                 }
-                val gui = GuiBuilder().rows(2).name(Chat.colored("${Chat.primaryColor}<bold>Arena Blocks")).owner(sender)
+                val gui = GuiBuilder().rows(3).name(Chat.colored("${Chat.primaryColor}<bold>Arena Blocks")).owner(sender)
                 val profile = Kraftwerk.instance.profileHandler.getProfile(sender.uniqueId)!!
                 var index = 0
                 for (block in availableArenaBlocks) {

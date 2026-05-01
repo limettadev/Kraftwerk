@@ -61,6 +61,45 @@ class BlockUtil {
 
     companion object {
         const val DEFAULT_VEIN_LIMIT = 64
+
+        var logs = listOf(
+            Material.OAK_LOG,
+            Material.STRIPPED_OAK_LOG,
+            Material.DARK_OAK_LOG,
+            Material.STRIPPED_DARK_OAK_LOG,
+            Material.STRIPPED_SPRUCE_LOG,
+            Material.SPRUCE_LOG,
+            Material.BIRCH_LOG,
+            Material.STRIPPED_BIRCH_LOG,
+            Material.JUNGLE_LOG,
+            Material.STRIPPED_JUNGLE_LOG,
+            Material.ACACIA_LOG,
+            Material.STRIPPED_ACACIA_LOG,
+            Material.MANGROVE_LOG,
+            Material.STRIPPED_MANGROVE_LOG,
+            Material.CHERRY_LOG,
+            Material.STRIPPED_CHERRY_LOG,
+            Material.PALE_OAK_LOG,
+            Material.STRIPPED_PALE_OAK_LOG,
+            Material.STRIPPED_CRIMSON_STEM,
+            Material.CRIMSON_STEM,
+            Material.STRIPPED_WARPED_STEM,
+            Material.WARPED_STEM
+        )
+
+        var leaves = listOf(
+            Material.OAK_LEAVES,
+            Material.SPRUCE_LEAVES,
+            Material.BIRCH_LEAVES,
+            Material.JUNGLE_LEAVES,
+            Material.ACACIA_LEAVES,
+            Material.DARK_OAK_LEAVES,
+            Material.MANGROVE_LEAVES,
+            Material.CHERRY_LEAVES,
+            Material.PALE_OAK_LEAVES,
+            Material.AZALEA_LEAVES,
+            Material.FLOWERING_AZALEA_LEAVES
+        )
     }
 
     fun getVein(start: Block): List<Block> = getVein(start, DEFAULT_VEIN_LIMIT)

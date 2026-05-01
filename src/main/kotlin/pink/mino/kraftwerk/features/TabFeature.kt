@@ -30,7 +30,7 @@ class TabFeature : BukkitRunnable() {
         } else if (ping < 500) {
             "<dark_red>" + ping.toString()
         } else {
-            "§8" + ping.toString()
+            "<dark_gray>" + ping.toString()
         }
     }
 

@@ -21,7 +21,7 @@ class HealthChatColorer {
                     c = "<red>"
                 }
                 else -> {
-                    c = "§8"
+                    c = "<dark_gray>"
                 }
             }
             return c

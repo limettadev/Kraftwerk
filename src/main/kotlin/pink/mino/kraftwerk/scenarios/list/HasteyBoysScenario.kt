@@ -31,7 +31,13 @@ class HasteyBoysScenario : Scenario(
             Material.STONE_AXE,
             Material.IRON_AXE,
             Material.GOLDEN_AXE,
-            Material.DIAMOND_AXE
+            Material.DIAMOND_AXE,
+            Material.NETHERITE_AXE,
+            Material.NETHERITE_PICKAXE,
+            Material.NETHERITE_SHOVEL,
+            Material.COPPER_SHOVEL,
+            Material.COPPER_AXE,
+            Material.COPPER_PICKAXE
         )
     )
 

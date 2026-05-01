@@ -38,10 +38,10 @@ class GamemodeCommand : CommandExecutor {
                             return false
                         }
                         target.gameMode = GameMode.SPECTATOR
-                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Spectator§7.")
+                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Spectator<gray>.")
                     } else {
                         player.gameMode = GameMode.SPECTATOR
-                        Chat.sendMessage(player, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Spectator§7.")
+                        Chat.sendMessage(player, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Spectator<gray>.")
                     }
                 }
                 "gmc" -> {
@@ -52,10 +52,10 @@ class GamemodeCommand : CommandExecutor {
                             return false
                         }
                         target.gameMode = GameMode.CREATIVE
-                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Creative§7.")
+                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Creative<gray>.")
                     } else {
                         player.gameMode = GameMode.CREATIVE
-                        Chat.sendMessage(player, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Creative§7.")
+                        Chat.sendMessage(player, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Creative<gray>.")
                     }
                 }
                 "gma" -> {
@@ -66,10 +66,10 @@ class GamemodeCommand : CommandExecutor {
                             return false
                         }
                         target.gameMode = GameMode.ADVENTURE
-                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Adventure§7.")
+                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Adventure<gray>.")
                     } else {
                         player.gameMode = GameMode.ADVENTURE
-                        Chat.sendMessage(player, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Adventure§7.")
+                        Chat.sendMessage(player, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Adventure<gray>.")
                     }
                 }
                 "gms" -> {
@@ -80,10 +80,10 @@ class GamemodeCommand : CommandExecutor {
                             return false
                         }
                         target.gameMode = GameMode.SURVIVAL
-                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Survival§7.")
+                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Survival<gray>.")
                     } else {
                         player.gameMode = GameMode.SURVIVAL
-                        Chat.sendMessage(player, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Survival§7.")
+                        Chat.sendMessage(player, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Survival<gray>.")
                     }
                 }
             }
@@ -97,10 +97,10 @@ class GamemodeCommand : CommandExecutor {
                             return false
                         }
                         target.gameMode = GameMode.SURVIVAL
-                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Survival§7.")
+                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Survival<gray>.")
                     } else {
                         sender.gameMode = GameMode.SURVIVAL
-                        Chat.sendMessage(sender, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Survival§7.")
+                        Chat.sendMessage(sender, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Survival<gray>.")
                     }
                 }
                 "0" -> {
@@ -111,10 +111,10 @@ class GamemodeCommand : CommandExecutor {
                             return false
                         }
                         target.gameMode = GameMode.SURVIVAL
-                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Survival§7.")
+                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Survival<gray>.")
                     } else {
                         sender.gameMode = GameMode.SURVIVAL
-                        Chat.sendMessage(sender, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Survival§7.")
+                        Chat.sendMessage(sender, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Survival<gray>.")
                     }
                 }
                 "survival" -> {
@@ -125,10 +125,10 @@ class GamemodeCommand : CommandExecutor {
                             return false
                         }
                         target.gameMode = GameMode.SURVIVAL
-                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Survival§7.")
+                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Survival<gray>.")
                     } else {
                         sender.gameMode = GameMode.SURVIVAL
-                        Chat.sendMessage(sender, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Survival§7.")
+                        Chat.sendMessage(sender, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Survival<gray>.")
                     }
                 }
 
@@ -140,10 +140,10 @@ class GamemodeCommand : CommandExecutor {
                             return false
                         }
                         target.gameMode = GameMode.CREATIVE
-                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Creative§7.")
+                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Creative<gray>.")
                     } else {
                         sender.gameMode = GameMode.CREATIVE
-                        Chat.sendMessage(sender, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Creative§7.")
+                        Chat.sendMessage(sender, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Creative<gray>.")
                     }
                 }
                 "1" -> {
@@ -154,10 +154,10 @@ class GamemodeCommand : CommandExecutor {
                             return false
                         }
                         target.gameMode = GameMode.CREATIVE
-                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Creative§7.")
+                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Creative<gray>.")
                     } else {
                         sender.gameMode = GameMode.CREATIVE
-                        Chat.sendMessage(sender, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Creative§7.")
+                        Chat.sendMessage(sender, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Creative<gray>.")
                     }
                 }
                 "creative" -> {
@@ -168,10 +168,10 @@ class GamemodeCommand : CommandExecutor {
                             return false
                         }
                         target.gameMode = GameMode.CREATIVE
-                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Creative§7.")
+                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Creative<gray>.")
                     } else {
                         sender.gameMode = GameMode.CREATIVE
-                        Chat.sendMessage(sender, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Creative§7.")
+                        Chat.sendMessage(sender, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Creative<gray>.")
                     }
                 }
 
@@ -183,10 +183,10 @@ class GamemodeCommand : CommandExecutor {
                             return false
                         }
                         target.gameMode = GameMode.ADVENTURE
-                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Adventure§7.")
+                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Adventure<gray>.")
                     } else {
                         sender.gameMode = GameMode.ADVENTURE
-                        Chat.sendMessage(sender, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Adventure§7.")
+                        Chat.sendMessage(sender, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Adventure<gray>.")
                     }
                 }
                 "2" -> {
@@ -197,10 +197,10 @@ class GamemodeCommand : CommandExecutor {
                             return false
                         }
                         target.gameMode = GameMode.ADVENTURE
-                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Adventure§7.")
+                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Adventure<gray>.")
                     } else {
                         sender.gameMode = GameMode.ADVENTURE
-                        Chat.sendMessage(sender, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Adventure§7.")
+                        Chat.sendMessage(sender, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Adventure<gray>.")
                     }
                 }
                 "adventure" -> {
@@ -211,10 +211,10 @@ class GamemodeCommand : CommandExecutor {
                             return false
                         }
                         target.gameMode = GameMode.ADVENTURE
-                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Adventure§7.")
+                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Adventure<gray>.")
                     } else {
                         sender.gameMode = GameMode.ADVENTURE
-                        Chat.sendMessage(sender, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Adventure§7.")
+                        Chat.sendMessage(sender, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Adventure<gray>.")
                     }
                 }
 
@@ -226,10 +226,10 @@ class GamemodeCommand : CommandExecutor {
                             return false
                         }
                         target.gameMode = GameMode.SPECTATOR
-                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Spectator§7.")
+                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Spectator<gray>.")
                     } else {
                         sender.gameMode = GameMode.SPECTATOR
-                        Chat.sendMessage(sender, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Spectator§7.")
+                        Chat.sendMessage(sender, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Spectator<gray>.")
                     }
                 }
                 "sp" -> {
@@ -240,10 +240,10 @@ class GamemodeCommand : CommandExecutor {
                             return false
                         }
                         target.gameMode = GameMode.SPECTATOR
-                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Spectator§7.")
+                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Spectator<gray>.")
                     } else {
                         sender.gameMode = GameMode.SPECTATOR
-                        Chat.sendMessage(sender, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Spectator§7.")
+                        Chat.sendMessage(sender, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Spectator<gray>.")
                     }
                 }
                 "spectator" -> {
@@ -254,10 +254,10 @@ class GamemodeCommand : CommandExecutor {
                             return false
                         }
                         target.gameMode = GameMode.SPECTATOR
-                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Spectator§7.")
+                        Chat.sendMessage(target, "${Chat.prefix} ${Chat.secondaryColor}${sender.name}<gray> has set your gamemode to ${Chat.primaryColor}Spectator<gray>.")
                     } else {
                         sender.gameMode = GameMode.SPECTATOR
-                        Chat.sendMessage(sender, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Spectator§7.")
+                        Chat.sendMessage(sender, "${Chat.prefix} <gray>Set your gamemode to ${Chat.primaryColor}Spectator<gray>.")
                     }
                 }
             }

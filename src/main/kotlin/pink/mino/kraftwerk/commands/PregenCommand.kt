@@ -138,7 +138,7 @@ class PregenCommand : CommandExecutor {
         if (blocks != null) {
             for (block in blocks) {
                 if (pregenConfig.clearTrees) {
-                    if (block.type == Material.OAK_LEAVES || block.type == Material.BIRCH_LEAVES || block.type == Material.OAK_LOG || block.type == Material.BIRCH_LOG) {
+                    if (BlockUtil.logs.contains(block.type) || BlockUtil.leaves.contains(block.type)) {
                         block.type = Material.AIR
                     }
                 }
