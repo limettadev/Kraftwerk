@@ -1,6 +1,5 @@
 package pink.mino.kraftwerk.commands
 
-import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -18,7 +17,7 @@ class HelpopListCommand : CommandExecutor {
     ): Boolean {
         if (sender is Player) {
             if (!sender.hasPermission("uhc.staff.hl")) {
-                Chat.sendMessage(sender, "${Chat.prefix} ${ChatColor.RED}You don't have permission to use this command.")
+                Chat.sendMessage(sender, "${Chat.prefix} <red>You don't have permission to use this command.")
                 return false
             }
         }

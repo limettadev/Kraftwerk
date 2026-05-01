@@ -20,11 +20,11 @@ class SpecChatCommand : CommandExecutor {
         if (SpecFeature.instance.getSpecs().contains(sender.name)) {
             val message = StringBuilder()
             if (args.isEmpty()) {
-                sender.sendMessage("${ChatColor.RED}Usage: /sc <message>")
+                sender.sendMessage("<red>Usage: /sc <message>")
                 return true
             }
             for (element in args) {
-                message.append("${ChatColor.GRAY}${element}").append(" " + ChatColor.GRAY)
+                message.append("<gray>${element}").append(" " + ChatColor.GRAY)
             }
             val msg = message.toString().trim()
             SpecFeature.instance.specChat("<dark_gray>[${Chat.primaryColor}Spec Chat<dark_gray>] <white>${sender.name} ${Chat.dash} <white>${msg}")

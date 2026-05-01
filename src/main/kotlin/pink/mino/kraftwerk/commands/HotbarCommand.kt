@@ -1,6 +1,5 @@
 package pink.mino.kraftwerk.commands
 
-import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -23,7 +22,7 @@ class HotbarCommand : CommandExecutor {
                 sender.sendMessage(Chat.colored("<dark_gray>[${Chat.primaryColor}Arena<dark_gray>]<gray> <gray>You can't use this command in the Arena."))
                 return false
             }
-            val gui = GuiBuilder().rows(1).name(ChatColor.translateAlternateColorCodes('&', "${Chat.primaryColor}Hotbar Editor"))
+            val gui = GuiBuilder().rows(1).name(Chat.colored("${Chat.primaryColor}Hotbar Editor"))
             gui.item(0, ItemStack(Material.DIAMOND_SWORD))
             gui.item(1, ItemStack(Material.FISHING_ROD))
             gui.item(2, ItemStack(Material.BOW))

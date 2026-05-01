@@ -1,7 +1,6 @@
 package pink.mino.kraftwerk.commands
 
 import org.bukkit.Bukkit
-import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -53,7 +52,7 @@ class EnemyReconCommand : CommandExecutor {
             Bukkit.broadcast(Chat.colored("${EnemyReconScenario.instance.prefix} ${Chat.secondaryColor}${sender.name}<gray> has been caught spying on ${Chat.secondaryColor}${target.name}<gray>."))
         }
         EnemyReconScenario.instance.recons[sender.uniqueId] = EnemyReconScenario.instance.recons[sender.uniqueId]!! - 1
-        val gui = GuiBuilder().rows(5).name(ChatColor.translateAlternateColorCodes('&', "${target.name}'s Inventory"))
+        val gui = GuiBuilder().rows(5).name(Chat.colored("${target.name}'s Inventory"))
         sender.openInventory(gui.make())
         for ((index, item) in target.inventory.contents.withIndex()) {
             if (item == null) {

@@ -2,7 +2,6 @@ package pink.mino.kraftwerk.utils.recipes
 
 import me.lucko.helper.Schedulers
 import me.lucko.helper.utils.Log
-import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -11,7 +10,6 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ShapedRecipe
 import org.bukkit.inventory.ShapelessRecipe
-import pink.mino.kraftwerk.Kraftwerk
 import pink.mino.kraftwerk.scenarios.ScenarioHandler
 import pink.mino.kraftwerk.utils.Chat
 import pink.mino.kraftwerk.utils.GuiBuilder
@@ -113,7 +111,7 @@ class RecipeCommand : CommandExecutor {
         gui.item(44, back).onClick runnable@{
             sender.closeInventory()
             Schedulers.sync().runLater({
-                Bukkit.dispatchCommand(sender, "recipes")
+                sender.performCommand("recipes")
             }, 1L)
             return@runnable
         }

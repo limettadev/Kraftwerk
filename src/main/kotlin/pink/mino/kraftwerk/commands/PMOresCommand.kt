@@ -1,6 +1,5 @@
 package pink.mino.kraftwerk.commands
 
-import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -21,12 +20,12 @@ class PMOresCommand : CommandExecutor {
             return false
         }
         if (sender.scoreboard.getPlayerTeam(sender) == null) {
-            sender.sendMessage("${ChatColor.RED}You must be on a team to send a message.")
+            sender.sendMessage("<red>You must be on a team to send a message.")
             return true
         }
 
         if (GameState.currentState != GameState.INGAME) {
-            sender.sendMessage("${ChatColor.RED}You can only use this command during a game.")
+            sender.sendMessage("<red>You can only use this command during a game.")
             return true
         }
 
@@ -48,7 +47,7 @@ class PMOresCommand : CommandExecutor {
 
             for (team in sender.scoreboard.getPlayerTeam(sender)!!.players) {
                 if (team is Player) {
-                    team.sendMessage(Chat.colored("§8[${Chat.primaryColor}Team Chat§8] ${ChatColor.WHITE}${sender.name} §7has ${iron} iron, §6${gold} gold§7, and §b${diamond} diamonds§7."))
+                    team.sendMessage(Chat.colored("§8[${Chat.primaryColor}Team Chat§8] <white>${sender.name} §7has ${iron} iron, §6${gold} gold§7, and §b${diamond} diamonds§7."))
                 }
             }
         }

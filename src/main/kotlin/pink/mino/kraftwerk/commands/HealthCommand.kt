@@ -2,7 +2,6 @@ package pink.mino.kraftwerk.commands
 
 import net.minecraft.server.level.ServerPlayer
 import org.bukkit.Bukkit
-import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -28,17 +27,17 @@ class HealthCommand : CommandExecutor {
             val health = floor(sender.health / 2 * 10 + el.absorptionAmount / 2 * 10)
             val color = HealthChatColorer.returnHealth(health)
             Chat.sendMessage(sender,
-                "${Chat.prefix} ${Chat.secondaryColor}${sender.displayName}${ChatColor.GRAY} is at ${color}${health}%${ChatColor.GRAY}.")
+                "${Chat.prefix} ${Chat.secondaryColor}${sender.displayName}<gray> is at ${color}${health}%<gray>.")
             return true
         } else {
             val target = Bukkit.getServer().getPlayer(args[0])
             if (target == null) {
-                sender.sendMessage("${ChatColor.RED}That player is not online or has never logged onto the server.")
+                sender.sendMessage("<red>That player is not online or has never logged onto the server.")
             }
             val el: ServerPlayer = (target as CraftPlayer).handle
             val health = floor(target.health / 2 * 10 + el.absorptionAmount / 2 * 10)
             val color = HealthChatColorer.returnHealth(health)
-            Chat.sendMessage(sender as Player, "${Chat.prefix} ${Chat.secondaryColor}${target.displayName}${ChatColor.GRAY} is at ${color}${health}%${ChatColor.GRAY}.")
+            Chat.sendMessage(sender as Player, "${Chat.prefix} ${Chat.secondaryColor}${target.displayName}<gray> is at ${color}${health}%<gray>.")
             return true
         }
     }

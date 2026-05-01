@@ -1,6 +1,9 @@
 package pink.mino.kraftwerk.commands
 
-import org.bukkit.*
+import org.bukkit.Bukkit
+import org.bukkit.Material
+import org.bukkit.OfflinePlayer
+import org.bukkit.World
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -19,11 +22,11 @@ class EditPregenCommand : CommandExecutor {
     ): Boolean {
         if (sender is Player) {
             if (!sender.hasPermission("uhc.staff.pregen")) {
-                Chat.sendMessage(sender, "${ChatColor.RED}You don't have permission to use this command.")
+                Chat.sendMessage(sender, "<red>You don't have permission to use this command.")
                 return false
             }
         } else {
-            Chat.sendMessage(sender, "${ChatColor.RED}You must be a player to use this command.")
+            Chat.sendMessage(sender, "<red>You must be a player to use this command.")
             return false
         }
         if (args.isEmpty()) {
@@ -35,7 +38,7 @@ class EditPregenCommand : CommandExecutor {
             Chat.sendMessage(sender, "${Chat.prefix} <gray>You don't have a pregeneration configuration set up yet.")
             return false
         }
-        val gui = GuiBuilder().rows(1).name(ChatColor.translateAlternateColorCodes('&', "${Chat.primaryColor}Edit Pregen Config")).owner(sender)
+        val gui = GuiBuilder().rows(1).name(Chat.colored("${Chat.primaryColor}Edit Pregen Config")).owner(sender)
         if (args[0] == "border") {
             val border = ItemBuilder(Material.BEDROCK)
                 .name("<gray>Border: ${Chat.primaryColor}±${pregenConfig.border}")

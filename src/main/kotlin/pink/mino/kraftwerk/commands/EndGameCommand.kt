@@ -9,7 +9,6 @@ import net.dv8tion.jda.api.utils.FileUpload
 import net.kyori.adventure.title.Title
 import org.bson.Document
 import org.bukkit.Bukkit
-import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -113,7 +112,7 @@ class EndGameCommand : CommandExecutor {
                 }
             }
         } catch (e: MongoException) {
-            Chat.sendMessage(sender, "${ChatColor.RED}An error occurred while ending the game and updating the matchpost (opened).")
+            Chat.sendMessage(sender, "<red>An error occurred while ending the game and updating the matchpost (opened).")
             e.printStackTrace()
         }
         val embed = EmbedBuilder()

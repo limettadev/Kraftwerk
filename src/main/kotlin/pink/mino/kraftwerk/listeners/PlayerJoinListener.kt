@@ -39,8 +39,8 @@ class PlayerJoinListener : Listener {
             val muted = PunishmentFeature.getActivePunishment(alt, PunishmentType.MUTE)
 
             when {
-                banned != null -> "${ChatColor.RED}${alt.name ?: "Unknown"}${ChatColor.GRAY} (banned)"
-                muted != null -> "${ChatColor.YELLOW}${alt.name ?: "Unknown"}${ChatColor.GRAY} (muted)"
+                banned != null -> "<red>${alt.name ?: "Unknown"}<gray> (banned)"
+                muted != null -> "<yellow>${alt.name ?: "Unknown"}<gray> (muted)"
                 else -> null // Skip alts with no punishment
             }
         }

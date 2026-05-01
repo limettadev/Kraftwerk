@@ -1,7 +1,5 @@
 package pink.mino.kraftwerk.commands
 
-import org.bukkit.Bukkit
-import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.Sound
 import org.bukkit.command.Command
@@ -80,7 +78,7 @@ class ConfigCommand : CommandExecutor {
             sender.sendMessage("You can't use this command as you technically aren't a player.")
             return false
         }
-        val gui = GuiBuilder().rows(3).name(ChatColor.translateAlternateColorCodes('&', "${Chat.primaryColor}<bold>Game Configuration")).owner(sender)
+        val gui = GuiBuilder().rows(3).name("${Chat.primaryColor}<bold>Game Configuration").owner(sender)
 
         sender.sendMessage(Chat.colored("${Chat.prefix} Opening the UHC configuration..."))
         val options = ItemBuilder(Material.LAVA_BUCKET)
@@ -101,7 +99,7 @@ class ConfigCommand : CommandExecutor {
         gui.item(3, options).onClick runnable@ {
             it.isCancelled = true
             if (sender.hasPermission("uhc.staff")) {
-                Bukkit.dispatchCommand(sender, "editconfig options")
+                sender.performCommand("editconfig options")
             }
         }
         val ign = if (ConfigFeature.instance.data!!.getString("game.host") == null) {
@@ -123,7 +121,7 @@ class ConfigCommand : CommandExecutor {
         gui.item(4, host).onClick runnable@ {
             it.isCancelled = true
             if (sender.hasPermission("uhc.staff")) {
-                Bukkit.dispatchCommand(sender, "editconfig host")
+                sender.performCommand("editconfig host")
             }
             Chat.sendMessage(sender, "${Chat.prefix} Matchpost: ${Chat.secondaryColor}https://hosts.uhc.gg/m/${ConfigFeature.instance.data!!.getInt("matchpost.id")} ")
         }
@@ -140,7 +138,7 @@ class ConfigCommand : CommandExecutor {
         gui.item(5, events).onClick runnable@ {
             it.isCancelled = true
             if (sender.hasPermission("uhc.staff")) {
-                Bukkit.dispatchCommand(sender, "editconfig events")
+                sender.performCommand("editconfig events")
             }
         }
         val healConfig = ItemBuilder(Material.GOLDEN_APPLE)
@@ -155,7 +153,7 @@ class ConfigCommand : CommandExecutor {
         gui.item(10, healConfig).onClick runnable@ {
             it.isCancelled = true
             if (sender.hasPermission("uhc.staff")) {
-                Bukkit.dispatchCommand(sender, "editconfig options")
+                sender.performCommand("editconfig options")
             }
         }
         val caneRates = if (ConfigFeature.instance.worlds!!.getInt("${ConfigFeature.instance.data!!.get("pregen.world")}.canerate") <= 0) {
@@ -175,7 +173,7 @@ class ConfigCommand : CommandExecutor {
         gui.item(11, ratesConfig).onClick runnable@ {
             it.isCancelled = true
             if (sender.hasPermission("uhc.staff")) {
-                Bukkit.dispatchCommand(sender, "editconfig rates")
+                sender.performCommand("editconfig rates")
             }
         }
         val ffa = if (ConfigFeature.instance.data!!.getBoolean("game.ffa")) {
@@ -204,7 +202,7 @@ class ConfigCommand : CommandExecutor {
         gui.item(12, teamConf).onClick runnable@ {
             it.isCancelled = true
             if (sender.hasPermission("uhc.staff")) {
-                Bukkit.dispatchCommand(sender, "editconfig teams")
+                sender.performCommand("editconfig teams")
             }
         }
         val scenarios = ItemBuilder(Material.EMERALD)
@@ -218,7 +216,7 @@ class ConfigCommand : CommandExecutor {
         gui.item(13, scenarios.make()).onClick runnable@ {
             it.isCancelled = true
             if (sender.hasPermission("uhc.staff")) {
-                Bukkit.dispatchCommand(sender, "sm")
+                sender.performCommand("sm")
             }
         }
         val enchanting = ItemBuilder(Material.ENCHANTING_TABLE)
@@ -234,7 +232,7 @@ class ConfigCommand : CommandExecutor {
         gui.item(14, enchanting).onClick runnable@ {
             it.isCancelled = true
             if (sender.hasPermission("uhc.staff")) {
-                Bukkit.dispatchCommand(sender, "editconfig options")
+                sender.performCommand("editconfig options")
             }
         }
         val border = ItemBuilder(Material.BEDROCK)
@@ -290,7 +288,7 @@ class ConfigCommand : CommandExecutor {
         gui.item(16, miningConfig).onClick runnable@ {
             it.isCancelled = true
             if (sender.hasPermission("uhc.staff")) {
-                Bukkit.dispatchCommand(sender, "editconfig rules")
+                sender.performCommand("editconfig rules")
             }
         }
         val netherConfig = ItemBuilder(Material.NETHERRACK)
@@ -355,31 +353,31 @@ class ConfigCommand : CommandExecutor {
             gui.item(21, editConfig).onClick runnable@ {
                 it.isCancelled = true
                 if (sender.hasPermission("uhc.staff")) {
-                    Bukkit.dispatchCommand(sender, "editconfig")
+                    sender.performCommand("editconfig")
                 }
             }
             gui.item(23, specialsConfig).onClick runnable@ {
                 it.isCancelled = true
                 if (sender.hasPermission("uhc.staff")) {
-                    Bukkit.dispatchCommand(sender, "editconfig specials")
+                    sender.performCommand("editconfig specials")
                 }
             }
             gui.item(20, pvpConfig).onClick runnable@ {
                 it.isCancelled = true
                 if (sender.hasPermission("uhc.staff")) {
-                    Bukkit.dispatchCommand(sender, "editconfig rules")
+                    sender.performCommand("editconfig rules")
                 }
             }
             gui.item(24, netherConfig).onClick runnable@ {
                 it.isCancelled = true
                 if (sender.hasPermission("uhc.staff")) {
-                    Bukkit.dispatchCommand(sender, "editconfig nether")
+                    sender.performCommand("editconfig nether")
                 }
             }
             gui.item(22, privateRoundConfig).onClick runnable@ {
                 it.isCancelled = true
                 if (sender.hasPermission("uhc.staff")) {
-                    Bukkit.dispatchCommand(sender, "editconfig options")
+                    sender.performCommand("editconfig options")
                 }
             }
         } else {
@@ -387,44 +385,44 @@ class ConfigCommand : CommandExecutor {
                 gui.item(21, pvpConfig).onClick runnable@ {
                     it.isCancelled = true
                     if (sender.hasPermission("uhc.staff")) {
-                        Bukkit.dispatchCommand(sender, "editconfig rules")
+                        sender.performCommand("editconfig rules")
                     }
                 }
                 gui.item(23, netherConfig).onClick runnable@ {
                     it.isCancelled = true
                     if (sender.hasPermission("uhc.staff")) {
-                        Bukkit.dispatchCommand(sender, "editconfig nether")
+                        sender.performCommand("editconfig nether")
                     }
                 }
                 gui.item(22, specialsConfig).onClick runnable@ {
                     it.isCancelled = true
                     if (sender.hasPermission("uhc.staff")) {
-                        Bukkit.dispatchCommand(sender, "editconfig specials")
+                        sender.performCommand("editconfig specials")
                     }
                 }
             } else {
                 gui.item(20, pvpConfig).onClick runnable@ {
                     it.isCancelled = true
                     if (sender.hasPermission("uhc.staff")) {
-                        Bukkit.dispatchCommand(sender, "editconfig rules")
+                        sender.performCommand("editconfig rules")
                     }
                 }
                 gui.item(23, netherConfig).onClick runnable@ {
                     it.isCancelled = true
                     if (sender.hasPermission("uhc.staff")) {
-                        Bukkit.dispatchCommand(sender, "editconfig nether")
+                        sender.performCommand("editconfig nether")
                     }
                 }
                 gui.item(24, specialsConfig).onClick runnable@ {
                     it.isCancelled = true
                     if (sender.hasPermission("uhc.staff")) {
-                        Bukkit.dispatchCommand(sender, "editconfig specials")
+                        sender.performCommand("editconfig specials")
                     }
                 }
                 gui.item(21, privateRoundConfig).onClick runnable@ {
                     it.isCancelled = true
                     if (sender.hasPermission("uhc.staff")) {
-                        Bukkit.dispatchCommand(sender, "editconfig options")
+                        sender.performCommand("editconfig options")
                     }
                 }
             }

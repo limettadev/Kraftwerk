@@ -249,7 +249,7 @@ class ProfileCommand : CommandExecutor {
                 .addLore("Go back to the previous menu.")
                 .make()
             gui.item(5, back).onClick runnable@ {
-                Bukkit.dispatchCommand(sender, "profile")
+                sender.performCommand("profile")
             }
             sender.openInventory(gui.make())
         }
@@ -309,7 +309,7 @@ class ProfileCommand : CommandExecutor {
                     .addLore("Go back to the previous menu.")
                     .make()
                 gui.item(26, back).onClick runnable@ {
-                    Bukkit.dispatchCommand(sender, "profile")
+                    sender.performCommand("profile")
                 }
                 sender.openInventory(gui.make())
             }
@@ -343,7 +343,7 @@ class ProfileCommand : CommandExecutor {
                     .addLore("Go back to the previous menu.")
                     .make()
                 gui.item(index, back).onClick runnable@ {
-                    Bukkit.dispatchCommand(sender, "profile")
+                    sender.performCommand("profile")
                 }
                 sender.openInventory(gui.make())
             }

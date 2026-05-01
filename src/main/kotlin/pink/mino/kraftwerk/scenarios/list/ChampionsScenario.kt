@@ -6,7 +6,6 @@ import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.enchantments.Enchantment
-import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.block.BlockBreakEvent
@@ -148,7 +147,7 @@ class ChampionsScenario : Scenario(
         }
         if (e.item!!.itemMeta.displayName() == Chat.colored("<red>Crafting Recipes")) {
             e.isCancelled = true
-            Bukkit.dispatchCommand(e.player, "recipes")
+            e.player.performCommand("recipes")
         }
     }
 
@@ -214,10 +213,10 @@ class ChampionsScenario : Scenario(
             val boots = ItemBuilder(Material.LEATHER_BOOTS)
                 .addEnchantment(Enchantment.PROTECTION, 3)
                 .make()
-            player.inventory.setHelmet(helmet)
-            player.inventory.setChestplate(chestplate)
-            player.inventory.setLeggings(leggings)
-            player.inventory.setBoots(boots)
+            player.inventory.helmet = helmet
+            player.inventory.chestplate = chestplate
+            player.inventory.leggings = leggings
+            player.inventory.boots = boots
         } else if (kits[player.uniqueId] == "enchanter") {
             val pickaxe = ItemBuilder(Material.STONE_PICKAXE)
                 .addEnchantment(Enchantment.EFFICIENCY, 3)
@@ -422,10 +421,10 @@ class ChampionsScenario : Scenario(
                 val boots = ItemBuilder(Material.LEATHER_BOOTS)
                     .addEnchantment(Enchantment.PROTECTION, 3)
                     .make()
-                player.inventory.setHelmet(helmet)
-                player.inventory.setChestplate(chestplate)
-                player.inventory.setLeggings(leggings)
-                player.inventory.setBoots(boots)
+                player.inventory.helmet = helmet
+                player.inventory.chestplate = chestplate
+                player.inventory.leggings = leggings
+                player.inventory.boots = boots
             } else if (kits[player.uniqueId] == "enchanter") {
                 val pickaxe = ItemBuilder(Material.STONE_PICKAXE)
                     .addEnchantment(Enchantment.EFFICIENCY, 3)

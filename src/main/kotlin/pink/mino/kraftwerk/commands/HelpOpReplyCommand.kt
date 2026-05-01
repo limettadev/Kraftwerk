@@ -19,7 +19,7 @@ class HelpOpReplyCommand : CommandExecutor {
     ): Boolean {
         if (sender is Player) {
             if (!sender.hasPermission("uhc.staff.hr")) {
-                Chat.sendMessage(sender, "${ChatColor.RED}You don't have permission to use this command.")
+                Chat.sendMessage(sender, "<red>You don't have permission to use this command.")
                 return false
             }
         }
@@ -33,7 +33,7 @@ class HelpOpReplyCommand : CommandExecutor {
         }
         val message = StringBuilder()
         for ((index, element) in args.withIndex()) {
-            if (index != 0) message.append("${ChatColor.GRAY}${element}").append(" " + ChatColor.GRAY)
+            if (index != 0) message.append("<gray>${element}").append(" " + ChatColor.GRAY)
         }
         val msg = message.toString().trim()
         val player = HelpOp.getHelpop(args[0].toInt())

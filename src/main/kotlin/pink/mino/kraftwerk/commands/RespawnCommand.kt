@@ -114,7 +114,7 @@ class RespawnCommand : CommandExecutor {
                     if (it.isLeftClick) {
                         sender.teleport(RespawnFeature.instance.locations[player]!!)
                     } else if (it.isRightClick) {
-                        Bukkit.dispatchCommand(sender, "revive ${Bukkit.getOfflinePlayer(player).name}")
+                        sender.performCommand("revive ${Bukkit.getOfflinePlayer(player).name}")
                     }
                 }
             }
@@ -161,10 +161,11 @@ class RespawnCommand : CommandExecutor {
             if (team != null) {
                 team.addPlayer(player)
             }
-            if (RespawnFeature.instance.helmet[player.uniqueId] != null) player.inventory.setHelmet(RespawnFeature.instance.helmet[player.uniqueId]!!)
-            if (RespawnFeature.instance.chestplate[player.uniqueId] != null) player.inventory.setChestplate(RespawnFeature.instance.chestplate[player.uniqueId]!!)
-            if (RespawnFeature.instance.leggings[player.uniqueId] != null) player.inventory.setLeggings(RespawnFeature.instance.leggings[player.uniqueId]!!)
-            if (RespawnFeature.instance.boots[player.uniqueId] != null) player.inventory.setBoots(RespawnFeature.instance.boots[player.uniqueId]!!)
+            if (RespawnFeature.instance.helmet[player.uniqueId] != null) player.inventory.helmet = RespawnFeature.instance.helmet[player.uniqueId]!!
+            if (RespawnFeature.instance.chestplate[player.uniqueId] != null) player.inventory.chestplate =
+                RespawnFeature.instance.chestplate[player.uniqueId]!!
+            if (RespawnFeature.instance.leggings[player.uniqueId] != null) player.inventory.leggings = RespawnFeature.instance.leggings[player.uniqueId]!!
+            if (RespawnFeature.instance.boots[player.uniqueId] != null) player.inventory.boots = RespawnFeature.instance.boots[player.uniqueId]!!
             RespawnFeature.instance.respawnablePlayers.remove(player.uniqueId)
 
             player.exp = RespawnFeature.instance.xp[player.uniqueId]!!

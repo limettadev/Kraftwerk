@@ -7,8 +7,6 @@ import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
-import org.bukkit.plugin.java.JavaPlugin
-import org.popcraft.chunky.api.ChunkyAPI
 import pink.mino.kraftwerk.Kraftwerk
 import pink.mino.kraftwerk.features.ConfigFeature
 import pink.mino.kraftwerk.utils.BlockUtil
@@ -165,7 +163,7 @@ class PregenCommand : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
         if (sender is Player) {
             if (!sender.hasPermission("uhc.staff.pregen")) {
-                Chat.sendMessage(sender, "${ChatColor.RED}You don't have permission to use this command.")
+                Chat.sendMessage(sender, "<red>You don't have permission to use this command.")
                 return false
             }
         }
@@ -243,15 +241,15 @@ class PregenCommand : CommandExecutor {
                     .make()
                 gui.item(3, changeGeneration).onClick {
                     it.isCancelled = true
-                    Bukkit.dispatchCommand(sender, "ep generation")
+                    sender.performCommand("ep generation")
                 }
                 gui.item(4, changeBorder).onClick {
                     it.isCancelled = true
-                    Bukkit.dispatchCommand(sender, "ep border")
+                    sender.performCommand("ep border")
                 }
                 gui.item(5, changeVarious).onClick {
                     it.isCancelled = true
-                    Bukkit.dispatchCommand(sender, "ep settings")
+                    sender.performCommand("ep settings")
                 }
                 gui.item(8, submit).onClick {
                     it.isCancelled = true

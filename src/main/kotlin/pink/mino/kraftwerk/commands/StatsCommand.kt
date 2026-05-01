@@ -2,7 +2,10 @@ package pink.mino.kraftwerk.commands
 
 import me.lucko.helper.promise.Promise
 import net.kyori.adventure.title.Title
-import org.bukkit.*
+import org.bukkit.Bukkit
+import org.bukkit.Material
+import org.bukkit.OfflinePlayer
+import org.bukkit.Sound
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -46,7 +49,7 @@ class StatsCommand : CommandExecutor {
             sender.sendMessage("You can't use this command as you technically aren't a player.")
             return false
         }
-        var gui = GuiBuilder().rows(1).name(ChatColor.translateAlternateColorCodes('&', "${Chat.primaryColor}Stats")).owner(sender)
+        var gui = GuiBuilder().rows(1).name(Chat.colored("${Chat.primaryColor}Stats")).owner(sender)
         val target: OfflinePlayer = if (args.isEmpty()) {
             sender
         } else {
@@ -203,7 +206,7 @@ class StatsCommand : CommandExecutor {
                                 sender.playSound(sender.location, Sound.BLOCK_ANVIL_LAND, 1f, 1f)
                             }
                             gui.item(5, decline).onClick runnable@ {
-                                Bukkit.dispatchCommand(sender, "stats")
+                                sender.performCommand("stats")
                             }
                             sender.openInventory(gui.make())
                         } else {

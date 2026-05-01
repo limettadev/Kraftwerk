@@ -1,6 +1,5 @@
 package pink.mino.kraftwerk.commands
 
-import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.Sound
 import org.bukkit.command.Command
@@ -103,12 +102,12 @@ class ScenarioManagerCommand : CommandExecutor {
             gui.item(32, next).onClick runnable@ {
                 it.isCancelled = true
                 sender.closeInventory()
-                Bukkit.dispatchCommand(sender, "sm ${page + 1}")
+                sender.performCommand("sm ${page + 1}")
             }
             gui.item(30, back).onClick runnable@ {
                 it.isCancelled = true
                 sender.closeInventory()
-                Bukkit.dispatchCommand(sender, "sm ${page - 1}")
+                sender.performCommand("sm ${page - 1}")
             }
             gui.item(31, resetScenarios).onClick runnable@ {
                 it.isCancelled = true
@@ -116,14 +115,14 @@ class ScenarioManagerCommand : CommandExecutor {
                 for (scenario in ScenarioHandler.getActiveScenarios()) {
                     ScenarioHandler.getScenario(scenario.id)!!.toggle()
                 }
-                Bukkit.dispatchCommand(sender, "sm $page")
+                sender.performCommand("sm $page")
             }
         } else {
             gui.item(31, next).onClick runnable@ {
                 it.isCancelled = true
                 sender.closeInventory()
-                if (page == 0) Bukkit.dispatchCommand(sender, "sm ${page + 2}")
-                else Bukkit.dispatchCommand(sender, "sm ${page + 1}")
+                if (page == 0) sender.performCommand("sm ${page + 2}")
+                else sender.performCommand("sm ${page + 1}")
             }
             gui.item(30, resetScenarios).onClick runnable@ {
                 it.isCancelled = true
@@ -131,7 +130,7 @@ class ScenarioManagerCommand : CommandExecutor {
                 for (scenario in ScenarioHandler.getActiveScenarios()) {
                     ScenarioHandler.getScenario(scenario.id)!!.toggle()
                 }
-                Bukkit.dispatchCommand(sender, "sm $page")
+                sender.performCommand("sm $page")
             }
         }
         sender.openInventory(gui.make())

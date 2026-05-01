@@ -1,7 +1,6 @@
 package pink.mino.kraftwerk.utils.recipes
 
 import net.kyori.adventure.text.Component
-import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
@@ -42,7 +41,7 @@ class RecipesMenu : PaginatedMenu() {
                     }
 
                     override fun clicked(player: Player, slot: Int, clickType: ClickType) {
-                        Bukkit.dispatchCommand(player, "recipe ${recipe.id}")
+                        player.performCommand("recipe ${recipe.id}")
                     }
                 }
                 count.getAndIncrement()

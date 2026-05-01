@@ -8,8 +8,6 @@ import com.lunarclient.apollo.Apollo
 import com.lunarclient.apollo.module.staffmod.StaffModModule
 import com.mongodb.MongoException
 import net.kyori.adventure.text.minimessage.MiniMessage
-import net.md_5.bungee.api.chat.ClickEvent
-import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.*
 import org.bukkit.block.Block
 import org.bukkit.entity.Arrow
@@ -189,10 +187,10 @@ class SpecFeature : Listener {
             p.removePotionEffect(effect.type)
         }
         p.inventory.clear()
-        p.inventory.setHelmet(ItemStack(Material.AIR))
-        p.inventory.setChestplate(ItemStack(Material.AIR))
-        p.inventory.setLeggings(ItemStack(Material.AIR))
-        p.inventory.setBoots(ItemStack(Material.AIR))
+        p.inventory.helmet = ItemStack(Material.AIR)
+        p.inventory.chestplate = ItemStack(Material.AIR)
+        p.inventory.leggings = ItemStack(Material.AIR)
+        p.inventory.boots = ItemStack(Material.AIR)
         p.inventory.setItemInOffHand(ItemStack(Material.AIR))
         p.gameMode = GameMode.SPECTATOR
 
@@ -302,10 +300,10 @@ class SpecFeature : Listener {
             p.removePotionEffect(effect.type)
         }
         p.inventory.clear()
-        p.inventory.setHelmet(ItemStack(Material.AIR))
-        p.inventory.setChestplate(ItemStack(Material.AIR))
-        p.inventory.setLeggings(ItemStack(Material.AIR))
-        p.inventory.setBoots(ItemStack(Material.AIR))
+        p.inventory.helmet = ItemStack(Material.AIR)
+        p.inventory.chestplate = ItemStack(Material.AIR)
+        p.inventory.leggings = ItemStack(Material.AIR)
+        p.inventory.boots = ItemStack(Material.AIR)
         p.inventory.setItemInOffHand(ItemStack(Material.AIR))
         p.gameMode = GameMode.SPECTATOR
 
@@ -383,10 +381,10 @@ class SpecFeature : Listener {
             p.removePotionEffect(effect.type)
         }
         p.inventory.clear()
-        p.inventory.setHelmet(ItemStack(Material.AIR))
-        p.inventory.setChestplate(ItemStack(Material.AIR))
-        p.inventory.setLeggings(ItemStack(Material.AIR))
-        p.inventory.setBoots(ItemStack(Material.AIR))
+        p.inventory.helmet = ItemStack(Material.AIR)
+        p.inventory.chestplate = ItemStack(Material.AIR)
+        p.inventory.leggings = ItemStack(Material.AIR)
+        p.inventory.boots = ItemStack(Material.AIR)
         p.inventory.setItemInOffHand(ItemStack(Material.AIR))
 
         SpawnFeature.instance.send(p)
@@ -500,7 +498,7 @@ class SpecFeature : Listener {
         if (getSpecs().contains(e.player.name)) {
             if (e.rightClicked.type == EntityType.PLAYER) {
                 val player = (e.rightClicked as Player)
-                val gui = GuiBuilder().rows(5).name(ChatColor.translateAlternateColorCodes('&', "${player.name}'s Inventory"))
+                val gui = GuiBuilder().rows(5).name(Chat.colored("${player.name}'s Inventory"))
                 e.player.openInventory(gui.make())
                 InvSeeFeature(e.player, player).runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0, 20L)
             } else {

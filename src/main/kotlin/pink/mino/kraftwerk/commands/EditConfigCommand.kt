@@ -2,7 +2,6 @@ package pink.mino.kraftwerk.commands
 
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.Bukkit
-import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.Sound
 import org.bukkit.command.Command
@@ -35,7 +34,7 @@ class EditConfigCommand : CommandExecutor {
         var gui: GuiBuilder? = null
         var size: Int = 35
         if (args.isEmpty()) {
-            gui = GuiBuilder().rows(2).name(ChatColor.translateAlternateColorCodes('&', "${Chat.primaryColor}Edit UHC Config")).owner(sender)
+            gui = GuiBuilder().rows(2).name("${Chat.primaryColor}Edit UHC Config").owner(sender)
             size = 17
             val rates = ItemBuilder(Material.FLINT)
                 .name("${Chat.primaryColor}Rates")
@@ -44,7 +43,7 @@ class EditConfigCommand : CommandExecutor {
             gui.item(0, rates).onClick runnable@ {
                 it.isCancelled = true
                 player.closeInventory()
-                Bukkit.dispatchCommand(player, "editconfig rates")
+                player.performCommand("editconfig rates")
             }
             val settings = ItemBuilder(Material.LAVA_BUCKET)
                 .name("${Chat.primaryColor}Settings")
@@ -53,7 +52,7 @@ class EditConfigCommand : CommandExecutor {
             gui.item(1, settings).onClick runnable@ {
                 it.isCancelled = true
                 player.closeInventory()
-                Bukkit.dispatchCommand(player, "editconfig options")
+                player.performCommand("editconfig options")
             }
             val teams = ItemBuilder(Material.DIAMOND_SWORD)
                 .name("${Chat.primaryColor}Teams")
@@ -62,7 +61,7 @@ class EditConfigCommand : CommandExecutor {
             gui.item(2, teams).onClick runnable@ {
                 it.isCancelled = true
                 player.closeInventory()
-                Bukkit.dispatchCommand(player, "editconfig teams")
+                player.performCommand("editconfig teams")
             }
             val starterFood = ItemBuilder(Material.COOKED_BEEF)
                 .name("${Chat.primaryColor}Starter Food")
@@ -71,7 +70,7 @@ class EditConfigCommand : CommandExecutor {
             gui.item(3, starterFood).onClick runnable@ {
                 it.isCancelled = true
                 player.closeInventory()
-                Bukkit.dispatchCommand(player, "editconfig starterfood")
+                player.performCommand("editconfig starterfood")
             }
             val host = ItemBuilder(Material.COMPASS)
                 .name("${Chat.primaryColor}Host")
@@ -80,7 +79,7 @@ class EditConfigCommand : CommandExecutor {
             gui.item(4, host).onClick runnable@ {
                 it.isCancelled = true
                 player.closeInventory()
-                Bukkit.dispatchCommand(player, "editconfig host")
+                player.performCommand("editconfig host")
             }
             val events = ItemBuilder(Material.CLOCK)
                 .name("${Chat.primaryColor}Events")
@@ -89,7 +88,7 @@ class EditConfigCommand : CommandExecutor {
             gui.item(5, events).onClick runnable@ {
                 it.isCancelled = true
                 player.closeInventory()
-                Bukkit.dispatchCommand(player, "editconfig events")
+                player.performCommand("editconfig events")
             }
             val nether = ItemBuilder(Material.NETHER_STAR)
                 .name("${Chat.primaryColor}Nether")
@@ -98,7 +97,7 @@ class EditConfigCommand : CommandExecutor {
             gui.item(6, nether).onClick runnable@ {
                 it.isCancelled = true
                 player.closeInventory()
-                Bukkit.dispatchCommand(player, "editconfig nether")
+                player.performCommand("editconfig nether")
             }
             val rules = ItemBuilder(Material.PAPER)
                 .name("${Chat.primaryColor}Rules")
@@ -107,7 +106,7 @@ class EditConfigCommand : CommandExecutor {
             gui.item(7, rules).onClick runnable@ {
                 it.isCancelled = true
                 player.closeInventory()
-                Bukkit.dispatchCommand(player, "editconfig rules")
+                player.performCommand("editconfig rules")
             }
             val specials = ItemBuilder(Material.BLAZE_POWDER)
                 .name("${Chat.primaryColor}Special Options")
@@ -116,10 +115,10 @@ class EditConfigCommand : CommandExecutor {
             gui.item(8, specials).onClick runnable@ {
                 it.isCancelled = true
                 player.closeInventory()
-                Bukkit.dispatchCommand(player, "editconfig specials")
+                player.performCommand("editconfig specials")
             }
         } else if (args[0].lowercase() == "options") {
-            gui = GuiBuilder().rows(3).name(ChatColor.translateAlternateColorCodes('&', "${Chat.primaryColor}Edit UHC Config")).owner(sender)
+            gui = GuiBuilder().rows(3).name("${Chat.primaryColor}Edit UHC Config").owner(sender)
             size = 17
             var iterator = 0
             for (option in ConfigOptionHandler.configOptions) {
@@ -144,7 +143,7 @@ class EditConfigCommand : CommandExecutor {
                 }
             }
         } else if (args[0].lowercase() == "nether") {
-            gui = GuiBuilder().rows(1).name(ChatColor.translateAlternateColorCodes('&', "${Chat.primaryColor}Edit UHC Config")).owner(sender)
+            gui = GuiBuilder().rows(1).name("${Chat.primaryColor}Edit UHC Config").owner(sender)
             size = 8
             var iterator = 0
             for (option in ConfigOptionHandler.configOptions) {
@@ -169,7 +168,7 @@ class EditConfigCommand : CommandExecutor {
                 }
             }
         } else if (args[0].lowercase() == "rules") {
-            gui = GuiBuilder().rows(2).name(ChatColor.translateAlternateColorCodes('&', "${Chat.primaryColor}Edit UHC Config")).owner(sender)
+            gui = GuiBuilder().rows(2).name("${Chat.primaryColor}Edit UHC Config").owner(sender)
             size = 17
             var iterator = 0
             for (option in ConfigOptionHandler.configOptions) {
@@ -194,7 +193,7 @@ class EditConfigCommand : CommandExecutor {
                 }
             }
         } else if (args[0] == "events") {
-            gui = GuiBuilder().rows(1).name(ChatColor.translateAlternateColorCodes('&', "${Chat.primaryColor}Edit UHC Config")).owner(sender)
+            gui = GuiBuilder().rows(1).name("${Chat.primaryColor}Edit UHC Config").owner(sender)
             size = 8
             val finalHeal = ItemStack(Material.REDSTONE)
             val pvp = ItemStack(Material.IRON_SWORD)
@@ -366,7 +365,7 @@ class EditConfigCommand : CommandExecutor {
             player.playSound(player.location, Sound.ENTITY_PLAYER_LEVELUP, 10.toFloat(), 1.toFloat())
             return true
         } else if (args[0].lowercase() == "starterfood") {
-            gui = GuiBuilder().rows(1).name(ChatColor.translateAlternateColorCodes('&', "${Chat.primaryColor}Edit UHC Config")).owner(sender)
+            gui = GuiBuilder().rows(1).name("${Chat.primaryColor}Edit UHC Config").owner(sender)
             size = 8
             val starterFood = ItemStack(Material.COOKED_BEEF)
             val starterFoodMeta = starterFood.itemMeta
@@ -409,7 +408,7 @@ class EditConfigCommand : CommandExecutor {
                 }
             }
         } else if (args[0].lowercase() == "teams") {
-            gui = GuiBuilder().rows(3).name(ChatColor.translateAlternateColorCodes('&', "${Chat.primaryColor}Edit UHC Config")).owner(sender)
+            gui = GuiBuilder().rows(3).name("${Chat.primaryColor}Edit UHC Config").owner(sender)
             size = 26
             val teamSize = ItemStack(Material.IRON_SWORD, ConfigFeature.instance.data!!.getInt("game.teamSize"))
             val teamSizeMeta = teamSize.itemMeta
@@ -519,7 +518,7 @@ class EditConfigCommand : CommandExecutor {
             randomizeTeams.itemMeta = randomizeTeamsMeta
             gui.item(14, randomizeTeams).onClick runnable@ {
                 it.isCancelled = true
-                Bukkit.dispatchCommand(player, "team randomize")
+                player.performCommand("team randomize")
             }
 
             val resetTeams = ItemStack(Material.BARRIER)
@@ -533,10 +532,10 @@ class EditConfigCommand : CommandExecutor {
             resetTeams.itemMeta = resetTeamsMeta
             gui.item(16, resetTeams).onClick runnable@ {
                 it.isCancelled = true
-                Bukkit.dispatchCommand(player, "team reset")
+                player.performCommand("team reset")
             }
         } else if (args[0].lowercase() == "rates") {
-            gui = GuiBuilder().rows(1).name(ChatColor.translateAlternateColorCodes('&', "${Chat.primaryColor}Edit UHC Config")).owner(sender)
+            gui = GuiBuilder().rows(1).name("${Chat.primaryColor}Edit UHC Config").owner(sender)
             size = 8
             val flintRates = ItemStack(Material.FLINT)
             val flintRatesMeta = flintRates.itemMeta
@@ -627,7 +626,7 @@ class EditConfigCommand : CommandExecutor {
                 }
             }
         }  else if (args[0].lowercase() == "specials") {
-            gui = GuiBuilder().rows(1).name(ChatColor.translateAlternateColorCodes('&', "${Chat.primaryColor}Edit UHC Config")).owner(sender)
+            gui = GuiBuilder().rows(1).name("${Chat.primaryColor}Edit UHC Config").owner(sender)
             size = 8
             var iterator = 0
             for (option in ConfigOptionHandler.configOptions) {

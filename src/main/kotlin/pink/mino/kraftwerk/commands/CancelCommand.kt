@@ -1,7 +1,6 @@
 package pink.mino.kraftwerk.commands
 
 import org.bukkit.Bukkit
-import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -20,7 +19,7 @@ class CancelCommand : CommandExecutor {
     ): Boolean {
         if (sender is Player) {
             if (!sender.hasPermission("uhc.staff.matchpost")) {
-                Chat.sendMessage(sender, "${ChatColor.RED}You don't have permission to use this command.")
+                Chat.sendMessage(sender, "<red>You don't have permission to use this command.")
                 return false
             }
         }

@@ -1,8 +1,5 @@
 package pink.mino.kraftwerk.commands
 
-import net.minecraft.world.item.alchemy.Potion
-import org.bukkit.Bukkit
-import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -12,7 +9,6 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.PotionMeta
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
-import org.bukkit.potion.PotionType
 import pink.mino.kraftwerk.scenarios.ScenarioHandler
 import pink.mino.kraftwerk.scenarios.list.MolesScenario
 import pink.mino.kraftwerk.utils.*
@@ -46,7 +42,7 @@ class MoleKitCommand : CommandExecutor {
         }
         when {
             args.isEmpty() -> {
-                val gui = GuiBuilder().rows(1).name(ChatColor.translateAlternateColorCodes('&', "${Chat.primaryColor}Mole Kits")).owner(sender)
+                val gui = GuiBuilder().rows(1).name(Chat.colored("${Chat.primaryColor}Mole Kits")).owner(sender)
                 val troll = ItemBuilder(Material.COBWEB)
                     .name("<gold>Troll Kit")
                     .addLore(Chat.guiLine)
@@ -122,35 +118,35 @@ class MoleKitCommand : CommandExecutor {
                     .make()
                 gui.item(0, troll).onClick runnable@ {
                     it.isCancelled = true
-                    Bukkit.dispatchCommand(sender, "molekit troll")
+                    sender.performCommand("molekit troll")
                 }
                 gui.item(1, potter).onClick runnable@ {
                     it.isCancelled = true
-                    Bukkit.dispatchCommand(sender, "molekit potter")
+                    sender.performCommand("molekit potter")
                 }
                 gui.item(2, fighter).onClick runnable@ {
                     it.isCancelled = true
-                    Bukkit.dispatchCommand(sender, "molekit fighter")
+                    sender.performCommand("molekit fighter")
                 }
                 gui.item(3, trapper).onClick runnable@ {
                     it.isCancelled = true
-                    Bukkit.dispatchCommand(sender, "molekit trapper")
+                    sender.performCommand("molekit trapper")
                 }
                 gui.item(4, tank).onClick runnable@ {
                     it.isCancelled = true
-                    Bukkit.dispatchCommand(sender, "molekit tank")
+                    sender.performCommand("molekit tank")
                 }
                 gui.item(5, enchanter).onClick runnable@ {
                     it.isCancelled = true
-                    Bukkit.dispatchCommand(sender, "molekit enchanter")
+                    sender.performCommand("molekit enchanter")
                 }
                 gui.item(6, healer).onClick runnable@ {
                     it.isCancelled = true
-                    Bukkit.dispatchCommand(sender, "molekit healer")
+                    sender.performCommand("molekit healer")
                 }
                 gui.item(7, projectile).onClick runnable@ {
                     it.isCancelled = true
-                    Bukkit.dispatchCommand(sender, "molekit projectile")
+                    sender.performCommand("molekit projectile")
                 }
                 sender.openInventory(gui.make())
             }

@@ -149,6 +149,7 @@ class ItemBuilder(material: Material) {
         item.itemMeta = meta
         return this
     }
+
     fun addLore(line: String): ItemBuilder {
         var lore = meta.lore()
         if (lore == null) lore = ArrayList()

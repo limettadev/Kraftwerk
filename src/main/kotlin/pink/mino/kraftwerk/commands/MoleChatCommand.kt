@@ -1,6 +1,5 @@
 package pink.mino.kraftwerk.commands
 
-import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -36,7 +35,7 @@ class MoleChatCommand : CommandExecutor {
         }
         val message = StringBuilder()
         if (args.isEmpty()) {
-            sender.sendMessage("${ChatColor.RED}Usage: /pm <message>")
+            sender.sendMessage("<red>Usage: /pm <message>")
             return true
         }
         for (element in args) {

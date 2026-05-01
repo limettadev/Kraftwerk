@@ -409,35 +409,35 @@ class SpawnFeature : Listener {
                 when (e.item!!.itemMeta.displayName()) {
                     Chat.colored("${Chat.primaryColor}View Stats <gray>(Right Click)") -> {
                         e.isCancelled = true
-                        Bukkit.dispatchCommand(e.player, "stats")
+                        e.player.performCommand("stats")
                     }
                     Chat.colored("<dark_green>Donator <gray>(Right Click)") -> {
                         e.isCancelled = true
-                        Bukkit.dispatchCommand(e.player, "donator")
+                        e.player.performCommand("donator")
                     }
                     Chat.colored("${Chat.primaryColor}UHC Configuration <gray>(Right Click)") -> {
                         e.isCancelled = true
-                        Bukkit.dispatchCommand(e.player, "uhc")
+                        e.player.performCommand("uhc")
                     }
                     Chat.colored("${Chat.primaryColor}Active Scenarios <gray>(Right Click)") -> {
                         e.isCancelled = true
-                        Bukkit.dispatchCommand(e.player, "scen")
+                        e.player.performCommand("scen")
                     }
                     Chat.colored("${Chat.primaryColor}FFA Arena <gray>(Right Click)") -> {
                         e.isCancelled = true
-                        Bukkit.dispatchCommand(e.player, "a")
+                        e.player.performCommand("a")
                     }
                     Chat.colored("${Chat.primaryColor}Donator Menu <gray>(Right Click)") -> {
                         e.isCancelled = true
-                        Bukkit.dispatchCommand(e.player, "donator")
+                        e.player.performCommand("donator")
                     }
                     Chat.colored("${Chat.primaryColor}Champions Kit <gray>(Right Click)") -> {
                         e.isCancelled = true
-                        Bukkit.dispatchCommand(e.player, "ckit")
+                        e.player.performCommand("ckit")
                     }
                     Chat.colored("${Chat.primaryColor}Your Profile <gray>(Right Click)") -> {
                         e.isCancelled = true
-                        Bukkit.dispatchCommand(e.player, "profile")
+                        e.player.performCommand("profile")
                     }
                     Chat.colored("${Chat.primaryColor}Edit Arena Kit <gray>(Right Click)") -> {
                         e.isCancelled = true

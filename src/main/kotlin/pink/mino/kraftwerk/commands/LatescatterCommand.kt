@@ -1,6 +1,9 @@
 package pink.mino.kraftwerk.commands
 
-import org.bukkit.*
+import org.bukkit.Bukkit
+import org.bukkit.GameMode
+import org.bukkit.Material
+import org.bukkit.Sound
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -29,7 +32,7 @@ class LatescatterCommand : CommandExecutor {
     ): Boolean {
         if (sender is Player) {
             if (!sender.hasPermission("uhc.staff.ls")) {
-                Chat.sendMessage(sender, "${ChatColor.RED}You don't have permission to use this command.")
+                Chat.sendMessage(sender, "<red>You don't have permission to use this command.")
                 return false
             }
         }
@@ -59,10 +62,10 @@ class LatescatterCommand : CommandExecutor {
             player.saturation = 20F
             player.gameMode = GameMode.SURVIVAL
             player.inventory.clear()
-            player.inventory.setHelmet(ItemStack(Material.AIR))
-            player.inventory.setChestplate(ItemStack(Material.AIR))
-            player.inventory.setLeggings(ItemStack(Material.AIR))
-            player.inventory.setBoots(ItemStack(Material.AIR))
+            player.inventory.helmet = ItemStack(Material.AIR)
+            player.inventory.chestplate = ItemStack(Material.AIR)
+            player.inventory.leggings = ItemStack(Material.AIR)
+            player.inventory.boots = ItemStack(Material.AIR)
             player.inventory.setItemInOffHand(ItemStack(Material.AIR))
 
             player.enderChest.clear()
@@ -109,10 +112,10 @@ class LatescatterCommand : CommandExecutor {
             player.gameMode = GameMode.SURVIVAL
             player.inventory.clear()
             player.enderChest.clear()
-            player.inventory.setHelmet(ItemStack(Material.AIR))
-            player.inventory.setChestplate(ItemStack(Material.AIR))
-            player.inventory.setLeggings(ItemStack(Material.AIR))
-            player.inventory.setBoots(ItemStack(Material.AIR))
+            player.inventory.helmet = ItemStack(Material.AIR)
+            player.inventory.chestplate = ItemStack(Material.AIR)
+            player.inventory.leggings = ItemStack(Material.AIR)
+            player.inventory.boots = ItemStack(Material.AIR)
             player.inventory.setItemInOffHand(ItemStack(Material.AIR))
             player.inventory.setItemInMainHand(ItemStack(Material.AIR))
 

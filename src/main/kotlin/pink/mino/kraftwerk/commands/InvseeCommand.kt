@@ -1,6 +1,5 @@
 package pink.mino.kraftwerk.commands
 
-import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -47,7 +46,7 @@ class InvseeCommand : CommandExecutor {
             return false
         }
 
-        val gui = GuiBuilder().rows(5).name(ChatColor.translateAlternateColorCodes('&', "${target.name}'s Inventory"))
+        val gui = GuiBuilder().rows(5).name(Chat.colored("${target.name}'s Inventory"))
         sender.openInventory(gui.make())
         InvSeeFeature(sender, target).runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0, 20L)
         Chat.sendMessage(sender, "${Chat.prefix} You have opened the inventory of ${Chat.primaryColor}${target.name}<gray>.")

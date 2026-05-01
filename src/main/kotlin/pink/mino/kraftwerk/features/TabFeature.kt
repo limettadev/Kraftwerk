@@ -74,12 +74,12 @@ class TabFeature : BukkitRunnable() {
         }
         val footer = if (!ConfigOptionHandler.getOption("nobranding")!!.enabled) {
             "\n<gray> Game: ${Chat.secondaryColor}${game} \n <gray>Scenarios: ${Chat.secondaryColor}${
-                scenarioTextWrap(scenarios.joinToString(", "), 40).joinToString("\n")
-            }</gray> \n"
+                scenarioTextWrap(scenarios.joinToString(", "), 40).joinToString(" \n")
+            } </gray> \n"
         } else {
             "\n<gray> Scenarios: ${Chat.secondaryColor}${
                 scenarioTextWrap(scenarios.joinToString(", "), 40).joinToString("\n")
-            }</gray> \n"
+            } </gray> \n"
         }
         player.sendPlayerListHeader(MiniMessage.miniMessage().deserialize(header))
         player.sendPlayerListFooter(MiniMessage.miniMessage().deserialize(footer))

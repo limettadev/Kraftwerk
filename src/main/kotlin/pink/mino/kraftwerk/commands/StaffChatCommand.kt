@@ -1,7 +1,6 @@
 package pink.mino.kraftwerk.commands
 
 import org.bukkit.Bukkit
-import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -17,7 +16,7 @@ class StaffChatCommand : CommandExecutor {
         if (sender.hasPermission("uhc.staff")) {
             val message = StringBuilder()
             if (args.isEmpty()) {
-                sender.sendMessage("${ChatColor.RED}Usage: /ac <message>")
+                sender.sendMessage("<red>Usage: /ac <message>")
                 return true
             }
             for (element in args) {

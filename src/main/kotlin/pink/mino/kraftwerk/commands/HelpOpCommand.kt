@@ -46,12 +46,12 @@ class HelpOpCommand : CommandExecutor {
             }
         }
         if (args.isEmpty()) {
-            sender.sendMessage("${ChatColor.RED}Usage: /helpop <message>")
+            sender.sendMessage("<red>Usage: /helpop <message>")
             return true
         }
         val message = StringBuilder()
         for (element in args) {
-            message.append("${ChatColor.GRAY}${element}").append(" " + ChatColor.GRAY)
+            message.append("<gray>${element}").append(" " + ChatColor.GRAY)
         }
         val msg = message.toString().trim()
         val id = HelpOp.addHelpop(sender, msg)

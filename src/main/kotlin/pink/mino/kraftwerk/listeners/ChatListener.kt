@@ -81,7 +81,7 @@ class ChatListener : Listener {
                 JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.chatMode = "PUBLIC"
             } else {
                 Schedulers.sync().run {
-                    Bukkit.dispatchCommand(player, "mcc ${(e.message() as TextComponent).content()}")
+                    player.performCommand("mcc ${(e.message() as TextComponent).content()}")
                 }
             }
         }
@@ -93,7 +93,7 @@ class ChatListener : Listener {
                 JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.chatMode = "PUBLIC"
             } else {
                 Schedulers.sync().run {
-                    Bukkit.dispatchCommand(player, "ac ${(e.message() as TextComponent).content()}")
+                    player.performCommand("ac ${(e.message() as TextComponent).content()}")
                 }
             }
         }
@@ -105,7 +105,7 @@ class ChatListener : Listener {
                 JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.chatMode = "PUBLIC"
             } else {
                 Schedulers.sync().run {
-                    Bukkit.dispatchCommand(player, "sc ${(e.message() as TextComponent).content()}")
+                    player.performCommand("sc ${(e.message() as TextComponent).content()}")
                 }
             }
         }
@@ -117,7 +117,7 @@ class ChatListener : Listener {
                 JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.chatMode = "PUBLIC"
             } else {
                 Schedulers.sync().run {
-                    Bukkit.dispatchCommand(player, "pm ${(e.message() as TextComponent).content()}")
+                    player.performCommand("pm ${(e.message() as TextComponent).content()}")
                 }
             }
         }

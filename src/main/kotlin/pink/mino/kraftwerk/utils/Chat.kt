@@ -4,7 +4,6 @@ import DefaultFontInfo
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.Bukkit
-import org.bukkit.ChatColor
 import org.bukkit.command.CommandSender
 import pink.mino.kraftwerk.features.ConfigFeature
 import pink.mino.kraftwerk.features.SpecFeature
@@ -59,7 +58,7 @@ class Chat {
 
         /* Function to get centered MOTDs */
         fun centerMotd(message: String): String {
-            val text = ChatColor.translateAlternateColorCodes('&', message)
+            val text = colored(message)
             var messagePxSize = 0
             var previousCode = false
             var isBold = false
@@ -113,7 +112,7 @@ class Chat {
         fun sendCenteredMessage(player: CommandSender, message: String?) {
             var text = message
             if (text == null || text == "") player.sendMessage("")
-            text = ChatColor.translateAlternateColorCodes('&', message!!)
+            text = colored(message!!)
             var messagePxSize = 0
             var previousCode = false
             var isBold = false
