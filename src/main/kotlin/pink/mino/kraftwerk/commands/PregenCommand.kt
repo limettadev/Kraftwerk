@@ -128,7 +128,7 @@ class PregenCommand : CommandExecutor {
             border.setCenter(0.0, 0.0)
 
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
-                "chunky start ${pregenConfig.name} square ${pregenConfig.border}"
+                "chunky start ${pregenConfig.name} square 0 0 ${pregenConfig.border}"
             )
         }, 5L)
 
@@ -143,7 +143,7 @@ class PregenCommand : CommandExecutor {
                     }
                 }
                 if (pregenConfig.clearWater) {
-                    if (block.type == Material.WATER || block.type == Material.WATER) {
+                    if (block.type == Material.WATER || block.type == Material.WATER || block.type == Material.SEAGRASS || block.type == Material.TALL_SEAGRASS) {
                         block.type = Material.BLUE_STAINED_GLASS
                     }
                 }
