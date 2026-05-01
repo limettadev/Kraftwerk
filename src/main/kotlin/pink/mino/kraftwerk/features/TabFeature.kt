@@ -38,15 +38,20 @@ class TabFeature : BukkitRunnable() {
         val words = text.split(" ")
         val lines = ArrayList<String>()
         var currentLine = ""
+
+        fun visibleLength(s: String) = s.replace(Regex("<[^>]+>"), "").length
+
         for (word in words) {
-            if (currentLine.length + word.length + 1 > width) {
-                lines.add("<white>${currentLine}")
-                currentLine = "<white>$word "
+            if (visibleLength(currentLine) + word.length + 1 > width) {
+                lines.add("<white>${currentLine.trim()}")
+                currentLine = "$word "
             } else {
-                currentLine += "<white>$word "
+                currentLine += "$word "
             }
         }
-        lines.add("<white>${currentLine}")
+        if (currentLine.isNotBlank()) {
+            lines.add("<white>${currentLine.trim()}")
+        }
         return lines
     }
 
