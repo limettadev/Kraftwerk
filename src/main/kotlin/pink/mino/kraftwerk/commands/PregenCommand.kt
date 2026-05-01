@@ -2,6 +2,7 @@ package pink.mino.kraftwerk.commands
 
 import me.lucko.helper.Schedulers
 import me.lucko.helper.utils.Log
+import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.*
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -16,6 +17,7 @@ import pink.mino.kraftwerk.utils.ItemBuilder
 import java.nio.file.Files
 import java.nio.file.Path
 import java.util.*
+import kotlin.math.roundToInt
 
 enum class PregenerationGenerationTypes {
     NONE,
@@ -59,6 +61,17 @@ class PregenConfigHandler {
 }
 
 class PregenCommand : CommandExecutor {
+
+    fun checkTps(tps: Double): String {
+        return when {
+            tps >= 19.0 -> "<green>$tps"
+            tps >= 16.0 -> "<yellow>$tps"
+            tps >= 10.0 -> "<red>$tps"
+            else -> "<dark_red>$tps"
+        }
+    }
+
+    val prefix = "<dark_gray>[${Chat.primaryColor}Server<dark_gray>]<gray>"
     val blacklistNames: ArrayList<String> = arrayListOf("world", "world_nether", "world_the_end", "Spawn", "Arena")
     fun createWorld(pregenConfig: PregenConfig) {
         if (Bukkit.getWorld(pregenConfig.name) != null) {
@@ -133,6 +146,21 @@ class PregenCommand : CommandExecutor {
         }, 5L)
 
         Bukkit.broadcast(Chat.colored("${Chat.prefix} <gray>Pregeneration started in <dark_gray>'${Chat.secondaryColor}${pregenConfig.name}<dark_gray>'<gray>."))
+        Kraftwerk.instance.chunky.onGenerationProgress { event ->
+            val rounded = (event.progress * 100.0).roundToInt() / 100.0
+            val tps = Bukkit.getServer().tps[0]
+
+            for (player in Bukkit.getOnlinePlayers()) {
+                player.sendActionBar(MiniMessage.miniMessage().deserialize(
+                    "${Chat.prefix} <gray>Progress: <${Chat.primaryColor}>${rounded}% <dark_gray>| <gray>World: <dark_gray>'<${Chat.primaryColor}>${event.world}<dark_gray>' <dark_gray>| <gray>TPS: ${checkTps(
+                        (tps * 100.0).roundToInt() / 100.0
+                    )}"
+                ))
+            }
+        }
+        Kraftwerk.instance.chunky.onGenerationComplete { event ->
+            Chat.broadcast("${Chat.prefix} Pregeneration finished in <dark_gray>'</dark_gray>${Chat.secondaryColor}${event.world}<dark_gray>'</dark_gray>.")
+        }
         //PregenActionBarFeature().runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, 20L)
         val blocks = BlockUtil().getBlocks(Bukkit.getWorld(pregenConfig.name)!!.spawnLocation.block, 100)
         if (blocks != null) {
