@@ -10,6 +10,7 @@ import me.lucko.helper.utils.Log
 import net.citizensnpcs.api.CitizensAPI
 import net.citizensnpcs.api.npc.MemoryNPCDataStore
 import net.citizensnpcs.api.npc.NPC
+import net.kyori.adventure.text.TextComponent
 import org.bson.BsonBinary
 import org.bson.Document
 import org.bukkit.*
@@ -407,41 +408,42 @@ class SpawnFeature : Listener {
             Log.info("yaaa2")
             if (e.item != null) {
                 val itemName = e.item!!.itemMeta?.displayName() ?: return
-                Log.info(itemName.toString())
-                when (itemName) {
-                    Chat.colored("${Chat.primaryColor}View Stats <gray>(Right Click)") -> {
+                Log.info((itemName as TextComponent).content().toString())
+                Log.info((Chat.colored("${Chat.primaryColor}View Stats <gray>(Right Click)") as TextComponent).content() )
+                when ((itemName as TextComponent).content()) {
+                    (Chat.colored("${Chat.primaryColor}View Stats <gray>(Right Click)") as TextComponent).content() -> {
                         e.isCancelled = true
                         e.player.performCommand("stats")
                     }
-                    Chat.colored("<dark_green>Donator <gray>(Right Click)") -> {
+                    (Chat.colored("<dark_green>Donator <gray>(Right Click)") as TextComponent).content() -> {
                         e.isCancelled = true
                         e.player.performCommand("donator")
                     }
-                    Chat.colored("${Chat.primaryColor}UHC Configuration <gray>(Right Click)") -> {
+                    (Chat.colored("${Chat.primaryColor}UHC Configuration <gray>(Right Click)") as TextComponent).content() -> {
                         e.isCancelled = true
                         e.player.performCommand("uhc")
                     }
-                    Chat.colored("${Chat.primaryColor}Active Scenarios <gray>(Right Click)") -> {
+                    (Chat.colored("${Chat.primaryColor}Active Scenarios <gray>(Right Click)") as TextComponent).content() -> {
                         e.isCancelled = true
                         e.player.performCommand("scen")
                     }
-                    Chat.colored("${Chat.primaryColor}FFA Arena <gray>(Right Click)") -> {
+                    (Chat.colored("${Chat.primaryColor}FFA Arena <gray>(Right Click)") as TextComponent).content() -> {
                         e.isCancelled = true
                         e.player.performCommand("a")
                     }
-                    Chat.colored("${Chat.primaryColor}Donator Menu <gray>(Right Click)") -> {
+                    (Chat.colored("${Chat.primaryColor}Donator Menu <gray>(Right Click)") as TextComponent).content() -> {
                         e.isCancelled = true
                         e.player.performCommand("donator")
                     }
-                    Chat.colored("${Chat.primaryColor}Champions Kit <gray>(Right Click)") -> {
+                    (Chat.colored("${Chat.primaryColor}Champions Kit <gray>(Right Click)") as TextComponent).content() -> {
                         e.isCancelled = true
                         e.player.performCommand("ckit")
                     }
-                    Chat.colored("${Chat.primaryColor}Your Profile <gray>(Right Click)") -> {
+                    (Chat.colored("${Chat.primaryColor}Your Profile <gray>(Right Click)") as TextComponent).content() -> {
                         e.isCancelled = true
                         e.player.performCommand("profile")
                     }
-                    Chat.colored("${Chat.primaryColor}Edit Arena Kit <gray>(Right Click)") -> {
+                    (Chat.colored("${Chat.primaryColor}Edit Arena Kit <gray>(Right Click)") as TextComponent).content() -> {
                         e.isCancelled = true
                         sendEditor(e.player)
                     }
