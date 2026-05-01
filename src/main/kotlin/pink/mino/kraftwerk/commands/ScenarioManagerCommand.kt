@@ -96,7 +96,7 @@ class ScenarioManagerCommand : CommandExecutor {
             .addLore("<gray>Go to the previous page.")
             .make()
         val resetScenarios = ItemBuilder(Material.REDSTONE_BLOCK)
-            .name("<dark_red>Reset Scenarios")
+            .name("${Chat.secondaryColor}Reset Scenarios")
             .addLore("<gray>Disables all scenarios.")
             .make()
         if (page > 0) {

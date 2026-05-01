@@ -67,7 +67,7 @@ class PregenCommand : CommandExecutor {
             tps >= 19.0 -> "<green>$tps"
             tps >= 16.0 -> "<yellow>$tps"
             tps >= 10.0 -> "<red>$tps"
-            else -> "<dark_red>$tps"
+            else -> "${Chat.secondaryColor}$tps"
         }
     }
 
@@ -227,7 +227,7 @@ class PregenCommand : CommandExecutor {
                     Chat.sendMessage(sender, "${Chat.prefix} There is no valid pregeneration task running.")
                 }
             } else {
-                val gui = GuiBuilder().name(Chat.colored("<dark_red>Pregeneration Config")).rows(1).owner(sender as Player)
+                val gui = GuiBuilder().name(Chat.colored("${Chat.secondaryColor}Pregeneration Config")).rows(1).owner(sender as Player)
                 Chat.sendMessage(sender, "${Chat.prefix} <gray>Opening pregeneration config for <gray>'${Chat.secondaryColor}${args[0]}<gray>'...")
                 val player = sender
                 val pregenConfig = PregenConfigHandler.addConfig(player, PregenConfig(player, args[0]))

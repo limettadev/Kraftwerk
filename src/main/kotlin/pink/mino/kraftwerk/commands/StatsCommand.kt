@@ -133,7 +133,7 @@ class StatsCommand : CommandExecutor {
                     .make()
 
                 val resetStats = ItemBuilder(Material.BARRIER)
-                    .name(" <dark_red><bold>Reset Stats <gray>(Donator Perk)")
+                    .name(" ${Chat.secondaryColor}<bold>Reset Stats <gray>(Donator Perk)")
                     .addLore(" ")
                     .addLore(" <gray>Clicking this will allow you to reset your statistics. ")
                     .addLore(" <red><bold>WARNING:<red> Doing this is a dangerous action! ")
@@ -201,7 +201,7 @@ class StatsCommand : CommandExecutor {
                                 Kraftwerk.instance.statsHandler.savePlayerData(statsPlayer)
 
                                 sender.closeInventory()
-                                sender.showTitle(Title.title(Chat.colored("<dark_red>RESET STATS!"), Chat.colored("<gray>Your statistics have been reset!")))
+                                sender.showTitle(Title.title(Chat.colored("${Chat.secondaryColor}RESET STATS!"), Chat.colored("<gray>Your statistics have been reset!")))
                                 Chat.sendMessage(sender, "${Chat.prefix} Your stats have been reset!")
                                 sender.playSound(sender.location, Sound.BLOCK_ANVIL_LAND, 1f, 1f)
                             }

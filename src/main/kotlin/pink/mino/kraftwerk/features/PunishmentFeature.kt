@@ -165,9 +165,9 @@ class PunishmentFeature {
                     (player as Player).kick(Chat.colored("${Chat.primaryColor}${Chat.scoreboardTitle}\n${Chat.line}\n\n<gray>You've been kicked from the server by ${Chat.secondaryColor}${punisher.name}<gray>.\n<gray>Reason: ${Chat.secondaryColor}${punishment.reason}\n\n${Chat.line}"))
                 }
                 if (punishment.type == PunishmentType.WARN) {
-                    (player as Player).showTitle(Title.title(Chat.colored("<dark_red>WARNING!"), Chat.colored("<gray>${punishment.reason}")))
+                    (player as Player).showTitle(Title.title(Chat.colored("${Chat.secondaryColor}WARNING!"), Chat.colored("<gray>${punishment.reason}")))
                     Chat.sendMessage(player, Chat.line)
-                    Chat.sendCenteredMessage(player, "<dark_red><bold>WARNING!")
+                    Chat.sendCenteredMessage(player, "${Chat.secondaryColor}<bold>WARNING!")
                     Chat.sendMessage(player, " ")
                     Chat.sendCenteredMessage(player, "<gray>You've been warned by ${Chat.secondaryColor}${Bukkit.getOfflinePlayer(punishment.punisherUuid).name}<gray>!")
                     Chat.sendCenteredMessage(player, "<gray>Further warnings may result in further action.")
@@ -176,9 +176,9 @@ class PunishmentFeature {
                     player.playSound(player.location, Sound.BLOCK_ANVIL_LAND, 1f, 1f)
                 }
                 if (punishment.type == PunishmentType.DISQUALIFICATION) {
-                    (player as Player).showTitle(Title.title(Chat.colored("<dark_red>DISQUALIFIED!"), Chat.colored("<gray>${punishment.reason})")))
+                    (player as Player).showTitle(Title.title(Chat.colored("${Chat.secondaryColor}DISQUALIFIED!"), Chat.colored("<gray>${punishment.reason})")))
                     Chat.sendMessage(player, Chat.line)
-                    Chat.sendCenteredMessage(player, "<dark_red><bold>DISQUALIFIED!")
+                    Chat.sendCenteredMessage(player, "${Chat.secondaryColor}<bold>DISQUALIFIED!")
                     Chat.sendMessage(player, " ")
                     Chat.sendCenteredMessage(player, "<gray>You've been disqualified by ${Chat.secondaryColor}${Bukkit.getOfflinePlayer(punishment.punisherUuid).name}<gray>!")
                     Chat.sendCenteredMessage(player, "<gray>Reason: ${Chat.secondaryColor}${punishment.reason}")
@@ -188,7 +188,7 @@ class PunishmentFeature {
                 }
                 if (punishment.type == PunishmentType.HELPOP_MUTE) {
                     Chat.sendMessage((player as Player), Chat.line)
-                    Chat.sendCenteredMessage(player, "<dark_red><bold>HELPOP MUTED!")
+                    Chat.sendCenteredMessage(player, "${Chat.secondaryColor}<bold>HELPOP MUTED!")
                     Chat.sendMessage(player, " ")
                     Chat.sendCenteredMessage(player, "<gray>You've been helpop muted by ${Chat.secondaryColor}${Bukkit.getOfflinePlayer(punishment.punisherUuid).name}<gray>!")
                     Chat.sendCenteredMessage(player, "<gray>You may no longer use ${Chat.secondaryColor}/helpop<gray> to ask for help from Staff.")
@@ -199,7 +199,7 @@ class PunishmentFeature {
                 }
                 if (punishment.type == PunishmentType.MUTE) {
                     Chat.sendMessage((player as Player), Chat.line)
-                    Chat.sendCenteredMessage(player, "<dark_red><bold>MUTED!")
+                    Chat.sendCenteredMessage(player, "${Chat.secondaryColor}<bold>MUTED!")
                     Chat.sendMessage(player, " ")
                     Chat.sendCenteredMessage(player, "<gray>You've been muted by ${Chat.secondaryColor}${Bukkit.getOfflinePlayer(punishment.punisherUuid).name}<gray>!")
                     Chat.sendCenteredMessage(player, "<gray>You may no longer talk in chat.")

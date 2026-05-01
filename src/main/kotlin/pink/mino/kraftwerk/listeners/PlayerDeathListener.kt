@@ -66,7 +66,7 @@ class PlayerDeathListener : Listener {
                 if (TeamsFeature.manager.getTeam(player) != null) TeamsFeature.manager.getTeam(player)!!.removePlayer(player)
                 val preference = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.deathMessageOnScreen
                 if (preference) {
-                    player.showTitle(Title.title(Chat.colored("<dark_red><bold>YOU DIED!"), Chat.colored("<gray>${e.deathMessage}")))
+                    player.showTitle(Title.title(Chat.colored("${Chat.secondaryColor}<bold>YOU DIED!"), Chat.colored("<gray>${e.deathMessage}")))
                 }
             }
             Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {

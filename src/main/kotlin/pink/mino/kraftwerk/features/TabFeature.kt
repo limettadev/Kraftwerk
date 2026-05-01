@@ -15,7 +15,7 @@ class TabFeature : BukkitRunnable() {
             tps >= 19.0 -> "<green>$tps"
             tps >= 16.0 -> "<yellow>$tps"
             tps >= 10.0 -> "<red>$tps"
-            else -> "<dark_red>$tps"
+            else -> "${Chat.secondaryColor}$tps"
         }
     }
 
@@ -28,7 +28,7 @@ class TabFeature : BukkitRunnable() {
         } else if (ping < 200) {
             "<red>" + ping.toString()
         } else if (ping < 500) {
-            "<dark_red>" + ping.toString()
+            "${Chat.secondaryColor}" + ping.toString()
         } else {
             "<dark_gray>" + ping.toString()
         }

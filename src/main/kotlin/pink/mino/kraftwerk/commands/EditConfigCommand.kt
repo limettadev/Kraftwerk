@@ -513,7 +513,7 @@ class EditConfigCommand : CommandExecutor {
             randomizeTeamsMeta.lore(listOf(
                 Chat.colored("<gray>Click to randomize all players into teams of ${Chat.primaryColor}${ConfigFeature.instance.data!!.getInt("game.teamSize")}<gray>.").decoration(TextDecoration.ITALIC, false),
                 Chat.colored("").decoration(TextDecoration.ITALIC, false),
-                Chat.colored("<dark_red><bold>WARNING<gray> All players that are not").decoration(TextDecoration.ITALIC, false),
+                Chat.colored("${Chat.secondaryColor}<bold>WARNING<gray> All players that are not").decoration(TextDecoration.ITALIC, false),
                 Chat.colored("<gray>going to play must be in Spectator mode.").decoration(TextDecoration.ITALIC, false)
             ))
             randomizeTeams.itemMeta = randomizeTeamsMeta
@@ -528,7 +528,7 @@ class EditConfigCommand : CommandExecutor {
             resetTeamsMeta.lore(listOf(
                 Chat.colored("<gray>Click to reset all teams.").decoration(TextDecoration.ITALIC, false),
                 Chat.colored("").decoration(TextDecoration.ITALIC, false),
-                Chat.colored("<dark_red><bold>WARNING<gray> This is probably a bad idea!").decoration(TextDecoration.ITALIC, false)
+                Chat.colored("${Chat.secondaryColor}<bold>WARNING<gray> This is probably a bad idea!").decoration(TextDecoration.ITALIC, false)
             ))
             resetTeams.itemMeta = resetTeamsMeta
             gui.item(16, resetTeams).onClick runnable@ {

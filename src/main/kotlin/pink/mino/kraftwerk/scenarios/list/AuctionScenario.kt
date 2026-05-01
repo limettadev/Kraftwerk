@@ -259,11 +259,11 @@ class AuctionScenario : Scenario(
                                             for (player in Bukkit.getOnlinePlayers()) {
                                                 if (highestBid == -1) {
                                                     player.sendActionBar(
-                                                        Chat.colored(prefix + "Current Player ${Chat.dash} ${Chat.primaryColor}${currentPlayer?.name} <dark_gray>| <gray>Highest Bid ${Chat.dash} ${Chat.primaryColor}N/A <gray>from <dark_red>N/A <dark_gray>(<gray>Time Left: ${Chat.primaryColor}${bidTime}s<dark_gray>)")
+                                                        Chat.colored(prefix + "Current Player ${Chat.dash} ${Chat.primaryColor}${currentPlayer?.name} <dark_gray>| <gray>Highest Bid ${Chat.dash} ${Chat.primaryColor}N/A <gray>from ${Chat.secondaryColor}N/A <dark_gray>(<gray>Time Left: ${Chat.primaryColor}${bidTime}s<dark_gray>)")
                                                     )
                                                 } else {
                                                     player.sendActionBar(
-                                                        Chat.colored(prefix + "Current Player ${Chat.dash} ${Chat.primaryColor}${currentPlayer?.name} <dark_gray>| <gray>Highest Bid ${Chat.dash} ${Chat.primaryColor}${highestBid} <gray>from <dark_red>${highestBidder?.name} <dark_gray>(<gray>Time Left: ${Chat.primaryColor}${bidTime}s<dark_gray>)")
+                                                        Chat.colored(prefix + "Current Player ${Chat.dash} ${Chat.primaryColor}${currentPlayer?.name} <dark_gray>| <gray>Highest Bid ${Chat.dash} ${Chat.primaryColor}${highestBid} <gray>from ${Chat.secondaryColor}${highestBidder?.name} <dark_gray>(<gray>Time Left: ${Chat.primaryColor}${bidTime}s<dark_gray>)")
                                                     )
                                                 }
                                             }

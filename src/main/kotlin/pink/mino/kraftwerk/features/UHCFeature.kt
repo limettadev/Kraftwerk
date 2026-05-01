@@ -508,10 +508,10 @@ class UHCFeature : Listener {
                 player.level = 0
                 player.gameMode = GameMode.SURVIVAL
                 player.inventory.clear()
-                player.inventory.setHelmet(ItemStack(Material.AIR))
-                player.inventory.setChestplate(ItemStack(Material.AIR))
-                player.inventory.setLeggings(ItemStack(Material.AIR))
-                player.inventory.setBoots(ItemStack(Material.AIR))
+                player.inventory.helmet = ItemStack(Material.AIR)
+                player.inventory.chestplate = ItemStack(Material.AIR)
+                player.inventory.leggings = ItemStack(Material.AIR)
+                player.inventory.boots = ItemStack(Material.AIR)
                 player.inventory.setItemInOffHand(ItemStack(Material.AIR))
                 val openInventory = player.openInventory
                 if (openInventory.type == InventoryType.CRAFTING) {
@@ -703,7 +703,7 @@ class UHCFeature : Listener {
                 Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in <white>10s<gray>.")
                 if (!SpecFeature.instance.getSpecs().contains(player.name)) {
                     if (!insideBorder(player, newBorder)) {
-                        player.showTitle(Title.title(Chat.colored("<dark_red> ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
+                        player.showTitle(Title.title(Chat.colored("${Chat.secondaryColor} ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
                         player.playSound(player.location, Sound.BLOCK_LEVER_CLICK, 1f, 1f)
                     }
                 }
@@ -711,7 +711,7 @@ class UHCFeature : Listener {
                     Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in <white>9s<gray>.")
                     if (!SpecFeature.instance.getSpecs().contains(player.name)) {
                         if (!insideBorder(player, newBorder)) {
-                            player.showTitle(Title.title(Chat.colored("<dark_red> ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
+                            player.showTitle(Title.title(Chat.colored("${Chat.secondaryColor} ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
                             player.playSound(player.location, Sound.BLOCK_LEVER_CLICK, 1f, 1f)
                         }
                     }
@@ -719,7 +719,7 @@ class UHCFeature : Listener {
                         Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in <white>8s<gray>.")
                         if (!SpecFeature.instance.getSpecs().contains(player.name)) {
                             if (!insideBorder(player, newBorder)) {
-                                player.showTitle(Title.title(Chat.colored("<dark_red> ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
+                                player.showTitle(Title.title(Chat.colored("${Chat.secondaryColor} ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
                                 player.playSound(player.location, Sound.BLOCK_LEVER_CLICK, 1f, 1f)
                             }
                         }
@@ -727,7 +727,7 @@ class UHCFeature : Listener {
                             Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in <white>7s<gray>.")
                             if (!SpecFeature.instance.getSpecs().contains(player.name)) {
                                 if (!insideBorder(player, newBorder)) {
-                                    player.showTitle(Title.title(Chat.colored("<dark_red> ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
+                                    player.showTitle(Title.title(Chat.colored("${Chat.secondaryColor} ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
                                     player.playSound(player.location, Sound.BLOCK_LEVER_CLICK, 1f, 1f)
                                 }
                             }
@@ -735,7 +735,7 @@ class UHCFeature : Listener {
                                 Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in <white>6s<gray>.")
                                 if (!SpecFeature.instance.getSpecs().contains(player.name)) {
                                     if (!insideBorder(player, newBorder)) {
-                                        player.showTitle(Title.title(Chat.colored("<dark_red> ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
+                                        player.showTitle(Title.title(Chat.colored("${Chat.secondaryColor} ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
                                         player.playSound(player.location, Sound.BLOCK_LEVER_CLICK, 1f, 1f)
                                     }
                                 }
@@ -743,7 +743,7 @@ class UHCFeature : Listener {
                                     Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in <white>5s<gray>.")
                                     if (!SpecFeature.instance.getSpecs().contains(player.name)) {
                                         if (!insideBorder(player, newBorder)) {
-                                            player.showTitle(Title.title(Chat.colored("<dark_red> ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
+                                            player.showTitle(Title.title(Chat.colored("${Chat.secondaryColor} ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
                                             player.playSound(player.location, Sound.BLOCK_LEVER_CLICK, 1f, 1f)
                                         }
                                     }
@@ -751,7 +751,7 @@ class UHCFeature : Listener {
                                         Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in <white>4s<gray>.")
                                         if (!SpecFeature.instance.getSpecs().contains(player.name)) {
                                             if (!insideBorder(player, newBorder)) {
-                                                player.showTitle(Title.title(Chat.colored("<dark_red> ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
+                                                player.showTitle(Title.title(Chat.colored("${Chat.secondaryColor} ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
                                                 player.playSound(player.location, Sound.BLOCK_LEVER_CLICK, 1f, 1f)
                                             }
                                         }
@@ -759,7 +759,7 @@ class UHCFeature : Listener {
                                             Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in <white>3s<gray>.")
                                             if (!SpecFeature.instance.getSpecs().contains(player.name)) {
                                                 if (!insideBorder(player, newBorder)) {
-                                                    player.showTitle(Title.title(Chat.colored("<dark_red> ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
+                                                    player.showTitle(Title.title(Chat.colored("${Chat.secondaryColor} ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
                                                     player.playSound(player.location, Sound.BLOCK_LEVER_CLICK, 1f, 1f)
                                                 }
                                             }
@@ -767,7 +767,7 @@ class UHCFeature : Listener {
                                                 Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in <white>2s<gray>.")
                                                 if (!SpecFeature.instance.getSpecs().contains(player.name)) {
                                                     if (!insideBorder(player, newBorder)) {
-                                                        player.showTitle(Title.title(Chat.colored("<dark_red> ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
+                                                        player.showTitle(Title.title(Chat.colored("${Chat.secondaryColor} ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
                                                         player.playSound(player.location, Sound.BLOCK_LEVER_CLICK, 1f, 1f)
                                                     }
                                                 }
@@ -775,7 +775,7 @@ class UHCFeature : Listener {
                                                     Chat.sendMessage(player, "${Chat.prefix} Shrinking to ${Chat.secondaryColor}${borderText}<gray> in <white>1s<gray>.")
                                                     if (!SpecFeature.instance.getSpecs().contains(player.name)) {
                                                         if (!insideBorder(player, newBorder)) {
-                                                            player.showTitle(Title.title(Chat.colored("<dark_red> ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
+                                                            player.showTitle(Title.title(Chat.colored("${Chat.secondaryColor} ! CAUTION ! "), Chat.colored("<gray>You are outside the border, you will be shrunk!")))
                                                             player.playSound(player.location, Sound.BLOCK_LEVER_CLICK, 1f, 1f)
                                                         }
                                                     }

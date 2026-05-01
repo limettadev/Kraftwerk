@@ -794,7 +794,7 @@ class TeamCommand : CommandExecutor {
                     Chat.sendMessage(sender, "${Chat.prefix} Invalid color: ${Chat.secondaryColor}$arg<gray>.")
                     Chat.sendMessage(
                         sender,
-                        "${Chat.prefix} Valid colors: <black>black<gray>, <dark_blue>dark_blue<gray>, <dark_green>dark_green<gray>, <dark_aqua>dark_aqua<gray>, <dark_red>dark_red<gray>, <dark_purple>dark_purple<gray>, <gold>gold<gray>, <gray>gray<gray>, <dark_gray>dark_gray<gray>, <blue>blue<gray>, <green>green<gray>, <aqua>aqua<gray>, <red>red<gray>, <light_purple>light_purple<gray>, <yellow>yellow<gray>, <white>white<gray>."
+                        "${Chat.prefix} Valid colors: <black>black<gray>, <dark_blue>dark_blue<gray>, <dark_green>dark_green<gray>, <dark_aqua>dark_aqua<gray>, ${Chat.secondaryColor}dark_red<gray>, <dark_purple>dark_purple<gray>, <gold>gold<gray>, <gray>gray<gray>, <dark_gray>dark_gray<gray>, <blue>blue<gray>, <green>green<gray>, <aqua>aqua<gray>, <red>red<gray>, <light_purple>light_purple<gray>, <yellow>yellow<gray>, <white>white<gray>."
                     )
                     return false
                 }
@@ -865,7 +865,7 @@ class TeamCommand : CommandExecutor {
                     Chat.sendMessage(sender, "${Chat.prefix} Invalid color: ${Chat.secondaryColor}$arg<gray>.")
                     Chat.sendMessage(
                         sender,
-                        "${Chat.prefix} Valid colors: <black>black<gray>, <dark_blue>dark_blue<gray>, <dark_green>dark_green<gray>, <dark_aqua>dark_aqua<gray>, <dark_red>dark_red<gray>, <dark_purple>dark_purple<gray>, <gold>gold<gray>, <gray>gray<gray>, <dark_gray>dark_gray<gray>, <blue>blue<gray>, <green>green<gray>, <aqua>aqua<gray>, <red>red<gray>, <light_purple>light_purple<gray>, <yellow>yellow<gray>, <white>white<gray>."
+                        "${Chat.prefix} Valid colors: <black>black<gray>, <dark_blue>dark_blue<gray>, <dark_green>dark_green<gray>, <dark_aqua>dark_aqua<gray>, ${Chat.secondaryColor}dark_red<gray>, <dark_purple>dark_purple<gray>, <gold>gold<gray>, <gray>gray<gray>, <dark_gray>dark_gray<gray>, <blue>blue<gray>, <green>green<gray>, <aqua>aqua<gray>, <red>red<gray>, <light_purple>light_purple<gray>, <yellow>yellow<gray>, <white>white<gray>."
                     )
                     return false
                 }
