@@ -356,12 +356,7 @@ class Kraftwerk : ExtendedJavaPlugin() {
         Log.info("Game state set to Lobby.")
         for (world in Bukkit.getWorldContainer().list()!!) {
             if (world == "Spawn" || world == "Arena") {
-                val actualWorld = server.createWorld(WorldCreator(world))!!
-                actualWorld.setGameRule(GameRules.ADVANCE_WEATHER, false)
-                actualWorld.setGameRule(GameRules.IMMEDIATE_RESPAWN, true)
-                actualWorld.setGameRule(GameRules.SHOW_ADVANCEMENT_MESSAGES, false)
-                actualWorld.setGameRule(GameRules.NATURAL_HEALTH_REGENERATION, false)
-                actualWorld.setGameRule(GameRules.LOCATOR_BAR, false)
+                server.createWorld(WorldCreator(world))
             } else {
                 val wc = WorldCreator(world)
                 if (ConfigFeature.instance.worlds!!.getString("${world}.type") == null) {
