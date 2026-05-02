@@ -161,55 +161,55 @@ class UHCTask : BukkitRunnable() {
             Events.BORDER_SHRINK_TWO -> {
                 if (!meetupHappened) {
                     player.sendActionBar(
-                        "${Chat.primaryColor}Meetup is in ${Chat.dash} <white>${timeToString((meetup - timer).toLong())} <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 600) - timer.toLong())}"
+                        Chat.colored("${Chat.primaryColor}Meetup is in ${Chat.dash} <white>${timeToString((meetup - timer).toLong())} <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 600) - timer.toLong())}")
                     )
                 } else {
                     player.sendActionBar(
-                        "${Chat.primaryColor}It is now Meetup! Head to 0,0! <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 600) - timer.toLong())}"
+                        Chat.colored("${Chat.primaryColor}It is now Meetup! Head to 0,0! <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 600) - timer.toLong())}")
                     )
                 }
             }
             Events.BORDER_SHRINK_THREE -> {
                 if (!meetupHappened) {
                     player.sendActionBar(
-                        "${Chat.primaryColor}Meetup is in ${Chat.dash} ${Chat.secondaryColor}${timeToString((meetup - timer).toLong())} <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 900) - timer.toLong())}"
+                        Chat.colored("${Chat.primaryColor}Meetup is in ${Chat.dash} ${Chat.secondaryColor}${timeToString((meetup - timer).toLong())} <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 900) - timer.toLong())}")
                     )
                 } else {
                     player.sendActionBar(
-                        "${Chat.primaryColor}It is now Meetup! Head to 0,0! <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 900) - timer.toLong())}"
+                        Chat.colored("${Chat.primaryColor}It is now Meetup! Head to 0,0! <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 900) - timer.toLong())}")
                     )
                 }
             }
             Events.BORDER_SHRINK_FOUR -> {
                 if (!meetupHappened) {
                     player.sendActionBar(
-                        "${Chat.primaryColor}Meetup is in ${Chat.dash} <white>${timeToString((meetup - timer).toLong())} <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 1200) - timer.toLong())}"
+                        Chat.colored("${Chat.primaryColor}Meetup is in ${Chat.dash} <white>${timeToString((meetup - timer).toLong())} <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 1200) - timer.toLong())}")
                     )
                 } else {
                     player.sendActionBar(
-                        "${Chat.primaryColor}It is now Meetup! Head to 0,0! <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 1200) - timer.toLong())}"
+                        Chat.colored("${Chat.primaryColor}It is now Meetup! Head to 0,0! <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 1200) - timer.toLong())}")
                     )
                 }
             }
             Events.BORDER_SHRINK_FIVE -> {
                 if (!meetupHappened) {
                     player.sendActionBar(
-                        "${Chat.primaryColor}Meetup is in ${Chat.dash} ${Chat.secondaryColor}${timeToString((meetup - timer).toLong())} <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 1500) - timer.toLong())}"
+                        Chat.colored("${Chat.primaryColor}Meetup is in ${Chat.dash} ${Chat.secondaryColor}${timeToString((meetup - timer).toLong())} <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 1500) - timer.toLong())}")
                     )
                 } else {
                     player.sendActionBar(
-                        "${Chat.primaryColor}It is now Meetup! Head to 0,0! <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 1500) - timer.toLong())}"
+                        Chat.colored("${Chat.primaryColor}It is now Meetup! Head to 0,0! <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText} <dark_gray>| ${Chat.secondaryColor}${timeToString((borderShrink + 1500) - timer.toLong())}")
                     )
                 }
             }
             Events.BORDER_SHRINK_SIX -> {
                 if (!meetupHappened) {
                     player.sendActionBar(
-                        "${Chat.primaryColor}Meetup is in ${Chat.dash} ${Chat.secondaryColor}${timeToString((meetup - timer).toLong())} <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText}"
+                        Chat.colored("${Chat.primaryColor}Meetup is in ${Chat.dash} ${Chat.secondaryColor}${timeToString((meetup - timer).toLong())} <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText}")
                     )
                 } else {
                     player.sendActionBar(
-                        "${Chat.primaryColor}It is now Meetup! Head to 0,0! <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText}"
+                        Chat.colored("${Chat.primaryColor}It is now Meetup! Head to 0,0! <dark_gray>| <gray>Border: ${Chat.secondaryColor}${borderText}")
                     )
                 }
             }

@@ -34,8 +34,21 @@ class BorderCommand : CommandExecutor {
         }
         Bukkit.dispatchCommand(
             Bukkit.getConsoleSender(),
-            "wb ${ConfigFeature.instance.data!!.getString("pregen.world")} setcorners ${args[0]} ${args[0]} -${args[0]} -${args[0]}"
+            "chunky world ${ConfigFeature.instance.data!!.getString("pregen.world")!!}"
         )
+        Bukkit.dispatchCommand(
+            Bukkit.getConsoleSender(),
+            "chunky border load"
+        )
+        Bukkit.dispatchCommand(
+            Bukkit.getConsoleSender(),
+            "chunky radius ${args[0]}"
+        )
+        Bukkit.dispatchCommand(
+            Bukkit.getConsoleSender(),
+            "chunky border add"
+        )
+
         Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
             val border = Bukkit.getWorld(ConfigFeature.instance.data!!.getString("pregen.world")!!)!!.worldBorder
             border.size = args[0].toDouble() * 2
