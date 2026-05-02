@@ -32,6 +32,7 @@ import pink.mino.kraftwerk.scenarios.ScenarioHandler
 import pink.mino.kraftwerk.utils.*
 import java.sql.Timestamp
 import java.util.*
+import kotlin.math.min
 
 
 class SpawnFeature : Listener {
@@ -267,7 +268,7 @@ class SpawnFeature : Listener {
                             val xpNeeded = (it.get().xpNeeded as Double?) ?: 0.0
                             val level = (it.get().level as Int?) ?: 1
                             p.level = level
-                            p.exp = (xp / xpNeeded).toFloat()
+                            p.exp = min((xp / xpNeeded).toFloat(), 0.0f)
                         }
                 }
             }
