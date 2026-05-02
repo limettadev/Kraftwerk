@@ -1,6 +1,5 @@
 package pink.mino.kraftwerk.commands
 
-import org.bson.BsonBinary
 import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -43,14 +42,14 @@ class IgnoreCommand : CommandExecutor {
             Chat.sendMessage(sender, "<red>You can't ignore this player, they are a staff member, contact us on Discord regarding feedback.")
             return false
         }
-        val list = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(sender.uniqueId))!!.ignored
+        val list = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(sender.uniqueId)!!.ignored
         if (list.contains(player.uniqueId)) {
             list.remove(player.uniqueId)
-            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(sender.uniqueId))!!.ignored = list
+            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(sender.uniqueId)!!.ignored = list
             Chat.sendMessage(sender, "${Chat.prefix} Successfully removed <dark_gray>'${Chat.secondaryColor}${player.name}<dark_gray>'<gray> from your ignored list.")
         } else {
             list.add(player.uniqueId)
-            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(sender.uniqueId))!!.ignored = list
+            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(sender.uniqueId)!!.ignored = list
             Chat.sendMessage(sender, "${Chat.prefix} Successfully added <dark_gray>'${Chat.secondaryColor}${player.name}<dark_gray>'<gray> to your ignored list.")
         }
 

@@ -1,6 +1,5 @@
 package pink.mino.kraftwerk.utils
 
-import org.bson.BsonBinary
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.command.Command
@@ -37,7 +36,7 @@ class GrantTagCommand : CommandExecutor {
             }
         }
         val player = Bukkit.getOfflinePlayer(args[0])
-        val profile = Kraftwerk.instance.profileHandler.getProfile(BsonBinary(player.uniqueId))!!
+        val profile = Kraftwerk.instance.profileHandler.getProfile(player.uniqueId)!!
         profile.unlockedTags.add(args[1].uppercase())
         Kraftwerk.instance.profileHandler.saveProfile(profile)
         if (player.isOnline) {

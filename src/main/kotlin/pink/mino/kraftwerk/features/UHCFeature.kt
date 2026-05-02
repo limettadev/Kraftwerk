@@ -1,7 +1,6 @@
 package pink.mino.kraftwerk.features
 
 import net.kyori.adventure.title.Title
-import org.bson.BsonBinary
 import org.bukkit.*
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -129,7 +128,7 @@ class UHCTask : BukkitRunnable() {
     }
 
     private fun displayTimer(player: Player) {
-        val preference = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(player.uniqueId))!!.borderPreference
+        val preference = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.borderPreference
         val borderText = if (preference == "DIAMETER") {
             "${ConfigFeature.instance.data!!.getInt("pregen.border") * 2}x${ConfigFeature.instance.data!!.getInt("pregen.border") * 2}"
         } else {
@@ -694,7 +693,7 @@ class UHCFeature : Listener {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "border $newBorder")
         }, 20 * 10L)
         for (player in Bukkit.getOnlinePlayers()) {
-            val preference = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(player.uniqueId))!!.borderPreference
+            val preference = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.borderPreference
             val borderText = if (preference == "DIAMETER") {
                 "${newBorder*2}x${newBorder*2}"
             } else {

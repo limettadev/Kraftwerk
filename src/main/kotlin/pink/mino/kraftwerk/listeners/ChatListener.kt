@@ -4,7 +4,6 @@ import io.papermc.paper.event.player.AsyncChatEvent
 import me.lucko.helper.Schedulers
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.TextComponent
-import org.bson.BsonBinary
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -73,13 +72,13 @@ class ChatListener : Listener {
 
             e.message(Component.text(msg))
         }
-        var preference = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(player.uniqueId))!!.chatMode
+        var preference = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.chatMode
         if (preference == "MOLES") {
             e.isCancelled = true
             if (!ScenarioHandler.getActiveScenarios().contains(ScenarioHandler.getScenario("moles")) || MolesScenario.instance.moles[player.uniqueId] == null) {
                 Chat.sendMessage(player, "<red>Moles is not enabled. Setting your chat mode back to PUBLIC.")
                 preference = "PUBLIC"
-                JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(player.uniqueId))!!.chatMode = "PUBLIC"
+                JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.chatMode = "PUBLIC"
             } else {
                 Schedulers.sync().run {
                     player.performCommand("mcc ${(e.message() as TextComponent).content()}")
@@ -91,7 +90,7 @@ class ChatListener : Listener {
             if (!player.hasPermission("uhc.staff")) {
                 Chat.sendMessage(player, "<red>You aren't a Staff member. Setting your chat mode back to PUBLIC.")
                 preference = "PUBLIC"
-                JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(player.uniqueId))!!.chatMode = "PUBLIC"
+                JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.chatMode = "PUBLIC"
             } else {
                 Schedulers.sync().run {
                     player.performCommand("ac ${(e.message() as TextComponent).content()}")
@@ -103,7 +102,7 @@ class ChatListener : Listener {
             if (!SpecFeature.instance.isSpec(player)) {
                 Chat.sendMessage(player, "<red>You aren't a Staff member. Setting your chat mode back to PUBLIC.")
                 preference = "PUBLIC"
-                JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(player.uniqueId))!!.chatMode = "PUBLIC"
+                JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.chatMode = "PUBLIC"
             } else {
                 Schedulers.sync().run {
                     player.performCommand("sc ${(e.message() as TextComponent).content()}")
@@ -115,7 +114,7 @@ class ChatListener : Listener {
             if (TeamsFeature.manager.getTeam(player) == null) {
                 Chat.sendMessage(player, "<red>You aren't on a Team. Setting your chat mode back to PUBLIC.")
                 preference = "PUBLIC"
-                JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(player.uniqueId))!!.chatMode = "PUBLIC"
+                JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.chatMode = "PUBLIC"
             } else {
                 Schedulers.sync().run {
                     player.performCommand("pm ${(e.message() as TextComponent).content()}")
@@ -146,7 +145,7 @@ class ChatListener : Listener {
                 }
             }
             val color = if (PerkChecker.checkPerks(player).contains(Perk.WHITE_CHAT)) "<white>" else "<gray>"
-            val tag = Kraftwerk.instance.profileHandler.getProfile(BsonBinary(player.uniqueId))!!.selectedTag
+            val tag = Kraftwerk.instance.profileHandler.getProfile(player.uniqueId)!!.selectedTag
             var display = ""
             if (tag != null) {
                 display = " ${Tags.valueOf(tag.uppercase()).display}"

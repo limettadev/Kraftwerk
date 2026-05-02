@@ -2,7 +2,6 @@ package pink.mino.kraftwerk.listeners
 import net.citizensnpcs.api.CitizensAPI
 import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.title.Title
-import org.bson.BsonBinary
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -65,7 +64,7 @@ class PlayerDeathListener : Listener {
                 }
                 e.droppedExp = e.droppedExp * 2
                 if (TeamsFeature.manager.getTeam(player) != null) TeamsFeature.manager.getTeam(player)!!.removePlayer(player)
-                val preference = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(player.uniqueId))!!.deathMessageOnScreen
+                val preference = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.deathMessageOnScreen
                 if (preference) {
                     player.showTitle(Title.title(Chat.colored("${Chat.secondaryColor}<bold>YOU DIED!"), Chat.colored("<gray>${e.deathMessage}")))
                 }

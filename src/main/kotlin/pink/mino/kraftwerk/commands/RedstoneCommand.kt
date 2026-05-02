@@ -1,6 +1,5 @@
 package pink.mino.kraftwerk.commands
 
-import org.bson.BsonBinary
 import org.bukkit.Material
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -24,7 +23,7 @@ class PickupFeature : Listener {
 
     @EventHandler
     fun onPlayerPickup(e: PlayerPickupItemEvent) {
-        val profile = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(e.player.uniqueId))
+        val profile = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(e.player.uniqueId)
         if (PerkChecker.checkPerks(e.player).contains(Perk.TOGGLE_PICKUPS)) {
             if (profile!!.disableLapisPickup) {
                 if (e.item.itemStack.type == Material.LAPIS_LAZULI && e.player.inventory.containsAtLeast(ItemStack(Material.LAPIS_LAZULI, 64, 4), 64)) {
@@ -55,11 +54,11 @@ class RedstoneCommand : CommandExecutor {
             Chat.sendMessage(sender, "<red>You must be a <dark_green>Donator<red> to use this command. Buy it at <yellow>${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store url setup in config tough tits"}")
             return false
         }
-        if (JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(sender.uniqueId))!!.disableRedstonePickup) {
-            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(sender.uniqueId))!!.disableRedstonePickup = false
+        if (JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(sender.uniqueId)!!.disableRedstonePickup) {
+            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(sender.uniqueId)!!.disableRedstonePickup = false
             Chat.sendMessage(sender, "${Chat.prefix} <gray>You have enabled <red>Redstone<gray> pickups!")
         } else {
-            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(sender.uniqueId))!!.disableRedstonePickup = true
+            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(sender.uniqueId)!!.disableRedstonePickup = true
             Chat.sendMessage(sender, "${Chat.prefix} <gray>You have disabled <red>Redstone<gray> pickups!")
         }
         return true

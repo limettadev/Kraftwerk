@@ -1,6 +1,5 @@
 package pink.mino.kraftwerk.commands
 
-import org.bson.BsonBinary
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import org.bukkit.command.Command
@@ -56,7 +55,7 @@ class AltsCommand : CommandExecutor {
             }
         }
 
-        val profile = Kraftwerk.instance.profileHandler.getProfile(BsonBinary(targetUuid))
+        val profile = Kraftwerk.instance.profileHandler.getProfile(targetUuid)
 
         if (profile == null) {
             Chat.sendMessage(sender, "${Chat.prefix} <gray>Profile not found for that player.")

@@ -2,7 +2,6 @@ package pink.mino.kraftwerk.listeners
 
 import net.kyori.adventure.title.Title
 import net.minecraft.server.level.ServerPlayer
-import org.bson.BsonBinary
 import org.bukkit.Bukkit
 import org.bukkit.craftbukkit.entity.CraftPlayer
 import org.bukkit.entity.Arrow
@@ -28,7 +27,7 @@ class ShootListener : Listener {
                 val el: ServerPlayer = (victim as CraftPlayer).handle
                 val health = floor(victim.health / 2 * 10 + el.absorptionAmount / 2 * 10)
                 val color = HealthChatColorer.returnHealth(health)
-                val preference = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(shooter.uniqueId))!!.projectileMessages
+                val preference = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(shooter.uniqueId)!!.projectileMessages
                 if (ScenarioHandler.getActiveScenarios().contains(ScenarioHandler.getScenario("parafusion"))) {
                     return@Runnable
                 } else {

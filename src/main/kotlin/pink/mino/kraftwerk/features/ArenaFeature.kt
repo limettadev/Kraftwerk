@@ -68,7 +68,7 @@ class ArenaFeature : Listener {
                 return unbreakableItem(Material.IRON_AXE)
             }
             "BLOCKS" -> {
-                return ItemStack(Material.valueOf(Kraftwerk.instance.profileHandler.getProfile(BsonBinary(player.uniqueId))!!.arenaBlock!!), 64)
+                return ItemStack(Material.valueOf(Kraftwerk.instance.profileHandler.getProfile(player.uniqueId)!!.arenaBlock!!), 64)
             }
             "WATER" -> {
                 return ItemStack(Material.WATER_BUCKET)
@@ -147,7 +147,7 @@ class ArenaFeature : Listener {
                         p.inventory.setItem(0, unbreakableItem(Material.DIAMOND_SWORD))
                         p.inventory.setItem(1, unbreakableItem(Material.IRON_AXE))
                         p.inventory.setItem(2, unbreakableItem(Material.BOW))
-                        p.inventory.setItem(3, ItemStack(Material.valueOf(Kraftwerk.instance.profileHandler.getProfile(BsonBinary(p.uniqueId))!!.arenaBlock!!), 64))
+                        p.inventory.setItem(3, ItemStack(Material.valueOf(Kraftwerk.instance.profileHandler.getProfile(p.uniqueId)!!.arenaBlock!!), 64))
                         p.inventory.setItem(4, ItemStack(Material.WATER_BUCKET))
                         p.inventory.setItem(5, ItemStack(Material.LAVA_BUCKET))
                         p.inventory.setItem(6, ItemStack(Material.GOLDEN_CARROT, 64))
@@ -435,9 +435,9 @@ class ArenaFeature : Listener {
             e.isCancelled = true
         }
         when (e.block.type) {
-            Material.valueOf(Kraftwerk.instance.profileHandler.getProfile(BsonBinary(e.player.uniqueId))!!.arenaBlock!!) -> {
+            Material.valueOf(Kraftwerk.instance.profileHandler.getProfile(e.player.uniqueId)!!.arenaBlock!!) -> {
                 Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
-                    e.player.inventory.addItem(ItemStack(Material.valueOf(Kraftwerk.instance.profileHandler.getProfile(BsonBinary(e.player.uniqueId))!!.arenaBlock!!)))
+                    e.player.inventory.addItem(ItemStack(Material.valueOf(Kraftwerk.instance.profileHandler.getProfile(e.player.uniqueId)!!.arenaBlock!!)))
                 }, 1L)
                 Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                     BlockAnimation().blockCrackAnimation(e.player, e.block, 1)

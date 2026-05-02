@@ -2,7 +2,6 @@ package pink.mino.kraftwerk.features
 
 import me.lucko.helper.promise.Promise
 import me.lucko.helper.utils.Log
-import org.bson.BsonBinary
 import org.bukkit.Material
 import org.bukkit.OfflinePlayer
 import org.bukkit.command.CommandSender
@@ -25,7 +24,7 @@ class XpFeature : Listener {
     fun add(p: OfflinePlayer, amount: Double) {
         Promise.start()
             .thenApplySync {
-                JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(BsonBinary(p.uniqueId))
+                JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(p.uniqueId)
             }
             .thenAcceptSync {
                 it.get().xp += amount
