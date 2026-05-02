@@ -40,7 +40,7 @@ class ProfileService {
             .handler { event ->
                 Promise.start()
                     .thenApplySync {
-                        lookupProfile(event.player.uniqueId)
+                        lookupProfile(BsonBinary(event.player.uniqueId))
                     }
                     .thenAcceptAsync {
                         it.get().name = event.player.name
@@ -52,7 +52,7 @@ class ProfileService {
             .handler { event ->
                 Promise.start()
                     .thenApplySync {
-                        lookupProfile(event.player.uniqueId)
+                        lookupProfile(BsonBinary(event.player.uniqueId))
                     }
                     .thenAcceptAsync {
                         it.get().name = event.player.name
@@ -98,12 +98,12 @@ class ProfileService {
         }
     }
 
-    fun getProfile(uniqueId: UUID): ImmutableProfile? {
+    fun getProfile(uniqueId: BsonBinary): ImmutableProfile? {
         Objects.requireNonNull(uniqueId, "uniqueId")
         return profilesMap.getIfPresent(uniqueId)
     }
 
-    fun lookupProfile(uniqueId: UUID): Promise<ImmutableProfile> {
+    fun lookupProfile(uniqueId: BsonBinary): Promise<ImmutableProfile> {
         Objects.requireNonNull(uniqueId, "uniqueId")
         val profile = getProfile(uniqueId)
         if (profile != null) {
@@ -112,12 +112,12 @@ class ProfileService {
         return Schedulers.async().supply {
             try {
                 val collection = JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("players")
-                val filter = Filters.eq("uuid", BsonBinary(uniqueId))
+                val filter = Filters.eq("uuid", uniqueId)
                 val document = collection.find(filter).first()
 
                 val p: ImmutableProfile = if (document != null) {
                     ImmutableProfile(
-                        uniqueId,
+                        uniqueId.asUuid(),
                         document["name"] as String,
                         (document["lastLogin"] as Date).time,
                         document["disableRedstonePickup"] as Boolean,
@@ -140,7 +140,7 @@ class ProfileService {
                         document["lastKnownIp"] as? String
                     )
                 } else {
-                    ImmutableProfile(uniqueId, null, 0)
+                    ImmutableProfile(uniqueId.asUuid(), null, 0)
                 }
 
                 updateCache(p)

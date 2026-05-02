@@ -1,5 +1,6 @@
 package pink.mino.kraftwerk.commands
 
+import org.bson.BsonBinary
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -26,11 +27,11 @@ class LapisCommand : CommandExecutor {
             Chat.sendMessage(sender, "<red>You must be a <dark_green>Donator<red> to use this command. Buy it at <yellow>${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store url setup in config tough tits"}")
             return false
         }
-        if (JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(sender.uniqueId)!!.disableLapisPickup) {
-            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(sender.uniqueId)!!.disableLapisPickup = false
+        if (JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(sender.uniqueId))!!.disableLapisPickup) {
+            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(sender.uniqueId))!!.disableLapisPickup = false
             Chat.sendMessage(sender, "${Chat.prefix} <gray>You have enabled <dark_blue>Lapis<gray> pickups!")
         } else {
-            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(sender.uniqueId)!!.disableLapisPickup = true
+            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(sender.uniqueId))!!.disableLapisPickup = true
             Chat.sendMessage(sender, "${Chat.prefix} <gray>You have disabled <dark_blue>Lapis<gray> pickups!")
         }
         return true

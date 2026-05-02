@@ -1,6 +1,7 @@
 package pink.mino.kraftwerk.commands
 
 import net.kyori.adventure.text.format.TextDecoration
+import org.bson.BsonBinary
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.command.Command
@@ -65,10 +66,10 @@ class ProfileCommand : CommandExecutor {
             .addLore(" <gray>Click to view your player stats. ")
             .addLore(" ")
             .make()
-        val profile = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(sender.uniqueId)!!
-        val xp = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(sender.uniqueId)!!.xp
-        val xpNeeded = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(sender.uniqueId)!!.xpNeeded
-        val level = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(sender.uniqueId)!!.level
+        val profile = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(sender.uniqueId))!!
+        val xp = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(sender.uniqueId))!!.xp
+        val xpNeeded = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(sender.uniqueId))!!.xpNeeded
+        val level = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(sender.uniqueId))!!.level
         val progress: Double = if (floor((xp / xpNeeded) * 100) > 0) {
             floor((xp / xpNeeded) * 100)
         } else {
@@ -131,7 +132,7 @@ class ProfileCommand : CommandExecutor {
             }
             gui.item(3, borderPreference).onClick runnable@ {
                 if (profile.borderPreference == "RADIUS") {
-                    JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.borderPreference = "DIAMETER"
+                    JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(player.uniqueId))!!.borderPreference = "DIAMETER"
                     Chat.sendMessage(player, "${Chat.prefix} Set your projectile messages to <dark_gray>'<yellow>DIAMETER<dark_gray>'<gray>.")
                     val meta = projectileMessages.itemMeta
                     meta.lore(listOf(
@@ -140,7 +141,7 @@ class ProfileCommand : CommandExecutor {
                     ))
                     it.currentItem!!.itemMeta = meta
                 } else if (profile.borderPreference == "DIAMETER") {
-                    JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.borderPreference = "RADIUS"
+                    JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(player.uniqueId))!!.borderPreference = "RADIUS"
                     Chat.sendMessage(player, "${Chat.prefix} Set your projectile messages to <dark_gray>'<yellow>RADIUS<dark_gray>'<gray>.")
                     val meta = projectileMessages.itemMeta
                     meta.lore(listOf(
@@ -152,7 +153,7 @@ class ProfileCommand : CommandExecutor {
             }
             gui.item(4, deathMessageOnScreen.make()).onClick runnable@ {
                 if (profile.deathMessageOnScreen) {
-                    JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.deathMessageOnScreen = false
+                    JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(player.uniqueId))!!.deathMessageOnScreen = false
                     Chat.sendMessage(player, "${Chat.prefix} <red>Disabled<bold> death message on screen.")
                     val meta = deathMessageOnScreen.meta
                     meta.displayName(Chat.colored("<red><bold>Death Message on Screen").decoration(TextDecoration.ITALIC, false))
@@ -162,7 +163,7 @@ class ProfileCommand : CommandExecutor {
                     ))
                     it.currentItem!!.itemMeta = meta
                 } else {
-                    JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.deathMessageOnScreen = true
+                    JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(player.uniqueId))!!.deathMessageOnScreen = true
                     Chat.sendMessage(player, "${Chat.prefix} <green>Enabled<bold> death message on screen.")
                     val meta = deathMessageOnScreen.meta
                     meta.displayName(Chat.colored("<green><bold>Death Message on Screen").decoration(TextDecoration.ITALIC, false))
@@ -175,7 +176,7 @@ class ProfileCommand : CommandExecutor {
             }
             gui.item(2, projectileMessages).onClick runnable@ {
                 if (profile.projectileMessages == "CHAT") {
-                    JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.projectileMessages = "SUBTITLE"
+                    JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(player.uniqueId))!!.projectileMessages = "SUBTITLE"
                     Chat.sendMessage(player, "${Chat.prefix} Set your projectile messages to <dark_gray>'<yellow>SUBTITLE<dark_gray>'<gray>.")
                     val meta = projectileMessages.itemMeta
                     meta.lore(listOf(
@@ -184,7 +185,7 @@ class ProfileCommand : CommandExecutor {
                     ))
                     it.currentItem!!.itemMeta = meta
                 } else if (profile.projectileMessages == "SUBTITLE") {
-                    JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.projectileMessages = "CHAT"
+                    JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(player.uniqueId))!!.projectileMessages = "CHAT"
                     Chat.sendMessage(player, "${Chat.prefix} Set your projectile messages to <dark_gray>'<yellow>CHAT<dark_gray>'<gray>.")
                     val meta = projectileMessages.itemMeta
                     meta.lore(listOf(
@@ -220,7 +221,7 @@ class ProfileCommand : CommandExecutor {
                     ))
                     it.currentItem!!.itemMeta = meta
                 }
-                JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.disableRedstonePickup = profile.disableRedstonePickup
+                JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(player.uniqueId))!!.disableRedstonePickup = profile.disableRedstonePickup
             }
             gui.item(1, disableLapisPickup.make()).onClick runnable@ {
                 if (!PerkChecker.checkPerks(player).contains(Perk.TOGGLE_PICKUPS)) {
@@ -248,7 +249,7 @@ class ProfileCommand : CommandExecutor {
                     ))
                     it.currentItem!!.itemMeta = meta
                 }
-                JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(player.uniqueId)!!.disableLapisPickup = profile.disableLapisPickup
+                JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(player.uniqueId))!!.disableLapisPickup = profile.disableLapisPickup
             }
             val back = ItemBuilder(Material.BARRIER)
                 .name("<red>Back")
@@ -280,7 +281,7 @@ class ProfileCommand : CommandExecutor {
                 .make()
             gui.item(12, tags).onClick runnable@ {
                 val gui = GuiBuilder().rows(3).name(Chat.colored("${Chat.primaryColor}<bold>Tags")).owner(sender)
-                val profile = Kraftwerk.instance.profileHandler.getProfile(sender.uniqueId)!!
+                val profile = Kraftwerk.instance.profileHandler.getProfile(BsonBinary(sender.uniqueId))!!
                 if (profile.unlockedTags.size == 0) {
                     Chat.sendMessage(sender, "<red>You have no tags unlocked, buy some at the store at <yellow>${if (ConfigFeature.instance.config!!.getString("chat.storeUrl") != null) ConfigFeature.instance.config!!.getString("chat.storeUrl") else "no store url setup in config tough tits"}<red>!")
                     return@runnable
@@ -325,7 +326,7 @@ class ProfileCommand : CommandExecutor {
                     return@runnable
                 }
                 val gui = GuiBuilder().rows(4).name(Chat.colored("${Chat.primaryColor}<bold>Arena Blocks")).owner(sender)
-                val profile = Kraftwerk.instance.profileHandler.getProfile(sender.uniqueId)!!
+                val profile = Kraftwerk.instance.profileHandler.getProfile(BsonBinary(sender.uniqueId))!!
                 var index = 0
                 for (block in availableArenaBlocks) {
                     val display = ItemBuilder(block)

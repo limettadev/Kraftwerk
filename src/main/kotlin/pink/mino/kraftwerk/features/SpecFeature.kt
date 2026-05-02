@@ -8,6 +8,7 @@ import com.lunarclient.apollo.Apollo
 import com.lunarclient.apollo.module.staffmod.StaffModModule
 import com.mongodb.MongoException
 import net.kyori.adventure.text.minimessage.MiniMessage
+import org.bson.BsonBinary
 import org.bukkit.*
 import org.bukkit.block.Block
 import org.bukkit.entity.Arrow
@@ -100,7 +101,7 @@ class SpecClickFeature : PacketAdapter(JavaPlugin.getPlugin(Kraftwerk::class.jav
                         Bukkit.dispatchCommand(p, "nearby")
                     }
                     22 -> {
-                        val profile = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(p.uniqueId).get()
+                        val profile = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(BsonBinary(p.uniqueId)).get()
 
 // Cycle through modes: 0 -> 1 -> 2 -> 0
                         profile.specSocialSpy = (profile.specSocialSpy + 1) % 3
@@ -221,7 +222,7 @@ class SpecFeature : Listener {
             .name("${Chat.primaryColor}Respawn Players")
             .addLore("<gray>Click to view a list of dead players that can be respawned.")
             .make()
-        val mode = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(p.uniqueId).get().specSocialSpy
+        val mode = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(BsonBinary(p.uniqueId)).get().specSocialSpy
         val modeText = when (mode) {
             1 -> "<green>Social Spy <gray>(Social)"
             2 -> "<green>Social Spy <gray>(All)"
@@ -271,7 +272,7 @@ class SpecFeature : Listener {
             val player = Bukkit.getPlayer(spectator) ?: continue
 
             val profile = JavaPlugin.getPlugin(Kraftwerk::class.java)
-                .profileHandler.lookupProfile(player.uniqueId).get()
+                .profileHandler.lookupProfile(BsonBinary(player.uniqueId)).get()
 
             when (profile.specSocialSpy) {
                 1 -> { // Mode 1: Social only
@@ -334,7 +335,7 @@ class SpecFeature : Listener {
             .name("${Chat.primaryColor}Respawn Players")
             .addLore("<gray>Click to view a list of dead players that can be respawned.")
             .make()
-        val mode = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(p.uniqueId).get().specSocialSpy
+        val mode = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(BsonBinary(p.uniqueId)).get().specSocialSpy
         val modeText = when (mode) {
             1 -> "<green>Social Spy <gray>(Social)"
             2 -> "<green>Social Spy <gray>(All)"

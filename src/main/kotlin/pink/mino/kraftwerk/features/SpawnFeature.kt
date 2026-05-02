@@ -201,7 +201,7 @@ class SpawnFeature : Listener {
             try {
                 with (JavaPlugin.getPlugin(Kraftwerk::class.java).dataSource.getCollection("kits")) {
                     val filter = Filters.eq("uuid", BsonBinary(p.uniqueId))
-                    val profile = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(p.uniqueId).get()
+                    val profile = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(BsonBinary(p.uniqueId)).get()
 
                     val slot1 = if (p.inventory.getItem(0) != null) ChatColor.stripColor(p.inventory.getItem(0)!!.itemMeta.displayName)!!.uppercase() else "NONE"
                     val slot2 = if (p.inventory.getItem(1) != null) ChatColor.stripColor(p.inventory.getItem(1)!!.itemMeta.displayName)!!.uppercase() else "NONE"
@@ -261,7 +261,7 @@ class SpawnFeature : Listener {
                     }
                     Promise.start()
                         .thenApplyAsync {
-                            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(p.uniqueId)
+                            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(BsonBinary(p.uniqueId))
                         }
                         .thenAcceptSync {
                             val xp = (it.get().xp as Double?) ?: 0.0

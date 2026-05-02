@@ -136,7 +136,7 @@ class Leaderboards : BukkitRunnable() {
                     val gp = this.find().sort(descending("gamesPlayed")).limit(10)
                     for ((index, document) in gp.withIndex()) {
                         val profile =
-                            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(document["uuid"] as UUID)
+                            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(BsonBinary(document["uuid"] as UUID))
                                 .get()
                         if (document["gamesPlayed"] as Int != 0) DHAPI.addHologramLine(
                             gamesPlayed,
@@ -151,7 +151,7 @@ class Leaderboards : BukkitRunnable() {
                     val w = this.find().sort(descending("wins")).limit(10)
                     for ((index, document) in w.withIndex()) {
                         val profile =
-                            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(document["uuid"] as UUID)
+                            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(BsonBinary(document["uuid"] as UUID))
                                 .get()
                         if (document["wins"] as Int != 0) DHAPI.addHologramLine(
                             wins,
@@ -163,7 +163,7 @@ class Leaderboards : BukkitRunnable() {
                     val k = this.find().sort(descending("kills")).limit(10)
                     for ((index, document) in k.withIndex()) {
                         val profile =
-                            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(document["uuid"] as UUID)
+                            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(BsonBinary(document["uuid"] as UUID))
                                 .get()
                         if (document["kills"] as Int != 0) DHAPI.addHologramLine(
                             kills,
@@ -175,7 +175,7 @@ class Leaderboards : BukkitRunnable() {
                     val d = this.find().sort(descending("diamondsMined")).limit(10)
                     for ((index, document) in d.withIndex()) {
                         val profile =
-                            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(document["uuid"] as UUID)
+                            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(BsonBinary(document["uuid"] as UUID))
                                 .get()
                         if (document["diamondsMined"] as Int != 0) DHAPI.addHologramLine(
                             diamondsMined,
@@ -190,7 +190,7 @@ class Leaderboards : BukkitRunnable() {
                     val g = this.find().sort(descending("gapplesEaten")).limit(10)
                     for ((index, document) in g.withIndex()) {
                         val profile =
-                            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(document["uuid"] as UUID)
+                            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(BsonBinary(document["uuid"] as UUID))
                                 .get()
                         if (document["gapplesEaten"] as Int != 0) DHAPI.addHologramLine(
                             gapplesEaten,
@@ -205,7 +205,7 @@ class Leaderboards : BukkitRunnable() {
                     val gm = this.find().sort(descending("goldMined")).limit(10)
                     for ((index, document) in gm.withIndex()) {
                         val profile =
-                            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(document["uuid"] as UUID)
+                            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(BsonBinary(document["uuid"] as UUID))
                                 .get()
                         if (document["goldMined"] as Int != 0) DHAPI.addHologramLine(
                             goldMined,
@@ -222,7 +222,7 @@ class Leaderboards : BukkitRunnable() {
                     val t = this.find().sort(descending("level")).limit(10)
                     for ((index, document) in t.withIndex()) {
                         val profile =
-                            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(document["uuid"] as UUID)
+                            JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.lookupProfile(BsonBinary(document["uuid"] as UUID))
                                 .get()
                         if (document["level"] as Int != 0) DHAPI.addHologramLine(
                             highestLevel,
@@ -278,7 +278,7 @@ class Leaderboards : BukkitRunnable() {
                     val winnerMap = mutableMapOf<String, Int>()
                     for (winner in match["winners"] as List<*>) {
                         try {
-                            plugin.profileHandler.lookupProfile(UUID.fromString(winner as String))
+                            plugin.profileHandler.lookupProfile(BsonBinary(UUID.fromString(winner as String)))
                                 .thenApplySync { profile ->
                                     winnerMap[profile.name!!] = killsMap[winner] as Int
                                 }

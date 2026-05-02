@@ -1,5 +1,6 @@
 package pink.mino.kraftwerk.commands
 
+import org.bson.BsonBinary
 import org.bukkit.Bukkit
 import org.bukkit.Sound
 import org.bukkit.command.Command
@@ -38,7 +39,7 @@ class ReplyCommand : CommandExecutor {
             return false
         }
 
-        val list = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(target.uniqueId)!!.ignored
+        val list = JavaPlugin.getPlugin(Kraftwerk::class.java).profileHandler.getProfile(BsonBinary(target.uniqueId))!!.ignored
         if (list.contains(sender.uniqueId)) {
             Chat.sendMessage(sender, "<red>This person has you on their ignore list.")
             return false

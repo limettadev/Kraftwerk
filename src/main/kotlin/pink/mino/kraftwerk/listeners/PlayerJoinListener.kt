@@ -27,7 +27,7 @@ import java.util.*
 class PlayerJoinListener : Listener {
 
     fun checkEvaders(player: OfflinePlayer) {
-        val profile = Kraftwerk.instance.profileHandler.getProfile(player.uniqueId) ?: return
+        val profile = Kraftwerk.instance.profileHandler.getProfile(BsonBinary(player.uniqueId)) ?: return
 
         val alts = profile.alts
         if (alts.isEmpty()) return
@@ -61,7 +61,7 @@ class PlayerJoinListener : Listener {
 
     fun checkAndMergeAlts(player: Player) {
         val plugin = JavaPlugin.getPlugin(Kraftwerk::class.java)
-        val profile = plugin.profileHandler.getProfile(player.uniqueId)!!
+        val profile = plugin.profileHandler.getProfile(BsonBinary(player.uniqueId))!!
         val currentIp = player.address?.address?.hostAddress ?: return
 
         // Update current IP if needed
@@ -87,7 +87,7 @@ class PlayerJoinListener : Listener {
                     continue
                 } ?: continue
 
-                val otherProfile = plugin.profileHandler.getProfile(otherUuid) ?: continue
+                val otherProfile = plugin.profileHandler.getProfile(BsonBinary(otherUuid)) ?: continue
 
                 var updated = false
                 if (!profile.alts.contains(otherUuid)) {
