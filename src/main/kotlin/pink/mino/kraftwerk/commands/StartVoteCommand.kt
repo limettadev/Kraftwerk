@@ -35,7 +35,7 @@ class Vote(val question: String) {
     fun startTimer() {
         for (online: Player in Bukkit.getOnlinePlayers()) {
             online.showTitle(Title.title(
-                MiniMessage.miniMessage().deserialize("<${Chat.primaryColor}><bold>New Vote!"),
+                MiniMessage.miniMessage().deserialize("${Chat.primaryColor}<bold>New Vote!"),
                 MiniMessage.miniMessage().deserialize("<gray>Vote using <green>/yes <gray>or <red>/no<gray>!")
             ))
         }

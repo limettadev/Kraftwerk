@@ -43,6 +43,7 @@ class HasteyBabiesScenario : Scenario(
     fun onCraft(e: PrepareItemCraftEvent) {
         if (!enabled) return
         if (GameState.currentState !== GameState.INGAME) return
+        if (e.recipe == null) return
         if (types.contains(e.recipe!!.result.type)) {
             val item = e.recipe!!.result
             item.addEnchantment(Enchantment.EFFICIENCY, 1)

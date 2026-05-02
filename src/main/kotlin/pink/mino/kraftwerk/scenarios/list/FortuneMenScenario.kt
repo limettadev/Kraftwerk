@@ -44,6 +44,7 @@ class FortuneMenScenario : Scenario(
     fun onCraft(e: PrepareItemCraftEvent) {
         if (!enabled) return
         if (GameState.currentState !== GameState.INGAME) return
+        if (e.recipe == null) return
         if (types.contains(e.recipe!!.result.type)) {
             Schedulers.sync().runLater(Runnable@ {
                 val item = e.recipe!!.result
