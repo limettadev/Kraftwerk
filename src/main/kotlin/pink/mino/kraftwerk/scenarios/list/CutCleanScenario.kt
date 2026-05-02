@@ -21,13 +21,21 @@ class CutCleanScenario : Scenario(
         if (GameState.currentState == GameState.LOBBY) return
         if (!enabled) return
         when (e.entity.itemStack.type) {
-            Material.IRON_ORE -> {
+            Material.IRON_ORE, Material.RAW_IRON -> {
                 (e.location.world.spawn(e.location, ExperienceOrb::class.java) as ExperienceOrb).experience = 1
                 e.entity.itemStack.type = Material.IRON_INGOT
             }
-            Material.GOLD_ORE -> {
+            Material.GOLD_ORE, Material.RAW_GOLD -> {
                 (e.location.world.spawn(e.location, ExperienceOrb::class.java) as ExperienceOrb).experience = 1
                 e.entity.itemStack.type = Material.GOLD_INGOT
+            }
+            Material.RAW_IRON_BLOCK -> {
+                (e.location.world.spawn(e.location, ExperienceOrb::class.java) as ExperienceOrb).experience = 1
+                e.entity.itemStack.type = Material.IRON_BLOCK
+            }
+            Material.RAW_GOLD_BLOCK -> {
+                (e.location.world.spawn(e.location, ExperienceOrb::class.java) as ExperienceOrb).experience = 1
+                e.entity.itemStack.type = Material.GOLD_BLOCK
             }
             Material.CHICKEN -> {
                 (e.location.world.spawn(e.location, ExperienceOrb::class.java) as ExperienceOrb).experience = 1

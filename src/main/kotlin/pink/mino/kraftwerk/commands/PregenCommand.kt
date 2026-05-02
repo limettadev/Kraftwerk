@@ -152,7 +152,7 @@ class PregenCommand : CommandExecutor {
 
             for (player in Bukkit.getOnlinePlayers()) {
                 player.sendActionBar(MiniMessage.miniMessage().deserialize(
-                    "${Chat.prefix} <gray>Progress: <${Chat.primaryColor}>${rounded}% <dark_gray>| <gray>World: <dark_gray>'<${Chat.primaryColor}>${event.world}<dark_gray>' <dark_gray>| <gray>TPS: ${checkTps(
+                    "${Chat.prefix} <gray>Progress: ${Chat.primaryColor}${rounded}% <dark_gray>| <gray>World: <dark_gray>'${Chat.primaryColor}${event.world}<dark_gray>' <dark_gray>| <gray>TPS: ${checkTps(
                         (tps * 100.0).roundToInt() / 100.0
                     )}"
                 ))
