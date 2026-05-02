@@ -40,7 +40,7 @@ class ChampionsScenario : Scenario(
     "champions",
     Material.GOLDEN_APPLE
 ), CommandExecutor {
-    val prefix = Chat.colored("<dark_gray>[${Chat.primaryColor}Champions<dark_gray>] <gray>")
+    val prefix = "<dark_gray>[${Chat.primaryColor}Champions<dark_gray>] <gray>"
     val kits = hashMapOf<UUID, String>()
 
     init {
@@ -132,7 +132,7 @@ class ChampionsScenario : Scenario(
                     }
                 }
             }
-        } else if (e.item!!.type == Material.PLAYER_HEAD) {
+        } else if (e.item!!.type == Material.PLAYER_HEAD && e.player.world.name != ConfigFeature.instance.config!!.getString("spawn.world")!!) {
             e.isCancelled = true
             e.item!!.amount = e.item!!.amount - 1
             if (e.item!!.amount == 0) {
