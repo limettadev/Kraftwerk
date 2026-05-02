@@ -162,7 +162,7 @@ class ChatListener : Listener {
                 }
             }
             e.renderer { player, sourceDisplayName, message, audience ->
-                Chat.colored("$prefix${PlayerUtils.getPrefix(player)}${player.name} <dark_gray>» $color${(e.message() as TextComponent).content()}")
+                Chat.colored("$prefix${PlayerUtils.getPrefix(player)}${player.name}<reset> $display <dark_gray>» $color${(e.message() as TextComponent).content()}")
             }
             cooldowns[player.uniqueId] = System.currentTimeMillis()
         }
