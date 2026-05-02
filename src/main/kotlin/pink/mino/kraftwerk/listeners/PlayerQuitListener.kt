@@ -24,7 +24,7 @@ class PlayerQuitListener : Listener {
     fun onPlayerQuit(e: PlayerQuitEvent) {
         val player = e.player
         val user = Kraftwerk.instance.luckPerms.getPlayerAdapter(Player::class.java).getUser(player)
-        val prefix = if (user.cachedData.metaData.prefix!! != "<gray>") user.cachedData.metaData.prefix!! else Chat.colored("<white>")
+        val prefix = if (user.cachedData.metaData.prefix!! != "<gray>") user.cachedData.metaData.prefix!! else "<white>"
         e.quitMessage(Chat.colored("<dark_gray>(${Chat.secondaryColor}-<dark_gray>)<reset> ${prefix}${player.displayName} <dark_gray>[${Chat.secondaryColor}${Bukkit.getOnlinePlayers().size - 1}<dark_gray>/${Chat.secondaryColor}${Bukkit.getServer().maxPlayers}<dark_gray>]"))
         Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
             Scoreboard.setScore("${Chat.dash} <gray>Playing...", Math.max(PlayerUtils.getPlayingPlayers().size, 0))

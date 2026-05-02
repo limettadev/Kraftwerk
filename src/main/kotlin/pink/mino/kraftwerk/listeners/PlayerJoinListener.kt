@@ -118,7 +118,7 @@ class PlayerJoinListener : Listener {
         }
 
         val user = Kraftwerk.instance.luckPerms.getPlayerAdapter(Player::class.java).getUser(player)
-        val prefix = if (user.cachedData.metaData.prefix!! != "<gray>") user.cachedData.metaData.prefix!! else Chat.colored("<white>")
+        val prefix = if (user.cachedData.metaData.prefix!! != "<gray>") user.cachedData.metaData.prefix!! else "<white>"
         e.joinMessage(Chat.colored("<dark_gray>(<dark_green>+<dark_gray>)<reset> ${prefix}${player.displayName} <dark_gray>[<dark_green>${Bukkit.getOnlinePlayers().size}<dark_gray>/<dark_green>${Bukkit.getServer().maxPlayers}<dark_gray>]"))
         /*Schedulers.sync().runLater({
             Chat.sendMessage(player, "<dark_gray>➡ <gray>Please consider donating to the server to keep it up for another month! The store link is <yellow>https://applejuice.tebex.io<gray> or just use <red>/buy<gray>!")

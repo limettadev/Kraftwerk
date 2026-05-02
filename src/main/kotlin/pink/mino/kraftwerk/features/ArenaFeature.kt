@@ -62,7 +62,10 @@ class ArenaFeature : Listener {
                 return unbreakableItem(Material.BOW)
             }
             "ROD" -> {
-                return unbreakableItem(Material.FISHING_ROD)
+                return unbreakableItem(Material.IRON_AXE)
+            }
+            "AXE" -> {
+                return unbreakableItem(Material.IRON_AXE)
             }
             "BLOCKS" -> {
                 return ItemStack(Material.valueOf(Kraftwerk.instance.profileHandler.getProfile(player.uniqueId)!!.arenaBlock!!), 64)
@@ -110,10 +113,10 @@ class ArenaFeature : Listener {
             p.removePotionEffect(effect.type)
         }
         p.inventory.clear()
-        p.inventory.setHelmet(ItemStack(Material.AIR))
-        p.inventory.setChestplate(ItemStack(Material.AIR))
-        p.inventory.setLeggings(ItemStack(Material.AIR))
-        p.inventory.setBoots(ItemStack(Material.AIR))
+        p.inventory.helmet = ItemStack(Material.AIR)
+        p.inventory.chestplate = ItemStack(Material.AIR)
+        p.inventory.leggings = ItemStack(Material.AIR)
+        p.inventory.boots = ItemStack(Material.AIR)
         p.inventory.setItemInOffHand(ItemStack(Material.AIR))
         p.gameMode = GameMode.SURVIVAL
 
@@ -132,22 +135,24 @@ class ArenaFeature : Listener {
                         p.inventory.setItem(7, alias(document.getEmbedded(listOf("kit", "slot8"), String::class.java), p))
                         p.inventory.setItem(8, alias(document.getEmbedded(listOf("kit", "slot9"), String::class.java), p))
                         p.inventory.setItem(9, ItemStack(Material.ARROW, 64))
+                        p.inventory.setItemInOffHand(ItemStack(Material.SHIELD))
 
-                        p.inventory.setHelmet(unbreakableItem(Material.IRON_HELMET))
-                        p.inventory.setChestplate(unbreakableItem(Material.IRON_CHESTPLATE))
-                        p.inventory.setLeggings(unbreakableItem(Material.IRON_LEGGINGS))
-                        p.inventory.setBoots(unbreakableItem(Material.DIAMOND_BOOTS))
+                        p.inventory.helmet = unbreakableItem(Material.IRON_HELMET)
+                        p.inventory.chestplate = unbreakableItem(Material.IRON_CHESTPLATE)
+                        p.inventory.leggings = unbreakableItem(Material.IRON_LEGGINGS)
+                        p.inventory.boots = unbreakableItem(Material.DIAMOND_BOOTS)
                     }
                 } catch (e: NullPointerException) {
                     Schedulers.sync().run {
                         p.inventory.setItem(0, unbreakableItem(Material.DIAMOND_SWORD))
-                        p.inventory.setItem(1, unbreakableItem(Material.FISHING_ROD))
+                        p.inventory.setItem(1, unbreakableItem(Material.IRON_AXE))
                         p.inventory.setItem(2, unbreakableItem(Material.BOW))
                         p.inventory.setItem(3, ItemStack(Material.valueOf(Kraftwerk.instance.profileHandler.getProfile(p.uniqueId)!!.arenaBlock!!), 64))
                         p.inventory.setItem(4, ItemStack(Material.WATER_BUCKET))
                         p.inventory.setItem(5, ItemStack(Material.LAVA_BUCKET))
                         p.inventory.setItem(6, ItemStack(Material.GOLDEN_CARROT, 64))
                         p.inventory.setItem(7, ItemStack(Material.GOLDEN_APPLE, 5))
+                        p.inventory.setItemInOffHand(ItemStack(Material.SHIELD))
                         val goldenHeads = ItemStack(Material.GOLDEN_APPLE, 3)
                         val meta = goldenHeads.itemMeta
                         meta.displayName(MiniMessage.miniMessage().deserialize("<gold>Golden Head"))
@@ -155,10 +160,10 @@ class ArenaFeature : Listener {
                         p.inventory.setItem(8, goldenHeads)
                         p.inventory.setItem(9, ItemStack(Material.ARROW, 64))
 
-                        p.inventory.setHelmet(unbreakableItem(Material.IRON_HELMET))
-                        p.inventory.setChestplate(unbreakableItem(Material.IRON_CHESTPLATE))
-                        p.inventory.setLeggings(unbreakableItem(Material.IRON_LEGGINGS))
-                        p.inventory.setBoots(unbreakableItem(Material.DIAMOND_BOOTS))
+                        p.inventory.helmet = unbreakableItem(Material.IRON_HELMET)
+                        p.inventory.chestplate = unbreakableItem(Material.IRON_CHESTPLATE)
+                        p.inventory.leggings = unbreakableItem(Material.IRON_LEGGINGS)
+                        p.inventory.boots = unbreakableItem(Material.DIAMOND_BOOTS)
                     }
                 }
             }

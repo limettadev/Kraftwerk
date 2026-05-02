@@ -172,7 +172,7 @@ class SpawnFeature : Listener {
 
 
         val sword = ItemBuilder(Material.DIAMOND_SWORD).name("<green>Sword").make()
-        val fishingRod = ItemBuilder(Material.FISHING_ROD).name("<green>Rod").make()
+        val ironAxe = ItemBuilder(Material.IRON_AXE).name("<green>Axe").make()
         val bow = ItemBuilder(Material.BOW).name("<green>Bow").make()
         val cobblestone = ItemBuilder(Material.COBBLESTONE).name("<green>Blocks").make()
         val waterBucket = ItemBuilder(Material.WATER_BUCKET).name("<green>Water").make()
@@ -182,7 +182,7 @@ class SpawnFeature : Listener {
         val gHeads = ItemBuilder(Material.GOLDEN_APPLE).name("<green>Heads").make()
 
         p.inventory.setItem(0, sword)
-        p.inventory.setItem(1, fishingRod)
+        p.inventory.setItem(1, ironAxe)
         p.inventory.setItem(2, bow)
         p.inventory.setItem(3, cobblestone)
         p.inventory.setItem(4, waterBucket)
