@@ -178,7 +178,7 @@ class Opening(var closing: Long) : BukkitRunnable() {
     }
 
     private fun displayTimer(player: Player) {
-        player.sendActionBar( "${Chat.primaryColor}Whitelist is enabled in ${Chat.dash} ${Chat.secondaryColor}${timeToString(closing - timer.toLong())}")
+        player.sendActionBar(Chat.colored("${Chat.primaryColor}Whitelist is enabled in ${Chat.dash} ${Chat.secondaryColor}${timeToString(closing - timer.toLong())}"))
     }
 
     override fun run() {
