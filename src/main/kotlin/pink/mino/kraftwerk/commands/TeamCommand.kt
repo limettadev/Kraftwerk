@@ -308,7 +308,7 @@ class TeamCommand : CommandExecutor {
             if (!invites.containsKey(player)) invites[player] = ArrayList()
             invites[player]!!.add(target)
             val text = MiniMessage.miniMessage().deserialize(
-                "${Chat.prefix} <gray>To accept, type <white>/team accept ${player.name}</white> <gray>or <${Chat.secondaryColor}><click:run_command:/team accept ${player.name}><u>click here</u></click><gray>."
+                "${Chat.prefix} <gray>To accept, type <white>/team accept ${player.name}</white> <gray>or ${Chat.secondaryColor}<click:run_command:/team accept ${player.name}><u>click here</u></click><gray>."
             )
             Chat.sendMessage(target, Chat.line)
             Chat.sendMessage(

@@ -36,7 +36,7 @@ class NearbyCommand : CommandExecutor {
         } else {
             for (player in players) {
                 val text = MiniMessage.miniMessage().deserialize(
-                    "<insert:/tp ${player.name}><${Chat.primaryColor}>${floor(player.location.x)}, ${floor(player.location.y)}, ${floor(player.location.z)} <dark_gray>- <${Chat.secondaryColor}>${PlayerUtils.getPrefix(player)}${player.name} <dark_gray>(<${Chat.primaryColor}>${floor(sender.location.distance(player.location))}m<dark_gray>)</insert>"
+                    "<insert:/tp ${player.name}>${Chat.primaryColor}${floor(player.location.x)}, ${floor(player.location.y)}, ${floor(player.location.z)} <dark_gray>- ${Chat.secondaryColor}${PlayerUtils.getPrefix(player)}${player.name} <dark_gray>(${Chat.primaryColor}${floor(sender.location.distance(player.location))}m<dark_gray>)</insert>"
                 )
                 Chat.sendMessage(sender, text)
             }

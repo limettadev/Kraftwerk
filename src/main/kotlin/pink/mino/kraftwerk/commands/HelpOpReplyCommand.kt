@@ -1,7 +1,6 @@
 package pink.mino.kraftwerk.commands
 
 import org.bukkit.Bukkit
-import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -33,7 +32,7 @@ class HelpOpReplyCommand : CommandExecutor {
         }
         val message = StringBuilder()
         for ((index, element) in args.withIndex()) {
-            if (index != 0) message.append("<gray>${element}").append(" " + ChatColor.GRAY)
+            if (index != 0) message.append("<gray>${element}").append(" " + "<gray>")
         }
         val msg = message.toString().trim()
         val player = HelpOp.getHelpop(args[0].toInt())

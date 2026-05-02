@@ -226,7 +226,7 @@ class PlayerJoinListener : Listener {
                         "<click:run_command:/ls ${player.name}>${Chat.dash} <light_purple><bold>Latescatter player?</bold></light_purple></click>"
                     )
                     val comp2 = MiniMessage.miniMessage().deserialize(
-                        "<click:suggest_command:/ls ${player.name} >${Chat.dash} <${Chat.primaryColor}><bold>Insert latescatter command?</bold></${Chat.primaryColor}></click>"
+                        "<click:suggest_command:/ls ${player.name} >${Chat.dash} ${Chat.primaryColor}<bold>Insert latescatter command?</bold></${Chat.primaryColor}></click>"
                     )
                     SpecFeature.instance.getSpecs().forEach {
                         val p = Bukkit.getOfflinePlayer(it)

@@ -1,6 +1,5 @@
 package pink.mino.kraftwerk.commands
 
-import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -24,7 +23,7 @@ class SpecChatCommand : CommandExecutor {
                 return true
             }
             for (element in args) {
-                message.append("<gray>${element}").append(" " + ChatColor.GRAY)
+                message.append("<gray>${element}").append(" " + "<gray>")
             }
             val msg = message.toString().trim()
             SpecFeature.instance.specChat("<dark_gray>[${Chat.primaryColor}Spec Chat<dark_gray>] <white>${sender.name} ${Chat.dash} <white>${msg}")

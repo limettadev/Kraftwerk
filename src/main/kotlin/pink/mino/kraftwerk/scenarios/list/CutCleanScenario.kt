@@ -33,6 +33,14 @@ class CutCleanScenario : Scenario(
                 (e.location.world.spawn(e.location, ExperienceOrb::class.java) as ExperienceOrb).experience = 1
                 e.entity.itemStack.type = Material.IRON_BLOCK
             }
+            Material.RAW_COPPER -> {
+                (e.location.world.spawn(e.location, ExperienceOrb::class.java) as ExperienceOrb).experience = 1
+                e.entity.itemStack.type = Material.COPPER_INGOT
+            }
+            Material.RAW_COPPER_BLOCK -> {
+                (e.location.world.spawn(e.location, ExperienceOrb::class.java) as ExperienceOrb).experience = 1
+                e.entity.itemStack.type = Material.COPPER_BLOCK
+            }
             Material.RAW_GOLD_BLOCK -> {
                 (e.location.world.spawn(e.location, ExperienceOrb::class.java) as ExperienceOrb).experience = 1
                 e.entity.itemStack.type = Material.GOLD_BLOCK

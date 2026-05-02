@@ -581,7 +581,7 @@ class SpecFeature : Listener {
                 if (getSpecs().contains(player.name)) {
                     Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                         val comp = MiniMessage.miniMessage().deserialize(
-                            "$prefix <${Chat.secondaryColor}>${PlayerUtils.getPrefix(p)}${p.name}<gray> has mined <aqua>Diamond Ore<gray>. <dark_gray>(<gray>T: <aqua>${diamondsMined[p.uniqueId]} <dark_gray>| <gray>V: <aqua>${diamonds}<dark_gray>)<click:run_command:/tp ${p.name}>"
+                            "$prefix ${Chat.secondaryColor}${PlayerUtils.getPrefix(p)}${p.name}<gray> has mined <aqua>Diamond Ore<gray>. <dark_gray>(<gray>T: <aqua>${diamondsMined[p.uniqueId]} <dark_gray>| <gray>V: <aqua>${diamonds}<dark_gray>)<click:run_command:/tp ${p.name}>"
                         )
                         player.sendMessage(comp)
                     }, 1L)
@@ -614,7 +614,7 @@ class SpecFeature : Listener {
                 if (getSpecs().contains(player.name)) {
                     Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                         val comp = MiniMessage.miniMessage().deserialize(
-                            "$prefix <${Chat.secondaryColor}>${PlayerUtils.getPrefix(p)}${p.name}<gray> has mined <gold>Gold Ore<gray>. <dark_gray>(<gray>T: <gold>${goldMined[p.uniqueId]} <dark_gray>| <gray>V: <gold>${gold}<dark_gray>)<click:run_command:/tp ${p.name}>"
+                            "$prefix ${Chat.secondaryColor}${PlayerUtils.getPrefix(p)}${p.name}<gray> has mined <gold>Gold Ore<gray>. <dark_gray>(<gray>T: <gold>${goldMined[p.uniqueId]} <dark_gray>| <gray>V: <gold>${gold}<dark_gray>)<click:run_command:/tp ${p.name}>"
                         )
                         player.sendMessage(comp)
                     }, 1L)
@@ -637,7 +637,7 @@ class SpecFeature : Listener {
                     if (getSpecs().contains(player.name)) {
                         Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                             val comp = MiniMessage.miniMessage().deserialize(
-                                "$prefix <${Chat.secondaryColor}>${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to <white>Fall<gray>.<click:run_command:/tp ${p.name}>"
+                                "$prefix ${Chat.secondaryColor}${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to <white>Fall<gray>.<click:run_command:/tp ${p.name}>"
                             )
                             player.sendMessage(comp)
                         }, 1L)
@@ -648,7 +648,7 @@ class SpecFeature : Listener {
                 for (player in Bukkit.getOnlinePlayers()) {
                     if (getSpecs().contains(player.name)) {
                         val comp = MiniMessage.miniMessage().deserialize(
-                            "$prefix <${Chat.secondaryColor}>${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to <white>Burning<gray>.<click:run_command:/tp ${p.name}>"
+                            "$prefix ${Chat.secondaryColor}${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to <white>Burning<gray>.<click:run_command:/tp ${p.name}>"
                         )
                         player.sendMessage(comp)
                     }
@@ -662,7 +662,7 @@ class SpecFeature : Listener {
                     if (getSpecs().contains(player.name)) {
                         Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                             val comp = MiniMessage.miniMessage().deserialize(
-                                "$prefix <${Chat.secondaryColor}>${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to <white>Unknown<gray>.<click:run_command:/tp ${p.name}>"
+                                "$prefix ${Chat.secondaryColor}${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to <white>Unknown<gray>.<click:run_command:/tp ${p.name}>"
                             )
                             player.sendMessage(comp)
                         }, 1L)
@@ -685,7 +685,7 @@ class SpecFeature : Listener {
                 if (getSpecs().contains(player.name)) {
                     Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                         val comp = MiniMessage.miniMessage().deserialize(
-                            "$prefix <${Chat.secondaryColor}>${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to <white>PvE<gray>.<click:run_command:/tp ${p.name}>"
+                            "$prefix ${Chat.secondaryColor}${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to <white>PvE<gray>.<click:run_command:/tp ${p.name}>"
                         )
                         player.sendMessage(comp)
                     }, 1L)
@@ -698,7 +698,7 @@ class SpecFeature : Listener {
                 if (getSpecs().contains(player.name)) {
                     Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                         val comp = MiniMessage.miniMessage().deserialize(
-                            "$prefix <${Chat.secondaryColor}>${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to ${PlayerUtils.getPrefix(damager)}${damager.name} <dark_gray>(${PlayerUtils.getHealth(damager)}<dark_gray>)<gray>. <dark_gray>(<white>PvP<dark_gray>)<click:run_command:/tp ${p.name}>"
+                            "$prefix ${Chat.secondaryColor}${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to ${PlayerUtils.getPrefix(damager)}${damager.name} <dark_gray>(${PlayerUtils.getHealth(damager)}<dark_gray>)<gray>. <dark_gray>(<white>PvP<dark_gray>)<click:run_command:/tp ${p.name}>"
                         )
                         player.sendMessage(comp)
                     }, 1L)
@@ -712,7 +712,7 @@ class SpecFeature : Listener {
                     if (getSpecs().contains(player.name)) {
                         Bukkit.getScheduler().runTaskLater(JavaPlugin.getPlugin(Kraftwerk::class.java), Runnable {
                             val comp = MiniMessage.miniMessage().deserialize(
-                                "$prefix <${Chat.secondaryColor}>${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to ${PlayerUtils.getPrefix(damager)}${damager.name} <dark_gray>(${PlayerUtils.getHealth(damager)}<dark_gray>)<gray>. <dark_gray>(<white>Bow<dark_gray>)<click:run_command:/tp ${p.name}>"
+                                "$prefix ${Chat.secondaryColor}${PlayerUtils.getPrefix(p)}${p.name} <dark_gray>(${PlayerUtils.getHealth(p)}<dark_gray>)<gray> took ${HealthChatColorer.returnHealth(percentage)}${percentage.toInt()}%<gray> due to ${PlayerUtils.getPrefix(damager)}${damager.name} <dark_gray>(${PlayerUtils.getHealth(damager)}<dark_gray>)<gray>. <dark_gray>(<white>Bow<dark_gray>)<click:run_command:/tp ${p.name}>"
                             )
                             player.sendMessage(comp)
                         }, 1L)
