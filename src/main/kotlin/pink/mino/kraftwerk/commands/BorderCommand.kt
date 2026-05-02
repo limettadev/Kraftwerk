@@ -53,7 +53,7 @@ class BorderCommand : CommandExecutor {
             val border = Bukkit.getWorld(ConfigFeature.instance.data!!.getString("pregen.world")!!)!!.worldBorder
             border.size = args[0].toDouble() * 2
             border.setCenter(0.0, 0.0)
-        }, 5L)
+        }, 40L)
         ConfigFeature.instance.data!!.set("pregen.border", args[0].toInt())
         ConfigFeature.instance.saveData()
         if (sender !is ConsoleCommandSender) {
