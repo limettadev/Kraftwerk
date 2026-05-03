@@ -2,7 +2,6 @@ package pink.mino.kraftwerk.features
 
 import me.lucko.helper.utils.Log
 import org.bukkit.Bukkit
-import org.bukkit.ChatColor
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -11,6 +10,7 @@ import org.bukkit.scoreboard.Scoreboard
 import org.bukkit.scoreboard.Team
 import pink.mino.kraftwerk.events.TeamJoinEvent
 import pink.mino.kraftwerk.events.TeamLeaveEvent
+import pink.mino.kraftwerk.utils.Chat
 
 
 class TeamsFeature private constructor() : Listener {
@@ -109,9 +109,9 @@ class TeamsFeature private constructor() : Listener {
         colors.remove(color)
 
         // Set up color & misc.
-        team!!.prefix = color
-        team.suffix = "§r"
-        team.displayName = color + "Team #${teamCount}"
+        team!!.prefix(Chat.colored(color))
+        team.suffix(Chat.colored("<reset>"))
+        team.displayName(Chat.colored(color + "Team #${teamCount}"))
         if (ConfigFeature.instance.data!!.getBoolean("game.friendlyFire")) team.setAllowFriendlyFire(true)
         else team.setAllowFriendlyFire(false)
         team.setCanSeeFriendlyInvisibles(true)
@@ -161,26 +161,38 @@ class TeamsFeature private constructor() : Listener {
     /**
      * Sets up all the teams.
      */
+    val actualColors = listOf<String>(
+        "black",
+        "dark_blue",
+        "dark_green",
+        "dark_aqua",
+        "dark_red",
+        "dark_purple",
+        "gold",
+        "gray",
+        "dark_gray",
+        "blue",
+        "green",
+        "aqua",
+        "red",
+        "light_purple",
+        "yellow",
+    )
+
     fun setupColors() {
-        for (color in ChatColor.values()) {
-            if (color == ChatColor.MAGIC) continue
-            if (color == ChatColor.RESET) continue
-            if (color == ChatColor.STRIKETHROUGH) continue
-            if (color == ChatColor.UNDERLINE) continue
-            if (color == ChatColor.BOLD) continue
-            if (color == ChatColor.ITALIC) continue
-            colors.add(color.toString())
+        for (color in actualColors) {
+            colors.add("<$color>")
         }
         colors.shuffle()
         val li = ArrayList<String>()
         for (color in colors) {
-            li.add(color + ChatColor.BOLD)
-            li.add(color + ChatColor.ITALIC)
-            li.add(color + ChatColor.UNDERLINE)
-            li.add(color + ChatColor.BOLD + ChatColor.ITALIC)
-            li.add(color + ChatColor.ITALIC + ChatColor.UNDERLINE)
-            li.add(color + ChatColor.BOLD + ChatColor.ITALIC + ChatColor.UNDERLINE)
-            li.add(color + ChatColor.BOLD + ChatColor.UNDERLINE)
+            li.add(color + "<bold>")
+            li.add(color + "<italic>")
+            li.add(color + "<underline>")
+            li.add(color + "<bold>" + "<italic>")
+            li.add(color + "<italic>" + "<underline>")
+            li.add(color + "<bold>" + "<italic>" + "<underline>")
+            li.add(color + "<bold>" + "<underline>")
         }
         li.shuffle()
         colors.addAll(li)

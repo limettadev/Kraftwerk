@@ -1,6 +1,5 @@
 package pink.mino.kraftwerk.scenarios.list
 
-import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.PlayerDeathEvent
@@ -23,7 +22,7 @@ class GoldenRetrieverScenario : Scenario(
         val head = ItemStack(Material.GOLDEN_APPLE)
         val meta: ItemMeta = head.itemMeta
         meta.displayName(Chat.colored("<gold>Golden Head"))
-        meta.lore = listOf(ChatColor.DARK_PURPLE.toString() + "Some say consuming the head of a", ChatColor.DARK_PURPLE.toString() + "fallen foe strengthens the blood.")
+        meta.lore(listOf(Chat.colored("<dark_purple>Some say consuming the head of a\nfallen foe strengthens the blood.")))
         head.itemMeta = meta
         e.drops.add(head)
     }
