@@ -110,7 +110,7 @@ class TeamsFeature private constructor() : Listener {
         colors.remove(color)
 
         // Set up color & misc.
-        team.prefix(Chat.colored(color) as TextComponent)
+        team.prefix((Chat.colored(" $color") as TextComponent))
         team.suffix(Chat.colored("<reset>"))
         team.displayName(Chat.colored(color + "Team #${teamCount}"))
         if (ConfigFeature.instance.data!!.getBoolean("game.friendlyFire")) team.setAllowFriendlyFire(true)
