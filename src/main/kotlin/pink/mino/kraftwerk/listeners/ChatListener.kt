@@ -163,15 +163,13 @@ class ChatListener : Listener {
             }
             e.renderer { player, sourceDisplayName, message, audience ->
                 val prefix = MiniMessage.miniMessage().deserialize("$prefix")
-                val playerPrefix = PlayerUtils.getPrefix(player) // Component
+                val playerPrefix = PlayerUtils.getPrefix(player)
                 val rest = MiniMessage.miniMessage().deserialize("<reset>$display <dark_gray>» $color${(e.message() as TextComponent).content()}")
 
-                Component.text()
-                    .append(prefix)
+                prefix
                     .append(playerPrefix)
                     .append(Component.text(player.name))
                     .append(rest)
-                    .build()
             }
             cooldowns[player.uniqueId] = System.currentTimeMillis()
         }

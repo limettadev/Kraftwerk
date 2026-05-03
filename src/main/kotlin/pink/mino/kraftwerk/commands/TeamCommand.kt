@@ -473,7 +473,6 @@ class TeamCommand : CommandExecutor {
                         for (player in team.players) {
                             list.add(player.name!!)
                         }
-                        val displayName = team.displayName()
                         val listMessage = Chat.colored(" <dark_gray>(${Chat.secondaryColor}${list.size}<dark_gray>) ${Chat.dash} ${Chat.secondaryColor}${
                             list.joinToString(
                                 ", "
@@ -481,10 +480,7 @@ class TeamCommand : CommandExecutor {
                         }")
                         Chat.sendMessage(
                             sender,
-                            Component.text()
-                                .append(team.displayName())
-                                .append(listMessage)
-                                .build()
+                            team.displayName().append(listMessage)
                         )
                     }
                 }
@@ -505,17 +501,13 @@ class TeamCommand : CommandExecutor {
                                 list.add("<red>${teammate.name}")
                             }
                         }
-                        val displayName = team.displayName()
                         val listMessage = Chat.colored(" <dark_gray>(${Chat.secondaryColor}${TeamsFeature.manager.teamMap[it]!!.size}<dark_gray>) ${Chat.dash} ${Chat.secondaryColor}${
                             list.joinToString(", ")
                         }")
 
                         Chat.sendMessage(
                             sender,
-                            Component.text()
-                                .append(displayName)
-                                .append(listMessage)
-                                .build()
+                            team.displayName().append(listMessage)
                         )
                     }
                 }
