@@ -5,6 +5,7 @@ import com.lunarclient.apollo.common.location.ApolloLocation
 import com.lunarclient.apollo.module.team.TeamMember
 import com.lunarclient.apollo.module.team.TeamModule
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.Bukkit
@@ -260,7 +261,10 @@ class TeamCommand : CommandExecutor {
             val team = TeamsFeature.manager.createTeam(player)
 
             SendTeamView(team).runTaskTimer(JavaPlugin.getPlugin(Kraftwerk::class.java), 0L, 20L)
-            Chat.sendMessage(sender, "${Chat.prefix} Successfully created ${Chat.secondaryColor}${team.displayName}<gray>!")
+            val message = Chat.colored("${Chat.prefix} Successfully created ${Chat.secondaryColor}")
+                .append(team.displayName())
+                .append(Chat.colored("<gray>!"))
+            Chat.sendMessage(sender, message)
         } else if (args[0] == "invite") {
             val player = sender as Player
             var team = TeamsFeature.manager.getTeam(player)
@@ -363,7 +367,10 @@ class TeamCommand : CommandExecutor {
                     player.sendMessage("<red>That team is too full to join!")
                     return false
                 }
-                Chat.sendMessage(player, "${Chat.prefix} <gray>You have joined ${Chat.secondaryColor}${team.displayName}<gray>!")
+                val message = Chat.colored("${Chat.prefix} <gray>You have joined ${Chat.secondaryColor} ")
+                    .append(team.displayName())
+                    .append(Chat.colored("<gray>!"))
+                Chat.sendMessage(player, message)
                 TeamsFeature.manager.joinTeam(team.name, player)
                 for (players in team.players) {
                     if (players is Player && players != player) {
@@ -466,9 +473,16 @@ class TeamCommand : CommandExecutor {
                         for (player in team.players) {
                             list.add(player.name!!)
                         }
+                        val displayName = team.displayName()
+                        val listMessage = Chat.colored(" <dark_gray>(${Chat.secondaryColor}${list.size}<dark_gray>) ${Chat.dash} ${Chat.secondaryColor}${
+                            list.joinToString(
+                                ", "
+                            )
+                        }")
+                        displayName.append(listMessage)
                         Chat.sendMessage(
                             sender,
-                            "${team.displayName} <dark_gray>(${Chat.secondaryColor}${list.size}<dark_gray>) ${Chat.dash} ${Chat.secondaryColor}${list.joinToString(", ")}"
+                            displayName
                         )
                     }
                 }
@@ -489,7 +503,14 @@ class TeamCommand : CommandExecutor {
                                 list.add("<red>${teammate.name}")
                             }
                         }
-                        Chat.sendMessage(sender, "${team.displayName} <dark_gray>(${Chat.secondaryColor}${TeamsFeature.manager.teamMap[it]!!.size}<dark_gray>) ${Chat.dash} ${Chat.secondaryColor}${list.joinToString(", ")}")
+                        val displayName = team.displayName()
+                        val listMessage = Chat.colored(" <dark_gray>(${Chat.secondaryColor}${TeamsFeature.manager.teamMap[it]!!.size}<dark_gray>) ${Chat.dash} ${Chat.secondaryColor}${
+                            list.joinToString(
+                                ", "
+                            )
+                        }")
+                        displayName.append(listMessage)
+                        Chat.sendMessage(sender, displayName)
                     }
                 }
                 if (keys.isEmpty()) {
@@ -531,9 +552,13 @@ class TeamCommand : CommandExecutor {
                 }
             }
             TeamsFeature.manager.deleteTeam(selectedTeam)
+            val message = Chat.colored(Chat.prefix!!)
+                .append(Chat.colored(" "))
+                .append(selectedTeam.prefix())
+                .append(Chat.colored("<gray> has been deleted & all members kicked."))
             Chat.sendMessage(
                 sender,
-                "${Chat.prefix} ${selectedTeam.prefix}${selectedTeam.name}<gray> has been deleted & all members kicked."
+                message
             )
         } else if (args[0] == "set") {
             if (sender is Player) {
@@ -910,9 +935,9 @@ class TeamCommand : CommandExecutor {
                 Chat.sendMessage(sender, "${Chat.dash} This color is already in use.")
                 return false
             } else {
-                TeamsFeature.manager.colors.add(team.prefix)
+                TeamsFeature.manager.colors.add(((team.prefix()) as TextComponent).content())
                 TeamsFeature.manager.colors.remove(selectedColor)
-                team.prefix = selectedColor
+                team.prefix(Chat.colored(selectedColor))
                 Chat.sendMessage(
                     sender,
                     "${Chat.prefix} You have changed the team color of ${team.prefix}${team.name}<gray> to ${Chat.secondaryColor}$selectedColor${args[2]}<gray>."

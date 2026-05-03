@@ -188,11 +188,11 @@ class TeamsFeature private constructor() : Listener {
         for (color in colors) {
             li.add(color + "<bold>")
             li.add(color + "<italic>")
-            li.add(color + "<underline>")
+            li.add(color + "<underlined>")
             li.add(color + "<bold>" + "<italic>")
-            li.add(color + "<italic>" + "<underline>")
-            li.add(color + "<bold>" + "<italic>" + "<underline>")
-            li.add(color + "<bold>" + "<underline>")
+            li.add(color + "<italic>" + "<underlined>")
+            li.add(color + "<bold>" + "<italic>" + "<underlined>")
+            li.add(color + "<bold>" + "<underlined>")
         }
         li.shuffle()
         colors.addAll(li)
