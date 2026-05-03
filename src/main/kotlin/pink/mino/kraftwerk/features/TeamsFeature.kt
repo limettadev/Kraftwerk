@@ -1,7 +1,6 @@
 package pink.mino.kraftwerk.features
 
 import me.lucko.helper.utils.Log
-import net.kyori.adventure.text.TextComponent
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
@@ -110,7 +109,7 @@ class TeamsFeature private constructor() : Listener {
         colors.remove(color)
 
         // Set up color & misc.
-        team.prefix((Chat.colored(" $color") as TextComponent))
+        team.prefix(Chat.colored("$color[#$teamCount]<reset> "))
         team.suffix(Chat.colored("<reset>"))
         team.displayName(Chat.colored(color + "Team #${teamCount}"))
         if (ConfigFeature.instance.data!!.getBoolean("game.friendlyFire")) team.setAllowFriendlyFire(true)
