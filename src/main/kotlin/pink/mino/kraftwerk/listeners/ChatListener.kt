@@ -4,6 +4,7 @@ import io.papermc.paper.event.player.AsyncChatEvent
 import me.lucko.helper.Schedulers
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.TextComponent
+import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -161,7 +162,16 @@ class ChatListener : Listener {
                 }
             }
             e.renderer { player, sourceDisplayName, message, audience ->
-                Chat.colored("$prefix${PlayerUtils.getPrefix(player)}${player.name}<reset>$display <dark_gray>» $color${(e.message() as TextComponent).content()}")
+                val prefix = MiniMessage.miniMessage().deserialize("$prefix")
+                val playerPrefix = PlayerUtils.getPrefix(player) // Component
+                val rest = MiniMessage.miniMessage().deserialize("<reset>$display <dark_gray>» $color${(e.message() as TextComponent).content()}")
+
+                Component.text()
+                    .append(prefix)
+                    .append(playerPrefix)
+                    .append(Component.text(player.name))
+                    .append(rest)
+                    .build()
             }
             cooldowns[player.uniqueId] = System.currentTimeMillis()
         }

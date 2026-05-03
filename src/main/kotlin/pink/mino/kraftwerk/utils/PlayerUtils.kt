@@ -2,6 +2,7 @@ package pink.mino.kraftwerk.utils
 
 // TODO: ADD 1.8 SUPPORT
 
+import net.kyori.adventure.text.Component
 import net.minecraft.server.level.ServerPlayer
 //import net.minecraft.server.v1_8_R3.EntityLiving
 import org.bukkit.Bukkit
@@ -15,11 +16,11 @@ import kotlin.math.floor
 
 class PlayerUtils {
     companion object {
-        fun getPrefix(player: Player): String {
+        fun getPrefix(player: Player): Component {
             return if (TeamsFeature.manager.getTeam(player) != null) {
-                TeamsFeature.manager.getTeam(player)!!.prefix
+                TeamsFeature.manager.getTeam(player)!!.prefix()
             } else {
-                "<white>"
+                Chat.colored("<white>")
             }
         }
 

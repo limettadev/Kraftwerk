@@ -479,10 +479,12 @@ class TeamCommand : CommandExecutor {
                                 ", "
                             )
                         }")
-                        displayName.append(listMessage)
                         Chat.sendMessage(
                             sender,
-                            displayName
+                            Component.text()
+                                .append(team.displayName())
+                                .append(listMessage)
+                                .build()
                         )
                     }
                 }
@@ -505,12 +507,16 @@ class TeamCommand : CommandExecutor {
                         }
                         val displayName = team.displayName()
                         val listMessage = Chat.colored(" <dark_gray>(${Chat.secondaryColor}${TeamsFeature.manager.teamMap[it]!!.size}<dark_gray>) ${Chat.dash} ${Chat.secondaryColor}${
-                            list.joinToString(
-                                ", "
-                            )
+                            list.joinToString(", ")
                         }")
-                        displayName.append(listMessage)
-                        Chat.sendMessage(sender, displayName)
+
+                        Chat.sendMessage(
+                            sender,
+                            Component.text()
+                                .append(displayName)
+                                .append(listMessage)
+                                .build()
+                        )
                     }
                 }
                 if (keys.isEmpty()) {
