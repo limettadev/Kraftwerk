@@ -1,7 +1,6 @@
 package pink.mino.kraftwerk.commands
 
 import com.wimbli.WorldBorder.Config
-import dev.limetta.aerosmith.event.api.world.CustomizedGenerationSettings
 import me.lucko.helper.utils.Log
 import org.bukkit.*
 import org.bukkit.command.Command
@@ -85,17 +84,6 @@ class PregenCommand : CommandExecutor {
 
         if (pregenConfig.generator == PregenerationGenerationTypes.CITY_WORLD) {
             wc.generator("CityWorld")
-        }
-
-        try {
-            val customGenSettings = CustomizedGenerationSettings()
-            customGenSettings.caveFrequency = pregenConfig.caveRate
-            customGenSettings.caveLengthMin = pregenConfig.caveMinLength
-            wc.customGenSettings = customGenSettings
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Log.info("Can't implement custom cave settings, something must be wrong with the Aerosmith JAR.")
-            Chat.sendMessage(pregenConfig.player as Player, "${Chat.prefix} Can't implement custom cave settings, something's wrong with the server JAR.")
         }
 
         val world = wc.createWorld()

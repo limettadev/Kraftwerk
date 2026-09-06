@@ -3,9 +3,10 @@ package pink.mino.kraftwerk
 import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.ProtocolManager
 import com.google.gson.Gson
-import com.mongodb.MongoClient
-import com.mongodb.MongoClientException
-import com.mongodb.MongoClientURI
+import com.mongodb.ConnectionString
+import com.mongodb.MongoClientSettings
+import com.mongodb.MongoException
+import com.mongodb.client.MongoClients
 import com.mongodb.client.MongoDatabase
 import me.lucko.helper.Schedulers
 import me.lucko.helper.plugin.ExtendedJavaPlugin
@@ -13,6 +14,7 @@ import me.lucko.helper.utils.Log
 import me.lucko.spark.api.Spark
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.entities.Activity
+import org.bson.UuidRepresentation
 import org.bukkit.*
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ShapedRecipe
@@ -395,9 +397,14 @@ class Kraftwerk : ExtendedJavaPlugin() {
         }
         var client: MongoDatabase? = null
         try {
-            val connectionString = MongoClientURI(uri)
-            client = MongoClient(connectionString).getDatabase(connectionString.database!!)
-        } catch (e: MongoClientException) {
+            val connectionString = ConnectionString(uri)
+            val settings = MongoClientSettings.builder()
+                .applyConnectionString(connectionString)
+                .uuidRepresentation(UuidRepresentation.JAVA_LEGACY)
+                .build()
+            val mongoClient = MongoClients.create(settings)
+            client = mongoClient.getDatabase(connectionString.database!!)
+        } catch (e: MongoException) {
             e.printStackTrace()
         }
 
