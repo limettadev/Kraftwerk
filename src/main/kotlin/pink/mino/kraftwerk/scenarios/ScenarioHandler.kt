@@ -94,6 +94,7 @@ class ScenarioHandler {
             addScenario(LifestealScenario())
             addScenario(MeleeFunScenario())
             addScenario(ProgressiveSkyHighScenario())
+            addScenario(RedemptionScenario())
             scenarios.sortWith(Comparator.comparing(Scenario::name))
             for (scenario in getActiveScenarios()) {
                 scenario.onToggle(true)

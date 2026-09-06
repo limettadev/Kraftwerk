@@ -1,17 +1,23 @@
 package pink.mino.kraftwerk.listeners
 
 import me.lucko.helper.Schedulers
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerRespawnEvent
 import org.bukkit.scheduler.BukkitRunnable
 import pink.mino.kraftwerk.Kraftwerk
+import pink.mino.kraftwerk.commands.RespawnFeature
 import pink.mino.kraftwerk.config.ConfigOptionHandler
 import pink.mino.kraftwerk.features.ConfigFeature
+import pink.mino.kraftwerk.features.ScatterFeature
 import pink.mino.kraftwerk.features.SpawnFeature
 import pink.mino.kraftwerk.features.SpecFeature
+import pink.mino.kraftwerk.scenarios.ScenarioHandler
+import pink.mino.kraftwerk.scenarios.list.RedemptionScenario
 import pink.mino.kraftwerk.utils.Chat
+import pink.mino.kraftwerk.utils.GameState
 import pink.mino.kraftwerk.utils.Perk
 import pink.mino.kraftwerk.utils.PerkChecker
 import java.util.*
@@ -51,6 +57,23 @@ class PlayerRespawnListener : Listener {
 
     @EventHandler
     fun onPlayerRespawn(e: PlayerRespawnEvent) {
+        if (GameState.currentState == GameState.INGAME
+            && ScenarioHandler.getActiveScenarios().contains(ScenarioHandler.getScenario("redemption"))
+            && !e.player.hasPermission("uhc.staff")
+            && !RedemptionScenario.trueDeadPlayers.contains(e.player.uniqueId)
+        ) {
+            ScatterFeature.scatterSolo(
+                e.player,
+                Bukkit.getWorld(ConfigFeature.instance.data!!.getString("pregen.world")),
+                ConfigFeature.instance.data!!.getInt("pregen.border")
+            )
+            Schedulers.sync().runLater(runnable@{
+                e.player.inventory.contents = RespawnFeature.instance.inventory[e.player.uniqueId] ?: e.player.inventory.contents
+                Chat.sendMessage(e.player, "${Chat.prefix} You've been rescattered. Don't die again!")
+            }, 1L)
+            return
+        }
+
         if (e.player.hasPermission("uhc.staff")) {
             e.respawnLocation = e.player.location
         } else {

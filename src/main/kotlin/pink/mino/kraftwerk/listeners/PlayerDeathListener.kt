@@ -12,6 +12,8 @@ import pink.mino.kraftwerk.config.ConfigOptionHandler
 import pink.mino.kraftwerk.features.CombatLogFeature
 import pink.mino.kraftwerk.features.ConfigFeature
 import pink.mino.kraftwerk.features.TeamsFeature
+import pink.mino.kraftwerk.scenarios.ScenarioHandler
+import pink.mino.kraftwerk.scenarios.list.RedemptionScenario
 import pink.mino.kraftwerk.utils.Chat
 import pink.mino.kraftwerk.utils.GameState
 import pink.mino.kraftwerk.utils.PlayerUtils
@@ -44,6 +46,15 @@ class PlayerDeathListener : Listener {
                     JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.pve++
                     Scoreboard.setScore(Chat.colored("${Chat.dash} &aPvE"), JavaPlugin.getPlugin(Kraftwerk::class.java).game!!.pve)
                 }
+                if (GameState.currentState == GameState.INGAME
+                    && ScenarioHandler.getActiveScenarios().contains(ScenarioHandler.getScenario("redemption"))
+                    && !RedemptionScenario.trueDeadPlayers.contains(player.uniqueId)
+                ) {
+                    RedemptionScenario.trueDeadPlayers.add(player.uniqueId)
+                    Chat.sendMessage(player, "&aYou've been redeemed! You have one life remaining.")
+                    return
+                }
+
                 val list = ConfigFeature.instance.data!!.getStringList("game.list")
                 list.remove(player.name)
                 ConfigFeature.instance.data!!.set("game.list", list)
